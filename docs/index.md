@@ -5,7 +5,10 @@ layout: home
 hero:
   name: "Lysand"
   text: "Federation, simpler"
-  tagline: A simple to implement and complete federation protocol
+  tagline: A simple to implement and complete federation protocol (WIP new site)
+  image:
+    src: /logo.png
+    alt: Lysand Logo
   actions:
     - theme: brand
       text: Protocol Docs
@@ -22,5 +25,3 @@ features:
   - title: Easy to implement
     details: The protocol is simple to implement, and can be used with any language
 ---
-
-

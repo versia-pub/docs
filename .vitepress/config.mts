@@ -9,7 +9,7 @@ export default defineConfig({
     // https://vitepress.dev/reference/default-theme-config
     nav: [
       { text: 'Home', link: '/' },
-      { text: 'Specification', link: '/spec' }
+      { text: 'Specification', link: '/spec' },
     ],
 
     sidebar: [
@@ -49,6 +49,20 @@ export default defineConfig({
 
     socialLinks: [
       { icon: 'github', link: 'https://github.com/lysand-org/' }
-    ]
-  }
+    ],
+    search: {
+      provider: "local",
+    },
+    editLink: {
+      pattern: "https://github.com/lysand-org/docs/edit/main/docs/:path"
+    },
+    logo: "/logo.png",
+  },
+  lastUpdated: true,
+  cleanUrls: true,
+  titleTemplate: ":title · Lysand Documentation",
+  head: [
+    ['link', { rel: 'icon', href: '/favicon.png', type: 'image/png' }]
+  ],
+  lang: 'en-US',
 })
