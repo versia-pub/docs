@@ -151,7 +151,7 @@ It is recommended that servers limit the length of the subject from 1 to 300 cha
 
 The `subject` field **MUST NOT** be a `ContentFormat` object. It **MUST** be a string, and **MUST** be plain text. It **MUST NOT** contain any HTML or other markup.
 
-> See [ContentFormat](#contentformat) for more information on `ContentFormat` objects.
+> See [ContentFormat](/structures/content-format) for more information on `ContentFormat` objects.
 
 > Client extensions are welcome to add support for HTML or other markup in the `subject` field, but it is not recommended.
 
