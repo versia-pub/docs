@@ -120,3 +120,9 @@ Lysand heavily recommends that servers provide both the original format and a mo
 Clients should display the most modern format that they support, such as WebP, AVIF, JXL, or HEIF. If the client does not support any modern formats, it should display the original format.
 
 > **Note:** Servers may find it useful to use a CDN that can automatically convert images to modern formats, such as Cloudflare. This will offload image processing from the server, and improve performance for clients.
+
+### Supported Extensions
+
+The `supported_extensions` field on a Server Metadata object is an array that contains a list of extension names that the server supports.
+
+The `supported_extensions` field is not required on all Server Metadata objects. If it is not provided, it is assumed that the server does not support any extensions.
