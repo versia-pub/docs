@@ -25,3 +25,10 @@ features:
   - title: Easy to implement
     details: The protocol is simple to implement, and can be used with any language
 ---
+
+<style>
+:root {
+  --vp-home-hero-image-background-image: linear-gradient(to top right, rgb(249, 168, 212), rgb(216, 180, 254), rgb(129, 140, 248));
+  --vp-home-hero-image-filter: blur(168px);
+}
+</style>
