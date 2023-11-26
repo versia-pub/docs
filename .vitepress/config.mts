@@ -30,7 +30,8 @@ export default defineConfig({
       {
         text: "Cryptography",
         items: [
-          { text: "Keys", link: "/cryptography/keys" }
+          { text: "Keys", link: "/cryptography/keys" },
+          { text: "Signing", link: "/cryptography/signing" },
         ]
       },
       {
@@ -40,9 +41,41 @@ export default defineConfig({
           {
             text: "Publications", link: "/objects/publications", items: [
               { text: "Note", link: "/objects/note" },
-              { text: "Patch", link: "objects/patch" },
+              { text: "Patch", link: "/objects/patch" },
             ]
-          }
+          },
+          {
+            text: "Actors", link: "/objects/actors", items: [
+              { text: "User", link: "/objects/user" },
+            ]
+          },
+          {
+            text: "Actions", link: "/objects/actions", items: [
+              { text: "Like", link: "/objects/like" },
+              { text: "Dislike", link: "/objects/dislike" },
+              { text: "Follow", link: "/objects/follow" },
+              { text: "FollowAccept", link: "/objects/follow-accept" },
+              { text: "FollowReject", link: "/objects/follow-reject" },
+              { text: "Announce", link: "/objects/announce" },
+              { text: "Undo", link: "/objects/undo" },
+            ]
+          },
+          { text: "Server Metadata", link: "/objects/server-metadata" }
+        ]
+      },
+      {
+        text: "Federation",
+        items: [
+          { text: "Endpoints", link: "/federation/endpoints" },
+          { text: "User Discovery", link: "/federation/user-discovery" },
+          { text: "Server Actors", link: "/federation/server-actors" },
+        ]
+      },
+      {
+        text: "Extensions",
+        link: "/extensions",
+        items: [
+          { text: "Server Endorsements", link: "/extensions/server-endorsement" },
         ]
       }
     ],

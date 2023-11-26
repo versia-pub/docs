@@ -28,4 +28,4 @@ Collections **MUST** contain an `items` field that contains an array of items in
 
 ### Author
 
-Collections **MUST** contain an `author` field that contains the URI of the user that created the collection. It is used to identify the author of the collection. If this collection is made by the server and not by a specific user (such as the Endorserment collection with the [ServerEndorsement Extension](/extensions/endorsement)), it must be the server actor's URI.
+Collections **MUST** contain an `author` field that contains the URI of the user that created the collection. It is used to identify the author of the collection. If this collection is made by the server and not by a specific user (such as the Endorserment collection with the [ServerEndorsement Extension](/extensions/server-endorsement)), it must be the server actor's URI.
