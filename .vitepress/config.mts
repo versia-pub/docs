@@ -68,14 +68,20 @@ export default defineConfig({
         items: [
           { text: "Endpoints", link: "/federation/endpoints" },
           { text: "User Discovery", link: "/federation/user-discovery" },
-          { text: "Server Actors", link: "/federation/server-actors" },
+          { text: "Server Actors", link: "/federation/server-actor" },
         ]
       },
       {
         text: "Extensions",
         link: "/extensions",
         items: [
+          { text: "Custom Emojis", link: "/extensions/custom-emojis" },
+          { text: "Reactions", link: "/extensions/reactions" },
+          { text: "Polls", link: "/extensions/polls" },
+          { text: "Is Cat", link: "/extensions/is-cat" },
           { text: "Server Endorsements", link: "/extensions/server-endorsement" },
+          { text: "Events", link: "/extensions/events" },
+          { text: "Reports", link: "/extensions/reports" },
         ]
       }
     ],
