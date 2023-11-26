@@ -17,7 +17,6 @@ export default defineConfig({
         text: 'Spec Details',
         items: [
           { text: 'Spec', link: '/spec' },
-          { text: "Objects", link: '/objects' },
         ]
       },
       {
@@ -25,6 +24,25 @@ export default defineConfig({
         items: [
           { text: "Content Format", link: '/structures/content-format' },
           { text: "Custom Emoji", link: '/structures/custom-emoji' },
+          { text: "Collection", link: '/structures/collection' },
+        ]
+      },
+      {
+        text: "Cryptography",
+        items: [
+          { text: "Keys", link: "/cryptography/keys" }
+        ]
+      },
+      {
+        text: "Objects",
+        link: "/objects",
+        items: [
+          {
+            text: "Publications", link: "/objects/publications", items: [
+              { text: "Note", link: "/objects/note" },
+              { text: "Patch", link: "objects/patch" },
+            ]
+          }
         ]
       }
     ],
