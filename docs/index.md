@@ -5,7 +5,7 @@ layout: home
 hero:
   name: "Lysand"
   text: "Federation, simpler"
-  tagline: A simple to implement and complete federation protocol (WIP new site)
+  tagline: A simple to implement and complete federation protocol
   image:
     src: /logo.png
     alt: Lysand Logo
