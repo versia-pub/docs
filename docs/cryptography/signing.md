@@ -56,7 +56,7 @@ Here is an example of signing a request using TypeScript and the WebCrypto API:
 ```typescript
 const privateKey = await crypto.subtle.importKey(
     "pkcs8",
-    atob("base64_private_key"),
+    str2ab(atob("base64_private_key")),
     "Ed25519",
     false,
     ["sign"]
@@ -67,18 +67,26 @@ const digest = await crypto.subtle.digest(
     new TextEncoder().encode("request_body")
 );
 
+const userInbox = new URL("...");
+
+const date = new Date();
+
 const signature = await crypto.subtle.sign(
     "Ed25519",
     privateKey,
     new TextEncoder().encode(
-        "(request-target): post /users/uuid/inbox\n" +
-        "host: example.com\n" +
-        "date: Fri, 01 Jan 2021 00:00:00 GMT\n" +
-        "digest: SHA-256=" + btoa(digest)
+        `(request-target): post ${userInbox.pathname}\n` +
+            `host: ${userInbox.host}\n` +
+            `date: ${date.toUTCString()}\n` +
+            `digest: SHA-256=${btoa(
+                String.fromCharCode(...new Uint8Array(digest))
+            )}\n`
     )
 );
 
-const signatureBase64 = base64Encode(signature);
+const signatureBase64 = btoa(
+    String.fromCharCode(...new Uint8Array(signature))
+);
 ```
 
 > **Note**: Support for Ed25519 in the WebCrypto API is recent and may not be available in some older runtimes, such as Node.js or older browsers.
@@ -89,9 +97,9 @@ await fetch("https://example.com/users/uuid/inbox", {
     method: "POST",
     headers: {
         "Content-Type": "application/json",
-        "Date": "Fri, 01 Jan 2021 00:00:00 GMT",
-        "Origin": "https://example.com",
-        "Signature": `keyId="https://example.com/users/uuid",algorithm="ed25519",headers="(request-target) host date digest",signature="${signatureBase64}"`
+        Date: date.toUTCString(),
+        Origin: "https://example.com",
+        Signature: `keyId="${...}",algorithm="ed25519",headers="(request-target) host date digest",signature="${signatureBase64}"`,
     },
     body: JSON.stringify({
         // ...
