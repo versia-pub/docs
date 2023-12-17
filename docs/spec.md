@@ -16,7 +16,7 @@ Lysand-compatible servers may implement other protocols as well, such as Activit
 
 # Required Across Implementations
 
-All HTTP request bodies and response bodies **MUST** be encoded as UTF-8 JSON, with the `Content-Type` header set to `application/json; charset=utf-8`. If cryptography is supported by the server, there **MUST** also be a `Signature` header as defined in [/signatures](the signatures spec).
+All HTTP request bodies and response bodies **MUST** be encoded as UTF-8 JSON, with the `Content-Type` header set to `application/json; charset=utf-8`. If cryptography is supported by the server, there **MUST** also be a `Signature` header as defined in [the signatures spec](/cryptography/signing).
 
 Servers **MUST** use UUIDs or a UUID-compatible system for the `id` field. Any kind of UUID is allowed, as long as it is a valid UUID. It **should** be unique across the entire known network if possible, but this is not needed as long as the server can guarantee that the `id` is unique across the server.
 
