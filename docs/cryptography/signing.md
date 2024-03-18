@@ -55,9 +55,22 @@ Where `/users/uuid/inbox` is the path of the request.
 Here is an example of signing a request using TypeScript and the WebCrypto API:
 
 ```typescript
+/**
+ * Convert a string into an ArrayBuffer
+ * from https://developers.google.com/web/updates/2012/06/How-to-convert-ArrayBuffer-to-and-from-String
+ */
+const str2ab = (str: string) => {
+	const buf = new ArrayBuffer(str.length);
+	const bufView = new Uint8Array(buf);
+	for (let i = 0, strLen = str.length; i < strLen; i++) {
+		bufView[i] = str.charCodeAt(i);
+	}
+	return buf;
+};
+
 const privateKey = await crypto.subtle.importKey(
     "pkcs8",
-    atob("base64_private_key"),
+    str2ab(atob("base64_private_key")),
     "Ed25519",
     false,
     ["sign"]
@@ -68,18 +81,26 @@ const digest = await crypto.subtle.digest(
     new TextEncoder().encode("request_body")
 );
 
+const userInbox = new URL("...");
+
+const date = new Date();
+
 const signature = await crypto.subtle.sign(
     "Ed25519",
     privateKey,
     new TextEncoder().encode(
-        "(request-target): post /users/uuid/inbox\n" +
-        "host: example.com\n" +
-        "date: Fri, 01 Jan 2021 00:00:00 GMT\n" +
-        "digest: SHA-256=" + btoa(digest)
+        `(request-target): post ${userInbox.pathname}\n` +
+            `host: ${userInbox.host}\n` +
+            `date: ${date.toUTCString()}\n` +
+            `digest: SHA-256=${btoa(
+                String.fromCharCode(...new Uint8Array(digest))
+            )}\n`
     )
 );
 
-const signatureBase64 = base64Encode(signature);
+const signatureBase64 = btoa(
+    String.fromCharCode(...new Uint8Array(signature))
+);
 ```
 
 > [!WARNING]
@@ -91,9 +112,9 @@ await fetch("https://example.com/users/uuid/inbox", {
     method: "POST",
     headers: {
         "Content-Type": "application/json",
-        "Date": "Fri, 01 Jan 2021 00:00:00 GMT",
-        "Origin": "https://example.com",
-        "Signature": `keyId="https://example.com/users/uuid",algorithm="ed25519",headers="(request-target) host date digest",signature="${signatureBase64}"`
+        Date: date.toUTCString(),
+        Origin: "https://example.com",
+        Signature: `keyId="${...}",algorithm="ed25519",headers="(request-target) host date digest",signature="${signatureBase64}"`,
     },
     body: JSON.stringify({
         // ...
