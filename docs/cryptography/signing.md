@@ -1,19 +1,20 @@
-# Cryptography
+# Cryptography in Lysand
 
-Lysand uses cryptography to ensure that objects are not tampered with during transit. This is done by signing objects with a private key, and verifying the signature with a public key.
+Lysand employs cryptography to safeguard objects from being altered during transit. This is achieved by signing objects using a private key, and then verifying the signature with a corresponding public key.
 
-> **Note**: The author of the object is the actor that created the object, indicated by the `author` property on the object body. The server that is sending the object is the server that is sending the object to another server.
+> [!NOTE]
+> The 'author' of the object refers to the entity (usually an [Actor](objects/actors)) that created the object. This is indicated by the `author` property on the object body.
 
-All HTTP requests **MUST** be sent over HTTPS. Servers **MUST** not accept HTTP requests, unless it is for development purposes.
+All HTTP requests **MUST** be sent over HTTPS for security reasons. Servers **MUST NOT** accept HTTP requests, unless it is for development purposes.
 
-HTTP requests **MUST** be signed with the public key of the author of the object. This is done by adding a `Signature` header to the request.
+HTTP requests **MUST** be signed with the public key of the object's author. This is done by adding a `Signature` header to the request.
 
-The `Signature` header **MUST** be formatted as follows:
+The `Signature` header is too be formatted as follows:
 ```
 Signature: keyId="https://example.com/users/uuid",algorithm="ed25519",headers="(request-target) host date digest",signature="base64_signature"
 ```
 
-The `keyId` field **MUST** be the URI of the user that is sending the request.
+Here, the `keyId` field **MUST** be the URI of the user that is sending the request.
 
 The `algorithm` field **MUST** be `ed25519`.
 
@@ -21,9 +22,9 @@ The `headers` field **MUST** be `(request-target) host date digest`.
 
 The `signature` field **MUST** be the base64-encoded signature of the request.
 
-The signature **MUST** be calculated as follows:
+The signature is calculated as follows:
 
-1. Create a string that contains the following:
+1. Create a string that contains the following, replacing the placeholders with the actual values of the request:
 ```
 (request-target): post /users/uuid/inbox
 host: example.com
@@ -81,7 +82,8 @@ const signature = await crypto.subtle.sign(
 const signatureBase64 = base64Encode(signature);
 ```
 
-> **Note**: Support for Ed25519 in the WebCrypto API is recent and may not be available in some older runtimes, such as Node.js or older browsers.
+> [!WARNING]
+> Support for Ed25519 in the WebCrypto API is recent and may not be available in some older runtimes, such as Node.js or older browsers.
 
 The request can then be sent with the `Signature`, `Origin` and `Date` headers as follows:
 ```ts
@@ -139,3 +141,12 @@ if (!isValid) {
 Signature is **REQUIRED** on **ALL** outbound requests. If the request is not signed, the server **MUST** respond with a `401 Unauthorized` response code. However, the receiving server is not required to validate the signature, it just must be provided.
 
 If a request is made by the server and not by a server actor, the [Server Actor](/federation/server-actor) **MUST** be used in the `author` field.
+
+## Security Considerations
+
+When implementing cryptography in Lysand, it is important to consider the following security considerations:
+- **Key Management**: Ensure that private keys are stored securely and are not exposed to unauthorized parties.
+- **Key Export**: Do not export private keys to untrusted environments, but allow users to export their private keys to secure locations.
+- **Key Import**: Allow users to import private keys when creating new account, but ensure that the keys are not exposed to unauthorized parties.
+
+Most implementations should not roll their own cryptography, but instead use well-established libraries such as the WebCrypto API. (See the [WebCrypto API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Crypto_API) documentation for more information). Libraries written in unsafe languages, such as C, or that are a frequent source of security issues (e.g., OpenSSL) should be avoided.

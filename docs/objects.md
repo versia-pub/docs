@@ -1,34 +1,35 @@
-# Objects
+# Data Entities
 
-Lysand uses JSON (JavaScript Object Notation) objects as its data format. It is meant to be a simple format that is easy to implement and understand.
+Lysand employs JSON (JavaScript Object Notation) entities for its data structure. This format is designed to be straightforward, facilitating easy implementation and comprehension.
 
-All JSON objects such as [Publications](/objects/publications), [Actors](/objects/actors), and [Actions](/objects/actions) **MUST** have the following fields:
+All JSON entities such as [Publications](/data-entities/publications), [Actors](/data-entities/actors), and [Actions](/data-entities/actions) **MUST** include the following attributes:
 
-## ID
+## Identifier (ID)
 
-The `id` field on an Object is a string that represents the unique identifier of the object. It is used to identify the object, and **MUST** be unique across all objects on the same server.
+The `id` attribute of an Entity is a string that serves as the unique identifier of the entity. It is utilized to distinguish the entity, and **MUST** be unique among all entities on the same server.
 
-The `id` field is not required to be unique across the entire network, but it is recommended that it is. Servers **MUST** use UUIDs or a UUID-compatible system for the `id` field.
+While the `id` attribute is not mandated to be unique across the entire network, it is advisable to do so. Servers **MUST** employ UUIDs or a UUID-compatible system for the `id` attribute.
 
-## Created At
+## Creation Timestamp
 
-The `created_at` field on an object is a string that represents the date and time that the object was created. It is used to determine the order of objects. The data **MUST** be in ISO 8601 format.
+The `created_at` attribute of an entity is a string that signifies the date and time when the entity was created. It is used to sequence the entities. The data **MUST** adhere to the ISO 8601 format.
 
 Example: `2021-01-01T00:00:00.000Z`
 
-> **Note:** The `created_at` field should be the date and time that the post was actually made, but it is not required to be. Any ISO 8601 date is allowed in the `created_at` field. It is up to the servers to decide if they want to process dates that they would consider invalid, such as dates in the future.
+> [!NOTE]
+> The `created_at` attribute should reflect the actual date and time of the post, but it is not mandatory. Any ISO 8601 date is permissible in the `created_at` field. Servers have the discretion to process dates they deem invalid, such as future dates.
 
-## URI
+## Uniform Resource Identifier (URI)
 
-The `uri` field on an object is a string that represents the URI of the object. It is used to identify the object, and **MUST** be unique across all objects. This URI **MUST** be unique across the entire network, and contain the `id` of the object in the URI.
+The `uri` attribute of an entity is a string that signifies the URI of the entity. It is used to identify the entity, and **MUST** be unique among all entities. This URI **MUST** be unique across the entire network, and include the `id` of the entity in the URI.
 
-URIs must follow the rules defined [here](/spec).
+URIs must adhere to the rules defined [here](/spec).
 
-## Type
+## Entity Type
 
-The `type` field on an object is a string that represents the type of the object. It is used to determine how the object should be displayed to the user.
+The `type` attribute of an entity is a string that signifies the type of the entity. It is used to determine how the entity should be presented to the user.
 
-The `type` field **MUST** be one of the following values:
+The `type` attribute **MUST** be one of the following values:
 - `Note`
 - `Patch`
 - `Actor`
@@ -42,4 +43,28 @@ The `type` field **MUST** be one of the following values:
 - `ServerMetadata`
 - `Extension`
 
-Other values are not allowed in this current iteration of the protocol.
+Other values are not permitted in this current version of the protocol.
+
+# Types
+
+This document uses TypeScript to define the types of the entities in a clear and universal manner. TypeScript is a superset of JavaScript that adds static type definitions to the language. The types are defined in the following format:
+
+```typescript
+interface Entity {
+  id: string;
+  created_at: string;
+  uri: string;
+  type: string;
+};
+```
+
+The `Entity` type is the base type for all entities in the Lysand protocol. It includes the `id`, `created_at`, `uri`, and `type` attributes.
+
+Other entities described in other parts of this documentation will extend the `Entity` type to include additional attributes, such as:
+    
+```typescript
+interface ImaginaryNote extends Entity {
+  content: string;
+  mentions: string[];
+};
+```
