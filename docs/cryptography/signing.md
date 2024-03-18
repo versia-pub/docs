@@ -3,7 +3,7 @@
 Lysand employs cryptography to safeguard objects from being altered during transit. This is achieved by signing objects using a private key, and then verifying the signature with a corresponding public key.
 
 > [!NOTE]
-> The 'author' of the object refers to the entity (usually an [Actor](objects/actors)) that created the object. This is indicated by the `author` property on the object body.
+> The 'author' of the object refers to the entity (usually an [Actor](../objects/actors)) that created the object. This is indicated by the `author` property on the object body.
 
 All HTTP requests **MUST** be sent over HTTPS for security reasons. Servers **MUST NOT** accept HTTP requests, unless it is for development purposes.
 

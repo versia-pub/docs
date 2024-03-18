@@ -68,5 +68,5 @@ All responses **MUST** include at least the following headers:
 - `Content-Type: application/json; charset=utf-8` if the response contains a body
 - `Signature` if the response body is signed (which is typically the case)
 - `Cache-Control: no-store` on entities that can be edited directly without using a [Patch](objects/patch), such as [Actors](objects/actors)
-- A cache header with a `max-age` of at least 5 minutes for entities that are not expected to change frequently, such as [Notes](objects/notes)
+- A cache header with a `max-age` of at least 5 minutes for entities that are not expected to change frequently, such as [Notes](objects/publications)
 - A cache header with a large `max-age` for media files when served by a CDN or other caching service under the server's control

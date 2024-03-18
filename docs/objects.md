@@ -2,7 +2,7 @@
 
 Lysand employs JSON (JavaScript Object Notation) entities for its data structure. This format is designed to be straightforward, facilitating easy implementation and comprehension.
 
-All JSON entities such as [Publications](/data-entities/publications), [Actors](/data-entities/actors), and [Actions](/data-entities/actions) **MUST** include the following attributes:
+All JSON entities such as [Publications](objects/publications), [Actors](objects/actors), and [Actions](objects/actions) **MUST** include the following attributes:
 
 ## Identifier (ID)
 
@@ -23,7 +23,7 @@ Example: `2021-01-01T00:00:00.000Z`
 
 The `uri` attribute of an entity is a string that signifies the URI of the entity. It is used to identify the entity, and **MUST** be unique among all entities. This URI **MUST** be unique across the entire network, and include the `id` of the entity in the URI.
 
-URIs must adhere to the rules defined [here](/spec).
+URIs must adhere to the rules defined [here](spec).
 
 ## Entity Type
 
