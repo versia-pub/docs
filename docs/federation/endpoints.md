@@ -124,7 +124,8 @@ The server **MUST** respond with a `200 OK` response code, and a JSON object in 
 
 Users in Lysand have a list of featured publications, which is a list of publications that the user has pinned or deemed important. This is similar to the featured publications list in ActivityPub.
 
-> **Note:** If you prefer not to display this list publicly, you can configure the featured publications endpoint to return an empty collection.
+> [!NOTE]
+> If you prefer not to display this list publicly, you can configure the featured publications endpoint to return an empty collection.
 
 The server **MUST** specify the featured publications URL in the actor object.
 
@@ -138,7 +139,8 @@ The server **MUST** respond with a `200 OK` response code, and a JSON object in 
 
 Users in Lysand have a list of likes, which is a list of posts that the user has liked. This is similar to the likes list in ActivityPub.
 
-> **Note:** If you prefer not to display this list publicly, you can configure the likes endpoint to return an empty collection.
+> [!NOTE]
+> If you prefer not to display this list publicly, you can configure the likes endpoint to return an empty collection.
 
 The server **MUST** specify the likes URL in the actor object.
 
@@ -153,7 +155,8 @@ The server **MUST** respond with a `200 OK` response code, and a JSON object in 
 
 Users in Lysand have a list of dislikes, which is a list of posts that the user has disliked. This is similar to the dislikes list in ActivityPub.
 
-> **Note:** If you prefer not to display this list publicly, you can configure the dislikes endpoint to return an empty collection.
+> [!NOTE]
+> If you prefer not to display this list publicly, you can configure the dislikes endpoint to return an empty collection.
 
 The server **MUST** specify the dislikes URL in the actor object.
 
