@@ -1,5 +1,8 @@
 # Introduction
 
+> [!NOTE]
+> You are looking at the documentation for `Lysand 1.1`, released in March 2024 after revision of the original `Lysand 1.0` specification published in September 2023.
+
 The Lysand Protocol is designed as a communication medium for federated applications, leveraging the HTTP stack. Its simplicity ensures ease of implementation and comprehension.
 
 Distinct from ActivityPub, Lysand incorporates an extensive range of built-in features tailored for social media applications. It prioritizes security and privacy by default.

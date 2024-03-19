@@ -1,55 +1,42 @@
-# Custom Emojis
+# Custom Emojis in Lysand
 
-Lysand supports custom emojis. They are represented as such in TypeScript:
+Lysand supports the use of custom emojis. Here's how they are represented in TypeScript:
 
 ```ts
 interface Emoji {
     name: string;
     alt?: string;
-    url: ContentFormat[];
+    url: ContentFormat;
 }
 ```
 
-Lysand custom emojis are implemented as part of an official optional extension to the protocol. See [Protocol Extensions](#protocol-extensions) for more information.
+Custom emojis in Lysand are part of an optional extension to the protocol. For more details, refer to the [Protocol Extensions](../extensions) section.
 
-Servers **MAY** choose not to implement custom emojis, but it is recommended that they do so.
+While servers have the discretion to implement custom emojis, it is highly recommended for a richer user interaction.
 
-An example value would be:
+Here's an example of a custom emoji representation:
+
 ```json
 {
     "name": "happy_face",
     "alt": "A happy face emoji.",
-    "url": [
-        {
+    "url": {
+        "image/webp": {
             "content": "https://cdn.example.com/emojis/happy_face.webp",
-            "content_type": "image/webp"
         }
-    ]
+    }
 }
 ```
 
-The `name` field **MUST** be a string that contains only alphanumeric characters, underscores, and dashes. It **MUST NOT** contain any spaces or other special characters.
+The `name` field is a string that should only contain alphanumeric characters, underscores, and dashes. Spaces or other special characters are not allowed. It should match the following regex: `/^[a-zA-Z0-9_-]+$/`.
 
-It **MUST** match this regex: `/^[a-zA-Z0-9_-]+$/`
+The `url` field is a [ContentFormat](./content-format), serving as a list of URLs where the emoji can be accessed. It is mandatory for all emojis and should contain at least one URL. The `url` field should be a binary image format, such as `image/png` or `image/jpeg`. Text formats like `text/plain` or `text/html` are not acceptable.
 
----
+The `alt` field is an optional string that provides the alt text for the emoji. This is particularly useful for visually impaired users or when the emoji fails to load. If not provided, it's assumed that the emoji doesn't have an alt text.
 
-The `url` field is an array that contains a list of `ContentFormat` objects. It is meant to serve as a list of URLs that the emoji can be accessed at. It is required on all emojis, and **MUST** contain at least one URL.
+While emojis are typically small and don't consume much bandwidth, servers may choose to transcode emojis into more modern formats like WebP, AVIF, JXL, or HEIF for optimization. Clients should display the most modern format they support. If they don't support any modern formats, they should display the original format.
 
-The `url` field **MUST** be a binary image format, such as `image/png` or `image/jpeg`. The `url` field **MUST NOT** be a text format, such as `text/plain` or `text/html`.
+> [!NOTE]
+> Servers might find it beneficial to use a CDN like Cloudflare that can automatically convert images to modern formats. This approach offloads image processing from the server and enhances performance for clients.
 
----
-
-The `alt` field is a string that contains the alt text for the emoji. It is used to describe the emoji to users that cannot see the emoji, such as users that are blind, or when the emoji does not load properly.
-
-The `alt` field is not required on all emojis. If it is not provided, it is assumed that the emoji does not have an alt text.
-
----
-
-Emojis normally do not need to be transcoded into more modern formats, as they are typically small and do not take up much bandwidth. However, servers **MAY** choose to transcode emojis into more modern formats, such as WebP, AVIF, JXL, or HEIF.
-
-Clients should display the most modern format that they support, such as WebP, AVIF, JXL, or HEIF. If the client does not support any modern formats, it should display the original format.
-
-> **Note:** Servers may find it useful to use a CDN that can automatically convert images to modern formats, such as Cloudflare. This will offload image processing from the server, and improve performance for clients.
-
-Emoji size is not standardized, and is up to the server to decide. Servers **MAY** choose to limit the size of emojis, but it is not required. Generally, an upper limit of a few hundred kilobytes is recommended so as to not take up too much bandwidth.
+The size of emojis is not standardized and is left to the server's discretion. Servers may choose to limit the size of emojis, but it's not mandatory. As a general guideline, an upper limit of a few hundred kilobytes is recommended to avoid excessive bandwidth usage.
