@@ -1,16 +1,16 @@
-##### 1.6.3.1.7. Undo
+# Undo
 
-An `Undo` action is an action that represents a user undoing an action. It is used to cancel an action or delete an already existing object.
+An `Undo` object signifies the reversal of a previously executed action by a user. It is primarily used to revoke an action or remove an existing object.
 
-An `Undo` object **MUST** have an `object` field that contains the URI of the object that the user is undoing. The object **MUST** be a `Publication` object.
+An `Undo` object **MUST** contain an `object` field that holds the URI of the object being reversed.
 
-Servers **MUST** not allow users to undo actions that they did not create.
+Servers **MUST NOT** permit users to reverse actions that they did not initiate.
 
-Servers that receive `Undo` actions **MUST** undo the action that is being undone. For example, if a user likes a post, and then undoes the like, the server **MUST** remove the like from the post. Similarly, if an `Undo` action is received for a `Follow` action, the server **MUST** unfollow the user.
+Upon receiving `Undo` actions, servers **MUST** reverse the action being undone. For instance, if a user expresses liking a post and subsequently undoes the like action, the server **MUST** eliminate the like from the post. Similarly, if an `Undo` action is received for a `Follow` action, the server **MUST** cease following the user.
 
-If the `Undo` action has a Publication or other object as the `object` field, the server **MUST** stop showing the object to users. Deleting the original object is recommended, but not required.
+If the `Undo` action has a Publication or another object as the `object` field, the server **MUST** discontinue displaying the object to users. It is recommended, but not mandatory, to delete the original object.
 
-An `Undo` action on a `Patch` object **MUST** be treated as cancellation of the `Note` object, not of the patch itself.
+An `Undo` action on a `Patch` object **MUST** be interpreted as the cancellation of the `Note` object, not the patch itself.
 
 Example:
 ```json5
