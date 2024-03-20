@@ -38,6 +38,8 @@ features:
 > The latest version of Lysand is **2.0**, released on **March 19th 2024** by [**CPlusPatch**](https://cpluspatch.dev).
 >
 > Lysand 2.0 features **more standardization**, **simpler object structures**, and **documentation rewrite**.
+>
+> [See the full Git diff here](https://github.com/lysand-org/docs/compare/158ec6e...f11d51c)
 
 <style>
 :root {
