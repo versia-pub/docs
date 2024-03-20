@@ -147,8 +147,8 @@ Clients should display the most modern format that they support, such as WebP, A
 
 ### Supported Extensions
 
-| Name                 | Type            | Required          |
-| :------------------- | :-------------- | :---------------- |
-| supported_extensions | Array of string | Yes, can be empty |
+| Name                 | Type            | Required                       |
+| :------------------- | :-------------- | :----------------------------- |
+| supported_extensions | Array of string | Yes, can be empty array (`[]`) |
 
 List of extension names that the server supports, in namespaced format (`"org.lysand:reactions"`).
