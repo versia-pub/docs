@@ -1,8 +1,8 @@
-# Reactions
+# Emoji Reactions
 
-With the Reactions extension, users can react to objects with emojis. This is similar to how Facebook and Discord work.
+The Emoji Reactions extension allows users to express their responses to objects using emojis, similar to the functionality provided by platforms like Facebook and Discord.
 
-Here is an example of a reaction to a post using this extension:
+Here's an example of a reaction to a post using this extension:
 
 ```json5
 {
@@ -20,48 +20,61 @@ Here is an example of a reaction to a post using this extension:
 
 ### Type
 
-As with all new objects added by extensions, the `type` field **MUST BE** `Extension`.
+The `type` field **MUST BE** `Extension`.
 
 The `extension_type` field **MUST** be `org.lysand:reactions/Reaction`.
 
 ### Object
 
-The `object` field on a Reaction object is a string that represents the URI of the object that the user is reacting to. The `object` field is required on all Reaction objects.
+| Name   | Type   | Required |
+| :----- | :----- | :------- |
+| object | String | Yes      |
+
+URI of the object that the user is reacting to. This **MUST** be a [Note](../objects/note) object.
 
 ### Content
 
-The `content` field on a Reaction object is a string that represents the emoji that the user is reacting with. The `content` field is required on all Reaction objects.
+| Name    | Type   | Required |
+| :------ | :----- | :------- |
+| content | String | Yes      |
 
-Clients **SHOULD** check if the value of `content` is an emoji: if it is not an emoji and instead is text, depending on which other extensions are implemented, it **MAY** be a Custom Emoji.
+Emoji that the user is reacting with.
 
+Clients **SHOULD** check if the value of `content` is an emoji: if it is not an emoji and instead is text, depending on which other extensions are implemented, it **MAY** be a [Custom Emoji](./custom-emojis).
+
+> [!NOTE]
+> If this field is not recognized as an emoji or [Custom Emoji](./custom-emojis), the whole Reaction object can be discarded as it is invalid.
+> 
 > Please see [Reactions With Custom Emojis](#reactions-with-custom-emojis) for more information about custom emoji reactions.
 
-### Getting Reactions
 
-Clients can get reactions to an object by sending a `GET` request to the reaction `Collection`'s URI.
+### Retrieving Reactions
 
-The URI of the reaction `Collection` **MUST** be specified as follows, inside a `Publication`:
+Clients can retrieve reactions to an object by sending a `GET` request to the reaction [Collection](../structures/collection)'s URI.
+
+The URI of the reaction [Collection](../structures/collection) **MUST** be specified as follows, inside a [Note](../objects/note):
 ```json5
 {
     // ...
     "extensions": {
         "org.lysand:reactions": {
-            "reactions": "https://example.com/publications/f08a124e-fe90-439e-8be4-15a428a72a19/reactions"
+            "reactions": "https://example.com/notes/f08a124e-fe90-439e-8be4-15a428a72a19/reactions"
         }
     }
 }
 ```
 
-The `reactions` field is a string that represents the URI of the reaction `Collection`.
+The `reactions` field is the URI of the reaction `Collection`.
 
-The server **MUST** respond with a `Collection` object that contains a list of `Reaction` objects, as such:
+The server **MUST** respond with a [Collection](../structures/collection) object that contains a list of `Reaction` objects, as such:
 
 ```json5
 {
     "type": "Collection",
     "first": "https://example.com/publications/f08a124e-fe90-439e-8be4-15a428a72a19/reactions?page=1",
     "last": "https://example.com/publications/f08a124e-fe90-439e-8be4-15a428a72a19/reactions?page=1",
-    "total_items": 1,
+    "totalCount": 1,
+    // "author": ... (for signatures)
     "items": [
         {
             "type": "Extension",
@@ -79,13 +92,13 @@ The server **MUST** respond with a `Collection` object that contains a list of `
 
 ### Public Reaction Federation
 
-If a user reacts to a Publication, the user's server **MUST** federate the reaction to all its followers. This is to ensure that all users see the reaction.
+If a user reacts to a [Note](../objects/note), the user's server **MUST** federate the reaction to all its followers. This is to ensure that all users see the reaction.
 
-Note, however, that this does not mean that the reaction will be displayed to users. If the Publication that was reacted to is not visible to a user, the reaction **MUST NOT** be displayed to the user, even if the user follows the user that reacted to the Publication.
+Note, however, that this does not mean that the reaction will be displayed to users. If the [Note](../objects/note), that was reacted to is not visible to a user, the reaction **MUST NOT** be displayed to the user, even if the user follows the user that reacted to the [Note](../objects/note),.
 
 ### Private Reaction Federation
 
-If a user reacts to a Publication, the user's server **MUST** federate the reaction to the author of the Publication. This is to ensure that the author of the Publication sees the reaction.
+If a user reacts to a [Note](../objects/note),, the user's server **MUST** federate the reaction to the author of the [Note](../objects/note),. This is to ensure that the author of the [Note](../objects/note), sees the reaction.
 
 ### Reactions With Custom Emojis
 
@@ -108,12 +121,11 @@ The Reaction object needs to be modified as such:
             "emojis": [
                 {
                     "name": "happy_face",
-                    "url": [
-                        {
+                    "url": {
+                        "image/webp": {
                             "content": "https://cdn.example.com/emojis/happy_face.webp",
-                            "content_type": "image/webp"
                         }
-                    ]
+                    }
                 },
                 // ...
             ]
@@ -122,13 +134,8 @@ The Reaction object needs to be modified as such:
 }
 ```
 
-The only addiction to the Reaction object is the `extensions` field, which contains the Custom Emojis extension.
+The only addition to the Reaction object is the `extensions` field, which contains the [Custom Emojis](./custom-emojis) extension.
 
 When rendering the Reaction object, clients **MUST** replace the `:emoji_name:` with the appropriate emoji. If the client does not support custom emojis, it **MUST** display the `:emoji_name:` as-is.
 
-When rendered as images, Custom Emoji Reactions **SHOULD** have proper alt text for accessibility. The alt text **SHOULD** be the alt text of the emoji, if it has one. If the emoji does not have an alt text, the alt text **SHOULD** be the name of the emoji.
-
-Example in HTML:
-```html
-<img src="https://cdn.example.com/emojis/happy_face.webp" alt="A happy face emoji." title="A happy face emoji.">
-```
+This emoji must be rendered according to the rules of the [Custom Emojis](./custom-emojis) extension.
