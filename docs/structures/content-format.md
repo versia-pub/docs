@@ -1,4 +1,4 @@
-# ContentFormat Protocol
+# ContentFormat
 
 The `ContentFormat` structure, as represented below in TypeScript, is a flexible and robust way to handle various types of content. It is designed to accommodate a wide range of content types and provide additional metadata about the content.
 

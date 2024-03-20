@@ -82,6 +82,7 @@ export default defineConfig({
           { text: "Server Endorsements", link: "/extensions/server-endorsement" },
           { text: "Events", link: "/extensions/events" },
           { text: "Reports", link: "/extensions/reports" },
+          { text: "Vanity", link: "/extensions/vanity" },
         ]
       }
     ],
@@ -99,7 +100,7 @@ export default defineConfig({
   },
   lastUpdated: true,
   cleanUrls: true,
-  titleTemplate: ":title · Lysand Documentation",
+  titleTemplate: ":title · Lysand 2.0 Docs",
   head: [
     ['link', { rel: 'icon', href: '/favicon.png', type: 'image/png' }]
   ],

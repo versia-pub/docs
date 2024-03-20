@@ -14,17 +14,30 @@ hero:
       text: Protocol Docs
       link: /spec
     - theme: alt
-      text: Types
-      link: /types
+      text: Lysand Server
+      link: https://github.com/lysand-org/lysand
 
 features:
   - title: JSON-based APIs
-    details: Simple JSON objects are used to represent all data
+    details: Simple JSON objects are used to represent all data 
   - title: Built-in namespaced extensions
     details: Extensions for common use cases are built-in, such as custom emojis and reactions
   - title: Easy to implement
     details: The protocol is simple to implement, and can be used with any language
+  - title: Secure by default
+    details: All requests are signed with the latest cryptography algorithms
+  - title: No vendor-specific implementations
+    details: Everything is heavily standardized to ensure compatibility
+  - title: TypeScript types
+    details: TypeScript types are provided for every object in the protocol
 ---
+
+---
+
+> [!INFO]
+> The latest version of Lysand is **2.0**, released on **March 19th 2024** by [**CPlusPatch**](https://cpluspatch.dev).
+>
+> Lysand 2.0 features **more standardization**, **simpler object structures**, and **documentation rewrite**.
 
 <style>
 :root {

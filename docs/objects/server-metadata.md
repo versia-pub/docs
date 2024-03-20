@@ -94,7 +94,7 @@ Represents the website of the server. This may be used to link to the server's w
 
 | Name       | Type            | Required |
 | :--------- | :-------------- | :------- |
-| moderators | Array of string | No       |
+| moderators | Array of String | No       |
 
 Rrray of URIs to the server moderators.
 
@@ -104,7 +104,7 @@ If it is not provided, it is assumed that the server does not have any moderator
 
 | Name   | Type            | Required |
 | :----- | :-------------- | :------- |
-| admins | Array of string | No       |
+| admins | Array of String | No       |
 
 The `admins` field on a Server Metadata object is an array of URIs that represent the admins of the server.
 
@@ -149,6 +149,6 @@ Clients should display the most modern format that they support, such as WebP, A
 
 | Name                 | Type            | Required                       |
 | :------------------- | :-------------- | :----------------------------- |
-| supported_extensions | Array of string | Yes, can be empty array (`[]`) |
+| supported_extensions | Array of String | Yes, can be empty array (`[]`) |
 
 List of extension names that the server supports, in namespaced format (`"org.lysand:reactions"`).
