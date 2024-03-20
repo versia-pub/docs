@@ -83,3 +83,13 @@ These include:
 - [Is Cat](/extensions/is-cat)
 - [Server Endorsement](/extensions/server-endorsement)
 - [Reports](/extensions/reports)
+
+## Types
+
+```typescript
+// Specific extension types will extend from this
+interface Extension extends Entity {
+    type: "Extension";
+    extension_type: string;
+}
+```

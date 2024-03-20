@@ -1,6 +1,6 @@
 # Custom Emojis
 
-Please see [Custom Emojis](/structures/custom-emoji) for more information about the Custom Emojis type. The extension is implemented as such:
+For detailed information about the Custom Emoji type, refer to [Custom Emojis](../structures/custom-emoji). The implementation of the extension is as follows:
 
 ```json5
 {
@@ -10,12 +10,12 @@ Please see [Custom Emojis](/structures/custom-emoji) for more information about 
             "emojis": [
                 {
                     "name": "happy_face",
-                    "url": [
-                        {
-                            "content": "https://cdn.example.com/emojis/happy_face.webp",
-                            "content_type": "image/webp"
+                    "url": {
+                        "image/png": {
+                            "content": "https://cdn.example.com/emojis/happy_face.png",
+                            "content_type": "image/png"
                         }
-                    ]
+                    }
                 },
                 // ...
             ]
@@ -25,34 +25,33 @@ Please see [Custom Emojis](/structures/custom-emoji) for more information about 
 }
 ```
 
-That is, the extension name is `org.lysand:custom_emojis`, and the extension value is an object that contains a list of emojis.
+In this context, the extension name is `org.lysand:custom_emojis`, and the extension value is an object that includes an array of emojis.
 
-## Applying Custom Emojis
+## Utilizing Custom Emojis
 
-Clients **MUST** apply custom emojis to the following fields of the following objects:
+Clients are **required** to implement custom emojis in any text field where their presence is plausible. This includes, but is not limited to, status text, display names, alt text, and bio fields. However, this does not extend to an [Actor](../objects/actors)'s username, for instance.
 
-- `Publication.contents`
-- `Publication.subject`
-- `Actor.bio`
-- `Actor.display_name`
-
-A custom emoji is formatted inside a text string as follows: 
+A custom emoji is represented within a text string as follows: 
 ```
 :emoji_name:
 ```
 
-For example, if a user wants to use the `happy_face` emoji, they would type:
+For instance, to use the `happy_face` emoji, a user would type:
 ```
 :happy_face:
 ```
 
-Clients **MUST** replace the `:emoji_name:` with the appropriate emoji. If the client does not support custom emojis, it **SHOULD** display the `:emoji_name:` as-is.
+Clients are **required** to substitute the `:emoji_name:` with the corresponding inline emoji. If the client does not support custom emojis, it **should** display the `:emoji_name:` as it is.
 
-If the client supports Custom Emojis, but does not support the emoji that the user is trying to use (such as with an incompatible MIME type), it **SHOULD** display the `:emoji_name:` as-is.
+If the client supports Custom Emojis, but does not support a specific emoji that the user is attempting to use (such as with an incompatible MIME type), it **should** display the `:emoji_name:` as it is.
 
-When rendered as images, Custom Emojis **SHOULD** have proper alt text for accessibility. The alt text **SHOULD** be the alt text of the emoji, if it has one. If the emoji does not have an alt text, the alt text **SHOULD** be the name of the emoji.
+When rendered as images, Custom Emojis **should** have appropriate alt text for accessibility. The alt text **should** be the alt text of the emoji, if it exists. If the emoji does not have an alt text, the alt text **should** be the name of the emoji.
+
+### Styling Custom Emojis
+
+If the styling system, such as CSS, supports it, clients **should** style the emoji to match the height of the text but allow it to take as much width as necessary, instead of treating it as a square and potentially distorting the image.
 
 Example in HTML:
 ```html
-Hello, world! <img src="https://cdn.example.com/emojis/happy_face.webp" alt="A happy face emoji." title="A happy face emoji.">
+Hello, world! <img src="https://cdn.example.com/emojis/happy_face.webp" alt="A happy face emoji." title="A happy face emoji." style="display: inline; height: 1em;">
 ```

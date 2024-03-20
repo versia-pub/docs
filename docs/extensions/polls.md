@@ -1,34 +1,33 @@
 # Polls
 
-With the Polls extension, users can create polls. This is useful for asking questions to users, such as "What is your favourite colour?".
+The Polls extension enables users to generate polls/surveys, a valuable tool for soliciting feedback or opinions from users, such as "What is your preferred color?".
 
-Polls are added as a new field under Publication Extensions, called `poll`. This field is an object that contains the poll information.
+Polls are incorporated as a new field under the [Note](../objects/note) Extensions, named `polls`. This field is an object that encapsulates the poll details.
 
 ```json5
 {
+    "id": "f08a124e-fe90-439e-8be4-15a428a72a19",
+    "type": "Note",
     // ...
     "extensions": {
         "org.lysand:polls": {
             "poll": {
                 "options": [
-                    [
-                        {
-                            "content": "Red",
-                            "content_type": "text/plain"
+                    {
+                        "text/plain": {
+                            "content": "Red"
                         }
-                    ],
-                    [
-                        {
-                            "content": "Blue",
-                            "content_type": "text/plain"
+                    },
+                    {
+                        "text/plain": {
+                            "content": "Blue"
                         }
-                    ],
-                    [
-                        {
-                            "content": "Green",
-                            "content_type": "text/plain"
+                    },
+                    {
+                        "text/plain": {
+                            "content": "Green"
                         }
-                    ]
+                    }
                 ],
                 "votes": [
                     9,
@@ -44,45 +43,59 @@ Polls are added as a new field under Publication Extensions, called `poll`. This
 }
 ```
 
-These fields are described below.
+The fields are explained below.
 
-> **Note:** There is no `question` field, because it is assumed that the question will be put in the `contents` field of the Publication. Clients are expected to render polls next to the contents of the Publication itself.
+> [!NOTE]
+> There is no `question` field, as it is presumed that the question will be included in the `contents` field of the associated [Note](../objects/note). Clients are anticipated to render surveys adjacent to the contents of the [Note](../objects/note) itself.
 
 ## Fields
 
 ### Options
 
-The `options` field on a Poll object is an array that contains a list of `ContentFormat` arrays. It is used to represent the options of the poll.
+| Name    | Type                   | Required |
+| :------ | :--------------------- | :------- |
+| options | Array of ContentFormat | Yes      |
 
-The `options` field is required on all Poll extension fields
+Displays the various options users can vote for.
 
-The `options` field **MUST** contain at least 2 options, and does not have an upper limit for the number of options.
+**MUST** contain at least 2 options, but does not have an upper limit for the number of options.
 
-> **Note:** Servers should limit the number of options to a reasonable number, perferably in a configurable manner, such as 10. This is to prevent abuse of the protocol by sending a large number of options.
+> [!NOTE]
+> Servers should limit the number of options to a reasonable number, preferably in a configurable manner, such as 40. This is to prevent abuse of the protocol by sending a large number of options, as they are not paginated.
 
 ### Votes
 
-The `votes` field on a Poll object is an array that contains a list of integers. It is used to represent the number of votes for each option.
+| Name  | Type             | Required |
+| :---- | :--------------- | :------- |
+| votes | Array of Integer | Yes      |
 
-The `votes` field is required on all Poll extension fields.
+Contains the number of votes cast for each option. The index of the array corresponds to the index of the option in the `options` array.
+
+Votes should not be public: the server should hide the users that casted votes and only show the total amount.
 
 ### Multiple Choice
 
-The `multiple_choice` field on a Poll object is a boolean that represents whether or not the poll is multiple choice. It is used to determine if the user can select multiple options.
+| Name            | Type    | Required |
+| :-------------- | :------ | :------- |
+| multiple_choice | Boolean | No       |
 
-The `multiple_choice` field is not required on all Poll extension fields. If it is not provided, it is assumed that the poll is not multiple choice.
+Indicates whether the poll is multiple choice. If true, users can vote for multiple options. If false, users can only vote for one option.
 
-### Expires At
+If not provided, it is assumed that the poll is not multiple choice.
 
-The `expires_at` field on a Poll object is a string that represents the date and time that the poll expires. It is used to determine when the poll ends, and when to stop accepting votes.
+### Expiration
 
-The `expires_at` field is required on all Poll extension fields.
+| Name       | Type   | Required |
+| :--------- | :----- | :------- |
+| expires_at | String | Yes      |
+
+The date and time when the poll expires. After this time, the poll is closed and no more votes can be cast.
 
 Clients **SHOULD** display the time remaining until the poll expires.
 
 ### Integration With Custom Emojis
 
-If you implement both the Polls and the Custom Emojis extensions, you can use the Custom Emojis extension to add emojis to poll options.
+If you implement both the Polls and the [Custom Emojis](./custom-emojis) extensions, you can use the Custom Emojis extension to add emojis to poll options.
 
 Example:
 ```json5
@@ -92,24 +105,21 @@ Example:
         "org.lysand:polls": {
             "poll": {
                 "options": [
-                    [
-                        {
-                            "content": ":red:",
-                            "content_type": "text/plain"
+                    {
+                        "text/plain": {
+                            "content": "Red :red:"
                         }
-                    ],
-                    [
-                        {
-                            "content": ":blue:",
-                            "content_type": "text/plain"
+                    },
+                    {
+                        "text/plain": {
+                            "content": "Blue :blue:"
                         }
-                    ],
-                    [
-                        {
-                            "content": ":green:",
-                            "content_type": "text/plain"
+                    },
+                    {
+                        "text/plain": {
+                            "content": "Green :green:"
                         }
-                    ]
+                    }
                 ],
                 "votes": [
                     9,
@@ -124,30 +134,27 @@ Example:
             "emojis": [
                 {
                     "name": "red",
-                    "url": [
-                        {
-                            "content": "https://cdn.example.com/emojis/red.webp",
-                            "content_type": "image/webp"
+                    "url": {
+                        "image/webp": {
+                            "content": "https://cdn.example.com/emojis/red.webp"
                         }
-                    ]
+                    }
                 },
                 {
                     "name": "blue",
-                    "url": [
-                        {
-                            "content": "https://cdn.example.com/emojis/blue.webp",
-                            "content_type": "image/webp"
+                    "url": {
+                        "image/webp": {
+                            "content": "https://cdn.example.com/emojis/blue.webp"
                         }
-                    ]
+                    }
                 },
                 {
                     "name": "green",
-                    "url": [
-                        {
-                            "content": "https://cdn.example.com/emojis/green.webp",
-                            "content_type": "image/webp"
+                    "url": {
+                        "image/webp": {
+                            "content": "https://cdn.example.com/emojis/green.webp"
                         }
-                    ]
+                    }
                 }
             ]
         }
@@ -156,19 +163,17 @@ Example:
 }
 ```
 
-When rendering the poll options, clients **SHOULD** display emojis as recommended by the [Custom Emojis](/extensions/custom-emojis) extension.
+When rendering the poll options, clients **SHOULD** display emojis as recommended by the [Custom Emojis](./custom-emojis) extension.
 
 ### Poll Results
 
-Clients **SHOULD** display poll results as a percentage of votes. For example, if 10 users voted for the first option, and 5 users voted for the second option, the first option should be displayed as 66.67%, and the second option should be displayed as 33.33%.
+Clients **SHOULD** display poll results as a percentage of votes. For example, if 10 users voted for the first option, and 5 users voted for the second option, the first option should be displayed as 66.67%, and the second option should be displayed as 33.33%. (with the third option being 0%)
 
-Clients **SHOULD** display the number of votes for each option.
-
-Clients **SHOULD** display the total number of votes.
+Clients **SHOULD** display the number of votes for each option, and the total number of votes.
 
 ###  Sending Votes
 
-Clients **SHOULD** allow users to vote on polls. When a user votes on a poll, the client **MUST** send a `POST` request to the poll's Publication URI with the following JSON object in the body:
+Clients **SHOULD** allow users to vote on polls. When a user votes on a poll, the client **MUST** send a `POST` request to the poll's [Note](../objects/note) URI with the following JSON object in the body:
 
 ```json5
 {
@@ -182,7 +187,9 @@ Clients **SHOULD** allow users to vote on polls. When a user votes on a poll, th
 }
 ```
 
-In return, the server **MUST** respond with a `200 OK` response code, and a JSON object in the body. This JSON object **MUST** be a valid `VoteResult` object.
+The `option` field **MUST** be the index of the option in the `options` array that the user is voting for.
+
+In return, the server **MUST** respond with a `200 OK` response code, and a JSON object in the body, unless there is an error. This JSON object **MUST** be a valid `VoteResult` object.
 
 ```json5
 {
@@ -199,6 +206,8 @@ In return, the server **MUST** respond with a `200 OK` response code, and a JSON
 }
 ```
 
+Each number in the `votes` array corresponds to the number of votes for each option. The index of the array corresponds to the index of the poll option in the original Poll object.
+
 If the poll is closed, the server **MUST** respond with a `403 Forbidden` response code.
 
 The total amount of votes can be calculated by summing the `votes` array.
@@ -210,3 +219,31 @@ This amount **MUST** include the user's vote, and **SHOULD** be displayed to the
 When a poll ends, a user that has voted in it **SHOULD** be notified of the results by the server.
 
 The server **MAY** send a `GET` request to the poll's Publication URI to update its internal database.
+
+## Types
+
+```typescript
+interface Poll extends Extension {
+    extension_type: "org.lysand:polls/Poll";
+    options: ContentFormat[];
+    votes: number[];
+    multiple_choice?: boolean;
+    expires_at: string;
+}
+```
+
+```typescript
+interface Vote extends Extension {
+    extension_type: "org.lysand:polls/Vote";
+    poll: string;
+    option: number;
+}
+```
+
+```typescript
+interface VoteResult extends Extension {
+    extension_type: "org.lysand:polls/VoteResult";
+    poll: string;
+    votes: number[];
+}
+```

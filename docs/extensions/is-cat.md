@@ -1,10 +1,14 @@
-# Is Cat
+# IsCat
 
-> **Note:** This is a **silly** extension that is not meant to be taken very seriously.
+>  [!NOTE]
+> This is a **light-hearted** extension designed for amusement and not intended for serious application.
 
-With the Is Cat extension, users can tell other users if they are a cat or not. This is akin to Misskey's "IsCat" feature.
+> [!WARNING]
+> This extension may be superseded by the upcoming [Vanity Profiles](./vanity) extension.
 
-An Actor can indicate whether they are a cat or not with the following field:
+The IsCat feature allows users to communicate their cat status to others, similar to Misskey's "IsCat" feature.
+
+A user, referred to as an Actor, can specify their feline status using the following field:
 
 ```json5
 {
@@ -12,10 +16,12 @@ An Actor can indicate whether they are a cat or not with the following field:
     // ...
     "extensions": {
         "org.lysand:is_cat": {
-            "cat": true
+            "cat": true,
+            // Potential additional fields
+            // "dog": true
         }
     }
 }
 ```
 
-Clients **SHOULD** render some graphic to indicate if a user is a cat or not, such as cat ears on the user's avatar.
+Clients **SHOULD** display an appropriate graphic to signify a user's cat status, such as adding cat ears to the user's avatar.
