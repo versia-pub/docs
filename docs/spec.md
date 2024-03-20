@@ -1,7 +1,7 @@
 # Introduction
 
 > [!NOTE]
-> You are looking at the documentation for `Lysand 1.1`, released in March 2024 after revision of the original `Lysand 1.0` specification published in September 2023.
+> You are looking at the documentation for `Lysand 2.0`, released in March 2024 after revision of the original `Lysand 1.0` specification published in September 2023.
 
 The Lysand Protocol is designed as a communication medium for federated applications, leveraging the HTTP stack. Its simplicity ensures ease of implementation and comprehension.
 
