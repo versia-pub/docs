@@ -32,7 +32,7 @@ Notably, the Lysand protocol does not include a `Block` action. This is because 
 
 This approach helps prevent potential misuse of the protocol to determine if a user has been blocked by another, thereby addressing a significant privacy concern.
 
-## Fielkds
+## Fields
 
 ### Author
 

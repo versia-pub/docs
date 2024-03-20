@@ -23,3 +23,21 @@ Example:
     "object": "https://example.com/publications/f08a124e-fe90-439e-8be4-15a428a72a19"
 }
 ```
+
+## Fields
+
+### Author
+
+| Name   | Type   | Required |
+| :----- | :----- | :------- |
+| author | String | Yes      |
+
+URI of the [Actor](./actors) who initiated the action.
+
+### Object
+
+| Name   | Type   | Required |
+| :----- | :----- | :------- |
+| object | String | Yes      |
+
+URI of the object being undone. The object **MUST** be an [Action](./actions) or a [Note](./note). To undo [Patch](./patch) objects, use a subsequent [Patch](./patch) or delete the original [Note](./note).

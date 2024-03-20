@@ -1,16 +1,16 @@
 # Patch
 
-A `Patch` object is an object that represents a change to a `Note`. It is used to update a `Note`, such as when a spelling mistake is made and needs to be corrected.
+A `Patch` object represents a modification to a [Note](./note). It is primarily used to update a [Note](./note), for instance, to correct a typographical error.
 
-`Patch` objects are not meant to be displayed to the user, and are only meant to be used internally by the server.
+`Patch` objects are intended for internal server use and are not designed to be displayed to the user.
 
-`Patch` objects **MUST** have a different `id` as the object that they are patching, and **MUST** have a `patched_at` field that contains the date and time that the object was patched. The `id` of the object that is being patched **MUST** be stored in the `patched_id` field.
+Each subsequent patch is applied to the original object, not the preceding patch. The server is responsible for presenting the most recent patch stored to the client.
 
-Subsequent patches are applied to the original object, not to the previous patch. It is up to the server to display the most recent patch it has in storage to the client.
+> [!NOTE]
+> A `Patch` object should replace the object it is patching when displayed to the client. Therefore, if a Patch object lacks some fields from the previous object, these fields should be removed in the edit.
 
-> **Note:**: A `Patch` object must replace the object that it is patching when displayed to the client. As such, if a Patch object is missing some fields from the previous object, these fields should not be displayed to the user
+Here is a sample `Patch` for the aforementioned object:
 
-Here is an example `Patch` for the aforementioned object:
 ```json5
 {
     "type": "Patch",
@@ -28,4 +28,38 @@ Here is an example `Patch` for the aforementioned object:
 }
 ```
 
-`Patch`es inherit all other properties from Publications.
+## Fields
+
+### ID
+
+This ID must be distinct from the original Note object, but it does not replace the original Note object's ID. It serves to identify the Patch object.
+
+### Patched ID
+
+| Name       | Type   | Required |
+| :--------- | :----- | :------- |
+| patched_id | String | Yes      |
+
+This is the URI of the object being patched. It must be a [Note](./note).
+
+### Patched At
+
+| Name       | Type   | Required |
+| :--------- | :----- | :------- |
+| patched_at | String | Yes      |
+
+This is the date and time when the object was patched. It must be in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format.
+
+### Other
+
+`Patch` objects inherit all other properties from [Publications](./publications).
+
+## Types
+
+```typescript
+interface Patch extends Publication {
+    type: "Patch";
+    patched_id: string;
+    patched_at: string;
+}
+```

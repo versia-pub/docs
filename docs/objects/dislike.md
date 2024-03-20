@@ -1,8 +1,6 @@
 # Dislike
 
-A `Dislike` action is an action that represents a user disliking an object. It is one of the most common type of action.
-
-A `Dislike` object **MUST** have an `object` field that contains the URI of the object that the user is disliking. The object **MUST** be a `Publication` object.
+The Dislike action signifies a user's negative sentiment towards an object. It is a frequently used action in the Lysand protocol.
 
 Example:
 ```json5
@@ -13,5 +11,33 @@ Example:
     "uri": "https://example.com/actions/3e7e4750-afd4-4d99-a256-02f0710a0520",
     "created_at": "2021-01-01T00:00:00.000Z",
     "object": "https://example.com/publications/f08a124e-fe90-439e-8be4-15a428a72a19"
+}
+```
+
+## Fields
+
+### Author
+
+| Name   | Type   | Required |
+| :----- | :----- | :------- |
+| author | String | Yes      |
+
+URI of the [Actor](./actors) who initiated the action.
+
+### Object
+
+| Name   | Type   | Required |
+| :----- | :----- | :------- |
+| object | String | Yes      |
+
+URI of the object being disliked. Must be of type [Note](./note)
+
+## Types
+
+```typescript
+interface Dislike extends Entity {
+    type: "Dislike";
+    author: string;
+    object: string;
 }
 ```

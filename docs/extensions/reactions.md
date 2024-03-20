@@ -73,7 +73,7 @@ The server **MUST** respond with a [Collection](../structures/collection) object
     "type": "Collection",
     "first": "https://example.com/publications/f08a124e-fe90-439e-8be4-15a428a72a19/reactions?page=1",
     "last": "https://example.com/publications/f08a124e-fe90-439e-8be4-15a428a72a19/reactions?page=1",
-    "totalCount": 1,
+    "total_count": 1,
     // "author": ... (for signatures)
     "items": [
         {

@@ -1,5 +1,13 @@
 # Note
 
-A `Note` object is a simple object that represents a post or publication. It is the most common type of object.
+A `Note` object symbolizes a basic post or publication within the Lysand protocol. It is the most frequently used object type.
 
-`Note` objects inherit from all Publication properties.
+`Note` objects extend all properties from the [Publication](./publications) object, thereby inheriting its characteristics and behaviors.
+
+### Types
+
+```typescript
+interface Note extends Publication {
+    type: "Note";
+}
+```

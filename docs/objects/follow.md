@@ -1,8 +1,6 @@
 # Follow
 
-A `Follow` action is an action that represents a user following another user. By following another user, the user will be able to see the other user's posts in their feed.
-
-A `Follow` object **MUST** have an `followee` field that contains the URI of the user that the user is following.
+A Follow action embodies a user's intent to follow another user. Upon successful execution of this action, the follower will start receiving the followed user's posts in their feed. This action facilitates the creation of a personalized content stream for each user.
 
 Example:
 ```json5
@@ -13,5 +11,33 @@ Example:
     "uri": "https://example.com/actions/3e7e4750-afd4-4d99-a256-02f0710a0520",
     "created_at": "2021-01-01T00:00:00.000Z",
     "followee": "https://example.com/users/02e1e3b2-cb1f-4e4a-b82e-98866bee5de7"
+}
+```
+
+## Fields
+
+### Author
+
+| Name   | Type   | Required |
+| :----- | :----- | :------- |
+| author | String | Yes      |
+
+URI of the [Actor](./actors) who initiated the action.
+
+### Followee
+
+| Name     | Type   | Required |
+| :------- | :----- | :------- |
+| followee | String | Yes      |
+
+URI of the [User](./user) who is being follow requested.
+
+## Types
+
+```typescript
+interface Follow extends Entity {
+    type: "Follow";
+    author: string;
+    followee: string;
 }
 ```

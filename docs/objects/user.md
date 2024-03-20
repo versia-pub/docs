@@ -73,17 +73,17 @@ All text fields can incorporate [Custom Emojis](../extensions/custom-emojis) as 
 
 The `type` of a `User` is invariably `User`.
 
-### ID
-
-The `id` field on an Actor is a UUID that signifies the unique identifier of the actor as a string. It is utilized to identify the actor, and **MUST** be unique across all actors of the server.
-
 ### Public Key
 
-The `public_key` field on an Actor is an [`ActorPublicKeyData`](../cryptography/keys) object. It is employed to authenticate the actor's identity. The key **MUST** be encoded in base64.
+| Name       | Type                                       | Required |
+| :--------- | :----------------------------------------- | :------- |
+| public_key | [ActorPublicKeyData](../cryptography/keys) | Yes      |
+
+Author public key. Used to authenticate the actor's identity for their posts. The key **MUST** be encoded in base64.
 
 All actors **MUST** have a `public_key` field. All servers **SHOULD** authenticate the actor's identity using the `public_key` field, which is used to encode any HTTP requests emitted on behalf of the actor.
 
-> For more information on cryptographic signing, please see the [Signing](/cryptography/signing) page.
+For more information on cryptographic signing, please see the [Signing](/cryptography/signing) page.
 
 Example of encoding the key in TypeScript:
 ```ts
@@ -93,9 +93,11 @@ const publicKey = btoa(String.fromCharCode(...new Uint8Array(await crypto.subtle
 
 ### Display Name
 
-The `display_name` field on an Actor is a string that signifies the actor's display name. It is used to present the actor's name to the user.
+| Name         | Type   | Required |
+| :----------- | :----- | :------- |
+| display_name | String | No       |
 
-The `display_name` field is optional. If it is not provided, it is assumed that the actor does not have a display name, and the actor's username should be used instead.
+User's display name. If it is not provided, it is assumed that the actor does not have a display name, and the actor's username should be used instead as a fallback.
 
 Display names **MUST** be treated as mutable, and **MUST NOT** be used to identify the actor.
 
@@ -103,15 +105,17 @@ It is recommended that servers limit the display name length from 1 to 50 charac
 
 ### Username
 
-The `username` field on an Actor is a string that signifies the actor's username. It is used to loosely identify the actor, and **MUST** be unique across all actors of a server.
+| Name     | Type   | Required |
+| :------- | :----- | :------- |
+| username | String | Yes      |
 
-The `username` field is mandatory on all actors.
+Actor's username (`@cpluspatch` for example). It is used to loosely identify the actor, and **MUST** be unique across all actors of a server.
 
 The `username` field **MUST NOT** be used to identify the actor internally or across the protocol. It is only meant to be used as a display name, and as such is mutable by the user.
 
-The `username` field **MUST** be a string that contains only alphanumeric characters, underscores, and dashes. It **MUST NOT** contain any spaces or other special characters.
+The `username` field **MUST** be a string that contains only alphanumeric lowercase characters, underscores, and dashes. It **MUST NOT** contain any spaces or other special characters.
 
-It **MUST** match this regex: `/^[a-zA-Z0-9_-]+$/`
+It **MUST** match this regex: `/^[a-z0-9_-]+$/`
 
 It is recommended that servers limit the username length from 1 to 20 characters, but the server has the discretion to decide the username length. The protocol does not impose an upper limit for the username length.
 
@@ -123,7 +127,11 @@ Since user search is done via the username, servers could implement a username h
 
 ### Indexable
 
-The `indexable` field on an Actor is a boolean that signifies whether or not the actor should be indexed by search engines. This field is mandatory and must be included.
+| Name      | Type    | Required |
+| :-------- | :------ | :------- |
+| indexable | Boolean | Yes      |
+
+Whether or not the actor should be indexed by search engines.
 
 Servers and search engines should respect the `indexable` field, and **SHOULD NOT** index the actor if the `indexable` field is set to `false`. This is to protect the privacy of users that do not want to be indexed by search engines.
 
@@ -133,9 +141,11 @@ This field should also trigger a change in the `robots.txt` file of the server, 
 
 ### Avatar
 
-The `avatar` field on an Actor is a [ContentFormat](../structures/content-format) object. It is intended to serve as a profile picture for users.
+| Name   | Type          | Required |
+| :----- | :------------ | :------- |
+| avatar | ContentFormat | No       |
 
-The `avatar` field is optional. If it is not provided, it is assumed that the actor does not have an avatar.
+Profile picture for users. If it is not provided, it is assumed that the actor does not have an avatar.
 
 The avatar content_type **MUST** be an image format, such as `image/png` or `image/jpeg`. The avatar content_type **MUST NOT** be a video format, such as `video/mp4` or `video/webm`.
 
@@ -145,9 +155,11 @@ Clients should display the most modern format that they support, such as WebP, A
 
 ### Header
 
-The `header` field on an Actor is a [ContentFormat](../structures/content-format) object. It is intended to serve as a banner for users.
+| Name   | Type          | Required |
+| :----- | :------------ | :------- |
+| header | ContentFormat | No       |
 
-The `header` field is optional. If it is not provided, it is assumed that the actor does not have a header.
+Banner for users. If it is not provided, it is assumed that the actor does not have a header.
 
 The header content_type **MUST** be an image format, such as `image/png` or `image/jpeg` (animated images are permitted). The header content_type **MUST NOT** be a video format, such as `video/mp4` or `video/webm`.
 
@@ -157,11 +169,11 @@ Clients should display the most modern format that they support, such as WebP, A
 
 ### Bio
 
-The `bio` field on an Actor is a [ContentFormat](../structures/content-format) object.
+| Name | Type          | Required |
+| :--- | :------------ | :------- |
+| bio  | ContentFormat | No       |
 
-The `bio` field is optional. If it is not provided, it is assumed that the actor does not have a bio.
-
-The `bio` field is used to display a short description of the actor to the user. It is recommended that servers limit the bio length from 500 to a couple thousand characters, but the server has the discretion to decide the bio length. The protocol does not impose an upper limit for the bio length.
+Used to display a short description of the actor to cleints. It is recommended that servers limit the bio length from 500 to a couple thousand characters, but the server has the discretion to decide the bio length. The protocol does not impose an upper limit for the bio length.
 
 The `bio` **MUST** be a text format, such as `text/plain` or `text/html`. The `bio` **MUST NOT** be a binary format, such as `image/png` or `video/mp4`.
 
@@ -190,9 +202,11 @@ It is up to the client to choose which content format to display to the user. Th
 
 ### Fields
 
-The `fields` field on an Actor is an array that contains a list of `Field` objects. It is used to display custom fields of key-value pairs to the user, such as additional metadata.
+| Name   | Type           | Required |
+| :----- | :------------- | :------- |
+| fields | Array of Field | No       |
 
-The `fields` field is optional. If it is not provided, it is assumed that the actor does not have any fields.
+Custom key-value pairs for clients, such as additional metadata. If not provided, it is assumed that the actor does not have any fields.
 
 An example value for the `fields` field would be:
 ```json5
@@ -231,31 +245,59 @@ The `key` and `value` fields **MUST** be text formats, such as `text/plain` or `
 
 ### Featured
 
+| Name     | Type   | Required |
+| :------- | :----- | :------- |
+| featured | String | Yes      |
+
 Please refer to [Featured Publications](../federation/endpoints) for more information.
 
 ### Followers
+
+| Name      | Type   | Required |
+| :-------- | :----- | :------- |
+| followers | String | Yes      |
 
 Please refer to [User Followers](../federation/endpoints) for more information.
 
 ### Following
 
+| Name      | Type   | Required |
+| :-------- | :----- | :------- |
+| following | String | Yes      |
+
 Please refer to [User Following](../federation/endpoints) for more information.
 
 ### Likes
+
+| Name  | Type   | Required |
+| :---- | :----- | :------- |
+| likes | String | Yes      |
 
 Please refer to [User Likes](../federation/endpoints) for more information.
 
 ### Dislikes
 
+| Name     | Type   | Required |
+| :------- | :----- | :------- |
+| dislikes | String | Yes      |
+
 Please refer to [User Dislikes](../federation/endpoints) for more information.
 
 ### Inbox
+
+| Name  | Type   | Required |
+| :---- | :----- | :------- |
+| inbox | String | Yes      |
 
 The `inbox` field on an Actor is a string that displays the URI of the actor's inbox. It is used to identify the actor's inbox for federation.
 
 Please refer to [Inbox](../federation/endpoints) for more information.
 
 ### Outbox
+
+| Name   | Type   | Required |
+| :----- | :----- | :------- |
+| outbox | String | Yes      |
 
 The `outbox` field on an Actor is a string that displays the URI of the actor's outbox. It is used to identify the actor's outbox for federation.
 
