@@ -1,8 +1,11 @@
-# Actions
+# User Interactions
 
-Actions are the main way that clients interact with the Lysand protocol. They are JSON objects that represent an action that a user wants to perform, such as posting a new object or following a user.
+User interactions in the Lysand protocol are primarily facilitated through Actions. These are JSON objects that encapsulate a user's intended operation, such as favouriting an object or initiating a follow request to another user.
 
-Here is an example action:
+Actions are a broad category encompassing various types of objects, rather than being a specific object type.
+
+Here's an example of an Action:
+
 ```json5
 {
     "type": "Like",
@@ -14,25 +17,27 @@ Here is an example action:
 }
 ```
 
-## Type
+## Action Types
 
-Currently available types are:
-- [`Like`](/objects/like)
-- [`Dislike`](/objects/dislike)
-- [`Follow`](/objects/follow)
-- [`FollowAccept`](/objects/follow-accept)
-- [`FollowReject`](/objects/follow-reject)
-- [`Announce`](/objects/announce)
-- [`Undo`](/objects/undo)
+The currently supported action types include:
+- [`Like`](./like)
+- [`Dislike`](./dislike)
+- [`Follow`](./follow)
+- [`FollowAccept`](./follow-accept)
+- [`FollowReject`](./follow-reject)
+- [`Announce`](./announce)
+- [`Undo`](./undo)
 
-Notably, a `Block` action is not included in the Lysand protocol. This is because Lysand does not have a concept of blocking users. Instead, it is up to the client or server to decide if it wants to display content from a user or not.
+Notably, the Lysand protocol does not include a `Block` action. This is because Lysand does not inherently support the concept of blocking users. Instead, the decision to display or hide content from a particular user should be done server-side.
 
-This serves to prevent abuse of the protocol to find out if a user has blocked another user, which is a privacy concern.
+This approach helps prevent potential misuse of the protocol to determine if a user has been blocked by another, thereby addressing a significant privacy concern.
 
-## Fields
+## Fielkds
 
 ### Author
 
-The `author` field on an Action is a string that represents the URI of the user that created the action. It is used to identify the author of the action.
+| Name   | Type   | Required |
+| :----- | :----- | :------- |
+| author | String | Yes      |
 
-The `author` field is required on all actions.
+URI of the [Actor](./actors) who initiated the action.

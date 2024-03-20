@@ -266,3 +266,36 @@ Please refer to [Outbox](../federation/endpoints) for more information.
 These extensions might add or affect the User object if used:
 - [Custom Emojis](../extensions/custom-emojis)
 - [Vanity Profile](../extensions/vanity)
+
+## Types
+
+```typescript
+interface User extends Entity {
+    type: "User";
+    id: string;
+    uri: string;
+    created_at: string;
+    display_name?: string;
+    username: string;
+    avatar?: ContentFormat;
+    header?: ContentFormat;
+    indexable: boolean;
+    public_key: ActorPublicKeyData;
+    bio?: ContentFormat;
+    fields?: Field[];
+    featured: string;
+    followers: string;
+    following: string;
+    likes: string;
+    dislikes: string;
+    inbox: string;
+    outbox: string;
+}
+```
+
+```typescript
+interface Field {
+    key: ContentFormat;
+    value: ContentFormat;
+}
+```

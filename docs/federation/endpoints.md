@@ -1,6 +1,6 @@
 # Federation
 
-This section elucidates how federation operates within Lysand.
+This section explains how federation operates within Lysand.
 
 Lysand's federation is built upon the HTTP stack. Servers interact with each other by exchanging HTTP requests.
 

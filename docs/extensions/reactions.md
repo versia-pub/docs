@@ -139,3 +139,13 @@ The only addition to the Reaction object is the `extensions` field, which contai
 When rendering the Reaction object, clients **MUST** replace the `:emoji_name:` with the appropriate emoji. If the client does not support custom emojis, it **MUST** display the `:emoji_name:` as-is.
 
 This emoji must be rendered according to the rules of the [Custom Emojis](./custom-emojis) extension.
+
+## Types
+
+```typescript
+interface Reaction extends Extension {
+    extension_type: "org.lysand:reactions/Reaction";
+    object: string;
+    content: string;
+}
+```

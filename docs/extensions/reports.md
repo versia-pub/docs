@@ -1,12 +1,12 @@
 # Reports
 
-The Reports extension allows users to report objects to their server. This is useful for reporting content that violates the server's rules to admin. (also called "flagging")
+The Reports extension enables users to flag content or users that violate the server's rules. This feature is important for maintaining a safe community environment.
 
-If the reporter and reportee are on the same server, there is no need for federation and reporting can happen directly. If the reporter and reportee are on different servers, the report **MUST** be federated to the reportee's server.
+If the reporting user (reporter) and the reported user (reportee) are on the same server, the report can be handled directly without the need for federation. However, if the reporter and reportee are on different servers, the report **MUST** be federated to the reportee's server.
 
 ## Report Object
 
-The report object is an object that contains information about the report. It is formatted as follows:
+The report object encapsulates the details of the report. It is structured as follows:
 
 ```json5
 {
@@ -30,18 +30,41 @@ Report events **MUST** be sent to the server actor's inbox.
 
 ### Objects
 
-The `objects` field is an array that contains a list of the URIs of the objects that are being reported. This field is required on all Report objects.
+| Name    | Type            | Required |
+| :------ | :-------------- | :------- |
+| objects | Array of String | Yes      |
 
-If `objects` contains Actors, then these Actors **MUST** be treated as the reported actors.
+URIs of the objects that are being reported.
 
-If `objects` contains Publications, then these Publications **MUST** be treated as the reported objects.
+If `objects` contains Actors, then these Actors **MUST** be treated as the reported users.
 
-`objects` can contain any URI to any kind of objects, however typically only Actors or Publications should be reportable
+If `objects` contains Notes, then these Notes **MUST** be treated as the reported content.
+
+`objects` can contain any URI to any kind of objects, however, typically only Actors or Notes should be reportable.
 
 ### Reason
 
-The `reason` field is a string that represents the reason for the report. This field is required on all Report objects. This is meant to be a short summary of the report, such as `"spam"`, `"hate speech"`, `"tos violation"` or such.
+| Name   | Type   | Required |
+| :----- | :----- | :------- |
+| reason | String | Yes      |
+
+The reason for the report. This should be a concise summary of the report, such as `"spam"`, `"hate speech"`, `"tos violation"`, etc.
 
 ### Comment
 
-The `comment` field is a string that represents the comment of the report. This field is not required on a Report object. This is meant to be a longer description of the report, such as `"This user has been spamming my inbox with advertisements."`.
+| Name    | Type   | Required |
+| :------ | :----- | :------- |
+| comment | String | No       |
+
+Additional comments about the report. This is meant to provide a more detailed description of the report, such as `"This user has been spamming my inbox with advertisements."`.
+
+## Types
+
+```typescript
+interface Report extends Extension {
+    extension_type: "org.lysand:reports/Report";
+    objects: string[];
+    reason: string;
+    comment?: string;
+}
+```

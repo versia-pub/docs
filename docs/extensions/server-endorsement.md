@@ -1,37 +1,45 @@
 # Server Endorsement
 
-The Server Endorsement extension allows servers to endorse other servers. This is useful as an alternative to open-air federation, where servers can endorse other servers that they trust. Only endorsed servers and the servers endorsed by those (up to a configurable depth) will be federated with.
+The Server Endorsement extension provides a mechanism for servers to vouch for the credibility of other servers. This is a valuable alternative to unrestricted federation, enabling servers to endorse those they deem trustworthy. Federation will only occur with endorsed servers and their subsequent endorsements, up to an admin-defined depth.
 
-## Endorsement Object
+## Endorsement Entity
 
-The endorsement object is an object that contains information about the endorsement. It is formatted as follows:
+The endorsement entity encapsulates the details of an endorsement. It adheres to the following structure:
 
 ```json5
 {
     "type": "Extension",
     "extension_type": "org.lysand:server_endorsement/Endorsement",
-    "author": "https://example.com/actor", // Should be the server actor
+    "author": "https://example.com/actor", // The endorsing server's actor
     "id": "ed480922-b095-4f09-9da5-c995be8f5960",
     "uri": "https://example.com/actions/ed480922-b095-4f09-9da5-c995be8f5960",
     "server": "https://example.com",
 }
 ```
 
-The `server` field is a string that represents the URI of the server that is being endorsed. This URI **MUST** be the URI of the server's root endpoint. For example, `https://example.com`.
+Endorsement entities **MUST** be dispatched to the endorsing server actor's inbox whenever the server administrators create a new endorsement.
 
-This URI **MUST** be HTTPS and **MUST NOT** be an IP address.
+### Server
 
-The `server` field is required on all Endorsement objects.
+| Name   | Type   | Required |
+| :----- | :----- | :------- |
+| server | String | Yes      |
 
-Endorsement objects **MUST** be sent to the server actor's inbox, whenever a new endorsement is made by the server admins.
+URI of the endorsed server. This URI **MUST** correspond to the server's root endpoint, such as `https://example.com`.
+
+This URI **MUST NOT** be an IP address, except for development purposes.
 
 ### Author
 
-The `author` field **MUST** be the server actor. This field is required so that servers can cryptographically sign the endorsement with the server actor's `public_key`.
+| Name   | Type   | Required |
+| :----- | :----- | :------- |
+| author | String | Yes      |
+
+The `author` field **MUST** represent the endorsing server actor. This requirement ensures that endorsements can be cryptographically signed using the server actor's `public_key`.
 
 ## Endorsement Collection
 
-The URI to the endorsement collection may be specified inside the server's metadata, inside `extensions`:
+The URI for the endorsement collection can be specified within the server's metadata, under `extensions`:
 
 ```json5
 {
@@ -45,16 +53,26 @@ The URI to the endorsement collection may be specified inside the server's metad
 }
 ```
 
-This should return a `Collection` object that contains a list of `Endorsement` objects.
+This should return a [Collection](../structures/collection) of `Endorsement` entities.
 
-## Behaviour Of Endorsements
+## Endorsement Protocol Behavior
 
-When a server receives an endorsement, it **MUST** verify the signature of the endorsement. If the signature is invalid, the server **MUST** discard the endorsement. This goes the same for fetching the endorsement collection.
+Upon receiving an endorsement, a server **MUST** validate the endorsement's signature. If the signature is invalid, the server **MUST** disregard the endorsement. This also applies when fetching the endorsement collection.
 
-It is up to the server to decide what it does with the endorsement: Endorsements are designed to apply as a flexible whitelist for servers, with the admins choosing a couple of trusted servers when setting up for the first time and then adding more as they go.
+The server has the discretion to decide how to handle the endorsement. Endorsements are intended to serve as a dynamic whitelist for servers, with administrators initially selecting a few trusted servers and progressively adding more.
 
-Servers **SHOULD** show the endorsements that they have received to their admins, and allow them to accept or reject the endorsement. Ultimately, it is up to the admins to decide what to do with the endorsement.
+Servers **SHOULD** display received endorsements to their administrators, allowing them to accept or reject the endorsement. Ultimately, the decision on how to handle the endorsement lies with the administrators.
 
-Endorsements should be treated as a guarantee of trust: If a server endorses another server, it is saying that it trusts that server. Servers should not endorse servers that they do not trust.
+Endorsements should be viewed as a seal of trust: If a server endorses another, it is expressing its trust in that server. Servers should refrain from endorsing servers they do not trust.
 
-Finally, servers **can** check the endorsed servers of the servers that they have endorsed, up to a configurable depth. This is to create a chain of trust, where servers can endorse servers that they trust, and servers that they trust can endorse servers that they trust, and so on.
+Lastly, servers **MAY** verify the endorsements of the servers they have endorsed, up to a user-defined depth. This creates a trust chain, where servers endorse those they trust, and those servers, in turn, endorse servers they trust, and so forth.
+
+## Types
+
+```typescript
+interface Endorsement extends Extension {
+    extension_type: "org.lysand:server_endorsement/Endorsement";
+    author: string;
+    server: string;
+}
+```

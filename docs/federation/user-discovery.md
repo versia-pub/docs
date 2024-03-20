@@ -1,6 +1,7 @@
 # User Discovery
 
-> **Note:** The terms "the server" and "the requesting server" are used in this section. "The server" refers to the server that is being discovered, and "the requesting server" refers to the server that is trying to discover the server.
+> [!NOTE]
+> The terms "the server" and "the requesting server" are used in this section. "The server" refers to the server that is being discovered, and "the requesting server" refers to the server that is trying to discover the server.
 
 Servers **MUST** implement the [WebFinger](https://tools.ietf.org/html/rfc7033) protocol to allow other servers to discover their endpoints. This is done by serving a `host-meta` file at the address `/.well-known/host-meta`.
 
@@ -23,7 +24,7 @@ Breaking down this URI, we get the following:
 - `uuid`: The UUID of the user that the server is trying to discover.
 - `example.com`: The domain of the server that the user is on. This is usually the domain of the server. This can also be a subdomain of the server, such as `lysand.example.com`.
 
-This format is reminiscent of the `acct` format used by ActivityPub, but with a UUID instead of a username. Users should typically not use the `id` of an actor to identify it, but instead its `username`.
+This format is reminiscent of the `acct` format used by ActivityPub, but with a UUID instead of a username. Users will typically not use the `id` of an actor to identify it, but instead its `username`: servers **MUST** only use the `id` to identify actors.
 
 ---
 
@@ -68,8 +69,10 @@ The server **MUST** respond with a `200 OK` response code, and a JSON object in 
 }
 ```
 
-> **Note:** The `subject` field **MUST** be the same as the `resource` field in the request.
+> [!NOTE]
+> The `subject` field **MUST** be the same as the `resource` field in the request.
 
-> **Note:** The server implementation is free to add any additional links to the `links` array, such as for compatibility with other federation protocols. However, the links specified above **MUST** be included.
-
->The `href` values of these links can be anything as long as it includes the `uuid` of the user, such as `https://example.com/accounts/uuid` or `https://example.com/uuid.`.
+> [!NOTE]
+> The server implementation is free to add any additional links to the `links` array, such as for compatibility with other federation protocols. However, the links specified above **MUST** be included.
+>
+> The `href` values of these links can be anything as long as it includes the `uuid` of the user, such as `https://example.com/accounts/uuid` or `https://example.com/uuid.`.
