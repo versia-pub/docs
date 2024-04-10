@@ -16,15 +16,15 @@ The document **MUST** contain the following information, as specified by the Web
 
 The `template` field **MUST** be the URI of the server's WebFinger endpoint, which is usually `https://example.com/.well-known/webfinger?resource={uri}`.
 
-The `resource` field **MUST** be the URI of the user that the server is trying to discover (in the format `acct:uuid@example.com`)
+The `resource` field **MUST** be the URI of the user that the server is trying to discover (in the format `acct:identifier@example.com`)
 
 Breaking down this URI, we get the following:
 
 - `acct`: The protocol of the URI. This is always `acct` for Lysand.
-- `uuid`: The UUID of the user that the server is trying to discover.
+- `identifier`: Either the UUID or the username of the user that the server is trying to discover.
 - `example.com`: The domain of the server that the user is on. This is usually the domain of the server. This can also be a subdomain of the server, such as `lysand.example.com`.
 
-This format is reminiscent of the `acct` format used by ActivityPub, but with a UUID instead of a username. Users will typically not use the `id` of an actor to identify it, but instead its `username`: servers **MUST** only use the `id` to identify actors.
+This format is reminiscent of the `acct` format used by ActivityPub, but with either a UUID or a username instead of just an username. Users will typically not use the `id` of an actor to identify it, but instead its `username`: servers **MUST** only use the `id` to identify actors.
 
 ---
 
@@ -39,7 +39,7 @@ The requesting server **MUST** send the following headers with the request:
 
 The requestinng server **MUST** send the following query parameters with the request:
 
-- `resource`: The URI of the user that the server is trying to discover (in the format `acct:uuid@example.com` (replace `uuid` with the user's ID)
+- `resource`: The URI of the user that the server is trying to discover (in the format `acct:identifier@example.com` (replace `identifier` with the user's ID or username)
 
 ---
 
@@ -47,7 +47,7 @@ The server **MUST** respond with a `200 OK` response code, and a JSON object in 
 
 ```json5
 {
-    "subject": "acct:uuid@example.com",
+    "subject": "acct:identifier@example.com",
     "links": [
         {
             "rel": "self",
