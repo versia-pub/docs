@@ -48,7 +48,7 @@ curl -X POST -H "Content-Type: application/json" -H "Accept: application/json" -
 }' https://example.com/users/uuid/inbox
 ```
 
-The server **MUST** respond with a `200 OK` response code if the operation was successful.
+The server **MUST** respond with a `201 CREATED` response code if the operation was successful.
 
 ## User Outbox
 
