@@ -212,7 +212,7 @@ Servers **MUST** respect the visibility of the publication and **MUST NOT** show
 ## Types
 
 ```typescript
-interface Publication {
+interface Publication extends Entity {
     type: "Note" | "Patch";
     author: string;
     content?: ContentFormat;
@@ -223,6 +223,19 @@ interface Publication {
     subject?: string;
     is_sensitive?: boolean;
     visibility: Visibility;
+    extensions?: Entity["extensions"] & {
+        "org.lysand:reactions"?: {
+            reactions: string;
+        };
+        "org.lysand:polls"?: {
+            poll: {
+                options: ContentFormat[];
+                votes: number[];
+                multiple_choice?: boolean;
+                expires_at: string;
+            };
+        };
+    };
 }
 ```
 

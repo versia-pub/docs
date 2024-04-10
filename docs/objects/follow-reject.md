@@ -35,9 +35,8 @@ URI of the [User](./user) who tried to follow the author.
 ## Types
 
 ```typescript
-interface FollowReject extends Entity {
+interface FollowReject extends Action {
     type: "FollowReject";
-    author: string;
     follower: string;
 }
 ```

@@ -36,9 +36,8 @@ URI of the object being announced. Must be of type [Note](./note)
 ## Types
 
 ```typescript
-interface Announce extends Entity {
+interface Announce extends Action {
     type: "Announce";
-    author: string;
     object: string;
 }
 ```

@@ -35,9 +35,8 @@ URI of the [User](./user) who is being follow requested.
 ## Types
 
 ```typescript
-interface Follow extends Entity {
+interface Follow extends Action {
     type: "Follow";
-    author: string;
     followee: string;
 }
 ```

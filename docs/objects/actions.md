@@ -41,3 +41,12 @@ This approach helps prevent potential misuse of the protocol to determine if a u
 | author | String | Yes      |
 
 URI of the [Actor](./actors) who initiated the action.
+
+## Types
+
+```typescript
+interface Action extends Entity {
+    type: "Like" | "Dislike" | "Follow" | "FollowAccept" | "FollowReject" | "Announce" | "Undo";
+    author: string
+}
+```

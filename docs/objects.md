@@ -51,11 +51,17 @@ This document uses TypeScript to define the types of the entities in a clear and
 
 ```typescript
 interface Entity {
-  id: string;
-  created_at: string;
-  uri: string;
-  type: string;
-};
+    id: string;
+    created_at: string;
+    uri: string;
+    type: string;
+    extensions?: {
+        "org.lysand:custom_emojis"?: {
+            emojis: Emoji[];
+        };
+        [key: string]: object | undefined;
+    };
+}
 ```
 
 The `Entity` type is the base type for all entities in the Lysand protocol. It includes the `id`, `created_at`, `uri`, and `type` attributes.

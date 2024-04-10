@@ -41,3 +41,13 @@ URI of the [Actor](./actors) who initiated the action.
 | object | String | Yes      |
 
 URI of the object being undone. The object **MUST** be an [Action](./actions) or a [Note](./note). To undo [Patch](./patch) objects, use a subsequent [Patch](./patch) or delete the original [Note](./note).
+
+## Types
+
+```typescript
+interface Undo extends Entity {
+    type: "Undo";
+    author: string;
+    object: string;
+}
+```
