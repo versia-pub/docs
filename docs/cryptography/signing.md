@@ -101,7 +101,7 @@ const signatureBase64 = btoa(
 
 The request can then be sent with the `Signature`, `Origin` and `Date` headers as follows:
 ```ts
-await fetch("https://example.com/users/uuid/inbox", {
+await fetch("https://receiver.com/users/22a56612-9909-48ca-84af-548b28db6fd5/inbox", {
     method: "POST",
     headers: {
         "Content-Type": "application/json",
