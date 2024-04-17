@@ -9,7 +9,7 @@ These requests are predominantly `POST` requests that carry a JSON object in the
 Servers that receive non-conforming Lysand objects **SHOULD** disregard these objects as invalid, and return a `400 Bad Request` response code (these could include debugging information in the response body).
 
 > [!NOTE]
-> Values such as ``https://example.com/users/uuid` are example implementations and not a guide on how an implementation should format a URI. These must follow the rules outlined in [the base spec](../spec.md).
+> Values such as `https://example.com/users/uuid` are example implementations and not a guide on how an implementation should format a URI. These must follow the rules outlined in [the base spec](../spec.md).
 > 
 ## User Actor Endpoints
 
