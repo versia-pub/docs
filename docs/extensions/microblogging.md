@@ -2,7 +2,7 @@
 
 > [!WARNING]
 >
-> Before Lysand 3.0, microblogging was directly integrated into the core spec. As of Lysand 3.0, microblogging has been moved to an extension, as part of a larger effort to modularization. This document describes the new microblogging extension.
+> Before Lysand 3.0, microblogging was directly integrated into the core spec. As of Lysand 3.0, microblogging has been moved to an extension, as part of a larger modularization effort. This document describes the new microblogging extension.
 
 The Microblogging extension allows users to perform certain tasks related to microblogging, such as "boosting" (reposting) posts.
 
@@ -35,7 +35,7 @@ Here's an example of an `Announce` action:
 | :----- | :----- | :------- |
 | author | String | Yes      |
 
-URI of the [Actor](../objects/actors) who initiated the action.
+URI of the [Actor](./actors) who initiated the action.
 
 #### Object
 
@@ -43,9 +43,9 @@ URI of the [Actor](../objects/actors) who initiated the action.
 | :----- | :----- | :------- |
 | object | String | Yes      |
 
-URI of the object being announced. Must be of type [Note](../objects/note)
+URI of the object being announced. Must be of type [Note](./note)
 
-### Implementation
+#### Implementation
 
 When a [Note](../objects/note) object is announced, the client **SHOULD** display the original note with an indicator that it has been announced. The client **SHOULD** also display the number of times the note has been announced, such as a number next to a small icon like such on [Mastodon](https://joinmastodon.org/):
 
@@ -57,8 +57,8 @@ Furthermore, users should be notified when their notes are announced by other us
 ## Types
 
 ```typescript
-interface Announce extends Entity {
-    type: "Announce";
+interface Announce extends Extension {
+    extension_type: "org.lysand:microblogging/Announce";
     author: string;
     object: string;
 }

@@ -1,10 +1,12 @@
 {
-  "scripts": {
-    "docs:dev": "vitepress dev",
-    "docs:build": "vitepress build",
-    "docs:preview": "vitepress preview"
-  },
-  "devDependencies": {
-    "vitepress": "^1.1.0"
-  }
+    "scripts": {
+        "docs:dev": "vitepress dev",
+        "docs:build": "vitepress build",
+        "docs:preview": "vitepress preview"
+    },
+    "devDependencies": {
+        "@biomejs/biome": "^1.7.1",
+        "vitepress": "^1.1.0"
+    },
+    "trustedDependencies": ["@biomejs/biome"]
 }
