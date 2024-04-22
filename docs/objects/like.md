@@ -35,9 +35,8 @@ URI of the object being liked. Must be of type [Note](./note)
 ## Types
 
 ```typescript
-interface Like extends Entity {
+interface Like extends Action {
     type: "Like";
-    author: string;
     object: string;
 }
 ```

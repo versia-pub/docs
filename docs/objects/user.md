@@ -332,6 +332,9 @@ interface User extends Entity {
     dislikes: string;
     inbox: string;
     outbox: string;
+    extensions?: Entity["extensions"] & {
+        "org.lysand:vanity"?: VanityExtension;
+    };
 }
 ```
 

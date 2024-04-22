@@ -28,7 +28,7 @@ The signature is calculated as follows:
 ```
 (request-target): post /users/uuid/inbox
 host: example.com
-date: Fri, 01 Jan 2021 00:00:00 GMT
+date: 2024-04-10T01:27:24.880Z
 digest: SHA-256=base64_digest
 ```
 
@@ -40,66 +40,59 @@ The `digest` field **MUST** be the SHA-256 digest of the request body, base64-en
 
 The `date` field **MUST** be the date and time that the request was sent, formatted as follows (ISO 8601):
 ```
-Fri, 01 Jan 2021 00:00:00 GMT
+2024-04-10T01:27:24.880Z
 ```
 
-The `host` field **MUST** be the domain of the server that is receiving the request.
+The `host` field **MUST** be the host of the server that is receiving the request.
 
 The `request-target` field **MUST** be the request target of the request, formatted as follows:
 ```
 post /users/uuid/inbox
 ```
 
-Where `/users/uuid/inbox` is the path of the request.
+Where `/users/uuid/inbox` is the path of the request (this will depend on implementations).
 
-Here is an example of signing a request using TypeScript and the WebCrypto API:
+Let's imagine a user at `example.com` wants to send something to a user at `receiver.com`'s inbox.
+
+Here is an example of signing a request using TypeScript and the WebCrypto API (replace `status_author_private_key`, `full_lysand_object_as_string` and sample text appropriate):
 
 ```typescript
-/**
- * Convert a string into an ArrayBuffer
- * from https://developers.google.com/web/updates/2012/06/How-to-convert-ArrayBuffer-to-and-from-String
- */
-const str2ab = (str: string) => {
-	const buf = new ArrayBuffer(str.length);
-	const bufView = new Uint8Array(buf);
-	for (let i = 0, strLen = str.length; i < strLen; i++) {
-		bufView[i] = str.charCodeAt(i);
-	}
-	return buf;
-};
-
 const privateKey = await crypto.subtle.importKey(
-    "pkcs8",
-    str2ab(atob("base64_private_key")),
-    "Ed25519",
-    false,
-    ["sign"]
+	"pkcs8",
+	Uint8Array.from(atob(status_author_private_key), (c) =>
+		c.charCodeAt(0),
+	),
+	"Ed25519",
+	false,
+	["sign"],
 );
 
 const digest = await crypto.subtle.digest(
-    "SHA-256",
-    new TextEncoder().encode("request_body")
+	"SHA-256",
+	new TextEncoder().encode(full_lysand_object_as_string),
 );
 
-const userInbox = new URL("...");
+const userInbox = new URL(
+	"https://receiver.com/users/22a56612-9909-48ca-84af-548b28db6fd5/inbox"
+);
 
 const date = new Date();
 
 const signature = await crypto.subtle.sign(
-    "Ed25519",
-    privateKey,
-    new TextEncoder().encode(
-        `(request-target): post ${userInbox.pathname}\n` +
-            `host: ${userInbox.host}\n` +
-            `date: ${date.toUTCString()}\n` +
-            `digest: SHA-256=${btoa(
-                String.fromCharCode(...new Uint8Array(digest))
-            )}\n`
-    )
+	"Ed25519",
+	privateKey,
+	new TextEncoder().encode(
+		`(request-target): post ${userInbox.pathname}\n` +
+			`host: ${userInbox.host}\n` +
+			`date: ${date.toISOString()}\n` +
+			`digest: SHA-256=${btoa(
+				String.fromCharCode(...new Uint8Array(digest)),
+			)}\n`,
+	),
 );
 
 const signatureBase64 = btoa(
-    String.fromCharCode(...new Uint8Array(signature))
+	String.fromCharCode(...new Uint8Array(signature)),
 );
 ```
 
@@ -108,50 +101,79 @@ const signatureBase64 = btoa(
 
 The request can then be sent with the `Signature`, `Origin` and `Date` headers as follows:
 ```ts
-await fetch("https://example.com/users/uuid/inbox", {
+await fetch("https://receiver.com/users/22a56612-9909-48ca-84af-548b28db6fd5/inbox", {
     method: "POST",
     headers: {
         "Content-Type": "application/json",
-        Date: date.toUTCString(),
-        Origin: "https://example.com",
-        Signature: `keyId="${...}",algorithm="ed25519",headers="(request-target) host date digest",signature="${signatureBase64}"`,
+        Date: date.toISOString(),
+        Origin: "example.com",
+        Signature: `keyId="https://example.com/users/caf18716-800d-4c88-843d-4947ab39ca0f",algorithm="ed25519",headers="(request-target) host date digest",signature="${signatureBase64}"`,
     },
-    body: JSON.stringify({
-        // ...
-    })
+    body: full_lysand_object_as_string,
 });
 ```
 
 Example of validation on the server side:
 
 ```typescript
-// request is a Request object containing the previous request
-// public_key is the user's public key in raw base64 format
+// req is a Request object
+const signatureHeader = req.headers.get("Signature");
+const origin = req.headers.get("Origin");
+const date = req.headers.get("Date");
 
-const signatureHeader = request.headers.get("Signature");
+if (!signatureHeader) {
+	return errorResponse("Missing Signature header", 400);
+}
 
-const signature = signatureHeader.split("signature=")[1].replace(/"/g, "");
+if (!origin) {
+	return errorResponse("Missing Origin header", 400);
+}
 
-const origin = request.headers.get("Origin");
+if (!date) {
+	return errorResponse("Missing Date header", 400);
+}
 
-const date = request.headers.get("Date");
+const signature = signatureHeader
+	.split("signature=")[1]
+	.replace(/"/g, "");
 
 const digest = await crypto.subtle.digest(
-    "SHA-256",
-    new TextEncoder().encode(await request.text())
+	"SHA-256",
+	new TextEncoder().encode(JSON.stringify(body)),
 );
 
-const expectedSignedString = `(request-target): ${request.method.toLowerCase()} ${request.url}\n` +
-    `host: ${request.url}\n` +
-    `date: ${date}\n` +
-    `digest: SHA-256=${btoa(digest)}`;
+const keyId = signatureHeader
+	.split("keyId=")[1]
+	.split(",")[0]
+	.replace(/"/g, "");
+
+// TODO: Fetch sender using WebFinger if not found
+const sender = ... // Get sender from your database via its URI (inside the keyId variable)
+
+const public_key = await crypto.subtle.importKey(
+	"spki",
+	Uint8Array.from(atob(sender.publicKey), (c) => c.charCodeAt(0)),
+	"Ed25519",
+	false,
+	["verify"],
+);
+
+const expectedSignedString =
+	`(request-target): ${req.method.toLowerCase()} ${
+		new URL(req.url).pathname
+	}\n` +
+	`host: ${new URL(req.url).host}\n` +
+	`date: ${date}\n` +
+	`digest: SHA-256=${btoa(
+		String.fromCharCode(...new Uint8Array(digest)),
+	)}\n`;
 
 // Check if signed string is valid
 const isValid = await crypto.subtle.verify(
-    "Ed25519",
-    publicKey,
-    new TextEncoder().encode(signature),
-    new TextEncoder().encode(expectedSignedString)
+	"Ed25519",
+	public_key,
+	Uint8Array.from(atob(signature), (c) => c.charCodeAt(0)),
+	new TextEncoder().encode(expectedSignedString),
 );
 
 if (!isValid) {

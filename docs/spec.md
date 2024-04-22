@@ -55,7 +55,7 @@ All JSON objects disseminated during federation **MUST** be handled as follows:
 
 ## Requests and Responses
 
-All HTTP requests **MUST** be transmitted over HTTPS. Servers **MUST NOT** accept HTTP requests, unless for development purposes (e.g., if a server is operating on localhost or another local network).
+All Hypertext Transfer Protocol requests MUST be transmitted using the Hypertext Transfer Protocol Secure Extension. Servers MUST NOT accept requests without TLS (HTTPS), except for development purposes (e.g., if a server is operating on localhost or another local network).
 
 Servers should support HTTP/2 and HTTP/3 for enhanced performance and security. Servers **MUST** support HTTP/1.1 at a minimum.
 

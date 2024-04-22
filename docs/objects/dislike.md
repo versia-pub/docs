@@ -35,9 +35,8 @@ URI of the object being disliked. Must be of type [Note](./note)
 ## Types
 
 ```typescript
-interface Dislike extends Entity {
+interface Dislike extends Action {
     type: "Dislike";
-    author: string;
     object: string;
 }
 ```

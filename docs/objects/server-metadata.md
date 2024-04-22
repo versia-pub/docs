@@ -152,3 +152,23 @@ Clients should display the most modern format that they support, such as WebP, A
 | supported_extensions | Array of String | Yes, can be empty array (`[]`) |
 
 List of extension names that the server supports, in namespaced format (`"org.lysand:reactions"`).
+
+## Types
+
+```typescript
+interface ServerMetadata {
+    type: "ServerMetadata";
+    name: string;
+    version: string;
+    description?: string;
+    website?: string;
+    moderators?: string[];
+    admins?: string[];
+    logo?: ContentFormat;
+    banner?: ContentFormat;
+    supported_extensions: string[];
+    extensions?: {
+        [key: string]: object | undefined;
+    };
+}
+```
