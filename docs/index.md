@@ -7,7 +7,7 @@ hero:
   text: "Federation, simpler"
   tagline: A simple to implement and complete federation protocol
   image:
-    src: /logo.png
+    src: https://cdn.lysand.org/logo.svg
     alt: Lysand Logo
   actions:
     - theme: brand
@@ -25,7 +25,7 @@ features:
   - title: Easy to implement
     details: The protocol is simple to implement, and can be used with any language
   - title: Secure by default
-    details: All requests are signed with the latest cryptography algorithms
+    details: All requests are signed with the latest cryptographic algorithms
   - title: No vendor-specific implementations
     details: Everything is heavily standardized to ensure compatibility
   - title: TypeScript types
@@ -35,11 +35,9 @@ features:
 ---
 
 > [!INFO]
-> The latest version of Lysand is **2.0**, released on **March 19th 2024** by [**CPlusPatch**](https://cpluspatch.dev).
+> The latest version of Lysand is **3.0**, released on **(beta site)** by [**CPlusPatch**](https://cpluspatch.com).
 >
-> Lysand 2.0 features **more standardization**, **simpler object structures**, and **documentation rewrite**.
->
-> [See the full Git diff here](https://github.com/lysand-org/docs/compare/158ec6e...f11d51c)
+> Lysand 3.0 features **stricter security** and **more modularizarion**.
 
 <style>
 :root {

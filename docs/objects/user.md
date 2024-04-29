@@ -77,13 +77,13 @@ The `type` of a `User` is invariably `User`.
 
 | Name       | Type                                       | Required |
 | :--------- | :----------------------------------------- | :------- |
-| public_key | [ActorPublicKeyData](../cryptography/keys) | Yes      |
+| public_key | [ActorPublicKeyData](../security/keys) | Yes      |
 
 Author public key. Used to authenticate the actor's identity for their posts. The key **MUST** be encoded in base64.
 
 All actors **MUST** have a `public_key` field. All servers **SHOULD** authenticate the actor's identity using the `public_key` field, which is used to encode any HTTP requests emitted on behalf of the actor.
 
-For more information on cryptographic signing, please see the [Signing](/cryptography/signing) page.
+For more information on cryptographic signing, please see the [Signing](/security/signing) page.
 
 Example of encoding the key in TypeScript:
 ```ts

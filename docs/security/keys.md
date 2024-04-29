@@ -6,7 +6,7 @@ All public keys in Lysand **MUST** be encoded using the [ed25519](https://ed2551
 
 While it's technically possible to implement other encryption algorithms using extensions, it's generally discouraged.
 
-In the near future, Lysand will also support quantum-resistant Kyber algorithms, once they are incorporated into the Web Crypto API.
+In the near future, Lysand will also support quantum-resistant algorithms, once they are incorporated into popular libraries.
 
 Here's an example of generating a public-private key pair in TypeScript using the WebCrypto API:
 
@@ -17,10 +17,14 @@ const keyPair = await crypto.subtle.generateKey(
     ["sign", "verify"]
 );
 
-// Encode both to base64
-const publicKey = btoa(String.fromCharCode(...new Uint8Array(await crypto.subtle.exportKey("spki", keyPair.publicKey))));
+// Encode both to base64 (Buffer is a Node.js API, replace with btoa and atob for browser environments)
+const privateKey = Buffer.from(
+    await crypto.subtle.exportKey("pkcs8", keys.privateKey),
+).toString("base64");
 
-const privateKey = btoa(String.fromCharCode(...new Uint8Array(await crypto.subtle.exportKey("pkcs8", keyPair.privateKey))));
+const publicKey = Buffer.from(
+    await crypto.subtle.exportKey("spki", keyPair.publicKey),
+).toString("base64");
 
 // Store the public and private key somewhere in your user data
 ```

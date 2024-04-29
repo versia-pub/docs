@@ -10,12 +10,16 @@ export default defineConfig({
         nav: [
             { text: "Home", link: "/" },
             { text: "Specification", link: "/spec" },
+            { text: "Objects", link: "/objects" },
         ],
 
         sidebar: [
             {
-                text: "Spec Details",
-                items: [{ text: "Spec", link: "/spec" }],
+                text: "Specification",
+                items: [
+                    { text: "Spec", link: "/spec" },
+                    { text: "Objects", link: "/objects" },
+                ],
             },
             {
                 text: "Structures",
@@ -30,18 +34,18 @@ export default defineConfig({
             },
             {
                 text: "Groups",
-                link: "/groups",
+                items: [{ text: "Groups", link: "/groups" }],
             },
             {
-                text: "Cryptography",
+                text: "Security",
                 items: [
-                    { text: "Keys", link: "/cryptography/keys" },
-                    { text: "Signing", link: "/cryptography/signing" },
+                    { text: "API", link: "/security/api" },
+                    { text: "Keys", link: "/security/keys" },
+                    { text: "Signing", link: "/security/signing" },
                 ],
             },
             {
                 text: "Objects",
-                link: "/objects",
                 items: [
                     {
                         text: "Publications",
@@ -127,7 +131,7 @@ export default defineConfig({
         editLink: {
             pattern: "https://github.com/lysand-org/docs/edit/main/docs/:path",
         },
-        logo: "/logo.png",
+        logo: "https://cdn.lysand.org/logo.svg",
     },
     lastUpdated: true,
     cleanUrls: true,

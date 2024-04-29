@@ -65,5 +65,3 @@ Other values for `group` are:
 - `followers` for notes that can be seen by the author's followers only.
 
 If the `group` field is empty, and nobody is mentioned in the `to` field, the note is only visible to the author.
-
---> To finish
