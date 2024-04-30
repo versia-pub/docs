@@ -131,7 +131,7 @@ export default defineConfig({
         editLink: {
             pattern: "https://github.com/lysand-org/docs/edit/main/docs/:path",
         },
-        logo: "https://cdn.lysand.org/logo.svg",
+        logo: "https://cdn.lysand.org/logo.webp",
     },
     lastUpdated: true,
     cleanUrls: true,

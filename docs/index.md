@@ -7,7 +7,7 @@ hero:
   text: "Federation, simpler"
   tagline: A simple to implement and complete federation protocol
   image:
-    src: https://cdn.lysand.org/logo.svg
+    src: https://cdn.lysand.org/logo.webp
     alt: Lysand Logo
   actions:
     - theme: brand
