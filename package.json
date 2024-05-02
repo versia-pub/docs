@@ -1,17 +1,17 @@
 {
-    "scripts": {
-        "docs:dev": "vitepress dev",
-        "docs:build": "vitepress build",
-        "docs:preview": "vitepress preview"
-    },
-    "devDependencies": {
-        "@biomejs/biome": "^1.7.1",
-        "vitepress": "^1.1.0"
-    },
-    "trustedDependencies": ["@biomejs/biome"],
-    "dependencies": {
-        "@tailwindcss/vite": "^4.0.0-alpha.14",
-        "iconify-icon": "^2.1.0",
-        "tailwindcss": "^4.0.0-alpha.14"
-    }
+  "scripts": {
+    "docs:dev": "vitepress dev",
+    "docs:build": "vitepress build",
+    "docs:preview": "vitepress preview"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^1.7.1",
+    "vitepress": "^1.1.0"
+  },
+  "trustedDependencies": ["@biomejs/biome"],
+  "dependencies": {
+    "@tailwindcss/vite": "^4.0.0-alpha.14",
+    "iconify-icon": "^2.1.0",
+    "tailwindcss": "^4.0.0-alpha.14"
+  }
 }

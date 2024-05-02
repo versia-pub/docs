@@ -28,7 +28,7 @@ The words **MUST**, **MUST NOT**, **SHOULD**, **SHOULD NOT**, and **MAY** are us
 
 - **Actor**: An individual or entity utilizing the Lysand protocol, analogous to ActivityPub's `Actor` objects. An actor could be a [Server Actor](federation/server-actor), representing a server, or a [User Actor](objects/actors).
 - **Server**: A server that deploys the Lysand protocol, referred to as an **implementation**. Servers are also known as **instances** when referring to the deployed form.
-- **Entity**: A generic term for any object in the Lysand protocol, such as an [Actor](objects/actors), [Note](objects/publications), or [Attachment](objects/attachments).
+- **Entity**: A generic term for any object in the Lysand protocol, such as an [Actor](objects/actors), [Note](objects/publications), or [Like](objects/like).
 
 # Implementation Requirements
 

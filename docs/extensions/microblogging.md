@@ -35,7 +35,7 @@ Here's an example of an `Announce` action:
 | :----- | :----- | :------- |
 | author | String | Yes      |
 
-URI of the [Actor](./actors) who initiated the action.
+URI of the [Actor](../objects/actors) who initiated the action.
 
 #### Object
 
@@ -43,7 +43,7 @@ URI of the [Actor](./actors) who initiated the action.
 | :----- | :----- | :------- |
 | object | String | Yes      |
 
-URI of the object being announced. Must be of type [Note](./note)
+URI of the object being announced. Must be of type [Note](../objects/note)
 
 #### Implementation
 
