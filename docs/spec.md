@@ -1,7 +1,8 @@
 # Introduction
 
 > [!NOTE]
-> You are looking at the documentation for `Lysand 3.0`, currently in development.
+> You are looking at the documentation for `Lysand 3.0-beta1`, released in May 2024
+> Small changes may still be made before the final release.
 >
 > Previous versions:
 > - `Lysand 2.0`, released in March 2024.
