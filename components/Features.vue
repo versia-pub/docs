@@ -26,7 +26,6 @@
 </template>
 
 <script setup>
-import "iconify-icon";
 const features = [
     {
         name: "JSON-based APIs",

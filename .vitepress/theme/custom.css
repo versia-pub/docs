@@ -12,6 +12,7 @@
   --vp-home-hero-image-filter: brightness(0.8) saturate(1.2); */
   --vp-home-hero-name-color: rgb(249, 168, 212);
   --vp-c-brand-1: rgb(249, 168, 212);
+  --vp-layout-top-height: var(--spacing-10);
   --lysand-gradient: linear-gradient(
     to right,
     rgb(249, 168, 212),
