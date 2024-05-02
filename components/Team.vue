@@ -86,6 +86,26 @@ const people = [
                 icon: "bxl:github",
                 url: "https://github.com/cutestnekoaqua",
             },
+            {
+                name: "Fediverse",
+                icon: "bxl:mastodon",
+                url: "https://donotsta.re/april",
+            },
+            {
+                name: "Lysand",
+                icon: "bx:server",
+                url: "https://social.lysand.org/@aprl",
+            },
+            {
+                name: "Matrix",
+                icon: "simple-icons:matrix",
+                url: "https://matrix.to/#/@aprl:uwu.is",
+            },
+            {
+                name: "Email",
+                icon: "bx:bxs-envelope",
+                url: "mailto:aprl@acab.dev",
+            },
         ],
     },
 ];
