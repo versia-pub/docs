@@ -333,12 +333,14 @@ interface Device {
 
 ```typescript
 /*
- * microblog -> Twitter, Mastodon-style
- * forum -> Reddit-style
- * blog -> Wordpress, WriteFreely-style
- * image -> Instagram-style
- * video -> YouTube-style
- * audio -> SoundCloud, Spotify-style
+ * UI examples for each category:
+ * microblog -> Twitter, Mastodon
+ * forum -> Reddit
+ * blog -> Wordpress, WriteFreely
+ * image -> Instagram
+ * video -> YouTube
+ * audio -> SoundCloud, Spotify
+ * messaging -> Discord, Matrix, Signal
  */
-type CategoryType = "microblog" | "forum" | "blog" | "image" | "video" | "audio"
+type CategoryType = "microblog" | "forum" | "blog" | "image" | "video" | "audio" | "messaging"
 ```
