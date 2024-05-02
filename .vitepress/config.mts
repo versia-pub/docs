@@ -1,9 +1,20 @@
+import tailwindcss from "@tailwindcss/vite";
 import { defineConfig } from "vitepress";
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
     title: "Lysand Documentation",
     description: "Documentation for Lysand, a new federated protocol",
+    vite: {
+        plugins: [tailwindcss()],
+    },
+    vue: {
+        template: {
+            compilerOptions: {
+                isCustomElement: (tag) => tag === "iconify-icon",
+            },
+        },
+    },
     srcDir: "docs",
     themeConfig: {
         // https://vitepress.dev/reference/default-theme-config
@@ -11,6 +22,8 @@ export default defineConfig({
             { text: "Home", link: "/" },
             { text: "Specification", link: "/spec" },
             { text: "Objects", link: "/objects" },
+            { text: "Security", link: "/security/api" },
+            { text: "Extensions", link: "/extensions" },
         ],
 
         sidebar: [
@@ -118,9 +131,18 @@ export default defineConfig({
                     { text: "Events", link: "/extensions/events" },
                     { text: "Reports", link: "/extensions/reports" },
                     { text: "Vanity", link: "/extensions/vanity" },
+                    {
+                        text: "Interactivity",
+                        link: "/extensions/interactivity",
+                    },
                 ],
             },
         ],
+
+        footer: {
+            message: "Released under the MIT License.",
+            copyright: "Copyright © 2023-present Gaspard Wierzbinski",
+        },
 
         socialLinks: [
             { icon: "github", link: "https://github.com/lysand-org/" },
@@ -131,11 +153,12 @@ export default defineConfig({
         editLink: {
             pattern: "https://github.com/lysand-org/docs/edit/main/docs/:path",
         },
+        externalLinkIcon: true,
         logo: "https://cdn.lysand.org/logo.webp",
     },
     lastUpdated: true,
     cleanUrls: true,
-    titleTemplate: ":title · Lysand 2.0 Docs",
+    titleTemplate: ":title · Lysand Docs",
     head: [["link", { rel: "icon", href: "/favicon.png", type: "image/png" }]],
     lang: "en-US",
 });

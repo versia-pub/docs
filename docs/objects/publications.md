@@ -12,13 +12,28 @@ Here is an example publication:
     "created_at": "2021-01-01T00:00:00.000Z",
     "content": {
         "text/plain": {
-            "content": "Hello, world!"
+            "content": "Hello, world! I own this website: https://google.com"
         },
         "text/html": {
-            "content": "Hello, <b>world</b>!"
+            "content": "Hello, <b>world</b>! I own this website! <a href=\"https://google.com\">https://google.com</a>"
         }
     },
-    "visibility": "public",
+    "category": "microblog",
+    "device": {
+        "name": "Megalodon for Android",
+        "version": "1.3.89",
+        "url": "https://sk22.github.io/megalodon"
+    },
+    "previews": [
+        {
+            "link": "https://google.com",
+            "title": "Google",
+            "description": "The world's most popular search engine",
+            "image": "https://cdn.example.com/previews/6e0204a2-746c-4972-8602-c4f37fc63bbe.png",
+            "icon": "https://google.com/favicon.ico"
+        }
+    ],
+    "group": "public",
     "attachments": [
         {
             "image/png": {
@@ -85,9 +100,55 @@ An example value for the `content` field would be:
 > 
 > Lysand also recommends that servers always include a `text/plain` version of each object, as it is the most basic content type that is supported by all clients, such as command line clients.
 
+> [!WARNING]
+> Servers should not trust the `text/html` content type, as it could contain malicious code. Servers should always sanitize the content before displaying it to the user.
+>
+> Additionally, frontends should warn users before clicking on links that do not match the link text, such as `<a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">https://google.com</a>`
+
 It is up to the client to choose which content format to display to the user. The client may choose to display the first content format that it supports, or it may choose to display the content format that it thinks is the most appropriate.
 
-Lysand recommends that clients display the richest content format that they support, such as HTML or more exotic formats such as MFM.
+Clients should display the richest content format that they support, such as HTML or more exotic formats such as MFM.
+
+### Category
+
+| Name     | Type         | Required |
+| :------- | :----------- | :------- |
+| category | CategoryType | No       |
+
+Category of the publication. Used for clients to possibly display notes in different ways, for example a note with the `microblog` category could be displayed in a timeline, while a note with the `forum` category could be displayed Reddit-style.
+
+See [the Types section](#types) for more information on the `CategoryType` enum.
+
+### Device
+
+| Name   | Type   | Required |
+| :----- | :----- | :------- |
+| device | Device | No       |
+
+Device that the publication was created on. If it is not provided, it is assumed that the publication was created on a generic device.
+
+Servers should avoid collecting any information that could be used to identify the user, such as IP addresses or user agents. A simple name is recommended.
+
+### Previews
+
+| Name     | Type                 | Required |
+| :------- | :------------------- | :------- |
+| previews | Array of LinkPreview | No       |
+
+Previews for links in the publication. Optional. This is to avoid the [stampeding mastodon problem](https://github.com/mastodon/mastodon/issues/23662) where a link preview is fetched by every server that sees the publication, creating an accidental DDOS attack.
+
+> [!WARNING]
+> Servers should make sure not to trust the previews, as they could be faked by remote servers. This is not a very good attack vector, but it is still possible to redirect users to malicious links.
+
+### Group
+
+| Name  | Type   | Required |
+| :---- | :----- | :------- |
+| group | String | No       |
+
+URI of a [Group](../groups.md), or `public` or `followers`.
+
+Refer to the [Groups](../groups.md) page for more information on groups, their implementation and what to do if this value is not provided.
 
 ### Attachments
 
@@ -216,6 +277,10 @@ interface Publication extends Entity {
     type: "Note" | "Patch";
     author: string;
     content?: ContentFormat;
+    category?: CategoryType;
+    device?: Device;
+    previews?: LinkPreview[];
+    group?: string | "public" | "followers";
     attachments?: ContentFormat[];
     replies_to?: string;
     quotes?: string;
@@ -246,4 +311,34 @@ enum Visibility {
     Followers = "followers",
     Direct = "direct"
 }
+```
+
+```typescript
+interface LinkPreview {
+    link: string;
+    title: string;
+    description?: string;
+    image?: string;
+    icon?: string;
+}
+```
+
+```typescript
+interface Device {
+    name: string;
+    version?: string;
+    url?: string;
+}
+```
+
+```typescript
+/*
+ * microblog -> Twitter, Mastodon-style
+ * forum -> Reddit-style
+ * blog -> Wordpress, WriteFreely-style
+ * image -> Instagram-style
+ * video -> YouTube-style
+ * audio -> SoundCloud, Spotify-style
+ */
+type CategoryType = "microblog" | "forum" | "blog" | "image" | "video" | "audio"
 ```

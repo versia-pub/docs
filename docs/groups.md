@@ -5,7 +5,7 @@ Groups are a way to organize the visibility of objects on the server. Groups can
 > [!NOTE]
 > Groups replace the old "visibility" system for Notes, which was designed for a microblogging context. Groups are more flexible and can be used for any application.
 >
-> Notes can still use visibility in cases where groups are not needed with the `followers` and `public` group URIs.
+> Notes can still use visibility in cases where groups are not needed with the `followers` and `public` values where you'd typically put a group URI (for example, in a [Publication](./objects/publications.md)'s `group` field').
 
 # Group Entity
 
