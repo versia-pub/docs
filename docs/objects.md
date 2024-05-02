@@ -29,21 +29,7 @@ URIs must adhere to the rules defined [here](spec).
 
 The `type` attribute of an entity is a string that signifies the type of the entity. It is used to determine how the entity should be presented to the user.
 
-The `type` attribute **MUST** be one of the following values:
-- `Note`
-- `Patch`
-- `Actor`
-- `Like`
-- `Dislike`
-- `Follow`
-- `FollowAccept`
-- `FollowReject`
-- `Announce`
-- `Undo`
-- `ServerMetadata`
-- `Extension`
-
-Other values are not permitted in this current version of the protocol.
+The `type` attribute **MUST** a type officially defined in the Lysand protocol. Extension types are **NOT** permitted and should instead use the [Extension System](extensions.md).
 
 # Types
 

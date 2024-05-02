@@ -48,7 +48,13 @@ Here is an example object:
             },
             "birthday": "1998-04-12",
             "location": "+40.6894-074.0447/",
-            "activitypub": "@erikuden@mastodon.de"
+            "activitypub": [
+                "@erikuden@mastodon.de"
+            ],
+            "aliases": [
+                "https://burger.social/accounts/349ee237-c672-41c1-aadc-677e185f795a",
+                "https://social.lysand.org/users/f565ef02-035d-4974-ba5e-f62a8558331d"
+            ]
         }
     }
 }
@@ -131,11 +137,19 @@ Clients might choose to display a map of the user's location.
 
 | Name       | Type   | Required |
 | :--------- | :----- | :------- |
-| activitypub | String | No       |
+| activitypub | Array of String | No       |
 
-The user's ActivityPub profile. This should be a string in the format `@username@domain`.
+The user's ActivityPub profile. This should be an array of strings in the format `@username@domain`.
 
 Servers are expected to use standard WebFinger resolution to fetch the user's ActivityPub profile if needed.
+
+### Aliases
+
+| Name    | Type   | Required |
+| :------ | :----- | :------- |
+| aliases | Array of String | No       |
+
+Aliases to the user's profile on other Lysand-compatible servers. This should be an array of URIs resolving to the user's Lysand object.
 
 ## Types
 
@@ -150,7 +164,8 @@ interface VanityExtension {
     };
     birthday?: string;
     location?: string;
-    activitypub?: string;
+    activitypub?: string[];
+    aliases?: string[];
 }
 ```
 
