@@ -17,7 +17,7 @@ interface ContentFormat {
         fps?: number; // unsigned 64-bit integer
         width?: number; // unsigned 64-bit integer
         height?: number; // unsigned 64-bit integer
-        duration?: number; // unsigned 64-bit integer
+        duration?: number; // unsigned 64-bit float
     }
 }
 ```
