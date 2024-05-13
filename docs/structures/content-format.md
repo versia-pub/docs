@@ -23,6 +23,7 @@ interface ContentFormat {
     }
 }
 ```
+To maintain compatibility with strongly types languages, numbers MUST fit within a [u64](https://doc.rust-lang.org/std/primitive.u64.html).
 
 Here's an example of how this structure can be used:
 
