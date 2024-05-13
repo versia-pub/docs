@@ -34,6 +34,14 @@ The words **MUST**, **MUST NOT**, **SHOULD**, **SHOULD NOT**, and **MAY** are us
 
 Servers **MUST** reject any requests that fail to respect the Lysand specification in any way. This includes, but is not limited to, incorrect JSON object handling, incorrect HTTP headers, and incorrect URI normalization.
 
+## For strictly-typed languages (e.g. Rust)
+
+All numbers are to be treated as 64-bit integer or floats (depending on whether a valid value would be int or float). If a valid value cannot be negative, it must also be treated as unsigned.
+
+Examples:
+- A `size` (bytes) property on a file object should be treated as an unsigned 64-bit integer.
+- A `duration` property on a video object should be treated as an unsigned 64-bit float.
+
 ## HTTP
 
 All HTTP request and response bodies **MUST** be encoded as UTF-8 JSON, with the `Content-Type` header set to `application/json; charset=utf-8`. Appropriate signatures must be included in the `Signature` header for **every request and response**.

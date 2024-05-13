@@ -295,7 +295,7 @@ interface Publication extends Entity {
         "org.lysand:polls"?: {
             poll: {
                 options: ContentFormat[];
-                votes: number[];
+                votes: number[]; // unsigned 64-bit integer
                 multiple_choice?: boolean;
                 expires_at: string;
             };

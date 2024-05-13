@@ -7,19 +7,17 @@ interface ContentFormat {
     [contentType: string]: {
         content: string;
         description?: string;
-        size?: number;
+        size?: number; // unsigned 64-bit integer
         hash?: {
-            md5?: string;
-            sha1?: string;
             sha256?: string;
             sha512?: string;
             [key: string]: string | undefined;
         };
         blurhash?: string;
-        fps?: number;
-        width?: number;
-        height?: number;
-        duration?: number;
+        fps?: number; // unsigned 64-bit integer
+        width?: number; // unsigned 64-bit integer
+        height?: number; // unsigned 64-bit integer
+        duration?: number; // unsigned 64-bit integer
     }
 }
 ```

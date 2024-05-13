@@ -8,7 +8,7 @@ Here's how a Collections can be represented in TypeScript:
 interface Collections<T> {
     first: string;
     last: string;
-    total_count: number;
+    total_count: number; // unsigned 64-bit integer
     author: string;
     next?: string;
     prev?: string;

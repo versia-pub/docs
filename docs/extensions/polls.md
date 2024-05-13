@@ -226,7 +226,7 @@ The server **MAY** send a `GET` request to the poll's Publication URI to update 
 interface Poll extends Extension {
     extension_type: "org.lysand:polls/Poll";
     options: ContentFormat[];
-    votes: number[];
+    votes: number[]; // unsigned 64-bit integer
     multiple_choice?: boolean;
     expires_at: string;
 }
@@ -236,7 +236,7 @@ interface Poll extends Extension {
 interface Vote extends Extension {
     extension_type: "org.lysand:polls/Vote";
     poll: string;
-    option: number;
+    option: number; // unsigned 64-bit integer
 }
 ```
 
@@ -244,6 +244,6 @@ interface Vote extends Extension {
 interface VoteResult extends Extension {
     extension_type: "org.lysand:polls/VoteResult";
     poll: string;
-    votes: number[];
+    votes: number[]; // unsigned 64-bit integer
 }
 ```
