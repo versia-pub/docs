@@ -86,3 +86,7 @@ All JSON objects disseminated during federation **MUST** be handled as follows:
 ## API Security
 
 All servers **MUST** adhere to the security guidelines outlined in the [API Security](security/api) document.
+
+---
+
+> [This document is dedicated to all citizens of planet Earth. You deserve freedom of communication; we hope we have contributed in some part, however small, towards that goal and right.](https://w3c.github.io/activitypub/#acknowledgements)
