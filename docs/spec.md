@@ -42,6 +42,10 @@ Examples:
 - A `size` (bytes) property on a file object should be treated as an unsigned 64-bit integer.
 - A `duration` property on a video object should be treated as an unsigned 64-bit float.
 
+## Optional Fields
+
+Fields marked as "optional" may be set to `null` or omitted entirely. If a field is omitted, it is assumed to be `null`, unless it is not in the object's schema.
+
 ## HTTP
 
 All HTTP request and response bodies **MUST** be encoded as UTF-8 JSON, with the `Content-Type` header set to `application/json; charset=utf-8`. Appropriate signatures must be included in the `Signature` header for **every request and response**.
