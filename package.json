@@ -7,7 +7,8 @@
         "build": "next build",
         "start": "next start",
         "typecheck": "tsc -p .",
-        "lint": "bunx @biomejs/biome check ."
+        "lint": "bunx @biomejs/biome check .",
+        "uuid": "bun --print 'crypto.randomUUID()'"
     },
     "browserslist": "defaults, not ie <= 11",
     "dependencies": {

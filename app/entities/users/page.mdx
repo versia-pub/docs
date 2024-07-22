@@ -1,0 +1,81 @@
+export const metadata = {
+    title: 'Users',
+    description: 'Definition of the User entity',
+}
+
+# Users
+
+## Entity Definition
+
+<Row>
+  <Col>
+
+    <Properties>
+      <Property name="contact.created">
+        A new contact was created.
+      </Property>
+    </Properties>
+
+  </Col>
+  <Col sticky>
+
+    ```jsonc {{ 'title': 'Example User' }}
+    {
+        "id": "018ec082-0ae1-761c-b2c5-22275a611771",
+        "type": "User",
+        "uri": "https://social.lysand.org/users/018ec082-0ae1-761c-b2c5-22275a611771",
+        "created_at": "2024-04-09T01:38:51.743Z",
+        // [!code focus:10]
+        "avatar": {
+            "application/octet-stream": {
+                "content": "https://avatars.githubusercontent.com/u/30842467?v=4"
+            }
+        },
+        "bio": {
+            "text/html": {
+                "content": "<p>🌸🌸🌸</p>"
+            },
+            "text/plain": {
+                "content": "🌸🌸🌸"
+            }
+        },
+        "dislikes": "https://social.lysand.org/users/018ec082-0ae1-761c-b2c5-22275a611771/dislikes",
+        "display_name": "April The Pink (limited Sand Edition)",
+        "extensions": {
+            "org.lysand:custom_emojis": {
+                "emojis": []
+            }
+        },
+        "featured": "https://social.lysand.org/users/018ec082-0ae1-761c-b2c5-22275a611771/featured",
+        "fields": [
+            {
+                "key": {
+                    "text/html": {
+                        "content": "<p>Pronouns</p>"
+                    }
+                },
+                "value": {
+                    "text/html": {
+                        "content": "<p>It/its</p>"
+                    }
+                }
+            }
+        ],
+        "followers": "https://social.lysand.org/users/018ec082-0ae1-761c-b2c5-22275a611771/followers",
+        "following": "https://social.lysand.org/users/018ec082-0ae1-761c-b2c5-22275a611771/following",
+        "header": null,
+        "inbox": "https://social.lysand.org/users/018ec082-0ae1-761c-b2c5-22275a611771/inbox",
+        "indexable": false,
+        "likes": "https://social.lysand.org/users/018ec082-0ae1-761c-b2c5-22275a611771/likes",
+        "manually_approves_followers": false,
+        "outbox": "https://social.lysand.org/users/018ec082-0ae1-761c-b2c5-22275a611771/outbox",
+        "public_key": {
+            "actor": "https://social.lysand.org/users/018ec082-0ae1-761c-b2c5-22275a611771",
+            "public_key": "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+        },
+        "username": "aprl"
+    }
+    ```
+
+  </Col>
+</Row>

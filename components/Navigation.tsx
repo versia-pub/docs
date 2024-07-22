@@ -256,6 +256,10 @@ export const navigation: NavGroup[] = [
         ],
     },
     {
+        title: "Entities",
+        links: [{ title: "Users", href: "/entities/users" }],
+    },
+    {
         title: "Resources",
         links: [
             { title: "Contacts", href: "/contacts" },
