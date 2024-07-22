@@ -1,5 +1,5 @@
 {
-    "name": "tailwindui-protocol",
+    "name": "@lysand-org/docs",
     "version": "0.1.0",
     "private": true,
     "scripts": {
@@ -10,7 +10,6 @@
         "lint": "bunx @biomejs/biome check .",
         "uuid": "bun --print 'crypto.randomUUID()'"
     },
-    "browserslist": "defaults, not ie <= 11",
     "dependencies": {
         "@algolia/autocomplete-core": "^1.17.4",
         "@headlessui/react": "^2.1.2",
@@ -51,6 +50,7 @@
     },
     "devDependencies": {
         "@biomejs/biome": "^1.8.3",
+        "@iconify-icon/react": "^2.1.0",
         "@shikijs/transformers": "^1.11.0",
         "eslint": "^9.7.0",
         "eslint-config-next": "^14.2.5",
