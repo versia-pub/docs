@@ -130,6 +130,7 @@ export default defineConfig({
                     },
                     { text: "Events", link: "/extensions/events" },
                     { text: "Reports", link: "/extensions/reports" },
+                    { text: "Migration", link: "/extensions/migration" },
                     { text: "Vanity", link: "/extensions/vanity" },
                     {
                         text: "Interactivity",
