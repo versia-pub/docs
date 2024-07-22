@@ -29,6 +29,7 @@ Here is an example user:
         }
     },
     "indexable": true,
+    "manually_approves_followers": false,
     "public_key": {
         "public_key": "...",
         "actor": "https://test.com/users/02e1e3b2-cb1f-4e4a-b82e-98866bee5de7"
@@ -75,8 +76,8 @@ The `type` of a `User` is invariably `User`.
 
 ### Public Key
 
-| Name       | Type                                       | Required |
-| :--------- | :----------------------------------------- | :------- |
+| Name       | Type                                   | Required |
+| :--------- | :------------------------------------- | :------- |
 | public_key | [ActorPublicKeyData](../security/keys) | Yes      |
 
 Author public key. Used to authenticate the actor's identity for their posts. The key **MUST** be encoded in base64.
@@ -138,6 +139,14 @@ Servers and search engines should respect the `indexable` field, and **SHOULD NO
 #### Implementation Details
 
 This field should also trigger a change in the `robots.txt` file of the server, to prevent search engines from indexing the user's profile, or some other kind of mechanism to prevent indexing (some search engines support using meta tags or headers for example)
+
+### Manually Approves Followers
+
+| Name                        | Type    | Required |
+| :-------------------------- | :------ | :------- |
+| manually_approves_followers | Boolean | Yes      |
+
+Whether or not the actor manually approves followers. This is meant to be used for clients to know if follow requests are automatically accepted or if they need to be manually approved by the user.
 
 ### Avatar
 
