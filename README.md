@@ -1,46 +1,63 @@
-# Protocol
 
-Protocol is a [Tailwind UI](https://tailwindui.com) site template built using [Tailwind CSS](https://tailwindcss.com) and [Next.js](https://nextjs.org).
 
-## Getting started
+<p align="center">
+  <a href="https://lysand.org"><img src="https://cdn.lysand.org/logo-long-dark.webp" alt="Lysand Logo" height="110"></a>
+</p>
 
-To get started with this template, first install the npm dependencies:
+
+<h2 align="center">
+  <strong><code>Lysand Documentation</code></strong>
+</h2>
+
+<div align="center">
+    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/typescript/typescript-original.svg" height="42" width="52" alt="TypeScript logo">
+    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" height="42" width="52" alt="React logo">
+    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg" height="42" width="52" alt="NextJS logo">
+    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg" height="42" width="52" alt="Docker logo">
+    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/bun/bun-original.svg" height="42" width="52" alt="Bun logo">
+    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" height="42" width="52" alt="CSS3 logo">
+    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" height="42" width="52" alt="HTML5 logo">
+    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linux/linux-original.svg" height="42" width="52" alt="Linux logo">
+    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original.svg" height="42" width="52" alt="TailwindCSS logo">
+</div>
+
+<br/>
+
+<p align="center">
+    <img src="public/screenshots/framed/ipad-home.webp" alt="Lysand on an iPad" height="400">
+</p>
+
+## Technologies
+
+- [**`TypeScript`**](https://www.typescriptlang.org/): A typed superset of JavaScript that compiles to plain JavaScript.
+- [**`React`**](https://reactjs.org/): A JavaScript library for building user interfaces.
+- [**`Next.js`**](https://nextjs.org/): A React framework for building static and dynamic websites.
+- [**`MDX`**](https://mdxjs.com/): Markdown for the component era.
+- [**`Zustand`**](https://zustand.surge.sh/): A small, fast, and scalable state management library.
+- [**`Framer Motion`**](https://www.framer.com/motion/): A production-ready motion library for React.
+- [**`FlexSearch`**](https://flexsearch.net/): A full-text search library for JavaScript.
+
+## Installation
+
+This project uses [Bun](https://bun.sh) as a package manager. To install the dependencies, run:
 
 ```bash
-npm install
+bun install
 ```
 
-Next, run the development server:
+To start the development server, run:
 
 ```bash
-npm run dev
+bun dev
 ```
 
-Finally, open [http://localhost:3000](http://localhost:3000) in your browser to view the website.
+## Contributing
 
-## Customizing
+Contributions are welcome! Feel free to open an issue or submit a pull request.
 
-You can start editing this template by modifying the files in the `/src` folder. The site will auto-update as you edit these files.
+### Licenses
 
-## Global search
+The code in this repository is licensed under the [MIT License](
+https://opensource.org/licenses/MIT).
 
-This template includes a global search that's powered by the [FlexSearch](https://github.com/nextapps-de/flexsearch) library. It's available by clicking the search input or by using the `⌘K` shortcut.
-
-This feature requires no configuration, and works out of the box by automatically scanning your documentation pages to build its index. You can adjust the search parameters by editing the `/src/mdx/search.mjs` file.
-
-## License
-
-This site template is a commercial product and is licensed under the [Tailwind UI license](https://tailwindui.com/license).
-
-## Learn more
-
-To learn more about the technologies used in this site template, see the following resources:
-
-- [Tailwind CSS](https://tailwindcss.com/docs) - the official Tailwind CSS documentation
-- [Next.js](https://nextjs.org/docs) - the official Next.js documentation
-- [Headless UI](https://headlessui.dev) - the official Headless UI documentation
-- [Framer Motion](https://www.framer.com/docs/) - the official Framer Motion documentation
-- [MDX](https://mdxjs.com/) - the official MDX documentation
-- [Algolia Autocomplete](https://www.algolia.com/doc/ui-libraries/autocomplete/introduction/what-is-autocomplete/) - the official Algolia Autocomplete documentation
-- [FlexSearch](https://github.com/nextapps-de/flexsearch) - the official FlexSearch documentation
-- [Zustand](https://docs.pmnd.rs/zustand/getting-started/introduction) - the official Zustand documentation
+However, the *documentation text* (including the Markdown files in the `app` directory) is licensed under the [Creative Commons Attribution 4.0 International License](https://creativecommons.org/licenses/by/4.0/). You are free to share and adapt the text as long as you provide proper attribution.
