@@ -3,15 +3,14 @@ import { Resources } from '@/components/Resources'
 import { HeroPattern } from '@/components/HeroPattern'
 
 export const metadata = {
-  title: 'Lysand Documentation',
-  description:
-    'Introduction to the Lysand Protocol, a communication medium for federated applications, leveraging the HTTP stack.',
+    title: 'Lysand Documentation',
+    description: 'Introduction to the Lysand Protocol, a communication medium for federated applications, leveraging the HTTP stack.',
 }
 
 export const sections = [
-  { title: 'Vocabulary', id: 'vocabulary' },
-  { title: 'Guides', id: 'guides' },
-  { title: 'Resources', id: 'resources' },
+    { title: 'Vocabulary', id: 'vocabulary' },
+    { title: 'Basic Concepts', id: 'basic-concepts' },
+    { title: 'Resources', id: 'resources' },
 ]
 
 <HeroPattern />
@@ -42,6 +41,15 @@ The Lysand Protocol uses the following terms:
   - Using the same nomenclature, an ActivityPub Implementation would be `Mastodon`, and an Instance would be `mastodon.social`.
 - **Federation**: The process of exchanging data between two or more **Instances**.
 
-<Guides />
+## Philosophy
+
+The Lysand Protocol is heavily inspired by the [ActivityPub](https://www.w3.org/TR/activitypub/) specification. It is designed to be simple and easy to implement, with a focus on the following concepts:
+- **Simple Structures**: Entities are represented as JSON objects. No JSON-LD, no complex data structures, just plain JSON.
+- **Modularity**: The protocol is divided into a **core protocol** and **extensions**. Implementations can choose to support only the core protocol or add extensions as needed.
+- **Namespacing**: To avoid extension conflicts, all extensions are namespaced.
+- **Signatures**: Most types of interactions **must** be signed with a private key. Unlike other protocols, signatures are **mandatory**, not optional.
+- **Developer-Friendliness**: Understanding and implementing your own Lysand server should be easy. Documentation is aimed at developers first.
+
+{/* <Guides /> */}
 
 <Resources />

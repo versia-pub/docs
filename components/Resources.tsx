@@ -16,8 +16,6 @@ import type {
 import { GridPattern } from "./GridPattern";
 import { Heading } from "./Heading";
 import { ChatBubbleIcon } from "./icons/ChatBubbleIcon";
-import { EnvelopeIcon } from "./icons/EnvelopeIcon";
-import { UserIcon } from "./icons/UserIcon";
 import { UsersIcon } from "./icons/UsersIcon";
 
 interface Resource {
@@ -33,11 +31,11 @@ interface Resource {
 
 const resources: Resource[] = [
     {
-        href: "/contacts",
-        name: "Contacts",
+        href: "/entities",
+        name: "Entities",
         description:
-            "Learn about the contact model and how to create, retrieve, update, delete, and list contacts.",
-        icon: UserIcon,
+            "Learn how Entities work and how to use them to transmit federated data.",
+        icon: ChatBubbleIcon,
         pattern: {
             y: 16,
             squares: [
@@ -47,42 +45,17 @@ const resources: Resource[] = [
         },
     },
     {
-        href: "/conversations",
-        name: "Conversations",
+        href: "/security",
+        name: "Security",
         description:
-            "Learn about the conversation model and how to create, retrieve, update, delete, and list conversations.",
-        icon: ChatBubbleIcon,
+            "Learn how to secure your Lysand implementation and protect your users' data.",
+        icon: UsersIcon,
         pattern: {
             y: -6,
             squares: [
                 [-1, 2],
                 [1, 3],
             ],
-        },
-    },
-    {
-        href: "/messages",
-        name: "Messages",
-        description:
-            "Learn about the message model and how to create, retrieve, update, delete, and list messages.",
-        icon: EnvelopeIcon,
-        pattern: {
-            y: 32,
-            squares: [
-                [0, 2],
-                [1, 4],
-            ],
-        },
-    },
-    {
-        href: "/groups",
-        name: "Groups",
-        description:
-            "Learn about the group model and how to create, retrieve, update, delete, and list groups.",
-        icon: UsersIcon,
-        pattern: {
-            y: 22,
-            squares: [[0, 1]],
         },
     },
 ];
