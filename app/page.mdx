@@ -3,40 +3,44 @@ import { Resources } from '@/components/Resources'
 import { HeroPattern } from '@/components/HeroPattern'
 
 export const metadata = {
-  title: 'API Documentation',
+  title: 'Lysand Documentation',
   description:
-    'Learn everything there is to know about the Protocol API and integrate Protocol into your product.',
+    'Introduction to the Lysand Protocol, a communication medium for federated applications, leveraging the HTTP stack.',
 }
 
 export const sections = [
+  { title: 'Vocabulary', id: 'vocabulary' },
   { title: 'Guides', id: 'guides' },
   { title: 'Resources', id: 'resources' },
 ]
 
 <HeroPattern />
 
-# API Documentation
+# Lysand Federation Protocol
 
-Use the Protocol API to access contacts, conversations, group messages, and more and seamlessly integrate your product into the workflows of dozens of devoted Protocol users. {{ className: 'lead' }}
+The Lysand Protocol is designed as a communication medium for federated applications, leveraging the HTTP stack. Its simplicity ensures ease of implementation and comprehension. {{ className: 'lead' }}
 
 <div className="not-prose mb-16 mt-6 flex gap-3">
   <Button href="/quickstart" arrow="right">
-    <>Quickstart</>
+    <>Introduction</>
   </Button>
   <Button href="/sdks" variant="outline">
     <>Explore SDKs</>
   </Button>
 </div>
 
-## Getting started {{ anchor: false }}
+## Vocabulary
 
-To get started, create a new application in your [developer settings](#), then read about how to make requests for the resources you need to access using our HTTP APIs or dedicated client SDKs. When your integration is ready to go live, publish it to our [integrations directory](#) to reach the Protocol community. {{ className: 'lead' }}
+<Note>
+The words **MUST**, **MUST NOT**, **SHOULD**, **SHOULD NOT**, and **MAY** are used in this document as defined in [RFC 2119](https://tools.ietf.org/html/rfc2119).
+</Note>
 
-<div className="not-prose">
-  <Button href="/sdks" variant="text" arrow="right">
-    <>Get your API key</>
-  </Button>
-</div>
+The Lysand Protocol uses the following terms:
+- **Entity**: A generic term for any JSON object in the protocol, such as an [Actor](./objects/actors), a [Note](./objects/notes), or a [Like](./objects/likes). Entities are uniquely identified by their `id` property.
+- **Implementation**: A software application that implements the Lysand Protocol.
+- **Instance**: An application deploying an **Implementation**.
+  - Using the same nomenclature, an ActivityPub Implementation would be `Mastodon`, and an Instance would be `mastodon.social`.
+- **Federation**: The process of exchanging data between two or more **Instances**.
 
 <Guides />
 

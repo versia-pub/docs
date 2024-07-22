@@ -10,8 +10,8 @@ import type { ReactNode } from "react";
 
 export const metadata: Metadata = {
     title: {
-        template: "%s - Protocol API Reference",
-        default: "Protocol API Reference",
+        template: "%s - Lysand API Reference",
+        default: "Lysand API Reference",
     },
 };
 
@@ -31,6 +31,9 @@ export default async function RootLayout({
 
     return (
         <html lang="en" className="h-full" suppressHydrationWarning={true}>
+            <head>
+                <link rel="icon" href="/favicon.png" type="image/png" />
+            </head>
             <body className="flex min-h-full bg-white antialiased dark:bg-zinc-900">
                 <Providers>
                     <div className="w-full">

@@ -170,7 +170,7 @@ function NavigationGroup({
         <li className={clsx("relative mt-6", className)}>
             <motion.h2
                 layout="position"
-                className="text-xs font-semibold text-zinc-900 dark:text-white"
+                className="text-sm font-semibold text-zinc-900 dark:text-white"
             >
                 {group.title}
             </motion.h2>
