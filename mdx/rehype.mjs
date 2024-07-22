@@ -1,8 +1,13 @@
+import {
+    transformerMetaHighlight,
+    transformerNotationFocus,
+    transformerNotationHighlight,
+} from "@shikijs/transformers";
 import { slugifyWithCounter } from "@sindresorhus/slugify";
 import * as acorn from "acorn";
 import { toString as mdastToString } from "mdast-util-to-string";
 import { mdxAnnotations } from "mdx-annotations";
-import shiki from "shiki";
+import { createCssVariablesTheme, createHighlighter } from "shiki";
 import { visit } from "unist-util-visit";
 
 function rehypeParseCodeBlocks() {
@@ -17,14 +22,31 @@ function rehypeParseCodeBlocks() {
     };
 }
 
-let highlighter;
+const myTheme = createCssVariablesTheme({
+    name: "css-variables",
+    variablePrefix: "--shiki-",
+    variableDefaults: {},
+    fontStyle: true,
+});
+
+const highlighter = await createHighlighter({
+    langs: [
+        "typescript",
+        "javascript",
+        "json",
+        "css",
+        "html",
+        "json5",
+        "jsonc",
+        "bash",
+        "php",
+        "python",
+    ],
+    themes: [myTheme],
+});
 
 function rehypeShiki() {
     return async (tree) => {
-        highlighter =
-            highlighter ??
-            (await shiki.getHighlighter({ theme: "css-variables" }));
-
         visit(tree, "element", (node) => {
             if (
                 node.tagName === "pre" &&
@@ -36,18 +58,17 @@ function rehypeShiki() {
                 node.properties.code = textNode.value;
 
                 if (node.properties.language) {
-                    const tokens = highlighter.codeToThemedTokens(
-                        textNode.value,
-                        node.properties.language,
-                    );
-
-                    textNode.value = shiki.renderToHtml(tokens, {
-                        elements: {
-                            pre: ({ children }) => children,
-                            code: ({ children }) => children,
-                            line: ({ children }) => `<span>${children}</span>`,
-                        },
+                    const html = highlighter.codeToHtml(textNode.value, {
+                        lang: node.properties.language,
+                        theme: myTheme,
+                        transformers: [
+                            transformerNotationFocus(),
+                            transformerNotationHighlight(),
+                            transformerMetaHighlight(),
+                        ],
                     });
+
+                    textNode.value = html;
                 }
             }
         });
