@@ -58,25 +58,25 @@ The `User` entity represents an account on a Lysand instance. Users can post [No
         <Property name="indexable" type="boolean" required={true}>
             User consent to be indexed by search engines. If `false`, the user's profile should not be indexed.
         </Property>
-        <Property name="inbox" type="URI" required={true}>
+        <Property name="inbox" type="URI" required={true} typeLink="/types#uri">
             The user's federation inbox. Refer to the [federation documentation](/federation).
         </Property>
-        <Property name="outbox" type="URI" required={true}>
+        <Property name="outbox" type="URI" required={true} typeLink="/types#uri">
             The user's federation outbox. Refer to the [federation documentation](/federation).
         </Property>
-        <Property name="followers" type="URI" required={true}>
+        <Property name="followers" type="URI" required={true} typeLink="/types#uri">
             User's followers. URI must resolve to a [Collection](/structures/collection) of [User](/entities/users) entities.
         </Property>
-        <Property name="following" type="URI" required={true}>
+        <Property name="following" type="URI" required={true} typeLink="/types#uri">
             Users that the user follows. URI must resolve to a [Collection](/structures/collection) of [User](/entities/users) entities.
         </Property>
-        <Property name="likes" type="URI" required={true}>
+        <Property name="likes" type="URI" required={true} typeLink="/types#uri">
             User's likes. URI must resolve to a [Collection](/structures/collection) of [Like](/entities/likes) entities.
         </Property>
-        <Property name="dislikes" type="URI" required={true}>
+        <Property name="dislikes" type="URI" required={true} typeLink="/types#uri">
             User's dislikes. URI must resolve to a [Collection](/structures/collection) of [Dislike](/entities/dislikes) entities.
         </Property>
-        <Property name="featured" type="URI" required={true}>
+        <Property name="featured" type="URI" required={true} typeLink="/types#uri">
             [Notes](/entities/notes) that the user wants to feature (also known as "pin") on their profile. URI must resolve to a [Collection](/structures/collection) of [Note](/entities/notes) entities.
         </Property>
     </Properties>

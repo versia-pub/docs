@@ -1,0 +1,83 @@
+export const metadata = {
+    title: 'Entities',
+    description:
+        'Entities are simple JSON objects that represent the core data structures in Lysand.',
+}
+
+# Entities
+
+Entities are the foundation of the Lysand protocol. A similar concept to entities are the [ActivityStreams](https://www.w3.org/TR/activitystreams-core/) objects, which are used to represent activities in the [ActivityPub](https://www.w3.org/TR/activitypub/) protocol. {{ className: 'lead' }}
+
+## Entity Definition
+
+An entity is a simple JSON object that represents a core data structure in Lysand. Entities are used to represent various types of data, such as users, notes, and more. Each entity has a unique `id` property that is used to identify it within the instance.
+
+Any field in an entity not marked as `required` may be omitted or set to `null`.
+
+<Row>
+  <Col>
+
+    <Properties>
+        <Property name="id" type="UUID" required={true} typeLink="/types#uuid">
+            Unique identifier for the entity. Must be unique within the instance.
+
+            Must be a [UUID](https://en.wikipedia.org/wiki/Universally_unique_identifier). Any version of UUID is allowed.
+        </Property>
+        <Property name="type" type="string" required={true}>
+            Type of the entity. Only types defined in the Lysand protocol are allowed. Use an [Extension](/extensions) if you want to define custom types.
+        </Property>
+        <Property name="created_at" type="ISO8601" required={true} typeLink="/types#iso-8601">
+            Date and time when the entity was created. Must be an [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) formatted string.
+
+            <Note>
+            Handling of dates that are valid but obviously incorrect (e.g. in the future) is left to the Implementation's discretion.
+            </Note>
+        </Property>
+        <Property name="uri" type="URI" required={true} typeLink="/types#uri">
+            URI of the entity. Must `id`. Should be unique and resolve to the entity.
+        </Property>
+        <Property name="extensions" type="Extensions" required={false} typeLink="/types#extensions">
+            Extensions to the entity. Use this to add custom properties to the entity.
+
+            Each custom property must be namespaced with the organization's domain name, followed by the property name. Extensions should be used sparingly and only when necessary.
+        </Property>
+    </Properties>
+  </Col>
+  <Col sticky>
+
+    ```jsonc {{ 'title': 'Example Entity' }}
+    {
+        "id": "9a8928b6-2526-4979-aab1-ef2f88cd5700",
+        "type": "Freeze",
+        "created_at": "2022-01-01T12:00:00Z",
+        "uri": "https://bongo.social/notes/9a8928b6-2526-4979-aab1-ef2f88cd5700",
+    }
+    ```
+
+    ```jsonc {{ 'title': 'With Extensions' }}
+    {
+        "id": "f0aacf0b-df7a-4ee5-a2ba-6c4acafd8642",
+        "type": "Zlorb",
+        "created_at": "2023-04-13T08:00:00Z",
+        "uri": "https://space.org/zlorbs/f0aacf0b-df7a-4ee5-a2ba-6c4acafd8642",
+        "extensions": { // [!code focus:100]
+            "org.space:zlorbs": {
+                "zlorb_type": "giant",
+                "zlorb_size": "huge"
+            },
+            "org.lysand:location": {
+                "latitude": 37.7749,
+                "longitude": -122.4194
+            }
+        }
+    }
+    ```
+    </Col>
+</Row>
+
+## Serialization
+
+When serialized to a string, the JSON representation of an entity should follow the following rules:
+- Keys must be sorted lexicographically.
+- Should use UTF-8 encoding.
+- Must be **signed** using the relevant [User](/entities/users)'s private key, or the [Server Actor](/entities/server-actor)'s private key if the entity is not associated with a particular user.
