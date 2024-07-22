@@ -296,7 +296,7 @@ export default function typographyStyles({ theme }: PluginUtils) {
                 code: {
                     color: "var(--tw-prose-code)",
                     borderRadius: theme("borderRadius.lg"),
-                    paddingTop: theme("padding.1"),
+                    paddingTop: theme("padding[1.5]"),
                     paddingRight: theme("padding[1.5]"),
                     paddingBottom: theme("padding.1"),
                     paddingLeft: theme("padding[1.5]"),
