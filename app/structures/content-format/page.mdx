@@ -1,0 +1,153 @@
+export const metadata = {
+    title: 'ContentFormat',
+    description: 'Definition of the ContentFormat structure',
+}
+
+# ContentFormat
+
+The `ContentFormat` structure is used to represent content with metadata. It supports multiple content types for the same file, such as a PNG image and a WebP image. {{ className: 'lead' }}
+
+A `ContentFormat` structure is defined as follows:
+
+```typescript
+type ContentType = `${string}/${string}`;
+
+type ContentFormat = {
+    [key: ContentType]: {
+        ...
+    };
+}
+```
+
+<Note>
+Each piece of data in the `ContentFormat` structure is meant to be a different representation of the same content. For example, a PNG image and its WebP version are different representations of the same image. Do not mix unrelated files or data in the same `ContentFormat` structure.
+
+**Good:**
+```json
+{
+    "image/png": {
+        ...
+    },
+    "image/webp": {
+        ...
+    }
+}
+```
+
+**Bad:**
+```json
+{
+    "image/png": {
+        ...
+    },
+    "application/json": {
+        ...
+    }
+}
+```
+</Note>
+
+## Implementation Guidelines
+
+### Text
+
+Implementations should always process text content with the richest format available, such as HTML. However, they should also provide other formats like plain text and Markdown for compatibility with other systems.
+
+HTML is the recommended content type for text content, and as such every text content should have an HTML representation. If the content is not HTML, it should be converted to HTML using appropriate conversion rules.
+
+Rich formats include:
+- `text/html`
+- `text/markdown`
+- `text/x.misskeymarkdown` (Misskey Flavoured Markdown, common on ActivityPub
+
+Clients should display the richest possible format available. If the client does not support the richest format, it should fall back to the next richest format.
+
+### Images
+
+It is a good idea to provide at least two versions of an image (if possible): one in the original format and another in a more efficient format like WebP/AVIF. This allows clients to choose the most suitable format based on their capabilities.
+
+## Entity Definition
+
+<Row>
+  <Col>
+
+    <Properties>
+        <Property name="content" type="string | URI" required={true}>
+            Structure data. If `Content-Type` is a binary format, this field should be a URI to the binary data. Otherwise, it should be the content itself. Refer to the `remote` property for more information.
+        </Property>
+        <Property name="remote" type="boolean" required={true}>
+            If `true`, the content is hosted remotely and should be fetched by the client. If `false`, the content is embedded in the entity.
+        </Property>
+        <Property name="description" type="string" required={false}>
+            A human-readable description of the content. Also known as `alt` text.
+        </Property>
+        <Property name="size" type="number" required={false} numberType="u64">
+            Size of the content in bytes.
+        </Property>
+        <Property name="hash" type="Hash" required={false}>
+            Hash of the content.
+
+            ```typescript
+            type HashNames = "sha256" | "sha512" | "sha3-256" | "sha3-512" | "blake2b-256" | "blake2b-512" | "blake3-256" | "blake3-512" | "md5" | "sha1" | "sha224" | "sha384" | "sha3-224" | "sha3-384" | "blake2s-256" | "blake2s-512" | "blake3-224" | "blake3-384";
+
+            type Hash = {
+                [key in HashNames]: string;
+            }
+            ```
+        </Property>
+        <Property name="blurhash" type="string" required={false}>
+            Image in [BlurHash](https://blurha.sh/) format.
+        </Property>
+        <Property name="width" type="number" required={false} numberType="u64">
+            Width of the content in pixels. Only applicable to content types that have a width.
+        </Property>
+        <Property name="height" type="number" required={false} numberType="u64">
+            Height of the content in pixels. Only applicable to content types that have a height.
+        </Property>
+        <Property name="fps" type="number" required={false} numberType="u64">
+            Frames per second. Only applicable to video content.
+        </Property>
+        <Property name="duration" type="number" required={false} numberType="f64">
+            Duration of the content in seconds. Only applicable to content types that have a duration.
+        </Property>
+    </Properties>
+
+  </Col>
+  <Col sticky>
+
+    ```jsonc {{ 'title': 'Images' }}
+    {
+        "image/png": {
+            "content": "https://cdn.example.com/attachments/ece2f9d9-27d7-457d-b657-4ce9172bdcf8.png",
+            "remote": true,
+            "description": "A jolly horse running through mountains",
+            "size": 453933,
+            "hash": {
+                "sha256": "91714fc336210d459d4f9d9233de663be2b87ffe923f1cfd76ece9d06f7c965d"
+            },
+            "blurhash": "UUKJ^v~q9G%L~qRj9GofRjofRjof",
+            "width": 1920,
+            "height": 1080
+        }
+    }
+    ```
+
+    ```jsonc {{ 'title': 'Text Formats' }}
+    {
+        "text/plain": {
+            "content": "The consequences of today are determined by the actions of the past. To change your future, alter your decisions today.",
+            "remote": false
+        },
+        "text/markdown": {
+            "content": "> The consequences of today are determined by the actions of the past.\n> To change your future, alter your decisions today.",
+            "remote": false
+        },
+        "text/html": {
+            "content": "<blockquote><p>The consequences of today are determined by the actions of the past.</p><p>To change your future, alter your decisions today.</p></blockquote>",
+            "remote": false
+        }
+    }
+    ```
+
+  </Col>
+</Row>

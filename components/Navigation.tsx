@@ -256,19 +256,16 @@ export const navigation: NavGroup[] = [
         ],
     },
     {
+        title: "Structures",
+        links: [
+            { title: "ContentFormat", href: "/structures/content-format" },
+            { title: "Collection", href: "/structures/collection" },
+        ],
+    },
+    {
         title: "Entities",
         links: [{ title: "Users", href: "/entities/users" }],
     },
-    /* {
-        title: "Resources",
-        links: [
-            { title: "Contacts", href: "/contacts" },
-            { title: "Conversations", href: "/conversations" },
-            { title: "Messages", href: "/messages" },
-            { title: "Groups", href: "/groups" },
-            { title: "Attachments", href: "/attachments" },
-        ],
-    }, */
 ];
 
 export function Navigation(props: ComponentPropsWithoutRef<"nav">) {

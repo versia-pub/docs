@@ -13,10 +13,10 @@ The `User` entity represents an account on a Lysand instance. Users can post [No
   <Col>
 
     <Properties>
-        <Property name="avatar" type="ContentFormat" required={true}>
+        <Property name="avatar" type="ContentFormat" required={true} typeLink="/structures/content-format">
             The user's avatar. Must be an image format (`image/*`).
         </Property>
-        <Property name="bio" type="ContentFormat" required={true}>
+        <Property name="bio" type="ContentFormat" required={true} typeLink="/structures/content-format">
             Short description of the user. Must be text format (`text/*`).
         </Property>
         <Property name="display_name" type="string" required={false}>
@@ -37,7 +37,7 @@ The `User` entity represents an account on a Lysand instance. Users can post [No
 
             Can only contain the following characters: `a-z` (lowercase), `0-9`, `_` and `-`. Should be limited to reasonable lengths.
         </Property>
-        <Property name="header" type="ContentFormat" required={false}>
+        <Property name="header" type="ContentFormat" required={false} typeLink="/structures/content-format">
             A header image for the user's profile. Also known as a cover photo or a banner. Must be an image format (`image/*`).
         </Property>
         <Property name="public_key" type="PublicKey" required={true}>
@@ -65,19 +65,19 @@ The `User` entity represents an account on a Lysand instance. Users can post [No
             The user's federation outbox. Refer to the [federation documentation](/federation).
         </Property>
         <Property name="followers" type="URI" required={true}>
-            User's followers. URI must resolve to a [Collection](/structures/collections) of [User](/entities/users) entities.
+            User's followers. URI must resolve to a [Collection](/structures/collection) of [User](/entities/users) entities.
         </Property>
         <Property name="following" type="URI" required={true}>
-            Users that the user follows. URI must resolve to a [Collection](/structures/collections) of [User](/entities/users) entities.
+            Users that the user follows. URI must resolve to a [Collection](/structures/collection) of [User](/entities/users) entities.
         </Property>
         <Property name="likes" type="URI" required={true}>
-            User's likes. URI must resolve to a [Collection](/structures/collections) of [Like](/entities/likes) entities.
+            User's likes. URI must resolve to a [Collection](/structures/collection) of [Like](/entities/likes) entities.
         </Property>
         <Property name="dislikes" type="URI" required={true}>
-            User's dislikes. URI must resolve to a [Collection](/structures/collections) of [Dislike](/entities/dislikes) entities.
+            User's dislikes. URI must resolve to a [Collection](/structures/collection) of [Dislike](/entities/dislikes) entities.
         </Property>
         <Property name="featured" type="URI" required={true}>
-            [Notes](/entities/notes) that the user wants to feature (also known as "pin") on their profile. URI must resolve to a [Collection](/structures/collections) of [Note](/entities/notes) entities.
+            [Notes](/entities/notes) that the user wants to feature (also known as "pin") on their profile. URI must resolve to a [Collection](/structures/collection) of [Note](/entities/notes) entities.
         </Property>
     </Properties>
 

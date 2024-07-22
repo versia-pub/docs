@@ -92,17 +92,25 @@ export function Properties({ children }: { children: ReactNode }) {
     );
 }
 
+const numberTypeTooltips = {
+    f64: "64-bit floating-point number",
+    i64: "64-bit signed integer",
+    u64: "64-bit unsigned integer",
+};
+
 export function Property({
     name,
     children,
     type,
     typeLink,
+    numberType,
     required,
 }: {
     name: string;
     children: ReactNode;
     type?: string;
     typeLink?: string;
+    numberType?: "f64" | "i64" | "u64";
     required?: boolean;
 }) {
     return (
@@ -117,6 +125,17 @@ export function Property({
                         <dt className="sr-only">Required</dt>
                         <dd className="inline-flex items-center rounded-md bg-brand-50 px-2 py-0 text-xs font-medium text-brand-700 ring-1 ring-inset ring-brand-500/10 dark:bg-brand-500/10 dark:text-brand-100 dark:ring-brand-200/20">
                             Required
+                        </dd>
+                    </>
+                )}
+                {numberType && (
+                    <>
+                        <dt className="sr-only">Type</dt>
+                        <dd
+                            className="inline-flex items-center rounded-md bg-blue-50 px-2 py-0 text-xs font-medium text-blue-700 ring-1 ring-inset ring-blue-500/10 dark:bg-blue-500/10 dark:text-blue-100 dark:ring-blue-200/20 hover:cursor-pointer"
+                            title={numberTypeTooltips[numberType]}
+                        >
+                            {numberType}
                         </dd>
                     </>
                 )}
