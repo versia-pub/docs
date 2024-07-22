@@ -77,7 +77,7 @@ function CopyButton({ code }: { code: string }) {
         <button
             type="button"
             className={clsx(
-                "group/button absolute right-4 top-3.5 overflow-hidden rounded-full py-1 pl-2 pr-3 text-2xs font-medium opacity-0 backdrop-blur transition focus:opacity-100 group-hover:opacity-100",
+                "group/button absolute right-4 top-3.5 overflow-hidden rounded-md py-1 pl-2 pr-3 text-2xs font-medium opacity-0 backdrop-blur transition focus:opacity-100 group-hover:opacity-100",
                 copied
                     ? "bg-brand-400/10 ring-1 ring-inset ring-brand-400/20"
                     : "bg-white/5 hover:bg-white/7.5 dark:bg-white/2.5 dark:hover:bg-white/5",
@@ -124,7 +124,7 @@ function CodePanelHeader({ tag, label }: { tag?: string; label?: string }) {
                 </div>
             )}
             {tag && label && (
-                <span className="h-0.5 w-0.5 rounded-full bg-zinc-500" />
+                <span className="h-0.5 w-0.5 rounded-md bg-zinc-500" />
             )}
             {label && (
                 <span className="font-mono text-xs text-zinc-400">{label}</span>
@@ -328,7 +328,7 @@ export function CodeGroup({
     const hasTabs = Children.count(children) > 1;
 
     const containerClassName =
-        "my-6 overflow-hidden rounded-2xl bg-zinc-900 shadow-md dark:ring-1 dark:ring-white/10";
+        "my-6 overflow-hidden rounded-md bg-zinc-900 shadow-md dark:ring-1 dark:ring-white/10";
     const header = (
         <CodeGroupHeader
             title={title}

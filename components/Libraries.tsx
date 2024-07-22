@@ -1,48 +1,16 @@
 import Image from "next/image";
 
-import logoGo from "@/images/logos/go.svg";
-import logoNode from "@/images/logos/node.svg";
-import logoPhp from "@/images/logos/php.svg";
-import logoPython from "@/images/logos/python.svg";
-import logoRuby from "@/images/logos/ruby.svg";
+import logoTypescript from "@/images/logos/typescript.svg";
 import { Button } from "./Button";
 import { Heading } from "./Heading";
 
 const libraries = [
     {
-        href: "#",
-        name: "PHP",
+        href: "https://github.com/lysand-org/api/tree/main/federation",
+        name: "@lysand-org/federation",
         description:
-            "A popular general-purpose scripting language that is especially suited to web development.",
-        logo: logoPhp,
-    },
-    {
-        href: "#",
-        name: "Ruby",
-        description:
-            "A dynamic, open source programming language with a focus on simplicity and productivity.",
-        logo: logoRuby,
-    },
-    {
-        href: "#",
-        name: "Node.js",
-        description:
-            "Node.js® is an open-source, cross-platform JavaScript runtime environment.",
-        logo: logoNode,
-    },
-    {
-        href: "#",
-        name: "Python",
-        description:
-            "Python is a programming language that lets you work quickly and integrate systems more effectively.",
-        logo: logoPython,
-    },
-    {
-        href: "#",
-        name: "Go",
-        description:
-            "An open-source programming language supported by Google with built-in concurrency.",
-        logo: logoGo,
+            "Fully-featured federation toolkit with validation, signatures, parsing, and more.",
+        logo: logoTypescript,
     },
 ];
 
@@ -52,15 +20,15 @@ export function Libraries() {
             <Heading level={2} id="official-libraries">
                 Official libraries
             </Heading>
-            <div className="not-prose mt-4 grid grid-cols-1 gap-x-6 gap-y-10 border-t border-zinc-900/5 pt-10 sm:grid-cols-2 xl:max-w-none xl:grid-cols-3 dark:border-white/5">
+            <div className="mt-4 grid grid-cols-1 gap-x-6 gap-y-10 border-t border-zinc-900/5 pt-10 sm:grid-cols-2 xl:max-w-none xl:grid-cols-3 dark:border-white/5">
                 {libraries.map((library) => (
                     <div
                         key={library.name}
                         className="flex flex-row-reverse gap-6"
                     >
                         <div className="flex-auto">
-                            <h3 className="text-sm font-semibold text-zinc-900 dark:text-white">
-                                {library.name}
+                            <h3 className="mt-0 text-sm font-semibold text-zinc-900 dark:text-white">
+                                <code>{library.name}</code>
                             </h3>
                             <p className="mt-1 text-sm text-zinc-600 dark:text-zinc-400">
                                 {library.description}
@@ -68,6 +36,8 @@ export function Libraries() {
                             <p className="mt-4">
                                 <Button
                                     href={library.href}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
                                     variant="text"
                                     arrow="right"
                                 >
@@ -78,7 +48,7 @@ export function Libraries() {
                         <Image
                             src={library.logo}
                             alt=""
-                            className="h-12 w-12"
+                            className="h-12 w-12 rounded m-0"
                             unoptimized={true}
                         />
                     </div>
