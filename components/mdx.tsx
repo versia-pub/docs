@@ -96,10 +96,14 @@ export function Property({
     name,
     children,
     type,
+    typeLink,
+    required,
 }: {
     name: string;
     children: ReactNode;
     type?: string;
+    typeLink?: string;
+    required?: boolean;
 }) {
     return (
         <li className="m-0 px-0 py-4 first:pt-0 last:pb-0">
@@ -108,11 +112,23 @@ export function Property({
                 <dd>
                     <code>{name}</code>
                 </dd>
+                {required && (
+                    <>
+                        <dt className="sr-only">Required</dt>
+                        <dd className="inline-flex items-center rounded-md bg-brand-50 px-2 py-0 text-xs font-medium text-brand-700 ring-1 ring-inset ring-brand-500/10 dark:bg-brand-500/10 dark:text-brand-100 dark:ring-brand-200/20">
+                            Required
+                        </dd>
+                    </>
+                )}
                 {type && (
                     <>
                         <dt className="sr-only">Type</dt>
                         <dd className="font-mono text-xs text-zinc-400 dark:text-zinc-500">
-                            {type}
+                            {typeLink ? (
+                                <Link href={typeLink}>{type}</Link>
+                            ) : (
+                                type
+                            )}
                         </dd>
                     </>
                 )}

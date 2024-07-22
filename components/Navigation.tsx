@@ -247,19 +247,19 @@ export const navigation: NavGroup[] = [
         title: "Guides",
         links: [
             { title: "Introduction", href: "/" },
-            { title: "Quickstart", href: "/quickstart" },
+            /* { title: "Quickstart", href: "/quickstart" }, */
             { title: "SDKs", href: "/sdks" },
-            { title: "Authentication", href: "/authentication" },
+            /* { title: "Authentication", href: "/authentication" },
             { title: "Pagination", href: "/pagination" },
             { title: "Errors", href: "/errors" },
-            { title: "Webhooks", href: "/webhooks" },
+            { title: "Webhooks", href: "/webhooks" }, */
         ],
     },
     {
         title: "Entities",
         links: [{ title: "Users", href: "/entities/users" }],
     },
-    {
+    /* {
         title: "Resources",
         links: [
             { title: "Contacts", href: "/contacts" },
@@ -268,7 +268,7 @@ export const navigation: NavGroup[] = [
             { title: "Groups", href: "/groups" },
             { title: "Attachments", href: "/attachments" },
         ],
-    },
+    }, */
 ];
 
 export function Navigation(props: ComponentPropsWithoutRef<"nav">) {
@@ -276,7 +276,6 @@ export function Navigation(props: ComponentPropsWithoutRef<"nav">) {
         <nav {...props}>
             <ul>
                 <TopLevelNavItem href="/">API</TopLevelNavItem>
-                <TopLevelNavItem href="#">Documentation</TopLevelNavItem>
                 <TopLevelNavItem href="#">Support</TopLevelNavItem>
                 {navigation.map((group, groupIndex) => (
                     <NavigationGroup

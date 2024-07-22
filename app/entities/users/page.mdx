@@ -11,9 +11,72 @@ export const metadata = {
   <Col>
 
     <Properties>
-      <Property name="avatar">
-        A new contact was created.
-      </Property>
+        <Property name="avatar" type="ContentFormat" required={true}>
+            The user's avatar.
+        </Property>
+        <Property name="bio" type="ContentFormat" required={true}>
+            Short description of the user.
+        </Property>
+        <Property name="display_name" type="string" required={false}>
+            Display name, as shown to other users. May contain emojis and any Unicode character.
+        </Property>
+        <Property name="fields" type="Field[]" required={false}>
+            Custom key/value pairs. For example, metadata like socials or pronouns.
+
+            ```typescript
+            type Field = {
+                key: ContentFormat;
+                value: ContentFormat;
+            }
+            ```
+        </Property>
+        <Property name="username" type="string" required={true}>
+            Alpha-numeric username. Must be unique within the instance.
+
+            Can only contain the following characters: `a-z` (lowercase), `0-9`, `_` and `-`. Should be limited to reasonable lengths.
+        </Property>
+        <Property name="header" type="ContentFormat" required={false}>
+            A header image for the user's profile. Also known as a cover photo or a banner.
+        </Property>
+        <Property name="public_key" type="PublicKey" required={true}>
+            The user's public key. Must follow the [Lysand Public Key](/signatures) format. `actor` may be a URI to another user's profile, in which case this key may allow the user to act on behalf of the other user (see [delegation](/delegation)).
+
+            ```typescript
+            type URI = string;
+
+            type PublicKey = {
+                actor: URI;
+                public_key: string;
+            }
+            ```
+        </Property>
+        <Property name="manually_approves_followers" type="boolean" required={true}>
+            If `true`, the user must approve any new followers manually. If `false`, followers are automatically approved. This does not affect federation, and is meant to be used for clients to display correct UI.
+        </Property>
+        <Property name="indexable" type="boolean" required={true}>
+            User consent to be indexed by search engines. If `false`, the user's profile should not be indexed.
+        </Property>
+        <Property name="inbox" type="URI" required={true}>
+            The user's federation inbox. Refer to the [federation documentation](/federation).
+        </Property>
+        <Property name="outbox" type="URI" required={true}>
+            The user's federation outbox. Refer to the [federation documentation](/federation).
+        </Property>
+        <Property name="followers" type="URI" required={true}>
+            User's followers. URI must resolve to a [Collection](/structures/collections) of [User](/entities/users) entities.
+        </Property>
+        <Property name="following" type="URI" required={true}>
+            Users that the user follows. URI must resolve to a [Collection](/structures/collections) of [User](/entities/users) entities.
+        </Property>
+        <Property name="likes" type="URI" required={true}>
+            User's likes. URI must resolve to a [Collection](/structures/collections) of [Like](/entities/likes) entities.
+        </Property>
+        <Property name="dislikes" type="URI" required={true}>
+            User's dislikes. URI must resolve to a [Collection](/structures/collections) of [Dislike](/entities/dislikes) entities.
+        </Property>
+        <Property name="featured" type="URI" required={true}>
+            [Notes](/entities/notes) that the user wants to feature (also known as "pin") on their profile. URI must resolve to a [Collection](/structures/collections) of [Note](/entities/notes) entities.
+        </Property>
     </Properties>
 
   </Col>
@@ -26,7 +89,7 @@ export const metadata = {
         "uri": "https://social.lysand.org/users/018ec082-0ae1-761c-b2c5-22275a611771",
         "created_at": "2024-04-09T01:38:51.743Z",
         "avatar": { // [!code focus:100]
-            "application/octet-stream": {
+            "image/png": {
                 "content": "https://avatars.githubusercontent.com/u/30842467?v=4"
             }
         },
