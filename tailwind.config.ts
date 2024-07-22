@@ -52,6 +52,15 @@ export default {
                 7.5: "0.075",
                 15: "0.15",
             },
+            animation: {
+                roll: "roll 2s 1 ease-in-out",
+            },
+            keyframes: {
+                roll: {
+                    "0%": { transform: "rotate(0deg)" },
+                    "100%": { transform: "rotate(360deg)" },
+                },
+            },
         },
     },
     plugins: [typographyPlugin, headlessuiPlugin],

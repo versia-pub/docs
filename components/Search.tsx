@@ -301,6 +301,21 @@ const SearchInput = forwardRef<
                     autocompleteState.status === "stalled" ? "pr-11" : "pr-4",
                 )}
                 {...inputProps}
+                onInput={(event) => {
+                    if (
+                        event.currentTarget.value
+                            .toLowerCase()
+                            .includes("barrel roll")
+                    ) {
+                        event.currentTarget.value = "";
+                        document.body.classList.add("animate-roll");
+                        setTimeout(
+                            () =>
+                                document.body.classList.remove("animate-roll"),
+                            2000,
+                        );
+                    }
+                }}
                 onKeyDown={(event) => {
                     if (
                         event.key === "Escape" &&
