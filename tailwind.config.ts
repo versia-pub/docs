@@ -1,6 +1,7 @@
 import headlessuiPlugin from "@headlessui/tailwindcss";
 import typographyPlugin from "@tailwindcss/typography";
 import type { Config } from "tailwindcss";
+import colors from "tailwindcss/colors";
 
 import typographyStyles from "./typography";
 
@@ -32,6 +33,10 @@ export default {
         extend: {
             boxShadow: {
                 glow: "0 0 4px rgb(0 0 0 / 0.1)",
+            },
+            colors: {
+                brand: colors.pink,
+                secondary: colors.purple,
             },
             maxWidth: {
                 lg: "33rem",
