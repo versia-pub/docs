@@ -7,6 +7,36 @@ export const metadata = {
 
 The `User` entity represents an account on a Lysand instance. Users can post [Notes](/entities/notes), follow other users, and interact with content. Users are identified by their `id` property, which is unique within the instance. {{ className: 'lead' }}
 
+## Addresses
+
+Users may be represented by a shorthand address, in the following formats:
+
+```
+@username@instance
+@uuid@instance
+```
+
+For example:
+
+```
+@jessew@social.lysand.org
+@018ec082-0ae1-761c-b2c5-22275a611771@social.lysand.org
+```
+
+This is similar to an email address or an ActivityPub address.
+
+### Identifier
+
+Identifier **must** be either a valid `username` or a valid `id`. It should have the same username/id as the user's profile.
+
+<Note>
+Usernames can be changed by the user, so it is recommended to use `id` for long-term references.
+</Note>
+
+### Instance
+
+Instance **must** be the host of the instance the user is on (hostname with optional port).
+
 ## Entity Definition
 
 <Row>
