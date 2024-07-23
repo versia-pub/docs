@@ -8,34 +8,29 @@ import {
 } from "framer-motion";
 import Link from "next/link";
 
-import type {
-    ComponentPropsWithoutRef,
-    ComponentType,
-    MouseEvent,
-} from "react";
+import { Icon } from "@iconify-icon/react";
+import type { ComponentPropsWithoutRef, MouseEvent } from "react";
 import { GridPattern } from "./GridPattern";
 import { Heading } from "./Heading";
-import { ChatBubbleIcon } from "./icons/ChatBubbleIcon";
-import { UsersIcon } from "./icons/UsersIcon";
 
-interface Resource {
-    href: string;
+export interface ResourceType {
+    href?: string;
     name: string;
     description: string;
-    icon: ComponentType<{ className?: string }>;
-    pattern: Omit<
+    icon: string;
+    pattern?: Omit<
         ComponentPropsWithoutRef<typeof GridPattern>,
         "width" | "height" | "x"
     >;
 }
 
-const resources: Resource[] = [
+const resources: ResourceType[] = [
     {
         href: "/entities",
         name: "Entities",
         description:
             "Learn how Entities work and how to use them to transmit federated data.",
-        icon: ChatBubbleIcon,
+        icon: "tabler:code-asterisk",
         pattern: {
             y: 16,
             squares: [
@@ -49,7 +44,7 @@ const resources: Resource[] = [
         name: "Security",
         description:
             "Learn how to secure your Lysand implementation and protect your users' data.",
-        icon: UsersIcon,
+        icon: "tabler:building-bank",
         pattern: {
             y: -6,
             squares: [
@@ -60,10 +55,14 @@ const resources: Resource[] = [
     },
 ];
 
-function ResourceIcon({ icon: Icon }: { icon: Resource["icon"] }) {
+function ResourceIcon({ icon }: { icon: string }) {
     return (
         <div className="flex h-7 w-7 items-center justify-center rounded-md bg-zinc-900/5 ring-1 ring-zinc-900/25 backdrop-blur-[2px] transition duration-300 group-hover:bg-white/50 group-hover:ring-zinc-900/25 dark:bg-white/7.5 dark:ring-white/15 dark:group-hover:bg-brand-300/10 dark:group-hover:ring-brand-400">
-            <Icon className="h-5 w-5 fill-zinc-700/10 stroke-zinc-700 transition-colors duration-300 group-hover:stroke-zinc-900 dark:fill-white/10 dark:stroke-zinc-400 dark:group-hover:fill-brand-300/10 dark:group-hover:stroke-brand-400" />
+            <Icon
+                icon={icon}
+                width="unset"
+                className="h-5 w-5 fill-zinc-700/10 stroke-zinc-700 transition-colors duration-300 group-hover:stroke-zinc-900 dark:fill-white/10 dark:stroke-zinc-400 dark:group-hover:fill-brand-300/10 dark:group-hover:stroke-brand-400"
+            />
         </div>
     );
 }
@@ -72,7 +71,7 @@ function ResourcePattern({
     mouseX,
     mouseY,
     ...gridProps
-}: Resource["pattern"] & {
+}: ResourceType["pattern"] & {
     mouseX: MotionValue<number>;
     mouseY: MotionValue<number>;
 }) {
@@ -110,7 +109,7 @@ function ResourcePattern({
     );
 }
 
-function Resource({ resource }: { resource: Resource }) {
+export function Resource({ resource }: { resource: ResourceType }) {
     const mouseX = useMotionValue(0);
     const mouseY = useMotionValue(0);
 
@@ -131,7 +130,13 @@ function Resource({ resource }: { resource: Resource }) {
             className="group relative flex rounded-md bg-zinc-50 transition-shadow hover:shadow-md hover:shadow-zinc-900/5 dark:bg-white/2.5 dark:hover:shadow-black/5"
         >
             <ResourcePattern
-                {...resource.pattern}
+                {...(resource.pattern ?? {
+                    y: 0,
+                    squares: [
+                        [0, 1],
+                        [1, 2],
+                    ],
+                })}
                 mouseX={mouseX}
                 mouseY={mouseY}
             />
@@ -139,10 +144,14 @@ function Resource({ resource }: { resource: Resource }) {
             <div className="relative rounded-md px-4 pb-4 pt-16">
                 <ResourceIcon icon={resource.icon} />
                 <h3 className="mt-4 text-sm font-semibold leading-7 text-zinc-900 dark:text-white">
-                    <Link href={resource.href}>
-                        <span className="absolute inset-0 rounded-md" />
-                        {resource.name}
-                    </Link>
+                    {resource.href ? (
+                        <Link href={resource.href}>
+                            <span className="absolute inset-0 rounded-md" />
+                            {resource.name}
+                        </Link>
+                    ) : (
+                        resource.name
+                    )}
                 </h3>
                 <p className="mt-1 text-sm text-zinc-600 dark:text-zinc-400">
                     {resource.description}
