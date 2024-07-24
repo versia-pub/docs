@@ -13,8 +13,7 @@ export const ExperimentalWarning: FC = () => (
                     >
                         <circle cx={1} cy={1} r={1} />
                     </svg>
-                    This is a testing site used for development, not a finished
-                    page.
+                    This site is experimental and under active development.
                 </p>
             </div>
         </div>
