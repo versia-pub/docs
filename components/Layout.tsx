@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 import type { ReactNode } from "react";
+import { ExperimentalWarning } from "./ExperimentalWarning";
 import { Footer } from "./Footer";
 import { Header } from "./Header";
 import { Logo } from "./Logo";
@@ -42,6 +43,7 @@ export function Layout({
                     <Footer />
                 </div>
             </div>
+            <ExperimentalWarning />
         </SectionProvider>
     );
 }

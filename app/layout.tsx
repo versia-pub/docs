@@ -10,7 +10,7 @@ import type { ReactNode } from "react";
 
 export const metadata: Metadata = {
     title: {
-        template: "%s - Lysand API Reference",
+        template: "%s • Lysand API Reference",
         default: "Lysand API Reference",
     },
 };
