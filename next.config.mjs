@@ -1,5 +1,6 @@
 import nextMDX from "@next/mdx";
 
+import bundleAnalyzer from "@next/bundle-analyzer";
 import { recmaPlugins } from "./mdx/recma.mjs";
 import { rehypePlugins } from "./mdx/rehype.mjs";
 import { remarkPlugins } from "./mdx/remark.mjs";
@@ -12,11 +13,13 @@ const withMDX = nextMDX({
         recmaPlugins,
     },
 });
-
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     pageExtensions: ["js", "jsx", "ts", "tsx", "mdx"],
     output: "export",
 };
 
-export default withSearch(withMDX(nextConfig));
+const withBundleAnalyzer = bundleAnalyzer({
+    enabled: process.env.ANALYZE === "true",
+});
+export default withBundleAnalyzer(withSearch(withMDX(nextConfig)));
