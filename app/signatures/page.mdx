@@ -53,6 +53,14 @@ Where:
 
 Sign this string using the user's private key. The resulting signature should be encoded in Base64.
 
+### Verifying the Signature
+
+To verify a signature, the server must:
+- Recreate the string as described above.
+- Extract the signature provided in the `Signature` header (`$signature` in the above section).
+- Decode the signature from Base64.
+- Perform a signature verification using the user's public key.
+
 ### Example
 
 The following example is written in TypeScript using the WebCrypto API.
