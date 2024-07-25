@@ -44,13 +44,13 @@ export default function typographyStyles({ theme }: PluginUtils) {
 
                 // Base
                 color: "var(--tw-prose-body)",
-                fontSize: theme("fontSize.sm")[0],
-                lineHeight: theme("lineHeight.7"),
+                fontSize: theme("fontSize.base")[0],
+                lineHeight: theme("lineHeight.8"),
 
                 // Text
                 p: {
-                    marginTop: theme("spacing.6"),
-                    marginBottom: theme("spacing.6"),
+                    marginTop: theme("spacing.8"),
+                    marginBottom: theme("spacing.8"),
                 },
                 '[class~="lead"]': {
                     fontSize: theme("fontSize.base")[0],
@@ -174,22 +174,22 @@ export default function typographyStyles({ theme }: PluginUtils) {
                 h1: {
                     color: "var(--tw-prose-headings)",
                     fontWeight: "700",
-                    fontSize: theme("fontSize.2xl")[0],
-                    ...theme("fontSize.2xl")[1],
-                    marginBottom: theme("spacing.2"),
+                    fontSize: theme("fontSize.4xl")[0],
+                    ...theme("fontSize.4xl")[1],
+                    marginBottom: theme("spacing.6"),
                 },
                 h2: {
                     color: "var(--tw-prose-headings)",
                     fontWeight: "600",
-                    fontSize: theme("fontSize.lg")[0],
-                    ...theme("fontSize.lg")[1],
+                    fontSize: theme("fontSize.2xl")[0],
+                    ...theme("fontSize.2xl")[1],
                     marginTop: theme("spacing.16"),
-                    marginBottom: theme("spacing.2"),
+                    marginBottom: theme("spacing.4"),
                 },
                 h3: {
                     color: "var(--tw-prose-headings)",
-                    fontSize: theme("fontSize.base")[0],
-                    ...theme("fontSize.base")[1],
+                    fontSize: theme("fontSize.lg")[0],
+                    ...theme("fontSize.lg")[1],
                     fontWeight: "600",
                     marginTop: theme("spacing.10"),
                     marginBottom: theme("spacing.2"),
@@ -206,8 +206,8 @@ export default function typographyStyles({ theme }: PluginUtils) {
                 },
                 figcaption: {
                     color: "var(--tw-prose-captions)",
-                    fontSize: theme("fontSize.xs")[0],
-                    ...theme("fontSize.xs")[1],
+                    fontSize: theme("fontSize.sm")[0],
+                    ...theme("fontSize.sm")[1],
                     marginTop: theme("spacing.2"),
                 },
 
@@ -302,7 +302,10 @@ export default function typographyStyles({ theme }: PluginUtils) {
                     paddingLeft: theme("padding[1.5]"),
                     boxShadow: "inset 0 0 0 1px var(--tw-prose-code-ring)",
                     backgroundColor: "var(--tw-prose-code-bg)",
-                    fontSize: theme("fontSize.2xs"),
+                    // If gets too long, split into multiple lines
+                    whiteSpace: "pre-wrap",
+                    wordBreak: "break-all",
+                    fontSize: theme("fontSize.xs"),
                 },
                 ":is(a, h1, h2, h3, blockquote, thead th) code": {
                     color: "inherit",
