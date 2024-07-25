@@ -1,0 +1,111 @@
+export const metadata = {
+    title: 'Signatures',
+    description:
+        'Learn how signatures work, and how to implement them in your Lysand server.',
+}
+
+# Signatures
+
+Lysand uses cryptographic signatures to ensure the integrity and authenticity of data. Signatures are used to verify that the data has not been tampered with and that it was created by the expected user. {{ className: 'lead' }}
+
+<Note>
+    This part is very important! If signatures are implemented incorrectly in your server, **you will not be able to federate**.
+
+    Mistakes made in this section can lead to **security vulnerabilities** and **impersonation attacks**.
+</Note>
+
+## Signature Definition
+
+A signature is encoded the same way that Mastodon does it. It consists of a series of HTTP headers in a request. The following headers are used:
+- **`Signature`**: The signature itself, encoded in the following format: `keyId="$keyId",algorithm="$algorithm",headers="$headers",signature="$signature"`.
+  - `keyId`: URI of the user that signed the request.
+  - `algorithm`: Algorithm used to sign the request. Currently, only `ed25519` is supported.
+  - `headers`: List of headers that were signed. Should always be `(request-target) host date digest`.
+  - `signature`: The signature itself, encoded in Base64.
+
+### Calculating the Signature
+
+Create a string containing the following (including newlines):
+```
+(request-target): $0 $1
+host: $2
+date: $3
+digest: SHA-256=$4
+```
+
+<Note>
+    The last line of the string MUST be terminated with a newline character (`\n`).
+</Note>
+
+Where:
+- `$0` is the HTTP method (e.g. `GET`, `POST`) in lowercase.
+- `$1` is the path of the request, in standard URI format (don't forget to URL-encode it).
+- `$2` is the hostname of the server (e.g. `example.com`, not `https://example.com` or `example.com/`).
+- `$3` is the date and time of the request, formatted as an [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) string.
+- `$4` is the SHA-256 hash of the request body, encoded in Base64.
+
+Sign this string using the user's private key. The resulting signature should be encoded in Base64.
+
+### Example
+
+The following example is written in TypeScript using the WebCrypto API.
+
+`@bob`, from `bob.com`, wants to sign a request to `alice.com`. The request is a `POST` to `/notes`, with the following body:
+```json
+{
+    "content": "Hello, world!"
+}
+```
+
+Bob can be found at `https://bob.com/users/bf44e6ad-7c0a-4560-9938-cf3fd4066511`. His ed25519 private key, encoded in Base64 PKCS8, is `MC4CAQAwBQYDK2VwBCIEILrNXhbWxC/MhKQDsJOAAF1FH/R+Am5G/eZKnqNum5ro`.
+
+Here's how Bob would sign the request:
+```typescript
+const content = JSON.stringify({
+    content: "Hello, world!",
+});
+
+const base64PrivateKey = "MC4CAQAwBQYDK2VwBCIEILrNXhbWxC/MhKQDsJOAAF1FH/R+Am5G/eZKnqNum5ro";
+const privateKey = await crypto.subtle.importKey(
+    "pkcs8",
+    Buffer.from(base64PrivateKey, "base64"),
+    "Ed25519",
+    false,
+    ["sign"],
+);
+
+const date = new Date().toISOString();
+const digest = await crypto.subtle.digest(
+    "SHA-256",
+    new TextEncoder().encode(content)
+);
+
+const stringToSign =
+    `(request-target): post /notes\n` +
+    `host: alice.com\n` +
+    `date: ${date}\n` +
+    `digest: SHA-256=${Buffer.from(digest).toString("base64")}\n`;
+
+const signature = await crypto.subtle.sign(
+    "Ed25519",
+    privateKey,
+    new TextEncoder().encode(stringToSign)
+);
+
+const base64Signature = Buffer.from(signature).toString("base64");
+```
+
+To send the request, Bob would use the following code:
+
+```typescript
+const headers = new Headers();
+
+headers.set("Date", date);
+headers.set("Signature", `keyId="https://bob.com/users/bf44e6ad-7c0a-4560-9938-cf3fd4066511",algorithm="ed25519",headers="(request-target) host date digest",signature="${base64Signature}"`);
+
+const response = await fetch("https://alice.com/notes", {
+    method: "POST",
+    headers,
+    body: content,
+});
+```

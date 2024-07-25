@@ -249,6 +249,7 @@ export const navigation: NavGroup[] = [
             { title: "Introduction", href: "/introduction" },
             { title: "SDKs", href: "/sdks" },
             { title: "Entities", href: "/entities" },
+            { title: "Signatures", href: "/signatures" },
         ],
     },
     {
