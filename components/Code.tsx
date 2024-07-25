@@ -162,7 +162,7 @@ function CodePanel({
         <div className="group dark:bg-white/2.5">
             <CodePanelHeader tag={tag} label={label} />
             <div className="relative">
-                <pre className="overflow-x-auto p-4 text-xs text-white">
+                <pre className="overflow-x-auto p-4 text-xs text-white [&>code>pre]:!bg-transparent">
                     {children}
                 </pre>
                 <CopyButton code={code} />

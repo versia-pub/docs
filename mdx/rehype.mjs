@@ -7,7 +7,7 @@ import { slugifyWithCounter } from "@sindresorhus/slugify";
 import * as acorn from "acorn";
 import { toString as mdastToString } from "mdast-util-to-string";
 import { mdxAnnotations } from "mdx-annotations";
-import { createCssVariablesTheme, createHighlighter } from "shiki";
+import { createHighlighter } from "shiki";
 import { visit } from "unist-util-visit";
 
 function rehypeParseCodeBlocks() {
@@ -22,13 +22,6 @@ function rehypeParseCodeBlocks() {
     };
 }
 
-const myTheme = createCssVariablesTheme({
-    name: "css-variables",
-    variablePrefix: "--shiki-",
-    variableDefaults: {},
-    fontStyle: true,
-});
-
 const highlighter = await createHighlighter({
     langs: [
         "typescript",
@@ -42,8 +35,10 @@ const highlighter = await createHighlighter({
         "php",
         "python",
     ],
-    themes: [myTheme],
+    themes: [],
 });
+
+highlighter.loadTheme("dark-plus");
 
 function rehypeShiki() {
     return async (tree) => {
@@ -60,7 +55,7 @@ function rehypeShiki() {
                 if (node.properties.language) {
                     const html = highlighter.codeToHtml(textNode.value, {
                         lang: node.properties.language,
-                        theme: myTheme,
+                        theme: "dark-plus",
                         transformers: [
                             transformerNotationFocus(),
                             transformerNotationHighlight(),
