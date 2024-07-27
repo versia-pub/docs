@@ -8,8 +8,6 @@ export const metadata = {
 
 Lysand uses the HTTP protocol for all communications between instances. HTTP requests must conform to certain standards to ensure compatibility between different implementations, as well as to ensure the security and integrity of the data being exchanged.
 
-## Communication
-
 ALL kinds of HTTP requests/responses between instances **MUST** include a [Signature](/signatures), signed with either the relevant [User](/entities/users)'s private key or the [Server Actor](/entities/server-actor)'s private key.
 
 ## Requests
@@ -26,7 +24,7 @@ ALL kinds of HTTP requests/responses between instances **MUST** include a [Signa
             <Property name="Signature" type="string" required={false} typeLink="/signatures">
                 Request signature, if the request is signed.
             </Property>
-            <Property name="Date" type="ISO8601" required={true}>
+            <Property name="Date" type="UTC Time" required={true} typeLink="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Date">
                 Date and time of the request.
             </Property>
             <Property name="User-Agent" type="string" required={false}>
@@ -56,13 +54,11 @@ ALL kinds of HTTP requests/responses between instances **MUST** include a [Signa
             <Property name="Signature" type="string" required={false} typeLink="/signatures">
                 Response signature, if the response is signed.
             </Property>
-            <Property name="Date" type="ISO8601" required={true}>
+            <Property name="Date" type="UTC Time" required={true} typeLink="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Date">
                 Date and time of the response.
             </Property>
             <Property name="Cache-Control" type="string" required={false}>
                 Must include `no-store` on entities that can be edited directly without a `Patch`, such as `Users`.
-
-                **SHOULD** include a large `max-age` on entities that are not expected to change frequently, such as `Notes`, or CDN resources.
             </Property>
         </Properties>
     </Col>
