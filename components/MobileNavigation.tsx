@@ -3,6 +3,7 @@
 import {
     Dialog,
     DialogPanel,
+    DialogTitle,
     Transition,
     TransitionChild,
 } from "@headlessui/react";
@@ -109,6 +110,9 @@ function MobileNavigationDialog({
                 </TransitionChild>
 
                 <DialogPanel>
+                    <DialogTitle className="sr-only">
+                        Mobile navigation
+                    </DialogTitle>
                     <TransitionChild
                         enter="duration-300 ease-out"
                         enterFrom="opacity-0"

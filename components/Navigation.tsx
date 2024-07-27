@@ -250,6 +250,14 @@ export const navigation: NavGroup[] = [
             { title: "SDKs", href: "/sdks" },
             { title: "Entities", href: "/entities" },
             { title: "Signatures", href: "/signatures" },
+            { title: "Federation", href: "/federation" },
+        ],
+    },
+    {
+        title: "Federation",
+        links: [
+            { title: "HTTP", href: "/federation/http" },
+            { title: "Validation", href: "/federation/validation" },
         ],
     },
     {
@@ -270,7 +278,7 @@ export const navigation: NavGroup[] = [
 
 export function Navigation(props: ComponentPropsWithoutRef<"nav">) {
     return (
-        <nav {...props}>
+        <nav {...props} aria-label="Side navigation">
             <ul>
                 <TopLevelNavItem href="/">API</TopLevelNavItem>
                 <TopLevelNavItem href="#">Support</TopLevelNavItem>

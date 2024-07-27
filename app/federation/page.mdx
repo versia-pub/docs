@@ -1,0 +1,18 @@
+import { Guides, Guide } from '@/components/Guides';
+
+export const metadata = {
+    title: 'Federation',
+    description:
+        'Description of federation behavior in Lysand.',
+}
+
+# Federation
+
+Being a federation protocol, Lysand defines a set of rules for exchanging data between instances. This document outlines the behavior of instances in a Lysand federated network. {{ className: 'lead' }}
+
+Federation is built on the [HyperText Transfer Protocol (HTTP)](https://tools.ietf.org/html/rfc7230) and the [JavaScript Object Notation (JSON)](https://tools.ietf.org/html/rfc7159) data format. Instances communicate with each other by sending and receiving JSON payloads over HTTP.
+
+<Guides>
+    <Guide name="HTTP Guidelines" href="/federation/http" description="Guidelines for HTTP communication in Lysand." />
+    <Guide name="Validation" href="/federation/validation" description="Validation rules for Lysand implementations." />
+</Guides>

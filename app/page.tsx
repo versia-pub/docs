@@ -63,7 +63,7 @@ const Page: FC = () => {
         children: (
             <>
                 <div className="relative z-10 max-w-2xl lg:pt-6">
-                    <h1 className="text-5xl font-semibold tracking-tight text-brand-600 dark:text-brand-400">
+                    <h1 className="text-5xl font-semibold tracking-tight leading-3 text-brand-600 dark:text-brand-400">
                         Lysand
                     </h1>
                     <h1 className="text-4xl sm:text-5xl font-semibold tracking-tight">

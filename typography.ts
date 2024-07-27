@@ -184,7 +184,7 @@ export default function typographyStyles({ theme }: PluginUtils) {
                     fontSize: theme("fontSize.2xl")[0],
                     ...theme("fontSize.2xl")[1],
                     marginTop: theme("spacing.16"),
-                    marginBottom: theme("spacing.4"),
+                    marginBottom: theme("spacing.8"),
                 },
                 h3: {
                     color: "var(--tw-prose-headings)",

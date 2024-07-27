@@ -9,6 +9,7 @@ import {
 import {
     Dialog,
     DialogPanel,
+    DialogTitle,
     Transition,
     TransitionChild,
 } from "@headlessui/react";
@@ -412,6 +413,9 @@ function SearchDialog({
                     >
                         <DialogPanel className="mx-auto transform-gpu overflow-hidden rounded-lg bg-zinc-50 shadow-xl ring-1 ring-zinc-900/7.5 sm:max-w-xl dark:bg-zinc-900 dark:ring-zinc-800">
                             <div {...autocomplete.getRootProps({})}>
+                                <DialogTitle className="sr-only">
+                                    Search
+                                </DialogTitle>
                                 <form
                                     ref={formRef}
                                     {...autocomplete.getFormProps({

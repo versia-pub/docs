@@ -87,7 +87,12 @@ function SocialLink({
     children: ReactNode;
 }) {
     return (
-        <Link href={href} className="group">
+        <Link
+            href={href}
+            className="group"
+            target="_blank"
+            rel="noopener noreferrer"
+        >
             <span className="sr-only">{children}</span>
             <Icon
                 icon={icon}
@@ -112,8 +117,11 @@ function SmallPrint() {
                 .
             </p>
             <div className="flex gap-4">
-                <SocialLink href="#" icon="mdi:github">
-                    Follow us on GitHub
+                <SocialLink
+                    href="https://github.com/lysand-org"
+                    icon="mdi:github"
+                >
+                    Find us on GitHub
                 </SocialLink>
             </div>
         </div>

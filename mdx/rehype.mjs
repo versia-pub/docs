@@ -34,6 +34,7 @@ const highlighter = await createHighlighter({
         "bash",
         "php",
         "python",
+        "http",
     ],
     themes: [],
 });

@@ -80,7 +80,10 @@ export const Header = forwardRef<ElementRef<"div">, { className?: string }>(
                     </Link>
                 </div>
                 <div className="flex items-center gap-5">
-                    <nav className="hidden md:block">
+                    <nav
+                        className="hidden md:block"
+                        aria-label="Main navigation"
+                    >
                         <ul className="flex items-center gap-8">
                             <TopLevelNavItem href="/">API</TopLevelNavItem>
                             <TopLevelNavItem href="#">
