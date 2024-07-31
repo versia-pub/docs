@@ -1,0 +1,69 @@
+export const metadata = {
+    title: 'Patches',
+    description: 'Definition of the Patch entity',
+}
+
+# Patches
+
+Patches represent changes to `Note` entities. They can be used to edit notes after their creation, such as fixing typos or adding more content. Patches are applied to notes by the author or by a moderator. {{ className: 'lead' }}
+
+## Why Patches?
+
+The reason why patches are used instead of editing the note directly is to preserve the history of the note. This is important for transparency and accountability. By using patches, users can see the original content of the note and all changes made to it.
+
+This is less important for other entities, such as `User` profiles, as their content is more disposable than notes.
+
+## Structure
+
+`Patch`es are extensions of the `Note` entity, with the type set to `Patch` and extra attributes defined below. Note that each subsequent patch is applied to the original object, not the preceding patch. The server is responsible for presenting the most recent patch stored to the client.
+
+## Entity Definition
+
+<Row>
+    <Col>
+        <Properties>
+            <Property name="patched_id" type="UUID" required={true} typeLink="/types#uuid">
+                ID of the note that was patched. The Patch's `id` property should be used to identify the patch itself.
+            </Property>
+            <Property name="patched_at" type="ISO8601" required={true} typeLink="/types#iso-8601">
+                Date and time when the patch was applied.
+            </Property>
+        </Properties>
+    </Col>
+    <Col sticky>
+        ```jsonc {{ 'title': 'Example Patch (deletes attachments from the previous page\\'s Note)' }}
+        {
+            "id": "be96bb7a-4b8e-45f9-93aa-23633eb3cfdc",
+            "type": "Patch",
+            "uri": "https://social.lysand.org/objects/be96bb7a-4b8e-45f9-93aa-23633eb3cfdc",
+            "created_at": "2024-06-19T01:07:44.139Z",
+            "patched_id": "01902e09-0f8b-72de-8ee3-9afc0cf5eae1", // [!code focus:2]
+            "patched_at": "2024-06-19T01:07:44.139Z",
+            "author": "https://social.lysand.org/users/018eb863-753f-76ff-83d6-fd590de7740a",
+            "category": "microblog",
+            "content": {
+                "text/html": {
+                    "content": "<p>No more attachments!</p>"
+                },
+                "text/plain": {
+                    "content": "No more attachments!"
+                }
+            },
+            "device": {
+                "name": "Megalodon for Android",
+                "version": "1.3.89",
+                "url": "https://sk22.github.io/megalodon"
+            },
+            "extensions": {
+                "org.lysand:custom_emojis": {
+                    "emojis": []
+                }
+            },
+            "group": "public",
+            "is_sensitive": false,
+            "mentions": [],
+            "subject": "Lysand development"
+        }
+        ```
+    </Col>
+</Row>
