@@ -34,7 +34,7 @@ Any field in an entity not marked as `required` may be omitted or set to `null`.
             </Note>
         </Property>
         <Property name="uri" type="URI" required={true} typeLink="/types#uri">
-            URI of the entity. Must `id`. Should be unique and resolve to the entity.
+            URI of the entity. Should be unique and resolve to the entity. Must be an absolute URI.
         </Property>
         <Property name="extensions" type="Extensions" required={false} typeLink="/types#extensions">
             Extensions to the entity. Use this to add custom properties to the entity.
