@@ -26,8 +26,9 @@ Things that should be validated include, but are not limited to:
 - The **type**, **precision** and **scale** of all numeric fields.
   - For example, a `size` field on a `ContentFormat` structure should be a positive integer, not a negative number or a floating-point number.
 <Note>
-    Best practice is to store a `size` internally as a unsigned int.
-    All numeric fields in these docs have the appropriate precision (`u64`, `i64`, `f32`, etc.) specified. Thumb rule: Do not use a different type in memory than the one specified in the docs. Exception to that rule: using the same type with a higher bit count, for example using a u128 instead of a u64. Beware of performance impacts this may cause.
+    All numeric fields in these docs have the appropriate precision (`u64`, `i64`, `f32`, etc.) specified. As a rule of thumb, do not use a different type in memory than the one specified in the docs.
+    
+    Using the same type with a higher bit count, for example using a u128 instead of a u64, is acceptable. Beware of performance impacts this may cause.
 </Note>
 - The **validity** of all URLs and URIs (run them through your favorite URL parser, optionally fetch the linked URL).
 - The **time** of all dates and times (people should not be born in the future, or in the year 0).
