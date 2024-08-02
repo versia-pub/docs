@@ -282,7 +282,6 @@ export function Navigation(props: ComponentPropsWithoutRef<"nav">) {
         <nav {...props} aria-label="Side navigation">
             <ul>
                 <TopLevelNavItem href="/">API</TopLevelNavItem>
-                <TopLevelNavItem href="#">Support</TopLevelNavItem>
                 {navigation.map((group, groupIndex) => (
                     <NavigationGroup
                         key={group.title}
@@ -292,7 +291,7 @@ export function Navigation(props: ComponentPropsWithoutRef<"nav">) {
                 ))}
                 <li className="sticky bottom-0 z-10 mt-6 min-[416px]:hidden">
                     <Button href="#" variant="filled" className="w-full">
-                        Sign in
+                        Working Draft 4
                     </Button>
                 </li>
             </ul>

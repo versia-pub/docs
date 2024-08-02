@@ -2,11 +2,18 @@
 
 import { Icon } from "@iconify-icon/react/dist/iconify.mjs";
 import { motion } from "framer-motion";
-import { type ReactNode, useState } from "react";
+import { type HTMLAttributes, type ReactNode, useState } from "react";
 
-export function Badge({ children }: { children: ReactNode }) {
+export function Badge({
+    children,
+    className,
+    ...props
+}: HTMLAttributes<HTMLSpanElement>) {
     return (
-        <span className="inline-flex items-center rounded-md bg-brand-50 px-2 py-0 text-xs font-medium text-brand-700 ring-1 ring-inset ring-brand-500/10 dark:bg-brand-500/10 dark:text-brand-100 dark:ring-brand-200/20 h-8">
+        <span
+            className={`inline-flex items-center justify-center rounded-md bg-brand-50 px-2 py-0 text-xs font-medium text-brand-700 ring-1 ring-inset ring-brand-500/10 dark:bg-brand-500/10 dark:text-brand-100 dark:ring-brand-200/20 h-8${className ? ` ${className}` : ""}`}
+            {...props}
+        >
             {children}
         </span>
     );
