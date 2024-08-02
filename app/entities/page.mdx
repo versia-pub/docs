@@ -18,10 +18,8 @@ Any field in an entity not marked as `required` may be omitted or set to `null`.
   <Col>
 
     <Properties>
-        <Property name="id" type="UUID" required={true} typeLink="/types#uuid">
-            Unique identifier for the entity. Must be unique within the instance.
-
-            Must be a [UUID](https://en.wikipedia.org/wiki/Universally_unique_identifier). Any version of UUID is allowed.
+        <Property name="id" type="string" required={true}>
+            Unique identifier for the entity. Must be unique within the instance. Can be any string. Max of 512 UTF-8 characters.
         </Property>
         <Property name="type" type="string" required={true}>
             Type of the entity. Only types defined in the Lysand protocol are allowed. Use an [Extension](/extensions) if you want to define custom types.
