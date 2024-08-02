@@ -57,9 +57,6 @@ ALL kinds of HTTP requests/responses between instances **MUST** include a [Signa
             <Property name="Date" type="UTC Time" required={true} typeLink="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Date">
                 Date and time of the response.
             </Property>
-            <Property name="Cache-Control" type="string" required={false}>
-                Must include `no-store` on entities that can be edited directly without a `Patch`, such as `Users`.
-            </Property>
         </Properties>
     </Col>
     <Col sticky>
@@ -68,7 +65,6 @@ ALL kinds of HTTP requests/responses between instances **MUST** include a [Signa
         Content-Type: application/json; charset=utf-8
         Date: Thu, 01 Jan 1970 00:00:00 GMT
         Signature: keyId="https://example.com/users/1",algorithm="ed25519",headers="(request-target) host date digest",signature="..."
-        Cache-Control: no-store
         ```
     </Col>
 </Row>
