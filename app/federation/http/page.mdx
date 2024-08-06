@@ -21,11 +21,14 @@ ALL kinds of HTTP requests/responses between instances **MUST** include a [Signa
             <Property name="Content-Type" type="string" required={true}>
                 Must include `application/json; charset=utf-8`, if the request has a body.
             </Property>
-            <Property name="Signature" type="string" required={false} typeLink="/signatures">
-                Request signature, if the request is signed.
+            <Property name="X-Signature" type="string" required={false}>
+                See [Signatures](/signatures) for more information.
             </Property>
-            <Property name="Date" type="UTC Time" required={true} typeLink="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Date">
-                Date and time of the request.
+            <Property name="X-Signed-By" type="URI" required={false} typeLink="/types#uri">
+                See [Signatures](/signatures).
+            </Property>
+            <Property name="X-Nonce" type="string" required={false}>
+                See [Signatures](/signatures).
             </Property>
             <Property name="User-Agent" type="string" required={false}>
                 A string identifying the software making the request.
@@ -34,11 +37,12 @@ ALL kinds of HTTP requests/responses between instances **MUST** include a [Signa
     </Col>
     <Col sticky>
         ```http {{ 'title': 'Example Request' }}
-        POST /users/1/inbox HTTP/1.1
+        POST https://bob.com/users/1/inbox HTTP/1.1
         Accept: application/json
-        Signature: keyId="https://example.com/users/1",algorithm="ed25519",headers="(request-target) host date digest",signature="..."
-        Date: Thu, 01 Jan 1970 00:00:00 GMT
         User-Agent: CoolServer/1.0 (https://coolserver.com)
+        X-Signature: post /users/1/inbox a2ebc29eb6762a9164fbcffc9271e8a53562a5e725e7187ea7d88d03cbe59341 n4bQgYhMfWWaL+qgxVrQFaO/TxsrC4Is0V1sFbDwCgg=
+        X-Signed-By: https://example.com/users/1
+        X-Nonce: a2ebc29eb6762a9164fbcffc9271e8a53562a5e725e7187ea7d88d03cbe59341
         ```
     </Col>
 </Row>
@@ -51,11 +55,14 @@ ALL kinds of HTTP requests/responses between instances **MUST** include a [Signa
             <Property name="Content-Type" type="string" required={true}>
                 Must include `application/json; charset=utf-8`.
             </Property>
-            <Property name="Signature" type="string" required={false} typeLink="/signatures">
-                Response signature, if the response is signed.
+            <Property name="X-Signature" type="string" required={false}>
+                See [Signatures](/signatures) for more information.
             </Property>
-            <Property name="Date" type="UTC Time" required={true} typeLink="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Date">
-                Date and time of the response.
+            <Property name="X-Signed-By" type="URI" required={false} typeLink="/types#uri">
+                See [Signatures](/signatures).
+            </Property>
+            <Property name="X-Nonce" type="string" required={false}>
+                See [Signatures](/signatures).
             </Property>
         </Properties>
     </Col>
@@ -63,8 +70,9 @@ ALL kinds of HTTP requests/responses between instances **MUST** include a [Signa
         ```http {{ 'title': 'Example Response' }}
         HTTP/1.1 200 OK
         Content-Type: application/json; charset=utf-8
-        Date: Thu, 01 Jan 1970 00:00:00 GMT
-        Signature: keyId="https://example.com/users/1",algorithm="ed25519",headers="(request-target) host date digest",signature="..."
+        X-Signature: get /users/1/followers 8f872d4609d26819d03a7d60ce3db68f5b0dd5a80d5930260294f237e670ab76 YDA64iuZiGG847KPM+7BvnWKITyGyTwHbb6fVYwRx1I
+        X-Signed-By: https://example.com/users/1
+        X-Nonce: 8f872d4609d26819d03a7d60ce3db68f5b0dd5a80d5930260294f237e670ab76
         ```
     </Col>
 </Row>
