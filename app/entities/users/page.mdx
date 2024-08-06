@@ -93,23 +93,35 @@ Instance **must** be the host of the instance the user is on (hostname with opti
 
             Some instances may have a shared inbox, in which case that should be used instead. Refer to [Server Metadata](/entities/server-metadata) for more information.
         </Property>
-        <Property name="collections.outbox" type="URI" required={true} typeLink="/types#uri">
+        <Property name="collections" type="UserCollections" required={true}>
+            Collections related to the user. Must contain at least `outbox`, `followers`, `following`, and `featured`.
+
+            ```typescript
+            type URI = string;
+
+            type UserCollections = {
+                outbox: URI;
+                followers: URI;
+                following: URI;
+                featured: URI;
+                // Same format as extension_type on Extensions
+                [key: ExtensionsKey]: URI;
+            }
+            ```
+
+            All URIs must resolve to a [Collection](/structures/collection) of the appropriate entities. Extensions may add additional collections.
+
+            ### Outbox
             The user's federation outbox. Refer to the [federation documentation](/federation).
-        </Property>
-        <Property name="collections.followers" type="URI" required={true} typeLink="/types#uri">
-            User's followers. URI must resolve to a [Collection](/structures/collection) of [User](/entities/users) entities.
-        </Property>
-        <Property name="collections.following" type="URI" required={true} typeLink="/types#uri">
-            Users that the user follows. URI must resolve to a [Collection](/structures/collection) of [User](/entities/users) entities.
-        </Property>
-        <Property name="collections.likes" type="URI" required={true} typeLink="/types#uri">
-            User's likes. URI must resolve to a [Collection](/structures/collection) of [Like](/entities/likes) entities.
-        </Property>
-        <Property name="collections.dislikes" type="URI" required={true} typeLink="/types#uri">
-            User's dislikes. URI must resolve to a [Collection](/structures/collection) of [Dislike](/entities/dislikes) entities.
-        </Property>
-        <Property name="collections.featured" type="URI" required={true} typeLink="/types#uri">
-            [Notes](/entities/notes) that the user wants to feature (also known as "pin") on their profile. URI must resolve to a [Collection](/structures/collection) of [Note](/entities/notes) entities.
+
+            ### Followers
+            User's followers. [Collection](/structures/collection) of [User](/entities/users) entities.
+
+            ### Following
+            Users that the user follows. [Collection](/structures/collection) of [User](/entities/users) entities.
+
+            ### Featured
+            [Notes](/entities/notes) that the user wants to feature (also known as "pin") on their profile. [Collection](/structures/collection) of [Note](/entities/notes) entities.
         </Property>
     </Properties>
 
@@ -136,11 +148,11 @@ Instance **must** be the host of the instance the user is on (hostname with opti
             }
         },
         "collections": {
-            "dislikes": "https://social.lysand.org/users/018ec082-0ae1-761c-b2c5-22275a611771/dislikes",
             "featured": "https://social.lysand.org/users/018ec082-0ae1-761c-b2c5-22275a611771/featured",
             "followers": "https://social.lysand.org/users/018ec082-0ae1-761c-b2c5-22275a611771/followers",
             "following": "https://social.lysand.org/users/018ec082-0ae1-761c-b2c5-22275a611771/following",
-            "likes": "https://social.lysand.org/users/018ec082-0ae1-761c-b2c5-22275a611771/likes",
+            "org.lysand:likes/Dislikes": "https://social.lysand.org/users/018ec082-0ae1-761c-b2c5-22275a611771/dislikes",
+            "org.lysand:likes/Likes": "https://social.lysand.org/users/018ec082-0ae1-761c-b2c5-22275a611771/likes",
             "outbox": "https://social.lysand.org/users/018ec082-0ae1-761c-b2c5-22275a611771/outbox",
         },
         "display_name": "April The Pink (limited Sand Edition)",
