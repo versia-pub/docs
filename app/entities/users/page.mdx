@@ -91,22 +91,22 @@ Instance **must** be the host of the instance the user is on (hostname with opti
         <Property name="inbox" type="URI" required={true} typeLink="/types#uri">
             The user's federation inbox. Refer to the [federation documentation](/federation).
         </Property>
-        <Property name="outbox" type="URI" required={true} typeLink="/types#uri">
+        <Property name="collections.outbox" type="URI" required={true} typeLink="/types#uri">
             The user's federation outbox. Refer to the [federation documentation](/federation).
         </Property>
-        <Property name="followers" type="URI" required={true} typeLink="/types#uri">
+        <Property name="collections.followers" type="URI" required={true} typeLink="/types#uri">
             User's followers. URI must resolve to a [Collection](/structures/collection) of [User](/entities/users) entities.
         </Property>
-        <Property name="following" type="URI" required={true} typeLink="/types#uri">
+        <Property name="collections.following" type="URI" required={true} typeLink="/types#uri">
             Users that the user follows. URI must resolve to a [Collection](/structures/collection) of [User](/entities/users) entities.
         </Property>
-        <Property name="likes" type="URI" required={true} typeLink="/types#uri">
+        <Property name="collections.likes" type="URI" required={true} typeLink="/types#uri">
             User's likes. URI must resolve to a [Collection](/structures/collection) of [Like](/entities/likes) entities.
         </Property>
-        <Property name="dislikes" type="URI" required={true} typeLink="/types#uri">
+        <Property name="collections.dislikes" type="URI" required={true} typeLink="/types#uri">
             User's dislikes. URI must resolve to a [Collection](/structures/collection) of [Dislike](/entities/dislikes) entities.
         </Property>
-        <Property name="featured" type="URI" required={true} typeLink="/types#uri">
+        <Property name="collections.featured" type="URI" required={true} typeLink="/types#uri">
             [Notes](/entities/notes) that the user wants to feature (also known as "pin") on their profile. URI must resolve to a [Collection](/structures/collection) of [Note](/entities/notes) entities.
         </Property>
     </Properties>
@@ -133,14 +133,20 @@ Instance **must** be the host of the instance the user is on (hostname with opti
                 "content": "🌸🌸🌸"
             }
         },
-        "dislikes": "https://social.lysand.org/users/018ec082-0ae1-761c-b2c5-22275a611771/dislikes",
+        "collections": {
+            "dislikes": "https://social.lysand.org/users/018ec082-0ae1-761c-b2c5-22275a611771/dislikes",
+            "featured": "https://social.lysand.org/users/018ec082-0ae1-761c-b2c5-22275a611771/featured",
+            "followers": "https://social.lysand.org/users/018ec082-0ae1-761c-b2c5-22275a611771/followers",
+            "following": "https://social.lysand.org/users/018ec082-0ae1-761c-b2c5-22275a611771/following",
+            "likes": "https://social.lysand.org/users/018ec082-0ae1-761c-b2c5-22275a611771/likes",
+            "outbox": "https://social.lysand.org/users/018ec082-0ae1-761c-b2c5-22275a611771/outbox",
+        },
         "display_name": "April The Pink (limited Sand Edition)",
         "extensions": {
             "org.lysand:custom_emojis": {
                 "emojis": []
             }
         },
-        "featured": "https://social.lysand.org/users/018ec082-0ae1-761c-b2c5-22275a611771/featured",
         "fields": [
             {
                 "key": {
@@ -155,14 +161,10 @@ Instance **must** be the host of the instance the user is on (hostname with opti
                 }
             }
         ],
-        "followers": "https://social.lysand.org/users/018ec082-0ae1-761c-b2c5-22275a611771/followers",
-        "following": "https://social.lysand.org/users/018ec082-0ae1-761c-b2c5-22275a611771/following",
         "header": null,
         "inbox": "https://social.lysand.org/users/018ec082-0ae1-761c-b2c5-22275a611771/inbox",
         "indexable": false,
-        "likes": "https://social.lysand.org/users/018ec082-0ae1-761c-b2c5-22275a611771/likes",
         "manually_approves_followers": false,
-        "outbox": "https://social.lysand.org/users/018ec082-0ae1-761c-b2c5-22275a611771/outbox",
         "public_key": {
             "actor": "https://social.lysand.org/users/018ec082-0ae1-761c-b2c5-22275a611771",
             "public_key": "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
