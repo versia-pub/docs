@@ -1,0 +1,74 @@
+export const metadata = {
+    title: 'Collection',
+    description: 'Definition of the Collection structure',
+}
+
+# Collection
+
+Collections are a way to represent paginated groups of entities. They are used everywhere lists of entities can be found, such as a user's outbox. {{ className: 'lead' }}
+
+Pages should be limited to a reasonable number of entities, such as 20 or 80.
+
+## Entity Definition
+
+<Row>
+    <Col>
+        <Properties>
+            <Property name="author" type="URI" required={true} typeLink="/types#uri">
+                Author of the collection. Usually the user who owns the collection. Can be the server actor.
+            </Property>
+            <Property name="first" type="URI" required={true} typeLink="/types#uri">
+                URI to the first page of the collection. Query parameters are allowed.
+            </Property>
+            <Property name="last" type="URI" required={true} typeLink="/types#uri">
+                URI to the last page of the collection. Query parameters are allowed.
+                
+                If the collection only has one page, this should be the same as `first`.
+            </Property>
+            <Property name="total" type="number" required={true}>
+                Total number of entities in the collection, across all pages.
+            </Property>
+            <Property name="next" type="URI" required={false} typeLink="/types#uri">
+                URI to the next page of the collection. Query parameters are allowed.
+                
+                If there is no next page, this should be `null`.
+            </Property>
+            <Property name="prev" type="URI" required={false} typeLink="/types#uri">
+                URI to the previous page of the collection. Query parameters are allowed.
+                
+                If there is no previous page, this should be `null`.
+            </Property>
+            <Property name="items" type="Entity[]" required={true}>
+                Collection contents. Must be an array of entities.
+            </Property>
+        </Properties>
+    </Col>
+
+    <Col sticky>
+
+    ```jsonc {{ 'title': 'Example Collection' }}
+    {
+        "author": "https://social.lysand.org/users/018ec082-0ae1-761c-b2c5-22275a611771",
+        "first": "https://social.lysand.org/users/018ec082-0ae1-761c-b2c5-22275a611771/outbox?page=1",
+        "last": "https://social.lysand.org/users/018ec082-0ae1-761c-b2c5-22275a611771/outbox?page=3",
+        "total": 46,
+        "next": "https://social.lysand.org/users/018ec082-0ae1-761c-b2c5-22275a611771/outbox?page=2",
+        "prev": null,
+        "items": [
+            {
+                "id": "456df8ed-daf1-4062-abab-491071c7b8dd",
+                "type": "Note",
+                "uri": "https://social.lysand.org/notes/456df8ed-daf1-4062-abab-491071c7b8dd",
+                "created_at": "2024-04-09T01:38:51.743Z",
+                "content": {
+                    "text/plain": {
+                        "content": "Hello, world!"
+                    }
+                }
+            }
+        ]
+    }
+    ```
+
+    </Col>
+</Row>
