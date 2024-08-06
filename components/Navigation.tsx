@@ -265,6 +265,7 @@ export const navigation: NavGroup[] = [
         links: [
             { title: "ContentFormat", href: "/structures/content-format" },
             { title: "Collection", href: "/structures/collection" },
+            { title: "Custom Emoji", href: "/structures/emoji" },
         ],
     },
     {
