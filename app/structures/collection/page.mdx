@@ -29,7 +29,7 @@ Pages should be limited to a reasonable number of entities, such as 20 or 80.
                 
                 If the collection only has one page, this should be the same as `first`.
             </Property>
-            <Property name="total" type="number" required={true}>
+            <Property name="total" type="number" required={true} numberType="u64">
                 Total number of entities in the collection, across all pages.
             </Property>
             <Property name="next" type="URI" required={false} typeLink="/types#uri">
