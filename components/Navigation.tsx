@@ -276,6 +276,10 @@ export const navigation: NavGroup[] = [
             { title: "Patches", href: "/entities/patches" },
         ],
     },
+    {
+        title: "Extensions",
+        links: [{ title: "WebSockets", href: "/extensions/websockets" }],
+    },
 ];
 
 export function Navigation(props: ComponentPropsWithoutRef<"nav">) {

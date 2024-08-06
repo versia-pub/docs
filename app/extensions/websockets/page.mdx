@@ -1,0 +1,57 @@
+export const metadata = {
+    title: 'WebSocket Extension',
+    description:
+        'The WebSocket extension adds support for real-time communication between instances.',
+}
+
+# WebSockets Extension
+
+<Note>
+    This extension is a **draft** and should not be considered final. It is subject to change.
+
+    If testing proves unsuccessful, this draft may be abandoned.
+</Note>
+
+Typically, communication between Lysand instances is done via HTTP. However, HTTP suffers from some limitations, such as high latency and heavy overhead for small messages, making it less suitable for exchanging large amounts of entities at acceptable speeds. {{ className: 'lead' }}
+
+This extension aims to address these limitations by adding support for the exchange of entities using WebSockets.
+
+## Message Format
+
+Messages sent over the WebSocket connection are JSON objects.
+
+<Row>
+    <Col>
+        <Properties>
+            <Property name="signature" type="string" required={true}>
+                Same as the `X-Signature` header in HTTP requests.
+            </Property>
+            <Property name="nonce" type="string" required={true}>
+                Same as the `X-Nonce` header in HTTP requests.
+            </Property>
+            <Property name="signed_by" type="URI" required={true}>
+                Same as the `X-Signed-By` header in HTTP requests.
+            </Property>
+            <Property name="entity" type="Entity" required={true} typeLink="/entities/entity">
+                Same as the request body in HTTP requests. Must be a string (stringified JSON), not JSON.
+            </Property>
+        </Properties>
+    </Col>
+
+    <Col sticky>
+
+    ```jsonc {{ 'title': 'Example Message' }}
+    {
+        "signature": "post /users/1/inbox a2ebc29eb6762a9164fbcffc9271e8a53562a5e725e7187ea7d88d03cbe59341 n4bQgYhMfWWaL+qgxVrQFaO/TxsrC4Is0V1sFbDwCgg=",
+        "nonce": "a2ebc29eb6762a9164fbcffc9271e8a53562a5e725e7187ea7d88d03cbe59341",
+        "signed_by": "https://bongo.social/users/63a00ab3-39b1-49eb-b88e-ed65d2361f3e",
+        "entity": "{\"id\":\"9a8928b6-2526-4979-aab1-ef2f88cd5700\",\"type\":\"Undo\",\"created_at\":\"2022-01-01T12:00:00Z\",\"uri\":\"https://bongo.social/objects/9a8928b6-2526-4979-aab1-ef2f88cd5700\",\"author\":\"https://bongo.social/users/63a00ab3-39b1-49eb-b88e-ed65d2361f3e\",\"object\":\"https://bongo.social/notes/54059ce2-9332-46fa-bf6a-598b5493b81b\"}"
+    }
+    ```
+
+    </Col>
+</Row>
+
+## Connection Establishment
+
+...
