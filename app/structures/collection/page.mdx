@@ -9,6 +9,10 @@ Collections are a way to represent paginated groups of entities. They are used e
 
 Pages should be limited to a reasonable number of entities, such as 20 or 80.
 
+<Note>
+    As Collections are independent and not part of a larger entity (like [ContentFormat](/structures/content-format)), they should have a valid [Signature](/signatures).
+</Note>
+
 ## Entity Definition
 
 <Row>
@@ -35,6 +39,7 @@ Pages should be limited to a reasonable number of entities, such as 20 or 80.
             </Property>
             <Property name="prev" type="URI" required={false} typeLink="/types#uri">
                 URI to the previous page of the collection. Query parameters are allowed.
+                
                 
                 If there is no previous page, this should be `null`.
             </Property>
