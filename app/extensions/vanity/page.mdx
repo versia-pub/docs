@@ -18,13 +18,9 @@ All properties are optional.
             <Property name="avatar_overlays" type="ContentFormat[]" typeLink="/structures/content-format" required={false}>
                 Overlay images to be placed on top of the user's avatar, like this: [example overlay from Discord](https://cdn.discordapp.com/avatar-decoration-presets/a_949a575b693c81ced8f56a7579d0969f.png).
 
-                The first overlay in the array is the topmost overlay.
+                The first overlay in the array is the topmost overlay. The inner 80% of the overlay should cover the avatar, with the outer 20% extending beyond the avatar's bounds.
 
                 Image format (e.g. `image/png`), can be animated (e.g. APNG, gif, WebP).
-
-                <Note>
-                    Overlays **MAY** extend beyond the bounds of the avatar. Implementations **SHOULD NOT** clip overlays to the avatar's bounds.
-                </Note>
             </Property>
             <Property name="avatar_mask" type="ContentFormat" required={false}>
                 Mask image to be used to clip the user's avatar. The avatar should be clipped to the mask's alpha channel. For example, a black square with rounded corners would clip the avatar to a rounded square.
