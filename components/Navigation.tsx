@@ -280,6 +280,7 @@ export const navigation: NavGroup[] = [
         title: "Extensions",
         links: [
             { title: "Likes", href: "/extensions/likes" },
+            { title: "Vanity", href: "/extensions/vanity" },
             { title: "WebSockets", href: "/extensions/websockets" },
         ],
     },
