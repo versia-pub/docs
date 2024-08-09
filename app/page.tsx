@@ -1,4 +1,5 @@
 import { Resource, type ResourceType } from "@/components/Resources";
+import { TeamMember } from "@/components/Team";
 import { wrapper } from "@/components/mdx";
 import type { Metadata } from "next";
 import type { FC } from "react";
@@ -95,6 +96,110 @@ const Page: FC = () => {
                     {resources.map((resource) => (
                         <Resource key={resource.name} resource={resource} />
                     ))}
+                </div>
+
+                <h2>Team</h2>
+
+                <div className="not-prose mt-4 grid grid-cols-1 max-w-full gap-8 border-t border-zinc-900/5 pt-10 sm:grid-cols-2 xl:grid-cols-3 dark:border-white/5">
+                    <TeamMember
+                        name="Jesse"
+                        bio="Lead developer, spec design, UI design."
+                        username="CPlusPatch"
+                        avatarUrl="https://avatars.githubusercontent.com/u/42910258?v=4"
+                        socials={[
+                            {
+                                name: "Website",
+                                icon: "bx:link",
+                                url: "https://cpluspatch.com",
+                            },
+                            {
+                                name: "GitHub",
+                                icon: "bxl:github",
+                                url: "https://github.com/cpluspatch",
+                            },
+                            {
+                                name: "Fediverse",
+                                icon: "bxl:mastodon",
+                                url: "https://mk.cpluspatch.com/@jessew",
+                            },
+                            {
+                                name: "Lysand",
+                                icon: "bx:server",
+                                url: "https://social.lysand.org/@jessew",
+                            },
+                            {
+                                name: "Matrix",
+                                icon: "simple-icons:matrix",
+                                url: "https://matrix.to/#/@jesse:cpluspatch.dev",
+                            },
+                            {
+                                name: "Signal",
+                                icon: "simple-icons:signal",
+                                url: "https://signal.me/#eu/mdX6iV0ayndNmJst43sNtlw3eFXgHSm7if4Y/mwYT1+qFDzl1PFAeroW+RpHGaRu",
+                            },
+                            {
+                                name: "Email",
+                                icon: "bx:bxs-envelope",
+                                url: "mailto:contact@cpluspatch.com",
+                            },
+                        ]}
+                    />
+                    <TeamMember
+                        name="April"
+                        bio="Spec design, ActivityPub bridge, emotional support cat."
+                        username="aprl"
+                        avatarUrl="https://avatars.githubusercontent.com/u/30842467?v=4"
+                        socials={[
+                            {
+                                name: "GitHub",
+                                icon: "bxl:github",
+                                url: "https://github.com/cutestnekoaqua",
+                            },
+                            {
+                                name: "Fediverse",
+                                icon: "bxl:mastodon",
+                                url: "https://donotsta.re/april",
+                            },
+                            {
+                                name: "Lysand",
+                                icon: "bx:server",
+                                url: "https://social.lysand.org/@aprl",
+                            },
+                            {
+                                name: "Matrix",
+                                icon: "simple-icons:matrix",
+                                url: "https://matrix.to/#/@aprl:uwu.is",
+                            },
+                            {
+                                name: "Email",
+                                icon: "bx:bxs-envelope",
+                                url: "mailto:aprl@acab.dev",
+                            },
+                        ]}
+                    />
+                    <TeamMember
+                        name="Anna"
+                        username="devminer"
+                        avatarUrl="https://i.imgur.com/grHNY7G.png"
+                        bio="Golang SDK, spec design."
+                        socials={[
+                            {
+                                name: "Website",
+                                icon: "bx:link",
+                                url: "https://devminer.xyz/",
+                            },
+                            {
+                                name: "GitHub",
+                                icon: "bxl:github",
+                                url: "https://github.com/TheDevMinerTV",
+                            },
+                            {
+                                name: "Matrix",
+                                icon: "simple-icons:matrix",
+                                url: "https://matrix.to/#/@devminer:devminer.xyz",
+                            },
+                        ]}
+                    />
                 </div>
             </>
         ),
