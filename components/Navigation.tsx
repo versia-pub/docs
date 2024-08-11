@@ -273,6 +273,10 @@ export const navigation: NavGroup[] = [
         links: [
             { title: "Users", href: "/entities/users" },
             { title: "Notes", href: "/entities/notes" },
+            { title: "Follow", href: "/entities/follows" },
+            { title: "FollowAccept", href: "/entities/follow-accepts" },
+            { title: "FollowReject", href: "/entities/follow-rejects" },
+            { title: "Unfollow", href: "/entities/unfollows" },
         ],
     },
     {
