@@ -1,0 +1,28 @@
+export const metadata = {
+    title: 'Changelog',
+    description:
+        'Changes since the last version of the Lysand protocol.',
+}
+
+# Changelog
+
+This page lists changes since Working Draft 03. {{ className: 'lead' }}
+
+## Since WD 03
+
+- Rewrote the signature system from scratch to be simpler and not depend on dates.
+- Moved Likes and Dislikes to an extension.
+- Renamed fields on several common entities like [Users](/entities/users) and [Notes](/entities/notes).
+- Removed the `Patch` entity.
+  - Useless since edits can just be sent to inboxes directly.
+- Allowed `uri`s to not contain the entity's `id`.
+- Loosened restrictions on the `id` field in entities.
+  - Can now be any string, not just a UUID.
+- Made `uri` optional in some entities not useful enough to keep track of.
+- Added shared inboxes.
+- Added `remote` field to [ContentFormat](/structures/content-format).
+- Switched to [ThumbHash](https://evanw.github.io/thumbhash/) from [BlurHash](https://blurha.sh/).
+- Added optional identification characters to [Custom Emojis](/structures/emoji).
+- Added `manually_approves_followers` to [Users](/entities/users).
+- Removed `visibility` from [Notes](/entities/notes).
+- Made `subject` optional in [Notes](/entities/notes).

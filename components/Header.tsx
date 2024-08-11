@@ -94,7 +94,7 @@ export const Header = forwardRef<ElementRef<"div">, { className?: string }>(
                         <ThemeToggle />
                     </div>
                     <div className="hidden min-[500px]:contents">
-                        <Button href="#">Working Draft 4</Button>
+                        <Button href="/changelog">Working Draft 4</Button>
                     </div>
                 </div>
             </motion.div>
