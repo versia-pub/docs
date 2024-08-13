@@ -5,9 +5,9 @@ import type { Metadata } from "next";
 import type { FC } from "react";
 
 export const metadata: Metadata = {
-    title: "Lysand Documentation",
+    title: "Versia Documentation",
     description:
-        "Introduction to the Lysand Protocol, a communication medium for federated applications, leveraging the HTTP stack.",
+        "Introduction to the Versia Protocol, a communication medium for federated applications, leveraging the HTTP stack.",
 };
 
 const Page: FC = () => {
@@ -20,7 +20,7 @@ const Page: FC = () => {
         {
             name: "MIT licensed",
             description:
-                "Lysand is licensed under the MIT License, which allows you to use it for any purpose.",
+                "Versia is licensed under the MIT License, which allows you to use it for any purpose.",
             icon: "tabler:license",
         },
         {
@@ -32,7 +32,7 @@ const Page: FC = () => {
         {
             name: "Easy to implement",
             description:
-                "Lysand is designed to be easy to implement in any language.",
+                "Versia is designed to be easy to implement in any language.",
             icon: "tabler:code",
         },
         {
@@ -65,7 +65,7 @@ const Page: FC = () => {
             <>
                 <div className="relative z-10 max-w-2xl lg:pt-6">
                     <h1 className="text-5xl font-semibold tracking-tight leading-3 text-brand-600 dark:text-brand-400">
-                        Lysand
+                        Versia
                     </h1>
                     <h1 className="text-4xl sm:text-5xl font-semibold tracking-tight">
                         Federation, simpler
@@ -79,8 +79,8 @@ const Page: FC = () => {
                 <h2>Made by developers</h2>
 
                 <p className="lead">
-                    Lysand is designed and maintained by the developers of the
-                    Lysand Server, which uses Lysand for federation. This
+                    Versia is designed and maintained by the developers of the
+                    Versia Server, which uses Versia for federation. This
                     community could include you! Check out our{" "}
                     <a
                         href="https://github.com/lysand-org/lysand"
@@ -123,7 +123,7 @@ const Page: FC = () => {
                                 url: "https://mk.cpluspatch.com/@jessew",
                             },
                             {
-                                name: "Lysand",
+                                name: "Versia",
                                 icon: "bx:server",
                                 url: "https://social.lysand.org/@jessew",
                             },
@@ -161,7 +161,7 @@ const Page: FC = () => {
                                 url: "https://donotsta.re/april",
                             },
                             {
-                                name: "Lysand",
+                                name: "Versia",
                                 icon: "bx:server",
                                 url: "https://social.lysand.org/@aprl",
                             },

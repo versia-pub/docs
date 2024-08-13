@@ -43,7 +43,7 @@ const resources: ResourceType[] = [
         href: "/security",
         name: "Security",
         description:
-            "Learn how to secure your Lysand implementation and protect your users' data.",
+            "Learn how to secure your Versia implementation and protect your users' data.",
         icon: "tabler:building-bank",
         pattern: {
             y: -6,

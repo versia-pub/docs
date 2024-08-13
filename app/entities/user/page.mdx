@@ -5,7 +5,7 @@ export const metadata = {
 
 # Users
 
-The `User` entity represents an account on a Lysand instance. Users can post [Notes](/entities/note), follow other users, and interact with content. Users are identified by their `id` property, which is unique within the instance. {{ className: 'lead' }}
+The `User` entity represents an account on a Versia instance. Users can post [Notes](/entities/note), follow other users, and interact with content. Users are identified by their `id` property, which is unique within the instance. {{ className: 'lead' }}
 
 ## Addresses
 
@@ -19,8 +19,8 @@ Users may be represented by a shorthand address, in the following formats:
 For example:
 
 ```
-@jessew@social.lysand.org
-@018ec082-0ae1-761c-b2c5-22275a611771@social.lysand.org
+@jessew@versia.social
+@018ec082-0ae1-761c-b2c5-22275a611771@versia.social
 ```
 
 This is similar to an email address or an ActivityPub address.
@@ -71,7 +71,7 @@ Instance **must** be the host of the instance the user is on (hostname with opti
             A header image for the user's profile. Also known as a cover photo or a banner. Must be an image format (`image/*`).
         </Property>
         <Property name="public_key" type="PublicKey" required={true}>
-            The user's public key. Must follow the [Lysand Public Key](/signatures) format. `actor` may be a URI to another user's profile, in which case this key may allow the user to act on behalf of the other user (see [delegation](/delegation)).
+            The user's public key. Must follow the [Versia Public Key](/signatures) format. `actor` may be a URI to another user's profile, in which case this key may allow the user to act on behalf of the other user (see [delegation](/delegation)).
 
             ```typescript
             type URI = string;
@@ -132,7 +132,7 @@ Instance **must** be the host of the instance the user is on (hostname with opti
     {
         "id": "018ec082-0ae1-761c-b2c5-22275a611771",
         "type": "User",
-        "uri": "https://social.lysand.org/users/018ec082-0ae1-761c-b2c5-22275a611771",
+        "uri": "https://versia.social/users/018ec082-0ae1-761c-b2c5-22275a611771",
         "created_at": "2024-04-09T01:38:51.743Z",
         "avatar": { // [!code focus:100]
             "image/png": {
@@ -148,16 +148,16 @@ Instance **must** be the host of the instance the user is on (hostname with opti
             }
         },
         "collections": {
-            "featured": "https://social.lysand.org/users/018ec082-0ae1-761c-b2c5-22275a611771/featured",
-            "followers": "https://social.lysand.org/users/018ec082-0ae1-761c-b2c5-22275a611771/followers",
-            "following": "https://social.lysand.org/users/018ec082-0ae1-761c-b2c5-22275a611771/following",
-            "org.lysand:likes/Dislikes": "https://social.lysand.org/users/018ec082-0ae1-761c-b2c5-22275a611771/dislikes",
-            "org.lysand:likes/Likes": "https://social.lysand.org/users/018ec082-0ae1-761c-b2c5-22275a611771/likes",
-            "outbox": "https://social.lysand.org/users/018ec082-0ae1-761c-b2c5-22275a611771/outbox",
+            "featured": "https://versia.social/users/018ec082-0ae1-761c-b2c5-22275a611771/featured",
+            "followers": "https://versia.social/users/018ec082-0ae1-761c-b2c5-22275a611771/followers",
+            "following": "https://versia.social/users/018ec082-0ae1-761c-b2c5-22275a611771/following",
+            "pub.versia:likes/Dislikes": "https://versia.social/users/018ec082-0ae1-761c-b2c5-22275a611771/dislikes",
+            "pub.versia:likes/Likes": "https://versia.social/users/018ec082-0ae1-761c-b2c5-22275a611771/likes",
+            "outbox": "https://versia.social/users/018ec082-0ae1-761c-b2c5-22275a611771/outbox",
         },
         "display_name": "April The Pink (limited Sand Edition)",
         "extensions": {
-            "org.lysand:custom_emojis": {
+            "pub.versia:custom_emojis": {
                 "emojis": []
             }
         },
@@ -176,11 +176,11 @@ Instance **must** be the host of the instance the user is on (hostname with opti
             }
         ],
         "header": null,
-        "inbox": "https://social.lysand.org/users/018ec082-0ae1-761c-b2c5-22275a611771/inbox",
+        "inbox": "https://versia.social/users/018ec082-0ae1-761c-b2c5-22275a611771/inbox",
         "indexable": false,
         "manually_approves_followers": false,
         "public_key": {
-            "actor": "https://social.lysand.org/users/018ec082-0ae1-761c-b2c5-22275a611771",
+            "actor": "https://versia.social/users/018ec082-0ae1-761c-b2c5-22275a611771",
             "public_key": "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
         },
         "username": "aprl"

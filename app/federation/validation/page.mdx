@@ -1,12 +1,12 @@
 export const metadata = {
     title: 'Validation',
     description:
-        'Validation rules for Lysand implementations.',
+        'Validation rules for Versia implementations.',
 }
 
 # Validation
 
-Implementations **MUST** strictly validate all incoming data to ensure that it is well-formed and adheres to the Lysand Protocol. If a request is invalid, the server **MUST** return a `400 Bad Request` HTTP status code.
+Implementations **MUST** strictly validate all incoming data to ensure that it is well-formed and adheres to the Versia Protocol. If a request is invalid, the server **MUST** return a `400 Bad Request` HTTP status code.
 
 <Note>
     Remember that while *your* implementation may disallow or restrict some user input, other implementations may not. You **should not** apply those restrictions to data coming from other instances.
@@ -33,4 +33,4 @@ Things that should be validated include, but are not limited to:
 - The **validity** of all URLs and URIs (run them through your favorite URL parser, optionally fetch the linked URL).
 - The **time** of all dates and times (people should not be born in the future, or in the year 0).
 
-It is your implementation's duty to reject data from other instances that does not adhere to the strict spec. **This is crucial to ensure the integrity of your instance and the network as a whole**. Allowing data that is technically valid but semantically incorrect can lead to the degradation of the entire Lysand ecosystem.
+It is your implementation's duty to reject data from other instances that does not adhere to the strict spec. **This is crucial to ensure the integrity of your instance and the network as a whole**. Allowing data that is technically valid but semantically incorrect can lead to the degradation of the entire Versia ecosystem.

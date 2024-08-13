@@ -13,7 +13,7 @@ export function Logo(props: ComponentPropsWithoutRef<"div">) {
         >
             <img src={logo.src} alt="Logo" className="h-full rounded-sm" />
             <span className="fill-zinc-900 dark:fill-white font-semibold text-lg">
-                Lysand Protocol
+                Versia Protocol
             </span>
         </div>
     );

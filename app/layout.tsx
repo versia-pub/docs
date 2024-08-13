@@ -11,16 +11,16 @@ import type { ReactNode } from "react";
 
 export const metadata: Metadata = {
     title: {
-        template: "%s • Lysand API Reference",
-        default: "Lysand API Reference",
+        template: "%s • Versia API Reference",
+        default: "Versia API Reference",
     },
-    keywords: ["federation", "api", "reference", "documentation", "lysand"],
-    metadataBase: new URL("https://dev.lysand.org"),
+    keywords: ["federation", "api", "reference", "documentation", "versia"],
+    metadataBase: new URL("https://versia.pub"),
     openGraph: {
         type: "article",
         images: {
             url: logo.src,
-            alt: "Lysand logo",
+            alt: "Versia logo",
             height: logo.height,
             width: logo.width,
             type: "image/webp",

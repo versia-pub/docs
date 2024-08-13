@@ -1,12 +1,12 @@
 
 
 <p align="center">
-  <a href="https://lysand.org"><img src="https://cdn.lysand.org/logo-long-dark.webp" alt="Lysand Logo" height="110"></a>
+  <a href="https://versia.pub"><img src="https://cdn.lysand.org/logo-long-dark.webp" alt="Versia Logo" height="110"></a>
 </p>
 
 
 <h2 align="center">
-  <strong><code>Lysand Documentation</code></strong>
+  <strong><code>Versia Documentation</code></strong>
 </h2>
 
 <div align="center">
@@ -24,7 +24,7 @@
 <br/>
 
 <p align="center">
-    <img src="public/screenshots/framed/ipad-home.webp" alt="Lysand on an iPad" height="400">
+    <img src="public/screenshots/framed/ipad-home.webp" alt="Versia on an iPad" height="400">
 </p>
 
 ## Technologies
