@@ -6,12 +6,25 @@ import type { Section } from "../components/SectionProvider";
 import { Providers } from "./providers";
 
 import "@/styles/tailwind.css";
+import logo from "@/images/branding/logo.webp";
 import type { ReactNode } from "react";
 
 export const metadata: Metadata = {
     title: {
         template: "%s • Lysand API Reference",
         default: "Lysand API Reference",
+    },
+    keywords: ["federation", "api", "reference", "documentation", "lysand"],
+    metadataBase: new URL("https://dev.lysand.org"),
+    openGraph: {
+        type: "article",
+        images: {
+            url: logo.src,
+            alt: "Lysand logo",
+            height: logo.height,
+            width: logo.width,
+            type: "image/webp",
+        },
     },
 };
 
