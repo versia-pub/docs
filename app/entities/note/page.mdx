@@ -5,7 +5,7 @@ export const metadata = {
 
 # Notes
 
-Notes represent a piece of content on a Lysand instance. They can be posted by [Users](/entities/users) and are displayed in a user's feed. Notes can contain text, images, and other media. {{ className: 'lead' }}
+Notes represent a piece of content on a Lysand instance. They can be posted by [Users](/entities/user) and are displayed in a user's feed. Notes can contain text, images, and other media. {{ className: 'lead' }}
 
 <Note>
     Notes are not just limited to microblogging. They can be used for any kind of content, such as forum posts, blog posts, image posts, video posts, audio posts, and even messaging.
@@ -61,7 +61,7 @@ Notes represent a piece of content on a Lysand instance. They can be posted by [
                 Whether the note contains "sensitive content". This can be used with `subject` as a "content warning" feature.
             </Property>
             <Property name="mentions" type="URI[]" required={false} typeLink="/types#uri">
-                URIs of [Users](/entities/users) that should be notified of the note. Similar to Twitter's `@` mentions. The note may also contain mentions in the content, however only the mentions in this field should trigger notifications.
+                URIs of [Users](/entities/user) that should be notified of the note. Similar to Twitter's `@` mentions. The note may also contain mentions in the content, however only the mentions in this field should trigger notifications.
             </Property>
             <Property name="previews" type="LinkPreview" required={false}>
                 Previews for any links in the publication. This is to avoid the [stampeding mastodon problem](https://github.com/mastodon/mastodon/issues/23662) where a link preview is fetched by every server that sees the publication, creating an accidental DDOS attack.

@@ -271,13 +271,13 @@ export const navigation: NavGroup[] = [
     {
         title: "Entities",
         links: [
-            { title: "Delete", href: "/entities/deletes" },
-            { title: "Follow", href: "/entities/follows" },
-            { title: "FollowAccept", href: "/entities/follow-accepts" },
-            { title: "FollowReject", href: "/entities/follow-rejects" },
-            { title: "Notes", href: "/entities/notes" },
-            { title: "Unfollow", href: "/entities/unfollows" },
-            { title: "Users", href: "/entities/users" },
+            { title: "Delete", href: "/entities/delete" },
+            { title: "Follow", href: "/entities/follow" },
+            { title: "FollowAccept", href: "/entities/follow-accept" },
+            { title: "FollowReject", href: "/entities/follow-reject" },
+            { title: "Notes", href: "/entities/note" },
+            { title: "Unfollow", href: "/entities/unfollow" },
+            { title: "Users", href: "/entities/user" },
         ],
     },
     {

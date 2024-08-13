@@ -12,7 +12,7 @@ This page lists changes since Working Draft 03. {{ className: 'lead' }}
 
 - Rewrote the signature system from scratch to be simpler and not depend on dates.
 - Moved Likes and Dislikes to an extension.
-- Renamed fields on several common entities like [Users](/entities/users) and [Notes](/entities/notes).
+- Renamed fields on several common entities like [Users](/entities/user) and [Notes](/entities/note).
 - Removed the `Patch` entity.
   - Useless since edits can just be sent to inboxes directly.
 - Allowed `uri`s to not contain the entity's `id`.
@@ -23,10 +23,10 @@ This page lists changes since Working Draft 03. {{ className: 'lead' }}
 - Added `remote` field to [ContentFormat](/structures/content-format).
 - Switched to [ThumbHash](https://evanw.github.io/thumbhash/) from [BlurHash](https://blurha.sh/).
 - Added optional identification characters to [Custom Emojis](/structures/emoji).
-- Added `manually_approves_followers` to [Users](/entities/users).
-- Removed `visibility` from [Notes](/entities/notes).
-- Made `subject` optional in [Notes](/entities/notes).
-- Clarified the way [Follows](/entities/follows) work.
+- Added `manually_approves_followers` to [Users](/entities/user).
+- Removed `visibility` from [Notes](/entities/note).
+- Made `subject` optional in [Notes](/entities/note).
+- Clarified the way [Follows](/entities/follow) work.
 - Removed the use of `Undo` entities for anything except than deleting entities.
-- Renamed `Undo` to [Delete](/entities/deletes).
-- Added [Unfollow](/entities/unfollows) entity.
+- Renamed `Undo` to [Delete](/entities/delete).
+- Added [Unfollow](/entities/unfollow) entity.

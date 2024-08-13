@@ -5,7 +5,7 @@ export const metadata = {
 
 # Users
 
-The `User` entity represents an account on a Lysand instance. Users can post [Notes](/entities/notes), follow other users, and interact with content. Users are identified by their `id` property, which is unique within the instance. {{ className: 'lead' }}
+The `User` entity represents an account on a Lysand instance. Users can post [Notes](/entities/note), follow other users, and interact with content. Users are identified by their `id` property, which is unique within the instance. {{ className: 'lead' }}
 
 ## Addresses
 
@@ -115,13 +115,13 @@ Instance **must** be the host of the instance the user is on (hostname with opti
             The user's federation outbox. Refer to the [federation documentation](/federation).
 
             ### Followers
-            User's followers. [Collection](/structures/collection) of [User](/entities/users) entities.
+            User's followers. [Collection](/structures/collection) of [User](/entities/user) entities.
 
             ### Following
-            Users that the user follows. [Collection](/structures/collection) of [User](/entities/users) entities.
+            Users that the user follows. [Collection](/structures/collection) of [User](/entities/user) entities.
 
             ### Featured
-            [Notes](/entities/notes) that the user wants to feature (also known as "pin") on their profile. [Collection](/structures/collection) of [Note](/entities/notes) entities.
+            [Notes](/entities/note) that the user wants to feature (also known as "pin") on their profile. [Collection](/structures/collection) of [Note](/entities/note) entities.
         </Property>
     </Properties>
 

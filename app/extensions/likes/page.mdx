@@ -26,7 +26,7 @@ Likes are a way for users to show appreciation for a note, like Twitter's "heart
                 Creator of the Like.
             </Property>
             <Property name="liked" type="URI" required={true} typeLink="/types#uri">
-                URI of the note being liked. Must link to a [Note](/entities/notes).
+                URI of the note being liked. Must link to a [Note](/entities/note).
             </Property>
         </Properties>
     </Col>
@@ -64,7 +64,7 @@ Dislikes are a way for users to show disapproval for a note, like YouTube's "dis
                 Creator of the Dislike.
             </Property>
             <Property name="disliked" type="URI" required={true} typeLink="/types#uri">
-                URI of the note being disliked. Must link to a [Note](/entities/notes).
+                URI of the note being disliked. Must link to a [Note](/entities/note).
             </Property>
         </Properties>
     </Col>
@@ -88,11 +88,11 @@ Dislikes are a way for users to show disapproval for a note, like YouTube's "dis
 
 ## Undoing Likes and Dislikes
 
-To undo a like or dislike, a [Delete](/entities/deletes) entity should be used. The `deleted` property of the Delete entity should link to the Like or Dislike entity to be removed.
+To undo a like or dislike, a [Delete](/entities/delete) entity should be used. The `deleted` property of the Delete entity should link to the Like or Dislike entity to be removed.
 
 ## User Collections
 
-The Likes extension adds the following collections to the [User](/entities/users) entity:
+The Likes extension adds the following collections to the [User](/entities/user) entity:
 
 - `likes`: A [Collection](/structures/collection) of all the notes the user has liked.
 - `dislikes`: A [Collection](/structures/collection) of all the notes the user has disliked.
