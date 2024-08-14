@@ -258,6 +258,7 @@ export const navigation: NavGroup[] = [
         links: [
             { title: "HTTP", href: "/federation/http" },
             { title: "Validation", href: "/federation/validation" },
+            { title: "Discovery", href: "/federation/discovery" },
         ],
     },
     {

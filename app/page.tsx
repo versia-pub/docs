@@ -72,7 +72,7 @@ const Page: FC = () => {
                     </h1>
                     <p className="mt-6 text-lg">
                         A simple, extensible federated protocol for building
-                        useful applications.
+                        useful applications. Formerly known as Lysand.
                     </p>
                 </div>
 
