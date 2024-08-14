@@ -277,6 +277,7 @@ export const navigation: NavGroup[] = [
             { title: "FollowAccept", href: "/entities/follow-accept" },
             { title: "FollowReject", href: "/entities/follow-reject" },
             { title: "Notes", href: "/entities/note" },
+            { title: "ServerMetadata", href: "/entities/server-metadata" },
             { title: "Unfollow", href: "/entities/unfollow" },
             { title: "Users", href: "/entities/user" },
         ],
