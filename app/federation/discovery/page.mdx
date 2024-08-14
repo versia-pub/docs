@@ -66,13 +66,20 @@ Accept: application/json
 {
     "type": "ServerMetadata",
     "name": "Versia Social",
-    "uri": "https://versia.social",
-    "version": "3.2.0",
-    "supported_extensions": [
-        "pub.versia:reactions",
-        "pub.versia:polls",
-        "pub.versia:custom_emojis",
-        "pub.versia:is_cat"
-    ]
+    "software": {
+        "name": "Versia Server",
+        "version": "0.7.0"
+    },
+    "compatibility": {
+        "versions": [
+            "0.4.0"
+        ],
+        "extensions": [
+            "pub.versia:reactions",
+            "pub.versia:polls",
+            "pub.versia:reports"
+        ]
+    },
+    "host": "versia.social",
 }
 ```
