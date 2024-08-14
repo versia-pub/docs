@@ -2,7 +2,6 @@ import clsx from "clsx";
 import Link from "next/link";
 
 import type { ComponentPropsWithoutRef, ReactNode } from "react";
-import { Feedback } from "./Feedback";
 import { Heading } from "./Heading";
 import { Prose } from "./Prose";
 
@@ -15,9 +14,9 @@ export function wrapper({ children }: { children: ReactNode }) {
     return (
         <article className="flex h-full flex-col pb-10 pt-16 overflow-hidden text-wrap">
             <Prose className="flex-auto">{children}</Prose>
-            <footer className="mx-auto mt-16 w-full max-w-2xl lg:max-w-5xl">
+            {/* <footer className="mx-auto mt-16 w-full max-w-2xl lg:max-w-5xl">
                 <Feedback />
-            </footer>
+            </footer> */}
         </article>
     );
 }
