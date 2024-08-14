@@ -32,7 +32,7 @@ Messages sent over the WebSocket connection are JSON objects.
             <Property name="signed_by" type="URI" required={true}>
                 Same as the `X-Signed-By` header in HTTP requests.
             </Property>
-            <Property name="entity" type="Entity" required={true} typeLink="/entities/entity">
+            <Property name="entity" type="Entity" required={true} typeLink="/entities">
                 Same as the request body in HTTP requests. Must be a string (stringified JSON), not JSON.
             </Property>
         </Properties>
