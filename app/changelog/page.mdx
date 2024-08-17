@@ -32,3 +32,5 @@ This page lists changes since Working Draft 03. {{ className: 'lead' }}
 - Added [Unfollow](/entities/unfollow) entity.
 - Completely rework `ServerMetadata`, and rename to [InstanceMetadata](/entities/instance-metadata).
 - Remove Server Actors, and move instance public keys to [InstanceMetadata](/entities/instance-metadata).
+- Add `algorithm` to [Users](/entities/user) and [InstanceMetadata](/entities/instance-metadata)'s public keys for future use (only `ed25519` is allowed for now).
+  - Renamed the second `public_key` to `key`.

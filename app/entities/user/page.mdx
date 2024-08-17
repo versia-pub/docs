@@ -73,12 +73,15 @@ Instance **must** be the host of the instance the user is on (hostname with opti
         <Property name="public_key" type="PublicKey" required={true}>
             The user's public key. Must follow the [Versia Public Key](/signatures) format. `actor` may be a URI to another user's profile, in which case this key may allow the user to act on behalf of the other user (see [delegation](/delegation)).
 
+            `algorithm` must be `ed25519` for now.
+
             ```typescript
             type URI = string;
 
             type PublicKey = {
                 actor: URI;
-                public_key: string;
+                algorithm: string;
+                key: string;
             }
             ```
         </Property>
@@ -181,7 +184,8 @@ Instance **must** be the host of the instance the user is on (hostname with opti
         "manually_approves_followers": false,
         "public_key": {
             "actor": "https://versia.social/users/018ec082-0ae1-761c-b2c5-22275a611771",
-            "public_key": "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+            "algorithm": "ed25519",
+            "key": "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
         },
         "username": "aprl"
     }

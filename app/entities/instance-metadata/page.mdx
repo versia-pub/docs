@@ -70,11 +70,13 @@ On all entities that have an `author` field, the `author` can be `null` to repre
 
                 ```typescript
                 type PublicKey = {
-                    public_key: string;
+                    algorithm: string;
+                    key: string;
                 }
                 ```
-
-                - `public_key`: Public key of the instance. Must follow the [Versia Public Key](/signatures) format.
+                
+                - `algorithm`: Algorithm used for the public key. Can only be `ed25519` for now.
+                - `key`: Public key of the instance. Must follow the [Versia Public Key](/signatures) format.
             </Property>
             <Property name="moderators" type="URI" required={false}>
                 URI to [Collection](/structures/collection) of instance moderators.
@@ -134,7 +136,8 @@ On all entities that have an `author` field, the `author` can be `null` to repre
             }
         },
         "public_key": {
-            "public_key": "MCowBQYDK2VwAyEA9zhEMtQZetRl4QrLcz99i7jOa6ZVjX7aLfRUsMuKByI=" 
+            "algorithm": "ed25519",
+            "key": "MCowBQYDK2VwAyEA9zhEMtQZetRl4QrLcz99i7jOa6ZVjX7aLfRUsMuKByI="
         },
         "banner": null,
         "extensions": {
