@@ -13,7 +13,7 @@ Implementations **must** ensure that the author of the `Delete` entity has the a
 
 Having the authorization is defined as:
 - The author is the creator of the target entity (including [delegation](/delegation)).
-- The author is the server actor.
+- The author is the instance.
 
 ## Entity Definition
 
@@ -23,8 +23,8 @@ Having the authorization is defined as:
             <Property name="uri" type="null" required={false}>
                 This entity does not have a URI.
             </Property>
-            <Property name="author" type="URI" required={true} typeLink="/types#uri">
-                URI of the `User` who is deleting the entity.
+            <Property name="author" type="URI | null" required={true} typeLink="/types#uri">
+                URI of the `User` who is deleting the entity. [Can be set to `null` to represent the instance](/entities/server-metadata#the-null-author).
             </Property>
             <Property name="target" type="URI" required={true} typeLink="/types#uri">
                 URI of the entity being deleted.

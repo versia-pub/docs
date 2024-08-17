@@ -7,11 +7,13 @@ export const metadata = {
 
 Contains metadata about a Versia instance, such as capabilities and endpoints. {{ className: 'lead' }}
 
-Not to be confused with [Server Actor](/entities/server-actor), which is a User representing an instance in the federation.
-
 <Note>
     This entity is only used as part of [Server Discovery](/federation/discovery#server-discovery), and not as part of federation.
 </Note>
+
+## The `null` Author
+
+On all entities that have an `author` field, the `author` can be `null` to represent the instance itself as the author (like ActivityPub's Server Actors). In this case, the instance's public key should be used to verify the entity.
 
 ## Entity Definition
 
@@ -62,6 +64,17 @@ Not to be confused with [Server Actor](/entities/server-actor), which is a User 
             </Property>
             <Property name="shared_inbox" type="URI" required={false}>
                 URI to the instance's shared inbox, if supported.
+            </Property>
+            <Property name="public_key" type="PublicKey" required={true}>
+                Public key of the instance.
+
+                ```typescript
+                type PublicKey = {
+                    public_key: string;
+                }
+                ```
+
+                - `public_key`: Public key of the instance. Must follow the [Versia Public Key](/signatures) format.
             </Property>
             <Property name="moderators" type="URI" required={false}>
                 URI to [Collection](/structures/collection) of instance moderators.
@@ -119,6 +132,9 @@ Not to be confused with [Server Actor](/entities/server-actor), which is a User 
             "image/webp": {
                 "content": "https://social.jimjams.com/files/logo.webp"
             }
+        },
+        "public_key": {
+            "public_key": "MCowBQYDK2VwAyEA9zhEMtQZetRl4QrLcz99i7jOa6ZVjX7aLfRUsMuKByI=" 
         },
         "banner": null,
         "extensions": {

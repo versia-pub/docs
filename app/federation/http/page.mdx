@@ -8,7 +8,7 @@ export const metadata = {
 
 Versia uses the HTTP protocol for all communications between instances. HTTP requests must conform to certain standards to ensure compatibility between different implementations, as well as to ensure the security and integrity of the data being exchanged.
 
-ALL kinds of HTTP requests/responses between instances **MUST** include a [Signature](/signatures), signed with either the relevant [User](/entities/user)'s private key or the [Server Actor](/entities/server-actor)'s private key.
+ALL kinds of HTTP requests/responses between instances **MUST** include a [Signature](/signatures), signed with either the relevant [User](/entities/user)'s private key or the [instance's private key](/entities/server-metadata).
 
 ## Requests
 

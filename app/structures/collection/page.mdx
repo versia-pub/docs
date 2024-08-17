@@ -18,8 +18,8 @@ Pages should be limited to a reasonable number of entities, such as 20 or 80.
 <Row>
     <Col>
         <Properties>
-            <Property name="author" type="URI" required={true} typeLink="/types#uri">
-                Author of the collection. Usually the user who owns the collection. Can be the server actor.
+            <Property name="author" type="URI | null" required={true} typeLink="/types#uri">
+                Author of the collection. Usually the user who owns the collection. [Can be set to `null` to represent the instance](/entities/server-metadata#the-null-author).
             </Property>
             <Property name="first" type="URI" required={true} typeLink="/types#uri">
                 URI to the first page of the collection. Query parameters are allowed.
