@@ -47,13 +47,13 @@ Accept: application/jrd+json
 }
 ```
 
-## Server Discovery
+## Instance Discovery
 
-Server metadata can be accessed by making a `GET` request to the server's Versia metadata endpoint, which is located at `/.well-known/versia`.
+Instaance metadata can be accessed by making a `GET` request to the instance's Versia metadata endpoint, which is located at `/.well-known/versia`.
 
 ### Example
 
-To discover the metadata of the server `versia.social`, an instance would make a `GET` request to `https://versia.social/.well-known/versia`.
+To discover the metadata of the instance `versia.social`, an instance would make a `GET` request to `https://versia.social/.well-known/versia`.
 
 This endpoint will return an [InstanceMetadata](/entities/instance-metadata) entity.
 

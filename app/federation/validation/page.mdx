@@ -6,7 +6,7 @@ export const metadata = {
 
 # Validation
 
-Implementations **MUST** strictly validate all incoming data to ensure that it is well-formed and adheres to the Versia Protocol. If a request is invalid, the server **MUST** return a `400 Bad Request` HTTP status code.
+Implementations **MUST** strictly validate all incoming data to ensure that it is well-formed and adheres to the Versia Protocol. If a request is invalid, the instance **MUST** return a `400 Bad Request` HTTP status code.
 
 <Note>
     Remember that while *your* implementation may disallow or restrict some user input, other implementations may not. You **should not** apply those restrictions to data coming from other instances.

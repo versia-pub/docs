@@ -64,7 +64,7 @@ Notes represent a piece of content on a Versia instance. They can be posted by [
                 URIs of [Users](/entities/user) that should be notified of the note. Similar to Twitter's `@` mentions. The note may also contain mentions in the content, however only the mentions in this field should trigger notifications.
             </Property>
             <Property name="previews" type="LinkPreview" required={false}>
-                Previews for any links in the publication. This is to avoid the [stampeding mastodon problem](https://github.com/mastodon/mastodon/issues/23662) where a link preview is fetched by every server that sees the publication, creating an accidental DDOS attack.
+                Previews for any links in the publication. This is to avoid the [stampeding mastodon problem](https://github.com/mastodon/mastodon/issues/23662) where a link preview is fetched by every instance that sees the publication, creating an accidental DDOS attack.
 
                 ```typescript
                 type LinkPreview = {
@@ -77,7 +77,7 @@ Notes represent a piece of content on a Versia instance. They can be posted by [
                 ```
 
                 <Note>
-                    Servers should make sure not to trust the previews, as they could be faked by malicious remote servers. This is not a very good attack vector, but it is still possible to redirect users to malicious links.
+                    Implementations should make sure not to trust the previews, as they could be faked by malicious remote instances. This is not a very good attack vector, but it is still possible to redirect users to malicious links.
                 </Note>
             </Property>
             <Property name="quotes" type="URI" required={false} typeLink="/types#uri">

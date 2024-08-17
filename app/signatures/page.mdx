@@ -1,7 +1,7 @@
 export const metadata = {
     title: 'Signatures',
     description:
-        'Learn how signatures work, and how to implement them in your Versia server.',
+        'Learn how signatures work, and how to implement them in your Versia instance.',
 }
 
 # Signatures
@@ -9,7 +9,7 @@ export const metadata = {
 Versia uses cryptographic signatures to ensure the integrity and authenticity of data. Signatures are used to verify that the data has not been tampered with and that it was created by the expected user. {{ className: 'lead' }}
 
 <Note>
-    This part is very important! If signatures are implemented incorrectly in your server, **you will not be able to federate**.
+    This part is very important! If signatures are implemented incorrectly in your instance, **you will not be able to federate**.
 
     Mistakes made in this section can lead to **security vulnerabilities** and **impersonation attacks**.
 </Note>
@@ -25,7 +25,7 @@ Signatures are **required on ALL federation traffic**. If a request does not hav
 - **All POST requests**.
 - **All responses to GET requests** (for example, when fetching a user's profile). In this case, the HTTP method used in the signature string must be `GET`.
 
-If a signature fails, is missing or is invalid, the server **MUST** return a `401 Unauthorized` HTTP status code.
+If a signature fails, is missing or is invalid, the instance **MUST** return a `401 Unauthorized` HTTP status code.
 
 ### Calculating the Signature
 
@@ -49,7 +49,7 @@ post /notes a2ebc29eb6762a9164fbcffc9271e8a53562a5e725e7187ea7d88d03cbe59341 n4b
 
 ### Verifying the Signature
 
-To verify a signature, the server must:
+To verify a signature, the instance must:
 - Recreate the string as described above.
 - Extract the signature provided in the `X-Signature` header.
 - Decode the signature from base64.

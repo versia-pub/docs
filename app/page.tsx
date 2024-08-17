@@ -50,7 +50,7 @@ const Page: FC = () => {
         {
             name: "In-depth security docs",
             description:
-                "Docs provide lots of information on how to program a secure server.",
+                "Docs provide lots of information on how to program a secure instance.",
             icon: "tabler:shield",
         },
         {

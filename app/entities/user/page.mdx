@@ -94,7 +94,7 @@ Instance **must** be the host of the instance the user is on (hostname with opti
         <Property name="inbox" type="URI" required={true} typeLink="/types#uri">
             The user's federation inbox. Refer to the [federation documentation](/federation).
 
-            Some instances may also have a shared inbox. Refer to [Server Metadata](/entities/instance-metadata) for more information.
+            Some instances may also have a shared inbox. Refer to [Instance Metadata](/entities/instance-metadata) for more information.
         </Property>
         <Property name="collections" type="UserCollections" required={true}>
             Collections related to the user. Must contain at least `outbox`, `followers`, `following`, and `featured`.
