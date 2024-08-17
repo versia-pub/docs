@@ -82,4 +82,4 @@ Any field in an entity not marked as `required` may be omitted or set to `null`.
 When serialized to a string, the JSON representation of an entity should follow the following rules:
 - Keys must be sorted lexicographically.
 - Should use UTF-8 encoding.
-- Must be **signed** using the relevant [User](/entities/user)'s private key, or the [instance's private key](/entities/server-metadata) if the entity is not associated with a particular user.
+- Must be **signed** using the relevant [User](/entities/user)'s private key, or the [instance's private key](/entities/instance-metadata) if the entity is not associated with a particular user.
