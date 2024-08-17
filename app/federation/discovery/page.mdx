@@ -55,7 +55,7 @@ Server metadata can be accessed by making a `GET` request to the server's Versia
 
 To discover the metadata of the server `versia.social`, an instance would make a `GET` request to `https://versia.social/.well-known/versia`.
 
-This endpoint will return a [ServerMetadata](/entities/server-metadata) entity.
+This endpoint will return an [InstanceMetadata](/entities/instance-metadata) entity.
 
 ```http {{ 'title': 'Example Request' }}
 GET /.well-known/versia HTTP/1.1
@@ -64,7 +64,7 @@ Accept: application/json
     
 ```jsonc {{ 'title': 'Example Response' }}
 {
-    "type": "ServerMetadata",
+    "type": "InstanceMetadata",
     "name": "Versia Social",
     "software": {
         "name": "Versia Server",
