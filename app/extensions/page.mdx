@@ -21,7 +21,7 @@ Extensions **must not** be designed in a way that makes them required to underst
 
 Versia extension names are composed of two parts:
 - The domain name of the extension author, in reverse order. Example: `pub.versia`
-- The extension name, separated by a colon. Example: `likes`
+- The extension name, separated by a colon. `snake_case`. Example: `likes`
 
 ``` {{ title: "Example Extension Name" }}
 pub.versia:likes
@@ -30,7 +30,7 @@ pub.versia:likes
 ### Custom entities
 
 Custom entities are named in the same way, but with an additional part:
-- The entity name, separated by a slash. PascalCase. Example: `Like`
+- The entity name, separated by a slash. `PascalCase`. Example: `Like`
 
 ``` {{ title: "Example Custom Entity Type" }}
 pub.versia:likes/Like

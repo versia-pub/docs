@@ -1,0 +1,79 @@
+export const metadata = {
+    title: "Custom Emojis Extension",
+    description: "The Custom Emojis extension adds support for custom emojis in notes.",
+}
+
+# Custom Emojis Extension
+
+The Custom Emojis extension adds support for adding personalized emojis to federated data. {{ className: 'lead' }}
+
+## Rendering
+
+To render custom emojis, clients **should** perform the following steps:
+1. Find all instances of custom emoji names in the text content.
+2. Replace the custom emoji names with the corresponding emoji images in text.
+
+If custom emojis are not supported, clients **should** leave the custom emoji names as-is. Images **should** have any associated `alt` text for accessibility.
+
+```html {{ 'title': 'Example HTML/CSS' }}
+<style>
+img.emoji {
+    display: inline;
+    height: 1em;
+}
+</style>
+
+<p>
+    Hello, world! <img src="https://cdn.example.com/emojis/happy_face.webp" alt="A happy emoji smiling." class="emoji" />!
+</p>
+```
+
+Emojis **should** be displayed at a fixed height (such as `1em`), but their width **should** be allowed to be flexible.
+
+## Extension Definition
+
+Custom Emojis can be added to any entity with text content. The extension ID is `pub.versia:custom_emojis`.
+
+<Row>
+    <Col>
+        <Properties>
+            <Property name="emojis" type="CustomEmoji[]" required={true} typeLink="/structures/emoji">
+                [Custom emojis](/structures/emoji) to be added to the note.
+            </Property>
+        </Properties>
+    </Col>
+
+    <Col sticky>
+
+    ```jsonc {{ 'title': 'Example Usage' }}
+    {
+        "id": "456df8ed-daf1-4062-abab-491071c7b8dd",
+        "type": "Note",
+        "uri": "https://versia.social/notes/456df8ed-daf1-4062-abab-491071c7b8dd",
+        "created_at": "2024-04-09T01:38:51.743Z",
+        "content": {
+            "text/plain": {
+                "content": "Hello, world :happy_face:!"
+            }
+        },
+        "extensions": { // [!code focus:16]
+            "pub.versia:custom_emojis": {
+                "emojis": [
+                    {
+                        "name": ":happy_face:",
+                        "content": {
+                            "image/webp": {
+                                "content": "https://cdn.example.com/emojis/happy_face.webp",
+                                "remote": true,
+                                "description": "A happy emoji smiling.",
+                            }
+                        }
+                    }
+                ]
+            }
+        }
+    }
+    ```
+
+    </Col>
+</Row>
