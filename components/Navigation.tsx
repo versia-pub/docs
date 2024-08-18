@@ -251,6 +251,7 @@ export const navigation: NavGroup[] = [
             { title: "Entities", href: "/entities" },
             { title: "Signatures", href: "/signatures" },
             { title: "Federation", href: "/federation" },
+            { title: "Extensions", href: "/extensions" },
         ],
     },
     {
