@@ -33,6 +33,7 @@ To accept the follow request, `Alice` can do the following:
 
 1. Create a [FollowAccept](/entities/follow-accept) entity with `Alice` as the author and `Joe` as the follower.
 2. Send the `FollowAccept` entity to `Joe`'s inbox.
+3. Update the relationship status in its database to "accepted".
 
 ### Rejecting the Follow Request
 
@@ -40,6 +41,7 @@ To reject the follow request, `Alice` can do the following:
 
 1. Create a [FollowReject](/entities/follow-reject) entity with `Alice` as the author and `Joe` as the follower.
 2. Send the `FollowReject` entity to `Joe`'s inbox.
+3. Optionally, log the rejection in its database.
 
 ### Final Steps
 
