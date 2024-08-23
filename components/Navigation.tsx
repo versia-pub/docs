@@ -260,6 +260,7 @@ export const navigation: NavGroup[] = [
             { title: "HTTP", href: "/federation/http" },
             { title: "Validation", href: "/federation/validation" },
             { title: "Discovery", href: "/federation/discovery" },
+            { title: "Delegation", href: "/federation/delegation" },
         ],
     },
     {

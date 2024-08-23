@@ -71,9 +71,11 @@ Instance **must** be the host of the instance the user is on (hostname with opti
             A header image for the user's profile. Also known as a cover photo or a banner. Must be an image format (`image/*`).
         </Property>
         <Property name="public_key" type="PublicKey" required={true}>
-            The user's public key. Must follow the [Versia Public Key](/signatures) format. `actor` may be a URI to another user's profile, in which case this key may allow the user to act on behalf of the other user (see [delegation](/delegation)).
+            The user's public key. Must follow the [Versia Public Key](/signatures) format. `actor` may be a URI to another user's profile, in which case this key may allow the other user act on behalf of this user (see [delegation](/federation/delegation)).
 
-            `algorithm` must be `ed25519` for now.
+            - `algorithm`: Must be `ed25519` for now.
+            - `key`: The public key in SPKI-encoded base64 (from raw bytes, not a PEM format). Must be the key associated with the `actor` URI.
+            - `actor`: URI to a user's profile, most often the user's own profile.
 
             ```typescript
             type URI = string;
