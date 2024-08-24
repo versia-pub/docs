@@ -290,6 +290,8 @@ export const navigation: NavGroup[] = [
         links: [
             { title: "Custom Emojis", href: "/extensions/custom-emojis" },
             { title: "Likes", href: "/extensions/likes" },
+            { title: "Polls", href: "/extensions/polls" },
+            { title: "Reactions", href: "/extensions/reactions" },
             { title: "Share", href: "/extensions/share" },
             { title: "Vanity", href: "/extensions/vanity" },
             { title: "WebSockets", href: "/extensions/websockets" },
