@@ -83,7 +83,7 @@ const Page: FC = () => {
                     Versia Server, which uses Versia for federation. This
                     community could include you! Check out our{" "}
                     <a
-                        href="https://github.com/lysand-org/lysand"
+                        href="https://github.com/lysand-org/server"
                         target="_blank"
                         rel="noopener noreferrer"
                     >
