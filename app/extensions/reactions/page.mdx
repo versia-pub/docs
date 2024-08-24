@@ -19,10 +19,10 @@ User reactions are (like every other entity) federated to all followers, and can
             <Property name="extension_type" type="string" required>
                 Must be `pub.versia:reactions/Reaction`.
             </Property>
-            <Property name="author" type="string" required>
+            <Property name="author" type="URI" required typeLink="/types#uri">
                 URI of the [User](/entities/user) that is reacting.
             </Property>
-            <Property name="object" type="string" required>
+            <Property name="object" type="URI" required typeLink="/types#uri">
                 URI of the [Note](/entities/note) attached to the reaction.
             </Property>
             <Property name="content" type="string" required>
