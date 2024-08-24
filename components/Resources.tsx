@@ -40,10 +40,10 @@ const resources: ResourceType[] = [
         },
     },
     {
-        href: "/security",
-        name: "Security",
+        href: "/federation",
+        name: "Federation",
         description:
-            "Learn how to secure your Versia implementation and protect your users' data.",
+            "Learn how to federate data across the Versia federation network.",
         icon: "tabler:building-bank",
         pattern: {
             y: -6,

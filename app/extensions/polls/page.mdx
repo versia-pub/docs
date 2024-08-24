@@ -21,7 +21,7 @@ Note that there is no `question` field: the question should be included in the `
     <Col>
         <Properties>
             <Property name="options" type="ContentFormat[]" required="true">
-                Array of options for the poll. Each option is a [ContentFormat](/entities/content-format) that can contain the same properties as a Note's `content` (e.g. [Custom Emojis](/extensions/custom-emojis) or HTML hyperlinks).
+                Array of options for the poll. Each option is a [ContentFormat](/structures/content-format) that can contain the same properties as a Note's `content` (e.g. [Custom Emojis](/extensions/custom-emojis) or HTML hyperlinks).
             </Property>
             <Property name="votes" type="number[]" required="true" numberType="u64">
                 Array of the number of votes for each option. The length of this array should match the length of the `options` array.
