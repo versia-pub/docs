@@ -43,10 +43,10 @@ Instance **must** be the host of the instance the user is on (hostname with opti
   <Col>
 
     <Properties>
-        <Property name="avatar" type="ContentFormat" required={true} typeLink="/structures/content-format">
+        <Property name="avatar" type="ContentFormat" required={false} typeLink="/structures/content-format">
             The user's avatar. Must be an image format (`image/*`).
         </Property>
-        <Property name="bio" type="ContentFormat" required={true} typeLink="/structures/content-format">
+        <Property name="bio" type="ContentFormat" required={false} typeLink="/structures/content-format">
             Short description of the user. Must be text format (`text/*`).
         </Property>
         <Property name="display_name" type="string" required={false}>
@@ -87,11 +87,11 @@ Instance **must** be the host of the instance the user is on (hostname with opti
             }
             ```
         </Property>
-        <Property name="manually_approves_followers" type="boolean" required={true}>
-            If `true`, the user must approve any new followers manually. If `false`, followers are automatically approved. This does not affect federation, and is meant to be used for clients to display correct UI.
+        <Property name="manually_approves_followers" type="boolean" required={false}>
+            If `true`, the user must approve any new followers manually. If `false`, followers are automatically approved. This does not affect federation, and is meant to be used for clients to display correct UI. Defaults to `false`.
         </Property>
-        <Property name="indexable" type="boolean" required={true}>
-            User consent to be indexed by search engines. If `false`, the user's profile should not be indexed.
+        <Property name="indexable" type="boolean" required={false}>
+            User consent to be indexed by search engines. If `false`, the user's profile should not be indexed. Defaults to `true`.
         </Property>
         <Property name="inbox" type="URI" required={true} typeLink="/types#uri">
             The user's federation inbox. Refer to the [federation documentation](/federation).
