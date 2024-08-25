@@ -41,8 +41,8 @@ All properties are optional.
 
                 Audio format (e.g. `audio/mpeg`).
             </Property>
-            <Property name="pronouns" type="Pronoun[]" required={false}>
-                An array of pronouns the user uses. Can be represented as a string or an object.
+            <Property name="pronouns" type="{ [key: LanguageCode]: Pronoun[] }" required={false}>
+                An array of internationalized pronouns the user uses. Can be represented as a string or an object.
 
                 ```typescript
                 /* e.g. "he/him" */
@@ -57,6 +57,8 @@ All properties are optional.
                 }
 
                 type Pronoun = ShortPronoun | LongPronoun;
+                /* Example: en-US or fr */
+                type LanguageCode = string;
                 ```
             </Property>
             <Property name="birthday" type="ISO8601" required={false} typeLink="/types#iso8601">
