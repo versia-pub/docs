@@ -292,6 +292,7 @@ export const navigation: NavGroup[] = [
             { title: "Likes", href: "/extensions/likes" },
             { title: "Polls", href: "/extensions/polls" },
             { title: "Reactions", href: "/extensions/reactions" },
+            { title: "Reports", href: "/extensions/reports" },
             { title: "Share", href: "/extensions/share" },
             { title: "Vanity", href: "/extensions/vanity" },
             { title: "WebSockets", href: "/extensions/websockets" },
