@@ -1,0 +1,99 @@
+export const metadata = {
+    "title": "Migration Extension",
+    "description": "Migration can be used when users want to move their data from one instance to another."
+}
+
+# Migration Extension
+
+Sometimes, users may want to move their data from one instance to another. This could be due to a change in administration, a desire to be closer to friends, or any other reason. Migration can be done using the migration extension. {{ className: 'lead' }}
+
+## Behaviour
+
+Migration happens in three steps:
+
+### Prepare the New Account
+
+- The user creates an account on the new instance, and puts the URI of the old account in the `previous` field of the new account.
+
+### Request Migration
+
+- The user requests migration from the old instance. The old instance checks that the `previous` field is set, and creates a migration entity.
+
+- The migration entity is then distributed to every instance that interacts with the old instance, including the new instance.
+
+- All instances that receive a verified migration entity (i.e. one where the `previous` field is correctly set on the new account) and support migration **must** then move all relationships (followers, followings, etc) from the old account to the new account in *their* internal database.
+
+### Complete Migration
+
+- The old instance sets the `new` field of the user to the URI of the new account, and marks it as "disabled" in its internal database.
+
+
+## Entity Definition
+
+<Row>
+    <Col>
+        <Properties>
+            <Property name="uri" type="null" required={false}>
+                This entity does not have a URI.
+            </Property>
+            <Property name="type" type="string" required={true}>
+                Must be `pub.versia:migration/Migration`.
+            </Property>
+            <Property name="author" type="URI" typeLink="/types#uri" required={true}>
+                URI of the [User](/entities/user) who is migrating.
+            </Property>
+            <Property name="destination" type="URI" required={true} typeLink="/types#uri">
+                URI of the destination [User](/entities/user) on the new instance.
+            </Property>
+        </Properties>
+    </Col>
+
+    <Col sticky>
+
+    ```json {{ title: "Example Entity" }}
+    {
+        "id": "016f3de2-ad63-4e06-999e-1e6b41c981c5",
+        "type": "pub.versia:migration/Migration",
+        "author": "https://example.com/users/44df6e02-ef43-47e0-aff2-47041f3d09ed",
+        "created_at": "2021-01-01T00:00:00.000Z",
+        "destination": "https://otherinstance.social/users/73e999a0-53d0-40a3-a5cc-be0408004726",
+    }
+    ```
+
+    </Col>
+</Row>
+
+## User Extensions
+
+The following extensions to [User](/entities/user) are used by the migration extension:
+
+<Row>
+    <Col>
+        <Properties>
+            <Property name="previous" type="URI" required={true} typeLink="/types#uri">
+                If this user has migrated from another instance, this property **MUST** be set to the URI of the user on the previous instance.
+            </Property>
+            <Property name="new" type="URI" required={false} typeLink="/types#uri">
+                If this user has migrated to another instance, this property **MUST** be set to the URI of the user on the new instance.
+            </Property>
+        </Properties>
+    </Col>
+
+    <Col sticky>
+
+    ```jsonc {{ 'title': 'Example' }}
+    {
+        // ...
+        "type": "User",
+        // ...
+        "extensions": { // [!code focus:100]
+            "pub.versia:migration": {
+                "previous": "https://oldinstance.social/users/44df6e02-ef43-47e0-aff2-47041f3d09ed",
+                // "new": "https://newinstance.social/users/73e999a0-53d0-40a3-a5cc-be0408004726",
+            } 
+        }
+    }
+    ```
+
+    </Col>
+</Row>
