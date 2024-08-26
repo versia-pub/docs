@@ -1,0 +1,137 @@
+export const metadata = {
+    title: 'Vanity Extension',
+    description:
+        'The Vanity adds more optional metadata to the user profile.',
+}
+
+# Vanity Extension
+
+The Vanity extension adds more optional metadata to the user profile. {{ className: 'lead' }}
+
+## Entity Definition
+
+All properties are optional.
+
+<Row>
+    <Col>
+        <Properties>
+            <Property name="avatar_overlays" type="ContentFormat[]" typeLink="/structures/content-format" required={false}>
+                Overlay images to be placed on top of the user's avatar, like this: [example overlay from Discord](https://cdn.discordapp.com/avatar-decoration-presets/a_949a575b693c81ced8f56a7579d0969f.png).
+
+                The first overlay in the array is the topmost overlay. The inner 80% of the overlay should cover the avatar, with the outer 20% extending beyond the avatar's bounds.
+
+                Image format (e.g. `image/png`), can be animated (e.g. APNG, gif, WebP).
+            </Property>
+            <Property name="avatar_mask" type="ContentFormat" required={false}>
+                Mask image to be used to clip the user's avatar. The avatar should be clipped to the mask's alpha channel. For example, a black square with rounded corners would clip the avatar to a rounded square.
+
+                Image format (e.g. `image/png`), non-animated.
+            </Property>
+            <Property name="background" type="ContentFormat" required={false}>
+                Background image to be displayed behind the user's profile. Should be full-width and high-resolution, preferably at least 1080p.
+
+                Image format (e.g. `image/png`), can be animated (e.g. APNG, gif, WebP).
+            </Property>
+            <Property name="audio" type="ContentFormat" required={false}>
+                Audio file to be played when viewing the user's profile. Should be a short clip, like a ringtone.
+
+                <Note>
+                    Audio files can be used as a vector for abuse. Implementations **SHOULD** provide a way to disable audio playback.
+                </Note>
+
+                Audio format (e.g. `audio/mpeg`).
+            </Property>
+            <Property name="pronouns" type="{ [key: LanguageCode]: Pronoun[] }" required={false}>
+                An array of internationalized pronouns the user uses. Can be represented as a string or an object.
+
+                ```typescript
+                /* e.g. "he/him" */
+                type ShortPronoun = string;
+
+                interface LongPronoun {
+                    subject: string;
+                    object: string;
+                    dependent_possessive: string;
+                    independent_possessive: string;
+                    reflexive: string;
+                }
+
+                type Pronoun = ShortPronoun | LongPronoun;
+                /* Example: en-US or fr */
+                type LanguageCode = string;
+                ```
+            </Property>
+            <Property name="birthday" type="ISO8601" required={false} typeLink="/types#iso8601">
+                User's birthday. If year is left out or set to `0000`, implementations **SHOULD** not display the year.
+            </Property>
+            <Property name="location" type="string" required={false}>
+                User's location. Can be an [ISO 6709 Annex H](https://en.wikipedia.org/wiki/ISO_6709#String_expression_(Annex_H)) string or a human-readale string (e.g. "New York, NY").
+
+                Location does not need to be precise, and can be as simple as `+46+002/` (France) or `+48.52+002.20/` (Paris, France).
+            </Property>
+            <Property name="aliases" type="URI[]" required={false} typeLink="/types#uri">
+                Versia profiles that should be considered aliases of this profile.
+            </Property>
+        </Properties>
+    </Col>
+
+    <Col sticky>
+
+    ```jsonc {{ 'title': 'Example Content' }}
+    {
+        // ...
+        "type": "User",
+        // ...
+        "extensions": { // [!code focus:100]
+            "pub.versia:vanity": {
+                "avatar_overlays": [
+                    {
+                        "image/png": {
+                            "content": "https://cdn.example.com/ab5081cf-b11f-408f-92c2-7c246f290593/cat_ears.png",
+                            "remote": true,
+                        }
+                    }
+                ],
+                "avatar_mask": {
+                    "image/png": {
+                        "content": "https://cdn.example.com/d8c42be1-d0f7-43ef-b4ab-5f614e1beba4/rounded_square.jpeg",
+                        "remote": true,
+                    }
+                },
+                "background": {
+                    "image/png": {
+                        "content": "https://cdn.example.com/6492ddcd-311e-4921-9567-41b497762b09/untitled-file-0019822.png",
+                        "remote": true,
+                    }
+                },
+                "audio": {
+                    "audio/mpeg": {
+                        "content": "https://cdn.example.com/4da2f0d4-4728-4819-83e4-d614e4c5bebc/michael-jackson-thriller.mp3",
+                        "remote": true,
+                    }
+                },
+                "pronouns": {
+                    "en-us": [
+                        "he/him",
+                        {
+                            "subject": "they",
+                            "object": "them",
+                            "dependent_possessive": "their",
+                            "independent_possessive": "theirs",
+                            "reflexive": "themself"
+                        },
+                    ]
+                },
+                "birthday": "1998-04-12",
+                "location": "+40.6894-074.0447/",
+                "aliases": [
+                    "https://burger.social/accounts/349ee237-c672-41c1-aadc-677e185f795a",
+                    "https://versia.social/users/f565ef02-035d-4974-ba5e-f62a8558331d"
+                ]
+            }
+        }
+    }
+    ```
+
+    </Col>
+</Row>

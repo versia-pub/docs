@@ -1,0 +1,48 @@
+export const metadata = {
+    title: 'Emoji',
+    description: 'Definition of the Emoji structure',
+}
+
+# Custom Emoji
+
+<Note>
+    This structure is part of the [Custom Emojis](/extensions/custom-emojis) extension. As such, it is not part of the core Versia specification.
+
+    If you are not implementing the Custom Emojis extension, you can ignore this structure.
+</Note>
+
+## Entity Definition
+
+<Row>
+    <Col>
+        <Properties>
+            <Property name="name" type="string" required={true}>
+                Emoji name, surrounded by identification characters (for example, colons: `:happy_face:`).
+
+                Name must match the regex `^[a-zA-Z0-9_-]+$`.
+                
+                Identification characters must not match the name regex (must not be alphanumeric/underscore/hyphen). There may only be two identification characters, one at the beginning and one at the end.
+            </Property>
+            <Property name="content" type="ContentFormat" required={true} typeLink="/structures/content-format">
+                Emoji content. Must be an image format (`image/*`).
+            </Property>
+        </Properties>
+    </Col>
+
+    <Col sticky>
+
+    ```jsonc {{ 'title': 'Example Emoji' }}
+    {
+        "name": ":happy_face:",
+        "content": {
+            "image/webp": {
+                "content": "https://cdn.example.com/emojis/happy_face.webp",
+                "remote": true,
+                "description": "A happy emoji smiling.",
+            }
+        }
+    }
+    ```
+
+    </Col>
+</Row>

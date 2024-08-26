@@ -1,0 +1,197 @@
+export const metadata = {
+    title: 'Users',
+    description: 'Definition of the User entity',
+}
+
+# Users
+
+The `User` entity represents an account on a Versia instance. Users can post [Notes](/entities/note), follow other users, and interact with content. Users are identified by their `id` property, which is unique within the instance. {{ className: 'lead' }}
+
+## Addresses
+
+Users may be represented by a shorthand address, in the following formats:
+
+```
+@username@instance
+@id@instance
+```
+
+For example:
+
+```
+@jessew@versia.social
+@018ec082-0ae1-761c-b2c5-22275a611771@versia.social
+```
+
+This is similar to an email address or an ActivityPub address.
+
+### Identifier
+
+Identifier **must** be either a valid `username` or a valid `id`. It should have the same username/id as the user's profile.
+
+<Note>
+Usernames can be changed by the user, so it is recommended to use `id` for long-term references.
+</Note>
+
+### Instance
+
+Instance **must** be the host of the instance the user is on (hostname with optional port).
+
+## Entity Definition
+
+<Row>
+  <Col>
+
+    <Properties>
+        <Property name="avatar" type="ContentFormat" required={false} typeLink="/structures/content-format">
+            The user's avatar. Must be an image format (`image/*`).
+        </Property>
+        <Property name="bio" type="ContentFormat" required={false} typeLink="/structures/content-format">
+            Short description of the user. Must be text format (`text/*`).
+        </Property>
+        <Property name="display_name" type="string" required={false}>
+            Display name, as shown to other users. May contain emojis and any Unicode character.
+        </Property>
+        <Property name="fields" type="Field[]" required={false}>
+            Custom key/value pairs. For example, metadata like socials or pronouns. Must be text format (`text/*`).
+
+            ```typescript
+            type Field = {
+                key: ContentFormat;
+                value: ContentFormat;
+            }
+            ```
+        </Property>
+        <Property name="username" type="string" required={true}>
+            Alpha-numeric username. Must be unique within the instance. **Must** be treated as changeable by the user.
+
+            Can only contain the following characters: `a-z` (lowercase), `0-9`, `_` and `-`. Should be limited to reasonable lengths.
+        </Property>
+        <Property name="header" type="ContentFormat" required={false} typeLink="/structures/content-format">
+            A header image for the user's profile. Also known as a cover photo or a banner. Must be an image format (`image/*`).
+        </Property>
+        <Property name="public_key" type="PublicKey" required={true}>
+            The user's public key. Must follow the [Versia Public Key](/signatures) format. `actor` may be a URI to another user's profile, in which case this key may allow the other user act on behalf of this user (see [delegation](/federation/delegation)).
+
+            - `algorithm`: Must be `ed25519` for now.
+            - `key`: The public key in SPKI-encoded base64 (from raw bytes, not a PEM format). Must be the key associated with the `actor` URI.
+            - `actor`: URI to a user's profile, most often the user's own profile.
+
+            ```typescript
+            type URI = string;
+
+            type PublicKey = {
+                actor: URI;
+                algorithm: string;
+                key: string;
+            }
+            ```
+        </Property>
+        <Property name="manually_approves_followers" type="boolean" required={false}>
+            If `true`, the user must approve any new followers manually. If `false`, followers are automatically approved. This does not affect federation, and is meant to be used for clients to display correct UI. Defaults to `false`.
+        </Property>
+        <Property name="indexable" type="boolean" required={false}>
+            User consent to be indexed by search engines. If `false`, the user's profile should not be indexed. Defaults to `true`.
+        </Property>
+        <Property name="inbox" type="URI" required={true} typeLink="/types#uri">
+            The user's federation inbox. Refer to the [federation documentation](/federation).
+
+            Some instances may also have a shared inbox. Refer to [Instance Metadata](/entities/instance-metadata) for more information.
+        </Property>
+        <Property name="collections" type="UserCollections" required={true}>
+            Collections related to the user. Must contain at least `outbox`, `followers`, `following`, and `featured`.
+
+            ```typescript
+            type URI = string;
+
+            type UserCollections = {
+                outbox: URI;
+                followers: URI;
+                following: URI;
+                featured: URI;
+                // Same format as type on Extensions
+                [key: ExtensionsKey]: URI;
+            }
+            ```
+
+            All URIs must resolve to a [Collection](/structures/collection) of the appropriate entities. Extensions may add additional collections.
+
+            ### Outbox
+            The user's federation outbox. Refer to the [federation documentation](/federation).
+
+            ### Followers
+            User's followers. [Collection](/structures/collection) of [User](/entities/user) entities.
+
+            ### Following
+            Users that the user follows. [Collection](/structures/collection) of [User](/entities/user) entities.
+
+            ### Featured
+            [Notes](/entities/note) that the user wants to feature (also known as "pin") on their profile. [Collection](/structures/collection) of [Note](/entities/note) entities.
+        </Property>
+    </Properties>
+
+  </Col>
+  <Col sticky>
+
+    ```jsonc {{ 'title': 'Example User' }}
+    {
+        "id": "018ec082-0ae1-761c-b2c5-22275a611771",
+        "type": "User",
+        "uri": "https://versia.social/users/018ec082-0ae1-761c-b2c5-22275a611771",
+        "created_at": "2024-04-09T01:38:51.743Z",
+        "avatar": { // [!code focus:100]
+            "image/png": {
+                "content": "https://avatars.githubusercontent.com/u/30842467?v=4"
+            }
+        },
+        "bio": {
+            "text/html": {
+                "content": "<p>🌸🌸🌸</p>"
+            },
+            "text/plain": {
+                "content": "🌸🌸🌸"
+            }
+        },
+        "collections": {
+            "featured": "https://versia.social/users/018ec082-0ae1-761c-b2c5-22275a611771/featured",
+            "followers": "https://versia.social/users/018ec082-0ae1-761c-b2c5-22275a611771/followers",
+            "following": "https://versia.social/users/018ec082-0ae1-761c-b2c5-22275a611771/following",
+            "pub.versia:likes/Dislikes": "https://versia.social/users/018ec082-0ae1-761c-b2c5-22275a611771/dislikes",
+            "pub.versia:likes/Likes": "https://versia.social/users/018ec082-0ae1-761c-b2c5-22275a611771/likes",
+            "outbox": "https://versia.social/users/018ec082-0ae1-761c-b2c5-22275a611771/outbox",
+        },
+        "display_name": "April The Pink (limited Sand Edition)",
+        "extensions": {
+            "pub.versia:custom_emojis": {
+                "emojis": []
+            }
+        },
+        "fields": [
+            {
+                "key": {
+                    "text/html": {
+                        "content": "<p>Pronouns</p>"
+                    }
+                },
+                "value": {
+                    "text/html": {
+                        "content": "<p>It/its</p>"
+                    }
+                }
+            }
+        ],
+        "header": null,
+        "inbox": "https://versia.social/users/018ec082-0ae1-761c-b2c5-22275a611771/inbox",
+        "indexable": false,
+        "manually_approves_followers": false,
+        "public_key": {
+            "actor": "https://versia.social/users/018ec082-0ae1-761c-b2c5-22275a611771",
+            "algorithm": "ed25519",
+            "key": "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+        },
+        "username": "aprl"
+    }
+    ```
+
+  </Col>
+</Row>

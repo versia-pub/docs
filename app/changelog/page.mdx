@@ -1,0 +1,41 @@
+export const metadata = {
+    title: 'Changelog',
+    description:
+        'Changes since the last version of the Versia protocol.',
+}
+
+# Changelog
+
+This page lists changes since Working Draft 03. {{ className: 'lead' }}
+
+## Since WD 03
+
+- Rewrote the signature system from scratch to be simpler and not depend on dates.
+- Moved Likes and Dislikes to an extension.
+- Added [Delegation](/federation/delegation).
+- Renamed fields on several common entities like [Users](/entities/user) and [Notes](/entities/note).
+- Removed the `Patch` entity.
+  - Useless since edits can just be sent to inboxes directly.
+- Allowed `uri`s to not contain the entity's `id`.
+- Loosened restrictions on the `id` field in entities.
+  - Can now be any string, not just a UUID.
+- Made `uri` optional in some entities not useful enough to keep track of.
+- Added shared inboxes.
+- Added `remote` field to [ContentFormat](/structures/content-format).
+- Switched to [ThumbHash](https://evanw.github.io/thumbhash/) from [BlurHash](https://blurha.sh/).
+- Added identification characters to [Custom Emojis](/structures/emoji).
+- Added `manually_approves_followers` to [Users](/entities/user).
+- Removed `visibility` from [Notes](/entities/note).
+- Made `subject` optional in [Notes](/entities/note).
+- Clarified the way [Follows](/entities/follow) work.
+- Removed the use of `Undo` entities for anything except than deleting entities.
+- Renamed `Undo` to [Delete](/entities/delete).
+- Added [Unfollow](/entities/unfollow) entity.
+- Completely rework `ServerMetadata`, and rename to [InstanceMetadata](/entities/instance-metadata).
+- Remove Server Actors, and move instance public keys to [InstanceMetadata](/entities/instance-metadata).
+- Add `algorithm` to [Users](/entities/user) and [InstanceMetadata](/entities/instance-metadata)'s public keys for future use (only `ed25519` is allowed for now).
+  - Renamed the second `public_key` to `key`.
+- Renamed `Announce` to [Share](/extensions/share).
+- Renamed `prev` to `previous` in [Collections](/structures/collection).
+- Removed `extension_type` from entities, and instead use the `type` field.
+- Removed `VoteResult` from the [Polls Extension](/extensions/polls).

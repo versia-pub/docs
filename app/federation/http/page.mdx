@@ -1,0 +1,78 @@
+export const metadata = {
+    title: 'HTTP',
+    description:
+        'How Versia uses the HTTP protocol for all communications between instances.',
+}
+
+# HTTP
+
+Versia uses the HTTP protocol for all communications between instances. HTTP requests must conform to certain standards to ensure compatibility between different implementations, as well as to ensure the security and integrity of the data being exchanged.
+
+ALL kinds of HTTP requests/responses between instances **MUST** include a [Signature](/signatures), signed with either the relevant [User](/entities/user)'s private key or the [instance's private key](/entities/instance-metadata).
+
+## Requests
+
+<Row>
+    <Col>
+        <Properties>
+            <Property name="Accept" type="string" required={true}>
+                Must include `application/json`.
+            </Property>
+            <Property name="Content-Type" type="string" required={true}>
+                Must include `application/json; charset=utf-8`, if the request has a body.
+            </Property>
+            <Property name="X-Signature" type="string" required={false}>
+                See [Signatures](/signatures) for more information.
+            </Property>
+            <Property name="X-Signed-By" type="URI" required={false} typeLink="/types#uri">
+                See [Signatures](/signatures).
+            </Property>
+            <Property name="X-Nonce" type="string" required={false}>
+                See [Signatures](/signatures).
+            </Property>
+            <Property name="User-Agent" type="string" required={false}>
+                A string identifying the software making the request.
+            </Property>
+        </Properties>
+    </Col>
+    <Col sticky>
+        ```http {{ 'title': 'Example Request' }}
+        POST https://bob.com/users/1/inbox HTTP/1.1
+        Accept: application/json
+        User-Agent: CoolServer/1.0 (https://coolserver.com)
+        X-Signature: post /users/1/inbox a2ebc29eb6762a9164fbcffc9271e8a53562a5e725e7187ea7d88d03cbe59341 n4bQgYhMfWWaL+qgxVrQFaO/TxsrC4Is0V1sFbDwCgg=
+        X-Signed-By: https://example.com/users/1
+        X-Nonce: a2ebc29eb6762a9164fbcffc9271e8a53562a5e725e7187ea7d88d03cbe59341
+        ```
+    </Col>
+</Row>
+
+## Responses
+
+<Row>
+    <Col>
+        <Properties>
+            <Property name="Content-Type" type="string" required={true}>
+                Must include `application/json; charset=utf-8`.
+            </Property>
+            <Property name="X-Signature" type="string" required={false}>
+                See [Signatures](/signatures) for more information.
+            </Property>
+            <Property name="X-Signed-By" type="URI" required={false} typeLink="/types#uri">
+                See [Signatures](/signatures).
+            </Property>
+            <Property name="X-Nonce" type="string" required={false}>
+                See [Signatures](/signatures).
+            </Property>
+        </Properties>
+    </Col>
+    <Col sticky>
+        ```http {{ 'title': 'Example Response' }}
+        HTTP/1.1 200 OK
+        Content-Type: application/json; charset=utf-8
+        X-Signature: get /users/1/followers 8f872d4609d26819d03a7d60ce3db68f5b0dd5a80d5930260294f237e670ab76 YDA64iuZiGG847KPM+7BvnWKITyGyTwHbb6fVYwRx1I
+        X-Signed-By: https://example.com/users/1
+        X-Nonce: 8f872d4609d26819d03a7d60ce3db68f5b0dd5a80d5930260294f237e670ab76
+        ```
+    </Col>
+</Row>

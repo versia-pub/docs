@@ -1,0 +1,146 @@
+export const metadata = {
+    title: 'Instance Metadata',
+    description: 'Metadata about a Versia instance, such as capabilities and endpoints.',
+}
+
+# Instance Metadata
+
+Contains metadata about a Versia instance, such as capabilities and endpoints. {{ className: 'lead' }}
+
+## The `null` Author
+
+On all entities that have an `author` field, the `author` can be `null` to represent the instance itself as the author (like ActivityPub's Server Actors). In this case, the instance's public key should be used to verify the entity.
+
+## Entity Definition
+
+<Row>
+    <Col>
+        <Properties>
+            <Property name="id" type="null">
+                This entity does not have an ID.
+            </Property>
+            <Property name="uri" type="null">
+                This entity does not have a URI.
+            </Property>
+            <Property name="name" type="string" required={true}>
+                Friendly name of the instance, for humans.
+            </Property>
+            <Property name="software" type="Software" required={true}>
+                Information about the software running the instance.
+
+                ```typescript
+                type Software = {
+                    name: string;
+                    version: string;
+                }
+                ```
+
+                - `name`: Name of the software.
+                - `version`: Version of the software. Should use [SemVer](https://semver.org/).
+            </Property>
+            <Property name="compatibility" type="Compatibility" required={true}>
+                Information about the compatibility of the instance.
+
+                ```typescript
+                type Compatibility = {
+                    versions: string[];
+                    extensions: string[];
+                }
+                ```
+
+                - `versions`: Supported Versia Protocol versions.
+                  - Versions marked as "Working Draft X" are represented as `0.X`.
+                - `extensions`: Supported extensions.
+            </Property>
+            <Property name="description" type="string" required={false}>
+                Long description of the instance, for humans. Should be around 100-200 words.
+            </Property>
+            <Property name="host" type="string" required={true}>
+                Hostname of the instance. Includes the port if it is not the default (i.e. `443` for HTTPS).
+            </Property>
+            <Property name="shared_inbox" type="URI" required={false}>
+                URI to the instance's shared inbox, if supported.
+            </Property>
+            <Property name="public_key" type="PublicKey" required={true}>
+                Public key of the instance.
+
+                ```typescript
+                type PublicKey = {
+                    algorithm: string;
+                    key: string;
+                }
+                ```
+                
+                - `algorithm`: Algorithm used for the public key. Can only be `ed25519` for now.
+                - `key`: Instance public key, in SPKI-encoded base64 (from raw bytes, not a PEM format).
+            </Property>
+            <Property name="moderators" type="URI" required={false}>
+                URI to [Collection](/structures/collection) of instance moderators.
+
+                <Note>
+                    This is for human consumption (such as moderator contact), not for any kind of protocol authorization.
+                </Note>
+            </Property>
+            <Property name="admins" type="URI" required={false}>
+                URI to [Collection](/structures/collection) of instance administrators.
+
+                <Note>
+                    This is for human consumption (such as admin contact), not for any kind of protocol authorization.
+                </Note>
+            </Property>
+            <Property name="logo" type="ContentFormat" required={false} typeLink="/structures/content-format">
+                Logo of the instance. Must be an image format (`image/*`).
+            </Property>
+            <Property name="banner" type="ContentFormat" required={false} typeLink="/structures/content-format">
+                Banner of the instance. Must be an image format (`image/*`).
+            </Property>
+        </Properties>
+    </Col>
+
+    <Col sticky>
+
+    ```jsonc {{ 'title': 'InstanceMetadata' }}
+    {
+        "type": "InstanceMetadata",
+        "name": "Jim's Jolly Jimjams",
+        "software": {
+            "name": "Versia Server",
+            "version": "1.2.0-beta.3"
+        },
+        "compatibility": {
+            "versions": [
+                "0.3.0",
+                "0.4.0"
+            ],
+            "extensions": [
+                "pub.versia:reactions",
+                "pub.versia:polls",
+                "pub.versia:reports"
+            ]
+        },
+        "description": "Server for Jim's Jolly Jimjams, a social network for fans of Jimjams.",
+        "host": "social.jimjams.com",
+        "shared_inbox": "https://social.jimjams.com/inbox",
+        "moderators": "https://social.jimjams.com/moderators",
+        "admins": "https://social.jimjams.com/admins",
+        "logo": {
+            "image/png": {
+                "content": "https://social.jimjams.com/files/logo.png"
+            },
+            "image/webp": {
+                "content": "https://social.jimjams.com/files/logo.webp"
+            }
+        },
+        "public_key": {
+            "algorithm": "ed25519",
+            "key": "MCowBQYDK2VwAyEA9zhEMtQZetRl4QrLcz99i7jOa6ZVjX7aLfRUsMuKByI="
+        },
+        "banner": null,
+        "extensions": {
+            "example.extension:monthly_active_users": 1000
+        }
+    }
+    ```
+
+    </Col>
+</Row>

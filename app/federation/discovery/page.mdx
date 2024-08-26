@@ -1,0 +1,85 @@
+export const metadata = {
+    title: 'Discovery',
+    description: "How Versia instances can discover users, capabilities, and endpoints.",
+}
+
+# Discovery
+
+A lot of the time, Versia instances may need to lookup information about other instances, such as their users, capabilities, and endpoints. This is done through a process called **discovery**.
+
+## User Discovery
+
+To discover a user, an instance must know [the user's address](/entities/user#addresses). Knowing this, the [WebFinger](https://tools.ietf.org/html/rfc7033) protocol can be used to find the user's profile.
+
+### Example
+
+To discover the profile of the user `@george@versia.social`, an instance would make a `GET` request to `https://versia.social/.well-known/webfinger?resource=acct:george@versia.social`.
+
+```http {{ 'title': 'Example Request' }}
+GET /.well-known/webfinger?resource=acct:george@versia.social HTTP/1.1
+Accept: application/jrd+json
+```
+
+```jsonc {{ 'title': 'Example Response' }}
+{
+    "subject": "acct:george@versia.social", // [!code focus:6]
+    "aliases": [
+        "https://versia.social/users/018ec082-0ae1-761c-b2c5-22275a611771",
+        "https://versia.social/@george"
+    ],
+    "links": [
+        {
+            "rel": "http://webfinger.net/rel/profile-page",
+            "type": "text/html",
+            "href": "https://versia.social/@george"
+        },
+        { // [!code focus:5]
+            "rel": "self",
+            "type": "application/json",
+            "href": "https://versia.social/users/018ec082-0ae1-761c-b2c5-22275a611771"
+        },
+        {
+            "rel": "http://webfinger.net/rel/avatar",
+            "type": "image/png",
+            "href": "https://cdn.versia.social/uploads/banana.png"
+        }
+    ] // [!code focus]
+}
+```
+
+## Instance Discovery
+
+Instaance metadata can be accessed by making a `GET` request to the instance's Versia metadata endpoint, which is located at `/.well-known/versia`.
+
+### Example
+
+To discover the metadata of the instance `versia.social`, an instance would make a `GET` request to `https://versia.social/.well-known/versia`.
+
+This endpoint will return an [InstanceMetadata](/entities/instance-metadata) entity.
+
+```http {{ 'title': 'Example Request' }}
+GET /.well-known/versia HTTP/1.1
+Accept: application/json
+```
+    
+```jsonc {{ 'title': 'Example Response' }}
+{
+    "type": "InstanceMetadata",
+    "name": "Versia Social",
+    "software": {
+        "name": "Versia Server",
+        "version": "0.7.0"
+    },
+    "compatibility": {
+        "versions": [
+            "0.4.0"
+        ],
+        "extensions": [
+            "pub.versia:reactions",
+            "pub.versia:polls",
+            "pub.versia:reports"
+        ]
+    },
+    "host": "versia.social",
+}
+```

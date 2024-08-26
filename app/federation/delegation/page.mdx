@@ -1,0 +1,25 @@
+export const metadata = {
+    title: 'Delegation',
+    description: 'Delegation is used to authorize actions on behalf of another user',
+}
+
+# Delegation
+
+Delegation is used to authorize actions on behalf of another user. {{ className: 'lead' }}
+
+## Vocabulary
+
+- **Delegator**: The user that is delegating actions to another user. (The user that owns the key)
+- **Delegate**: The user that is being delegated actions. (The user that the key is pointing to)
+
+## The `actor` Field on Public Keys
+
+[Users](/entities/user)'s `public_key` property contains a field called `actor`. This field contains the URI to the **delegator** user, which is used to authorize actions on behalf of the **delegate** user.
+
+This means that the **delegator** user can sign requests with their private key, and any implementations should consider the **delegate** user as equivalent to the **delegator** user.
+
+## Implementation Details
+
+Any actions or entities created by the **delegate** should be attributed to the **delegator** user in clients transparently to end-users (e.g. showing the **delegator** user's name and avatar). This allows for a form of "consensual impersonation" that is authorized by the **delegators** and **delegates**.
+
+This is useful as a way to centralize all of a user's many "alt accounts" into a single, unified feed.

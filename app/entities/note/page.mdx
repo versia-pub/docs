@@ -1,0 +1,160 @@
+export const metadata = {
+    title: 'Notes',
+    description: 'Definition of the Note entity',
+}
+
+# Notes
+
+Notes represent a piece of content on a Versia instance. They can be posted by [Users](/entities/user) and are displayed in a user's feed. Notes can contain text, images, and other media. {{ className: 'lead' }}
+
+<Note>
+    Notes are not just limited to microblogging. They can be used for any kind of content, such as forum posts, blog posts, image posts, video posts, audio posts, and even messaging.
+</Note>
+
+## Entity Definition
+
+<Row>
+    <Col>
+        <Properties>
+            <Property name="attachments" type="ContentFormat[]" required={false} typeLink="/structures/content-format">
+                Media attachments to the note. May be any format.
+            </Property>
+            <Property name="author" type="URI" required={true} typeLink="/types#uri">
+                URI of the `User` considered the author of the note.
+            </Property>
+            <Property name="category" type="Category" required={false}>
+                Category of the note. Useful for clients to render notes differently depending on their intended purpose.
+
+                ```typescript
+                type Category =
+                    | "microblog" // Like Twitter, Mastodon
+                    | "forum" // Like Reddit
+                    | "blog" // Like WordPress, Medium
+                    | "image" // Like Instagram
+                    | "video" // Like YouTube, PeerTube
+                    | "audio" // Like SoundCloud, Spotify
+                    | "messaging"; // Like Discord, Element (Matrix), Signal
+                ```
+            </Property>
+            <Property name="content" type="ContentFormat" required={false} typeLink="/structures/content-format">
+                The content of the note. Must be text format (`text/html`, `text/markdown`, etc). Must not be remote.
+            </Property>
+            <Property name="device" type="Device" required={false}>
+                Device used to post the note. Useful for functionality such as Twitter's "posted via" feature.
+
+                ```typescript
+                type Device = {
+                    name: string;
+                    version?: string;
+                    url?: string;
+                }
+                ```
+            </Property>
+            <Property name="group" type="URI | &quot;public&quot; | &quot;followers&quot;" required={false} typeLink="/types#uri">
+                URI of a [Group](/entities/group) that the note is only visible in, or one of the following strings:
+                - `public`: The note is visible to anyone.
+                - `followers`: The note is visible only to the author's followers.
+
+                If not provided, the note is only visible to the author and those mentioned in the note.
+            </Property>
+            <Property name="is_sensitive" type="boolean" required={false}>
+                Whether the note contains "sensitive content". This can be used with `subject` as a "content warning" feature.
+            </Property>
+            <Property name="mentions" type="URI[]" required={false} typeLink="/types#uri">
+                URIs of [Users](/entities/user) that should be notified of the note. Similar to Twitter's `@` mentions. The note may also contain mentions in the content, however only the mentions in this field should trigger notifications.
+            </Property>
+            <Property name="previews" type="LinkPreview" required={false}>
+                Previews for any links in the publication. This is to avoid the [stampeding mastodon problem](https://github.com/mastodon/mastodon/issues/23662) where a link preview is fetched by every instance that sees the publication, creating an accidental DDOS attack.
+
+                ```typescript
+                type LinkPreview = {
+                    link: string;
+                    title: string;
+                    description?: string;
+                    image?: string;
+                    icon?: string;
+                }
+                ```
+
+                <Note>
+                    Implementations should make sure not to trust the previews, as they could be faked by malicious remote instances. This is not a very good attack vector, but it is still possible to redirect users to malicious links.
+                </Note>
+            </Property>
+            <Property name="quotes" type="URI" required={false} typeLink="/types#uri">
+                URI of the note that this note is quoting, if any. Quoting is similar to replying, but does not notify the author of the quoted note. Inspired by Twitter's "quote tweet" feature.
+            </Property>
+            <Property name="replies_to" type="URI" required={false} typeLink="/types#uri">
+                URI of the note that this note is a reply to, if any.
+            </Property>
+            <Property name="subject" type="string" required={false}>
+                A subject for the note. Useful for clients to display a "content warning" or "spoiler" feature, such as on Mastodon. Must be a plaintext string (`text/plain`).
+            </Property>
+        </Properties>
+    </Col>
+    <Col sticky>
+
+    ```jsonc {{ 'title': 'Example Note' }}
+    {
+        "id": "01902e09-0f8b-72de-8ee3-9afc0cf5eae1",
+        "type": "Note",
+        "uri": "https://versia.social/objects/01902e09-0f8b-72de-8ee3-9afc0cf5eae1",
+        "created_at": "2024-06-19T01:07:44.139Z",
+        "attachments": [ // [!code focus:100]
+            {
+                "image/png": {
+                    "content": "https://cdn.versia.social/29e810bf4707fef373d886af322089d5db300fce66e4e073efc26827f10825f6/image.webp",
+                    "remote": true,
+                    "thumbhash": "1QcSHQRnh493V4dIh4eXh1h4kJUI",
+                    "description": "",
+                    "height": 960,
+                    "size": 221275,
+                    "hash": {
+                        "sha256": "967b8e86d8708c6283814f450efcbd3be94d3d24ca9a7ab435b2ff8b51dcbc21"
+                    },
+                    "width": 639
+                }
+            },
+            {
+                "image/png": {
+                    "content": "https://cdn.versia.social/4f87598d377441e78f3c8cfa7bd7d19d61a7470bfe0abcbee6eb1de87279fb3b/image.webp",
+                    "remote": true,
+                    "thumbhash": "3PcNNYSFeXh/d3eld0iHZoZgVwh2",
+                    "description": "",
+                    "height": 1051,
+                    "size": 122577,
+                    "hash": {
+                        "sha256": "fe4ef842e04495dac7c148b440d83f366b948c4a18557457109ac951d5c46eaf"
+                    },
+                    "width": 926
+                }
+            }
+        ],
+        "author": "https://versia.social/users/018eb863-753f-76ff-83d6-fd590de7740a",
+        "category": "microblog",
+        "content": {
+            "text/html": {
+                "content": "<p>In the next versia-fe update: account settings, finally!</p>"
+            },
+            "text/plain": {
+                "content": "In the next versia-fe update: account settings, finally!"
+            }
+        },
+        "device": {
+            "name": "Megalodon for Android",
+            "version": "1.3.89",
+            "url": "https://sk22.github.io/megalodon"
+        },
+        "extensions": {
+            "pub.versia:custom_emojis": {
+                "emojis": []
+            }
+        },
+        "group": "public",
+        "is_sensitive": false,
+        "mentions": [],
+        "subject": "Versia development"
+    }
+    ```
+
+    </Col>
+</Row>

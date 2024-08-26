@@ -1,0 +1,52 @@
+import { Resources } from '@/components/Resources'
+import { HeroPattern } from '@/components/HeroPattern'
+
+export const metadata = {
+    title: 'Versia Documentation',
+    description: 'Introduction to the Versia Protocol, a communication medium for federated applications, leveraging the HTTP stack.',
+}
+
+export const sections = [
+    { title: 'Vocabulary', id: 'vocabulary' },
+    { title: 'Basic Concepts', id: 'basic-concepts' },
+    { title: 'Resources', id: 'resources' },
+]
+
+<HeroPattern />
+
+# Versia Federation Protocol
+
+The Versia Protocol is designed as a communication medium for federated applications, leveraging the HTTP stack. Its simplicity ensures ease of implementation and comprehension. {{ className: 'lead' }}
+
+<div className="not-prose mb-16 mt-6 flex gap-3">
+  <Button href="/entities" arrow="right">
+    <>Entities</>
+  </Button>
+  <Button href="/sdks" variant="outline">
+    <>Explore SDKs</>
+  </Button>
+</div>
+
+## Vocabulary
+
+<Note>
+The words **MUST**, **MUST NOT**, **SHOULD**, **SHOULD NOT**, and **MAY** are used in this document as defined in [RFC 2119](https://tools.ietf.org/html/rfc2119).
+</Note>
+
+The Versia Protocol uses the following terms:
+- **Entity**: A generic term for any JSON object in the protocol, such as a [User](./entities/user), a [Note](./entities/note), or a [Like](./extensions/likes). Entities are uniquely identified by their `id` property.
+- **Implementation**: A software application that implements the Versia Protocol.
+- **Instance**: An application deploying an **Implementation**.
+  - Using the same nomenclature, an ActivityPub Implementation would be `Mastodon`, and an Instance would be `mastodon.social`.
+- **Federation**: The process of exchanging data between two or more **Instances**.
+
+## Philosophy
+
+The Versia Protocol is heavily inspired by the [ActivityPub](https://www.w3.org/TR/activitypub/) specification. It is designed to be simple and easy to implement, with a focus on the following concepts:
+- **Simple Structures**: Entities are represented as JSON objects. No JSON-LD, no complex data structures, just plain JSON.
+- **Modularity**: The protocol is divided into a **core protocol** and **extensions**. Implementations can choose to support only the core protocol or add extensions as needed.
+- **Namespacing**: To avoid extension conflicts, all extensions are namespaced.
+- **Signatures**: Most types of interactions **must** be signed with a private key. Unlike other protocols, signatures are **mandatory**, not optional.
+- **Developer-Friendliness**: Understanding and implementing your own Versia server should be easy. Documentation is aimed at developers first.
+
+<Resources />
