@@ -118,7 +118,7 @@ function SmallPrint() {
             </p>
             <div className="flex gap-4">
                 <SocialLink
-                    href="https://github.com/lysand-org"
+                    href="https://github.com/versia-pub"
                     icon="mdi:github"
                 >
                     Find us on GitHub

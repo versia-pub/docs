@@ -6,8 +6,8 @@ import { Heading } from "./Heading";
 
 const libraries = [
     {
-        href: "https://github.com/lysand-org/api/tree/main/federation",
-        name: "@lysand-org/federation",
+        href: "https://github.com/versia-pub/api/tree/main/federation",
+        name: "@versia/federation",
         description:
             "Fully-featured federation toolkit with validation, signatures, parsing, and more.",
         logo: logoTypescript,
