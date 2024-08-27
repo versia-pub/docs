@@ -7,6 +7,42 @@ export const metadata = {
 
 The Custom Emojis extension adds support for adding personalized emojis to federated data. {{ className: 'lead' }}
 
+## Structure Definition
+
+<Row>
+    <Col>
+        <Properties>
+            <Property name="name" type="string" required={true}>
+                Emoji name, surrounded by identification characters (for example, colons: `:happy_face:`).
+
+                Name must match the regex `^[a-zA-Z0-9_-]+$`.
+                
+                Identification characters must not match the name regex (must not be alphanumeric/underscore/hyphen). There may only be two identification characters, one at the beginning and one at the end.
+            </Property>
+            <Property name="content" type="ContentFormat" required={true} typeLink="/structures/content-format">
+                Emoji content. Must be an image format (`image/*`).
+            </Property>
+        </Properties>
+    </Col>
+
+    <Col sticky>
+
+    ```jsonc {{ 'title': 'Example Emoji' }}
+    {
+        "name": ":happy_face:",
+        "content": {
+            "image/webp": {
+                "content": "https://cdn.example.com/emojis/happy_face.webp",
+                "remote": true,
+                "description": "A happy emoji smiling.",
+            }
+        }
+    }
+    ```
+
+    </Col>
+</Row>
+
 ## Rendering
 
 To render custom emojis, clients **should** perform the following steps:
@@ -37,8 +73,8 @@ Custom Emojis can be added to any entity with text content. The extension ID is 
 <Row>
     <Col>
         <Properties>
-            <Property name="emojis" type="CustomEmoji[]" required={true} typeLink="/structures/emoji">
-                [Custom emojis](/structures/emoji) to be added to the note.
+            <Property name="emojis" type="CustomEmoji[]" required={true} typeLink="/extensions/custom-emoji#structure-definition">
+                [Custom emojis](/extensions/custom-emoji#structure-definition) to be added to the note.
             </Property>
         </Properties>
     </Col>
