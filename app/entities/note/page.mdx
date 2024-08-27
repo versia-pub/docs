@@ -17,7 +17,7 @@ Notes represent a piece of content on a Versia instance. They can be posted by [
     <Col>
         <Properties>
             <Property name="attachments" type="ContentFormat[]" required={false} typeLink="/structures/content-format">
-                Media attachments to the note. May be any format.
+                Media attachments to the note. May be any format. **Must** be remote.
             </Property>
             <Property name="author" type="URI" required={true} typeLink="/types#uri">
                 URI of the `User` considered the author of the note.
@@ -105,7 +105,6 @@ Notes represent a piece of content on a Versia instance. They can be posted by [
                     "content": "https://cdn.versia.social/29e810bf4707fef373d886af322089d5db300fce66e4e073efc26827f10825f6/image.webp",
                     "remote": true,
                     "thumbhash": "1QcSHQRnh493V4dIh4eXh1h4kJUI",
-                    "description": "",
                     "height": 960,
                     "size": 221275,
                     "hash": {
@@ -115,17 +114,13 @@ Notes represent a piece of content on a Versia instance. They can be posted by [
                 }
             },
             {
-                "image/png": {
-                    "content": "https://cdn.versia.social/4f87598d377441e78f3c8cfa7bd7d19d61a7470bfe0abcbee6eb1de87279fb3b/image.webp",
+                "text/plain": {
+                    "content": "https://cdn.lysand.org/68c02dd11c179ef4d170b05393f6e72133dd0ad733f40d41b42363d8784e8d5d/fire.txt",
                     "remote": true,
-                    "thumbhash": "3PcNNYSFeXh/d3eld0iHZoZgVwh2",
-                    "description": "",
-                    "height": 1051,
-                    "size": 122577,
+                    "size": 8,
                     "hash": {
-                        "sha256": "fe4ef842e04495dac7c148b440d83f366b948c4a18557457109ac951d5c46eaf"
-                    },
-                    "width": 926
+                        "sha256": "68c02dd11c179ef4d170b05393f6e72133dd0ad733f40d41b42363d8784e8d5d"
+                    }
                 }
             }
         ],
