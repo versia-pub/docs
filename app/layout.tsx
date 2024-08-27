@@ -6,7 +6,6 @@ import type { Section } from "../components/SectionProvider";
 import { Providers } from "./providers";
 
 import "@/styles/tailwind.css";
-import logo from "@/images/branding/logo.webp";
 import type { ReactNode } from "react";
 
 export const metadata: Metadata = {
@@ -19,11 +18,9 @@ export const metadata: Metadata = {
     openGraph: {
         type: "article",
         images: {
-            url: logo.src,
+            url: "https://cdn.versia.pub/branding/icon.svg",
             alt: "Versia logo",
-            height: logo.height,
-            width: logo.width,
-            type: "image/webp",
+            type: "image/svg+xml",
         },
     },
 };
