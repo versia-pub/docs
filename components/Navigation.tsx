@@ -288,6 +288,10 @@ export const navigation: NavGroup[] = [
         title: "Extensions",
         links: [
             { title: "Custom Emojis", href: "/extensions/custom-emojis" },
+            {
+                title: "Instance Messaging",
+                href: "/extensions/instance-messaging",
+            },
             { title: "Likes", href: "/extensions/likes" },
             { title: "Migration", href: "/extensions/migration" },
             { title: "Polls", href: "/extensions/polls" },

@@ -1,0 +1,87 @@
+export const metadata = {
+    title: "Instance Messaging Extension",
+    description: "Instance Messaging allows instances to send federation debug messages."
+}
+
+# Instance Messaging Extension
+
+Misconfigured or buggy instances often have trouble federating with others. This extension enables instances to send simple federation debug messages. {{ className: "lead" }}
+
+<Note>
+    This extension is intended to help developers debug federation issues between instances. It is not intended for general-purpose messaging.
+</Note>
+
+## Purpose
+
+Often, federation "fails silently" with no indication of what went wrong, as instances are incapable of communicating with each other outside of administrators manually checking logs.
+
+For example, let's consider the following scenario:
+1. `joe.social` and `jane.org` are two instances.
+2. `joe.social` tries to fetch a user profile from `jane.org`, at `jane.org/users/nkGEd8eI98` for example.
+3. `jane.org` responds with a [User](/entities/user) object with a missing or incorrect field, such as an improperly validated `username`.
+4. `joe.social` is incapable of processing the response and silently fails to fetch the user profile.
+
+In this scenario, `jane.org` has no way of knowing what went wrong, as `joe.social` does not provide any feedback.
+
+## Instance Metadata Extensions
+
+This extension adds the following metadata to instances:
+
+<Row>
+    <Col>
+        <Properties>
+            <Property name="endpoint" type="string" required={true}>
+                The endpoint to send federation debug messages to.
+
+                ### Sending Messages
+
+                To send a federation debug message, instances **should** make a `POST` request to the appropriate endpoint with a simple text body containing a helpful message.
+
+                ```text {{ "title": "Helpful Message" }}
+                Validation failed for https://jane.org/users/nkGEd8eI98.
+                Reasons:
+                  - `username` must be alphanumeric. Found invalid character `@`.
+                ```
+
+                Do not send useless messages, such as:
+
+                ```text {{ "title": "Unhelpful Message" }}
+                Federation failed.
+                ```
+            </Property>
+        </Properties>
+    </Col>
+
+    <Col sticky>
+
+    ```jsonc {{ "title": "Example Instance Metadata" }}
+    {
+        "type": "InstanceMetadata",
+        "name": "Jane.org",
+        "software": {
+            "name": "Versia Server",
+            "version": "0.7.0"
+        },
+        "compatibility": {
+            "versions": [
+                "0.4.0"
+            ],
+            "extensions": [
+                "pub.versia:reactions",
+                "pub.versia:polls",
+                "pub.versia:reports",
+                "pub.versia:instance_messaging"
+            ]
+        },
+        "host": "jane.org",
+        "created_at": "2021-07-01T00:00:00Z",
+        "extensions": { // [!code focus:5]
+            "pub.versia:instance_messaging": {
+                "endpoint": "https://jane.org/api/reports",
+            },
+        }
+    }
+    ```
+
+    </Col>
+</Row>
