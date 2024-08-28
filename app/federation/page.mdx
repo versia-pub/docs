@@ -10,7 +10,7 @@ export const metadata = {
 
 Being a federation protocol, Versia defines a set of rules for exchanging data between instances. This document outlines the behavior of instances in a Versia federated network. {{ className: 'lead' }}
 
-Federation is built on the [HyperText Transfer Protocol (HTTP)](https://tools.ietf.org/html/rfc7230) and the [JavaScript Object Notation (JSON)](https://tools.ietf.org/html/rfc7159) data format. Instances communicate with each other by sending and receiving JSON payloads over HTTP.
+Federation is built on the [HyperText Transfer Protocol (HTTP)](https://tools.ietf.org/html/rfc7230) and the [JavaScript Object Notation (JSON)](https://tools.ietf.org/html/rfc7159) data format. Instances communicate with each other by sending and receiving JSON payloads over HTTP. If you have ever worked with ActivityPub, Versia's federation protocol will feel familiar.
 
 <Guides>
     <Guide name="HTTP Guidelines" href="/federation/http" description="Guidelines for HTTP communication in Versia." />
@@ -18,3 +18,21 @@ Federation is built on the [HyperText Transfer Protocol (HTTP)](https://tools.ie
     <Guide name="Discovery" href="/federation/discovery" description="How Versia instances can discover users, capabilities, and endpoints." />
     <Guide name="Delegation" href="/federation/delegation" description="Authorizing actions on behalf of another user." />
 </Guides>
+
+## Inboxes
+
+Ever [User](/entities/user) has a personal HTTP endpoint called an inbox (e.g., `/users/3/inbox`). This endpoint is used to send and receive messages between users and instances. Messages are sent as JSON payloads over HTTP `POST` requests.
+
+Let's consider the following example:
+
+> Alice, on the instance `alice.example`, sends a message to Bob on the instance `bob.example`.
+
+To perform this action, Alice's instance sends a `POST` request to Bob's inbox endpoint, which can be found by checking the `inbox` field in Bob's [User](/entities/user) entity. This request contains the [Note](/entities/note) entity that Alice wants to send to Bob, with [the appropriate metadata](/federation/http) to ensure the message is valid.
+
+Bob's instance receives the message and processes it according to the rules defined in the [Validation](/federation/validation) document.
+
+## Outboxes
+
+In addition to inboxes, every user has an outbox (e.g., `/users/3/outbox`). The outbox is simply a collection of all the messages that a user has sent. When a user sends a message to another user, a copy of that message is accessible in the sender's outbox.
+
+Outboxes are very useful for "backfilling" data when a new instance joins the network. By resolving the outboxes of all new users it encounters, a new instance can quickly catch up on all old messages.
