@@ -9,7 +9,7 @@ Contains metadata about a Versia instance, such as capabilities and endpoints. {
 
 ## The `null` Author
 
-On all entities that have an `author` field, the `author` can be `null` to represent the instance itself as the author (like ActivityPub's Server Actors). In this case, the instance's public key should be used to verify the entity.
+On all entities that have an `author` field, the `author` can be `null` to represent the instance itself as the author (like ActivityPub's Server Actors). In this case, the instance's public key should be used to verify the entity. To know which instance's public key to use, the entity signature should be used.
 
 ## Entity Definition
 
