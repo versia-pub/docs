@@ -1,0 +1,60 @@
+export const metadata = {
+    title: 'Security Model',
+    description:
+        "Description of Versia's security model (what to expect and what to avoid).",
+}
+
+# Security Model
+
+<Note>
+    **In a nutshell**: Versia is designed to guarantee integrity and authenticity, but not confidentiality. This means that you can trust the data you receive, but you should not assume that it is private.
+
+    This is in line with most other federated systems, such as email and the Web: if you are looking for absolute confidentiality, you should be using end-to-end encrypted platforms such as [Signal](https://signal.org/).
+</Note>
+
+## Overview
+
+Versia's security model is designed to ensure the integrity and authenticity of data, with a simple but robust system of cryptographic signatures. This system is designed to be easy to implement and understand, while still providing strong guarantees.
+
+However, **it is of critical importance to understand the limitations of this system**. Versia's security model is designed to prevent impersonation attacks and data tampering, but it does not provide confidentiality. This means that while you can trust the data you receive, you should not assume that it is private.
+
+<Note>
+    There are three main kinds of security that are commonly discussed in the context of cryptography:
+
+    - **Integrity**: Ensuring that data has not been tampered with.
+    - **Authenticity**: Ensuring that data was created by the expected user.
+    - **Confidentiality**: Ensuring that data is private and cannot be read by unauthorized parties.
+</Note>
+
+### Security Concerns
+
+All data that you create, including but not limited to passwords, DMs, and private posts, is assumed to be accessible by the following parties:
+- Your instance administrator.
+- The administrators of any instance that you federate with.
+- Any party that has access to the data in transit (and can break through TLS).
+
+### Security Guarantees
+
+Versia's security model provides the following guarantees:
+- **Integrity**: Data cannot be tampered with in transit. Any entities that you receive are guaranteed to be the same as the entities that were sent, as long as the signatures are valid.
+- **Authenticity**: You can trust that the data you receive was created by the expected user mentioned as the signature author.
+
+## Why No Confidentiality?
+
+There are several reasons why confidentiality is not covered as part of this specification. Before we go into them, it is important to note that most federated platforms or social media do not provide confidentiality guarantees either, such as:
+
+- ActivityPub
+- Email
+- The Web
+- Twitter
+- TCP
+
+Confidentiality is **several orders of magnitude more complex** than integrity and authenticity. It requires a completely different set of tools and assumptions, which are not feasible to reliably implement in a complex federated system (if you've ever seen `** Unable to decrypt: The sender's device has not sent us the keys for this message. **`, you know what we're talking about).
+
+Furthermore, adding more complex cryptography would make the specification significantly more complex, which would likely make it harder to implement for smaller developers with less resources.
+
+Additionally, we would like to avoid re-creating what would essentially be a shoddier version of much stronger centralized platforms like [Signal](https://signal.org/). We feel, just like many others before us, that it is better to leave the confidentiality to the experts.
+
+## Conclusion
+
+Now that you understand the security model, you have a better understanding of how to design your Versia implementation. If you have questions or problems with security that you would like to discuss, please [feel free to reach out to any one of us here](/#team).

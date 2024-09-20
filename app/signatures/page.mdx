@@ -25,6 +25,12 @@ Signatures are **required on ALL federation traffic**. If a request does not hav
 - **All POST requests**.
 - **All responses to GET requests** (for example, when fetching a user's profile). In this case, the HTTP method used in the signature string must be `GET`.
 
+<Note>
+    Versia's security model makes replay attacks useless, so they are not a concern.
+
+    For more information, please read [the security model documentation](/security).
+</Note>
+
 If a signature fails, is missing or is invalid, the instance **MUST** return a `401 Unauthorized` HTTP status code.
 
 ### Calculating the Signature
