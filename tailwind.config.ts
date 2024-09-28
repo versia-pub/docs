@@ -55,6 +55,10 @@ export default {
             animation: {
                 roll: "roll 2s 1 ease-in-out",
             },
+            backgroundImage: {
+                construction:
+                    "linear-gradient(45deg, rgb(255 195 0 / var(--tw-bg-opacity)) 25%, rgb(46 39 37 / var(--tw-bg-opacity)) 25%, rgb(46 39 37 / var(--tw-bg-opacity)) 50%, rgb(255 195 0 / var(--tw-bg-opacity)) 50%, rgb(255 195 0 / var(--tw-bg-opacity)) 75%, rgb(46 39 37 / var(--tw-bg-opacity)) 75%, rgb(46 39 37 / var(--tw-bg-opacity)) 100%)",
+            },
             keyframes: {
                 roll: {
                     "0%": { transform: "rotate(0deg)" },

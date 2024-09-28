@@ -323,7 +323,7 @@ export function Navigation(props: ComponentPropsWithoutRef<"nav">) {
                         variant="filled"
                         className="w-full"
                     >
-                        Working Draft 4
+                        Working Draft 5
                     </Button>
                 </li>
             </ul>
