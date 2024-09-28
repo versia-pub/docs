@@ -20,8 +20,8 @@
         "@sindresorhus/slugify": "^2.2.1",
         "@tailwindcss/typography": "^0.5.15",
         "@types/mdx": "^2.0.13",
-        "@types/node": "^22.5.5",
-        "@types/react": "^18.3.8",
+        "@types/node": "^22.7.4",
+        "@types/react": "^18.3.10",
         "@types/react-dom": "^18.3.0",
         "@types/react-highlight-words": "^0.20.0",
         "acorn": "^8.12.1",
@@ -29,7 +29,7 @@
         "clsx": "^2.1.1",
         "fast-glob": "^3.3.2",
         "flexsearch": "^0.7.43",
-        "framer-motion": "^11.5.5",
+        "framer-motion": "^11.9.0",
         "mdast-util-to-string": "^4.0.0",
         "mdx-annotations": "^0.1.4",
         "next": "^14.2.13",
@@ -40,19 +40,19 @@
         "remark": "^15.0.1",
         "remark-gfm": "^4.0.0",
         "remark-mdx": "^3.0.1",
-        "shiki": "^1.18.0",
+        "shiki": "^1.20.0",
         "simple-functional-loader": "^1.2.1",
-        "tailwindcss": "^3.4.12",
+        "tailwindcss": "^3.4.13",
         "typescript": "^5.6.2",
         "unist-util-filter": "^5.0.1",
         "unist-util-visit": "^5.0.0",
-        "zustand": "^4.5.5"
+        "zustand": "^5.0.0-rc.2"
     },
     "devDependencies": {
         "@biomejs/biome": "^1.9.2",
         "@iconify-icon/react": "^2.1.0",
         "@next/bundle-analyzer": "^14.2.13",
-        "@shikijs/transformers": "^1.18.0",
+        "@shikijs/transformers": "^1.20.0",
         "sharp": "^0.33.5"
     },
     "trustedDependencies": ["@biomejs/biome", "sharp"]
