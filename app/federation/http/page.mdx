@@ -47,6 +47,16 @@ ALL kinds of HTTP requests/responses between instances **MUST** include a [Signa
     </Col>
 </Row>
 
+## Rate limits
+
+Implementations **MUST** respect the rate limits of remote instances.
+
+IETF draft [draft-polli-ratelimit-headers-02](https://www.ietf.org/archive/id/draft-polli-ratelimit-headers-02.html) **MUST** be used to communicate rate limits. Other rate limit headers/formats are not allowed.
+
+<Note>
+    This IETF draft is, well, a draft. However, there are no standards for rate limiting in HTTP, so this is the best we have.
+</Note>
+
 ## Responses
 
 <Row>
