@@ -295,6 +295,10 @@ export const navigation: NavGroup[] = [
                 title: "Instance Messaging",
                 href: "/extensions/instance-messaging",
             },
+            {
+                title: "Interaction Controls",
+                href: "/extensions/interaction-controls",
+            },
             { title: "Likes", href: "/extensions/likes" },
             { title: "Migration", href: "/extensions/migration" },
             { title: "Polls", href: "/extensions/polls" },
