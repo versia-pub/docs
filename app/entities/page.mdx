@@ -36,6 +36,13 @@ Any field in an entity not marked as `required` may be omitted or set to `null`.
 
             **Some entity types may not need a URI. This will be specified in the entity's documentation.**
         </Property>
+        <Property name="$schema" type="string" required={false}>
+            URL of any JSON Schema that the entity adheres to.
+
+            <Note>
+                This is for human use only, and not to be used by either clients or servers as a way to validate the entity.
+            </Note>
+        </Property>
         <Property name="extensions" type="Extensions" required={false} typeLink="/types#extensions">
             Extensions to the entity. Use this to add custom properties to the entity.
 
