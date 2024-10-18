@@ -209,6 +209,7 @@ function NavigationGroup({
                                 {link.href === pathname &&
                                     sections.length > 0 && (
                                         <motion.ul
+                                            // biome-ignore lint/a11y/useSemanticElements: already a <ul>
                                             role="list"
                                             initial={{ opacity: 0 }}
                                             animate={{
