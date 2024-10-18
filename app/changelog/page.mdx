@@ -18,6 +18,8 @@ This page lists changes since Working Draft 3. {{ className: 'lead' }}
 - Removed the nonce from the [signature system](/signatures), replaced with `Versia-Signed-At` (timestamps).
 - Standardize rate limits with [IETF draft draft-polli-ratelimit-headers-02](https://www.ietf.org/archive/id/draft-polli-ratelimit-headers-02.html).
 - Added [Versia Links](/links).
+- Switched from ISO 8601 to [RFC 3339](https://datatracker.ietf.org/doc/html/rfc3339) for timestamps.
+    - In most cases, the two are interchangeable, but RFC 3339 is more strict. Most implementations should not need to change anything.
 
 ## Since WD 3
 

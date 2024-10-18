@@ -1,23 +1,7 @@
 
-## ISO8601
+## RFC3339
 
-```typescript
-type Year = `${number}${number}${number}${number}`;
-type Month = `${"0" | "1"}${number}`;
-type Day = `${"0" | "1" | "2" | "3"}${number}`;
-
-type DateString = `${Year}-${Month}-${Day}`;
-
-type Hour = `${"0" | "1" | "2"}${number}`;
-type Minute = `${"0" | "1" | "2" | "3" | "4" | "5"}${number}`;
-type Second = `${"0" | "1" | "2" | "3" | "4" | "5"}${number}`;
-
-type TimeString = `${Hour}:${Minute}:${Second}`;
-
-type Offset = `${"Z" | "+" | "-"}${Hour}:${Minute}`;
-
-type ISO8601 = `${DateString}T${TimeString}${Offset}`;
-```
+[https://datatracker.ietf.org/doc/html/rfc3339](https://datatracker.ietf.org/doc/html/rfc3339)
 
 ## UUID
 

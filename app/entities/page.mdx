@@ -24,8 +24,8 @@ Any field in an entity not marked as `required` may be omitted or set to `null`.
         <Property name="type" type="string" required={true}>
             Type of the entity. Custom types must follow [Extension Naming](/extensions#naming).
         </Property>
-        <Property name="created_at" type="ISO8601" required={true} typeLink="/types#iso-8601">
-            Date and time when the entity was created. Must be an [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) formatted string.
+        <Property name="created_at" type="RFC3339" required={true} typeLink="/types#rfc3339">
+            Date and time when the entity was created. Must be an [RFC 3339](https://datatracker.ietf.org/doc/html/rfc3339) timestamp.
 
             <Note>
             Handling of dates that are valid but obviously incorrect (e.g. in the future) is left to the Implementation's discretion.

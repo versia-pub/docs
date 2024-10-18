@@ -29,8 +29,8 @@ Note that there is no `question` field: the question should be included in the `
             <Property name="multiple_choice" type="boolean" required="true">
                 Whether the poll allows multiple votes to be cast for different options.
             </Property>
-            <Property name="expires_at" type="ISO 8601" typeLink="/types#iso8601">
-                ISO 8601 timestamp of when the poll ends and no more votes can be cast. If not present, the poll does not expire.
+            <Property name="expires_at" type="RFC3339" typeLink="/types#rfc3339">
+                RFC 3339 timestamp of when the poll ends and no more votes can be cast. If not present, the poll does not expire.
             </Property>
         </Properties>
     </Col>
