@@ -1,0 +1,63 @@
+export const metadata = {
+    title: 'Versia Links',
+    description:
+        'How Versia Links work and how they are used in the Versia Protocol.',
+}
+
+# Versia Links
+
+Versia Links are a way to reference entities in the Versia Protocol, in a way that can be handled by browsers and applications. They function the same way as `mailto:` links, but for Versia entities.
+
+## Syntax
+
+<Row>
+    <Col>
+        <Properties>
+            <Property name="scheme" type="string" required={true}>
+                Must be `web+versia://` so that browsers and applications can recognize it.
+
+                An IANA registration for the `versia://` scheme will be requested in the future.
+            </Property>
+            <Property name="instance" type="string" required={true}>
+                Instance host, including the port if it is not the default (i.e. `443` for HTTPS).
+            </Property>
+            <Property name="action" type="string" required={true}>
+                Action to take on the entity. Can have multiple slashes as a way to segment the action.
+
+                Possible actions:
+
+                - `users/:username`: Open a user profile.
+                - `notes/:id`: Open a note.
+                - `groups/:id`: Open a group.
+                - `reply/:id`: Open the composer to reply to a note.
+                - `quote/:id`: Open the composer to quote a note.
+                - `share/:id`: Share a note.
+            </Property>
+        </Properties>
+    </Col>
+
+    <Col sticky>
+        ``` {{ title: "Viewing a user profile" }}
+        web+versia://bob.social/users/alice
+        ```
+
+        ``` {{ title: "Viewing a note" }}
+        web+versia://jimbob.com/notes/01902e09-0f8b-72de-8ee3-9afc0cf5eae1
+        ```
+
+        ``` {{ title: "Replying to a note" }}
+        web+versia://bob.social/reply/01902e09-0f8b-72de-8ee3-9afc0cf5eae1
+        ```
+    </Col>
+</Row>
+
+## Handling
+
+Versia clients **should** register themselves as handlers for the `web+versia://` scheme in the user's operating system. When a Versia Link is clicked, the client should open the entity in the client's interface.
+
+The default client ("frontend") on a Versia instance **should** also display Versia links for logged-out users on:
+- Profiles
+- Notes
+- Groups
+
+Clients **should** ask users to confirm any action that is not a simple view action, such as replying to a note or sharing a note.
