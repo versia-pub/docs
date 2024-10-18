@@ -24,13 +24,13 @@ Messages sent over the WebSocket connection are JSON objects.
     <Col>
         <Properties>
             <Property name="signature" type="string" required={true}>
-                Same as the `X-Signature` header in HTTP requests.
+                Same as the `Versia-Signature` header in HTTP requests.
             </Property>
-            <Property name="nonce" type="string" required={true}>
-                Same as the `X-Nonce` header in HTTP requests.
+            <Property name="signed_at" type="string" required={true}>
+                Same as the `Versia-Signed-At` header in HTTP requests.
             </Property>
             <Property name="signed_by" type="URI" required={true}>
-                Same as the `X-Signed-By` header in HTTP requests.
+                Same as the `Versia-Signed-By` header in HTTP requests.
             </Property>
             <Property name="entity" type="Entity" required={true} typeLink="/entities">
                 Same as the request body in HTTP requests. Must be a string (stringified JSON), not JSON.
@@ -42,8 +42,8 @@ Messages sent over the WebSocket connection are JSON objects.
 
     ```jsonc {{ 'title': 'Example Message' }}
     {
-        "signature": "post /users/1/inbox a2ebc29eb6762a9164fbcffc9271e8a53562a5e725e7187ea7d88d03cbe59341 n4bQgYhMfWWaL+qgxVrQFaO/TxsrC4Is0V1sFbDwCgg=",
-        "nonce": "a2ebc29eb6762a9164fbcffc9271e8a53562a5e725e7187ea7d88d03cbe59341",
+        "signature": "/CjB2L9bcvRg+uP19B4/rqy7Ji9/cqMFPlL3GVCIndnQjYyOpBzJEAl9weDnXm7Jrqa3y6sBC+EYWKThO2r9Bw==",
+        "signed_at": "1729241807",
         "signed_by": "https://bongo.social/users/63a00ab3-39b1-49eb-b88e-ed65d2361f3e",
         "entity": "{\"id\":\"9a8928b6-2526-4979-aab1-ef2f88cd5700\",\"type\":\"Delete\",\"created_at\":\"2022-01-01T12:00:00Z\",\"author\":\"https://bongo.social/users/63a00ab3-39b1-49eb-b88e-ed65d2361f3e\",\"deleted\":\"https://bongo.social/notes/54059ce2-9332-46fa-bf6a-598b5493b81b\"}"
     }
