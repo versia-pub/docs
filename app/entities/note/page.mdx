@@ -89,6 +89,9 @@ Notes represent a piece of content on a Versia instance. They can be posted by [
             <Property name="subject" type="string" required={false}>
                 A subject for the note. Useful for clients to display a "content warning" or "spoiler" feature, such as on Mastodon. Must be a plaintext string (`text/plain`).
             </Property>
+            <Property name="html_uri" type="URI" required={false} typeLink="/types#uri">
+                URI to the note in HTML, for web browsers. Useful for "open this note on remote instance" functionality.
+            </Property>
         </Properties>
     </Col>
     <Col sticky>
@@ -126,6 +129,7 @@ Notes represent a piece of content on a Versia instance. They can be posted by [
         ],
         "author": "https://versia.social/users/018eb863-753f-76ff-83d6-fd590de7740a",
         "category": "microblog",
+        "html_uri": "https://versia.social/@jessew/17652802716161",
         "content": {
             "text/html": {
                 "content": "<p>In the next versia-fe update: account settings, finally!</p>"
