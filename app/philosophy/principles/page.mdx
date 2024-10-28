@@ -6,7 +6,7 @@ When designing basically anything, it is very important to define its principles
 
 Entities should contain all the data necessary for their processing (and only theirs) in a single JSON object. This object should also be roughly understandable by a human, and should be able to be serialized and deserialized without loss of information.
 
-This means that headers, transport mechanisms, 
+This means that headers, transport mechanisms, encoding and other such things should be separate from the data itself. This is to ensure that the data can be processed by any system, regardless of the transport mechanism.
 
 ## Determinism
 
