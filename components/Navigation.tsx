@@ -258,6 +258,10 @@ export const navigation: NavGroup[] = [
         ],
     },
     {
+        title: "Philosophy",
+        links: [{ title: "Principles", href: "/philosophy/principles" }],
+    },
+    {
         title: "Federation",
         links: [
             { title: "HTTP", href: "/federation/http" },
