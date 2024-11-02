@@ -55,5 +55,9 @@
         "@shikijs/transformers": "^1.22.2",
         "sharp": "^0.33.5"
     },
+    "overrides": {
+        "react": "^19.0.0-rc-cae764ce-20241025",
+        "react-dom": "^19.0.0-rc-cae764ce-20241025"
+    },
     "trustedDependencies": ["@biomejs/biome", "sharp"]
 }
