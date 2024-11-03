@@ -102,7 +102,7 @@ Extensions **may** choose to register their own interaction types (such as `pub.
 
 Implementations that find a user attempting to create an interaction they are not allowed to **MUST** return a `403 Forbidden` HTTP status code when processing the Note during federation. The Note **must** also be discarded.
 
-It is important for implementations to backfill any related [Collections](/structures/collection) (e.g. user followers) in order to not incorrectly reject Notes based off of outdated data.
+It is important for implementations to backfill any related [Collections](/structures/collection)/[URI Collections](/structures/collection#uri-collection) (e.g. user followers) in order to not incorrectly reject Notes based off of outdated data.
 
 <Note>
     To avoid server load from constant Collection refreshing, implementations **could** only refetch associated Collections when forbidden interactions are detected, then recalculate permissions again.

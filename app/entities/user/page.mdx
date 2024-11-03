@@ -114,19 +114,19 @@ Instance **must** be the host of the instance the user is on (hostname with opti
             }
             ```
 
-            All URIs must resolve to a [Collection](/structures/collection) of the appropriate entities. Extensions may add additional collections.
+            All URIs must resolve to either a [Collection](/structures/collection) or a [URI Collection](/structures/collection#uri-collection) of the appropriate entities. Extensions may add additional collections.
 
             ### Outbox
-            The user's federation outbox. Refer to the [federation documentation](/federation).
+            The user's federation outbox. Refer to the [federation documentation](/federation). [Collection](/structures/collection) of [Note](/entities/note) entities.
 
             ### Followers
-            User's followers. [Collection](/structures/collection) of [User](/entities/user) entities.
+            User's followers. [URI Collection](/structures/collection#uri-collection) of [User](/entities/user) entities.
 
             ### Following
-            Users that the user follows. [Collection](/structures/collection) of [User](/entities/user) entities.
+            Users that the user follows. [URI Collection](/structures/collection#uri-collection) of [User](/entities/user) entities.
 
             ### Featured
-            [Notes](/entities/note) that the user wants to feature (also known as "pin") on their profile. [Collection](/structures/collection) of [Note](/entities/note) entities.
+            [Notes](/entities/note) that the user wants to feature (also known as "pin") on their profile. [Collection](/structures/collection) of [Note](/entities/note) entities. Only notes authored by the user can be featured.
         </Property>
     </Properties>
 

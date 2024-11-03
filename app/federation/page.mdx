@@ -39,6 +39,6 @@ Shared inboxes are defined in the [Instance Metadata](/entities/instance-metadat
 
 ## Outboxes
 
-In addition to inboxes, every user has an outbox (e.g., `/users/3/outbox`). The outbox is simply a collection of all the messages that a user has sent. When a user sends a message to another user, a copy of that message is accessible in the sender's outbox.
+In addition to inboxes, every user has an outbox (e.g., `/users/3/outbox`). The outbox is simply a [Collection](/structures/collection) of all the messages that a user has sent. When a user sends a message to another user, a copy of that message is accessible in the sender's outbox.
 
 Outboxes are very useful for "backfilling" data when a new instance joins the network. By resolving the outboxes of all new users it encounters, a new instance can quickly catch up on all old messages.
