@@ -107,6 +107,25 @@ The Likes extension adds the following collections to the [User](/entities/user)
 }
 ```
 
+## Note Collections
+
+The Likes extension adds the following collections to the [Note](/entities/note) entity:
+
+- `likes`: A [URI Collection](/structures/collection#uri-collection) of all the likes the note has received.
+- `dislikes`: A [URI Collection](/structures/collection#uri-collection) of all the dislikes the note has received.
+
+```jsonc
+{
+    "type": "Note",
+    ...
+    "collections": {
+        ...
+        "pub.versia:likes/Likes": "https://example.com/notes/fmKZ763jzIU8/likes",
+        "pub.versia:likes/Dislikes": "https://example.com/notes/fmKZ763jzIU8/dislikes"
+    }
+}
+```
+
 ## Interaction Types
 
 <Note>

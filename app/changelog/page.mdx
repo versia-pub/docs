@@ -24,6 +24,8 @@ This page lists changes since Working Draft 3. {{ className: 'lead' }}
 - Added [Interaction Controls Extensions](/extensions/interaction-controls)
 - Added [URI Collections](/structures/collection#uri-collection)
     - Changed all Collections that can contain remote entities to use URI Collections (eg. [User](/entities/user) `collections.followers`).
+- Add `collections` field to [Notes](/entities/note).
+    - [Likes Extension](/extensions/likes), [Reactions Extension](/extensions/reactions) and [Share Extension](/extensions/share) now use this field, instead of a custom field in `extensions`.
 
 ## Since WD 3
 

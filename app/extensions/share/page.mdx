@@ -46,6 +46,23 @@ When a user shares a note, the note's original author **must** receive the entit
     </Col>
 </Row>
 
+## Note Collections
+
+The Share extension adds the following collections to the [Note](/entities/note) entity:
+
+- `shares`: A [URI Collection](/structures/collection#uri-collection) of all the shares of the note.
+
+```jsonc
+{
+    "type": "Note",
+    ...
+    "collections": {
+        ...
+        "pub.versia:share/Shares": "https://example.com/notes/fmKZ763jzIU8/shares"
+    }
+}
+```
+
 ## Interaction Types
 
 <Note>
