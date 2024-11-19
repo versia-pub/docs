@@ -18,20 +18,22 @@ Versia Links are a way to reference entities in the Versia Protocol, in a way th
 
                 An IANA registration for the `versia://` scheme will be requested in the future.
             </Property>
-            <Property name="instance" type="string" required={true}>
-                Instance host, including the port if it is not the default (i.e. `443` for HTTPS).
-            </Property>
             <Property name="action" type="string" required={true}>
                 Action to take on the entity. Can have multiple slashes as a way to segment the action.
+                Links that reference instance-specific content (like Entities) **must** reference a Instance.
 
                 Possible actions:
 
-                - `users/:username`: Open a user profile.
-                - `notes/:id`: Open a note.
-                - `groups/:id`: Open a group.
-                - `reply/:id`: Open the composer to reply to a note.
-                - `quote/:id`: Open the composer to quote a note.
-                - `share/:id`: Share a note.
+                - `users/:instance/:id`: Open a user profile.
+                - `notes/:instance/:id`: Open a note.
+                - `groups/:instance/:id`: Open a group.
+                - `reply/:instance/:id`: Open the composer to reply to a note.
+                - `quote/:instance/:id`: Open the composer to quote a note.
+                - `share/:instance/:id`: Share a note.
+                - `compose/:text`: Compose a new note. Text passed at the end will be added in the note compose field. Used for "Share with Versia" buttons on websites.
+            </Property>
+            <Property name="instance" type="string" required={false}>
+                Instance hosting the referenced content, including the port if it is not the default (i.e. `443` for HTTPS).
             </Property>
         </Properties>
     </Col>
@@ -59,5 +61,7 @@ The default client ("frontend") on a Versia instance **should** also display Ver
 - Profiles
 - Notes
 - Groups
+
+This **could** be used for easier following of users from remote instances.
 
 Clients **should** ask users to confirm any action that is not a simple view action, such as replying to a note or sharing a note.
