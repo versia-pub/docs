@@ -125,7 +125,7 @@ const Page: FC = () => {
                             {
                                 name: "Versia",
                                 icon: "bx:server",
-                                url: "https://social.lysand.org/@jessew",
+                                url: "https://beta.versia.social/@jessew",
                             },
                             {
                                 name: "Matrix",
@@ -163,7 +163,7 @@ const Page: FC = () => {
                             {
                                 name: "Versia",
                                 icon: "bx:server",
-                                url: "https://social.lysand.org/@aprl",
+                                url: "https://beta.versia.social/@aprl",
                             },
                             {
                                 name: "Matrix",
