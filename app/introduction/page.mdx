@@ -35,7 +35,7 @@ The words **MUST**, **MUST NOT**, **SHOULD**, **SHOULD NOT**, and **MAY** are us
 
 The Versia Protocol uses the following terms:
 - **Entity**: A generic term for any JSON object in the protocol, such as a [User](./entities/user), a [Note](./entities/note), or a [Like](./extensions/likes). Entities are uniquely identified by their `id` property.
-    - **Transient Entity**: A type of **Entity** that is not meant to be stored permanently or referenced by other entities.
+    - [**Transient Entity**](/entities#transient-entities): A type of **Entity** that is not meant to be stored permanently or referenced by other entities.
 - **Implementation**: A software application that implements the Versia Protocol.
 - **Instance**: An application deploying an **Implementation**.
   - Using the same nomenclature, an ActivityPub Implementation would be `Mastodon`, and an Instance would be `mastodon.social`.

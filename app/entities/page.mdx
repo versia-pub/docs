@@ -35,7 +35,7 @@ Any field in an entity not marked as `required` may be omitted or set to `null`.
             URI of the entity. Should be unique and resolve to the entity. Must be an absolute URI.
 
             <Note>
-                **Transient Entities** do not require a URI.
+                [**Transient Entities**](/entities#transient-entities) do not require a URI.
             </Note>
         </Property>
         <Property name="$schema" type="string" required={false}>
@@ -85,6 +85,12 @@ Any field in an entity not marked as `required` may be omitted or set to `null`.
     ```
     </Col>
 </Row>
+
+## Transient Entities
+
+Some entities are transient, meaning they do not have a URI. These entities are used for actions that do not require a permanent record, such as deletions or migrations.
+
+Implementations **must not** rely on other implementations to store transient entities in their database.
 
 ## Serialization
 
