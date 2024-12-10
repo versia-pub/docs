@@ -24,6 +24,15 @@ Refer to [Note](/entities/note#entity-definition)'s `group` property for how not
                 
                 Text only (`text/plain`, `text/html`, etc).
             </Property>
+            <Property name="open" type="boolean" required={false}>
+                Whether the group is open to all users or requires approval to join.
+
+                <Note>
+                    **This is meant as a UI hint** and does not guarantee that group subscriptions will be accepted or rejected.
+
+                    It is similar to a [User](/entities/user)'s `manually_approves_followers` field.
+                </Note>
+            </Property>
             <Property name="members" type="URI" required={true} typeLink="/types#uri">
                 URI of the group's members list. [URI Collection](/structures/collection#uri-collection) of [Users](/entities/user).
             </Property>
@@ -50,7 +59,194 @@ Refer to [Note](/entities/note#entity-definition)'s `group` property for how not
                 "content": "A group for fans of the Woozy emoji."
             }
         },
+        "open": false,
         "members": "https://example.com/groups/ed480922-b095-4f09-9da5-c995be8f5960/members",
+    }
+    ```
+
+    </Col>
+</Row>
+
+## Subscribing to Groups
+
+[Users](/entities/user) may "subscribe" to a Group in order to receive all [Notes](/entities/note) posted to it. The mechanism by which federation is handled is described at [the end of this document](#federation).
+
+First, a [User](/entities/user) must send a `GroupSubscribe` activity to the group. The group will then respond with either a `GroupSubscribeAccept` or a `GroupSubscribeReject` activity.
+
+If the group accepts the subscription, the user will receive all notes posted to the group. If the group rejects the subscription, the user will not receive any notes posted to the group.
+
+### GroupSubscribe
+
+Indicates that a [User](/entities/user) wishes to subscribe to a group.
+
+<Row>
+    <Col>
+        <Properties>
+            <Property name="uri" type="null" required={false}>
+                This entity does not have a URI.
+            </Property>
+            <Property name="subscriber" type="URI" required={true} typeLink="/types#uri">
+                URI of the [User](/entities/user) subscribing to the group.
+            </Property>
+            <Property name="group" type="URI" required={true} typeLink="/types#uri">
+                URI of the group to subscribe to.
+            </Property>
+        </Properties>
+    </Col>
+
+    <Col sticky>
+
+    ```jsonc {{ title: "Example GroupSubscribe" }}
+    {
+        "type": "GroupSubscribe",
+        "id": "9a7e9345-4e4a-4d5a-8301-4dbbfe777ca0",
+        "subscriber": "https://bob.social/users/e9277471-8aa1-4d40-a3d0-0878e818ccdc",
+        "group": "https://example.com/groups/ed480922-b095-4f09-9da5-c995be8f5960",
+        "created_at": "2021-01-01T00:00:00Z"
+    }
+    ```
+
+    </Col>
+</Row>
+
+### GroupUnsubscribe
+
+Indicates that a [User](/entities/user) wishes to unsubscribe from a group.
+
+<Row>
+    <Col>
+        <Properties>
+            <Property name="uri" type="null" required={false}>
+                This entity does not have a URI.
+            </Property>
+            <Property name="subscriber" type="URI" required={true} typeLink="/types#uri">
+                URI of the [User](/entities/user) unsubscribing from the group.
+            </Property>
+            <Property name="group" type="URI" required={true} typeLink="/types#uri">
+                URI of the group to unsubscribe from.
+            </Property>
+        </Properties>
+    </Col>
+
+    <Col sticky>
+
+    ```jsonc {{ title: "Example GroupUnsubscribe" }}
+    {
+        "type": "GroupUnsubscribe",
+        "id": "9a7e9345-4e4a-4d5a-8301-4dbbfe777ca0",
+        "subscriber": "https://bob.social/users/e9277471-8aa1-4d40-a3d0-0878e818ccdc",
+        "group": "https://example.com/groups/ed480922-b095-4f09-9da5-c995be8f5960",
+        "created_at": "2021-01-01T00:00:00Z"
+    }
+    ```
+
+    </Col>
+</Row>
+
+### GroupSubscribeAccept
+
+Indicates that a [Group](#entity-definition) has accepted a [User](/entities/user)'s subscription request. Should be signed by the instance hosting the group.
+
+<Row>
+    <Col>
+        <Properties>
+            <Property name="uri" type="null" required={false}>
+                This entity does not have a URI.
+            </Property>
+            <Property name="subscriber" type="URI" required={true} typeLink="/types#uri">
+                URI of the [User](/entities/user) subscribing to the group.
+            </Property>
+            <Property name="group" type="URI" required={true} typeLink="/types#uri">
+                URI of the group that accepted the subscription.
+            </Property>
+        </Properties>
+    </Col>
+
+    <Col sticky>
+
+    ```jsonc {{ title: "Example GroupSubscribeAccept" }}
+    {
+        "type": "GroupSubscribeAccept",
+        "id": "9a7e9345-4e4a-4d5a-8301-4dbbfe777ca0",
+        "subscriber": "https://bob.social/users/e9277471-8aa1-4d40-a3d0-0878e818ccdc",
+        "group": "https://example.com/groups/ed480922-b095-4f09-9da5-c995be8f5960",
+        "created_at": "2021-01-01T00:00:00Z"
+    }
+    ```
+
+    </Col>
+</Row>
+
+### GroupSubscribeReject
+
+Indicates that a [Group](#entity-definition) has rejected a [User](/entities/user)'s subscription request. Should be signed by the instance hosting the group.
+
+<Row>
+    <Col>
+        <Properties>
+            <Property name="uri" type="null" required={false}>
+                This entity does not have a URI.
+            </Property>
+            <Property name="subscriber" type="URI" required={true} typeLink="/types#uri">
+                URI of the [User](/entities/user) subscribing to the group.
+            </Property>
+            <Property name="group" type="URI" required={true} typeLink="/types#uri">
+                URI of the group that rejected the subscription.
+            </Property>
+        </Properties>
+    </Col>
+
+    <Col sticky>
+
+    ```jsonc {{ title: "Example GroupSubscribeReject" }}
+    {
+        "type": "GroupSubscribeReject",
+        "id": "9a7e9345-4e4a-4d5a-8301-4dbbfe777ca0",
+        "subscriber": "https://bob.social/users/e9277471-8aa1-4d40-a3d0-0878e818ccdc",
+        "group": "https://example.com/groups/ed480922-b095-4f09-9da5-c995be8f5960",
+        "created_at": "2021-01-01T00:00:00Z"
+    }
+    ```
+
+    </Col>
+</Row>
+
+## Federation
+
+Group federation represents a particularly challenging problem, as it requires a way to make sure every single [Note](/entities/note) posted to it is delivered to every single member of the group.
+
+All [Notes](/entities/note) posted to a group (using the `group` field) must be sent to its instance's [shared inbox](/federation#inboxes). Groups do not have an inbox of their own.
+
+Once this is done, the group's instance must then federate this [Note](/entities/note) to every member of the group. However, this cannot be done the "normal way", as the group's instance does not have the private key to [sign](/signatures) the [Note](/entities/note).
+
+### GroupFederate
+
+The `GroupFederate` entity allows a group to federate a note to all of its members, without needing to sign the note itself. It contains a URI to the note being federated, which must be fetched by the receiving instances. This entity is signed by the group's instance.
+
+<Row>
+    <Col>
+        <Properties>
+            <Property name="uri" type="null" required={false}>
+                This entity does not have a URI.
+            </Property>
+            <Property name="note" type="URI" required={true} typeLink="/types#uri">
+                URI of the note to federate.
+            </Property>
+            <Property name="group" type="URI" required={true} typeLink="/types#uri">
+                URI of the group federating the note.
+            </Property>
+        </Properties>
+    </Col>
+
+    <Col sticky>
+
+    ```jsonc {{ title: "Example GroupFederate" }}
+    {
+        "type": "GroupFederate",
+        "id": "9a7e9345-4e4a-4d5a-8301-4dbbfe777ca0",
+        "note": "https://example.com/notes/ed480922-b095-4f09-9da5-c995be8f5960",
+        "group": "https://example.com/groups/ed480922-b095-4f09-9da5-c995be8f5960",
+        "created_at": "2021-01-01T00:00:00Z"
     }
     ```
 
