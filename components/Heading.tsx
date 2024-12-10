@@ -5,6 +5,7 @@ import Link from "next/link";
 import {
     type ComponentPropsWithoutRef,
     type ReactNode,
+    type RefObject,
     useEffect,
     useRef,
 } from "react";
@@ -87,7 +88,7 @@ export function Heading<Level extends 2 | 3>({
 }) {
     level = level ?? (2 as Level);
     const Component = `h${level}` as "h2" | "h3";
-    const ref = useRef<HTMLHeadingElement>(null);
+    const ref = useRef<HTMLHeadingElement | null>(null);
     const registerHeading = useSectionStore((s) => s.registerHeading);
 
     const inView = useInView(ref, {
@@ -96,10 +97,10 @@ export function Heading<Level extends 2 | 3>({
     });
 
     useEffect(() => {
-        if (level === 2) {
+        if (level === 2 && ref.current) {
             registerHeading({
                 id: props.id,
-                ref,
+                ref: ref as RefObject<HTMLHeadingElement>,
                 offsetRem: tag || label ? 8 : 6,
             });
         }
