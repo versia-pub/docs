@@ -18,7 +18,9 @@ This page lists changes since Working Draft 3. {{ className: 'lead' }}
   - `X-Signed-By` to `Versia-Signed-By`
 - Removed the nonce from the [signature system](/signatures), replaced with `Versia-Signed-At` (timestamps).
 - Standardize rate limits with [IETF draft draft-polli-ratelimit-headers-02](https://www.ietf.org/archive/id/draft-polli-ratelimit-headers-02.html).
-- Properly documented [Group](/entities/group) federation and subscribing.
+- Properly documented [Group](/extensions/groups) federation and subscribing.
+- Moved [Groups](/extensions/groups) to an extension, as they were getting too complex for the core protocol.
+  - The [Note](/entities/note) `group` field documentation has been updated to reflect this.
 - Added [Versia Links](/links).
 - Switched from ISO 8601 to [RFC 3339](https://datatracker.ietf.org/doc/html/rfc3339) for timestamps.
     - In most cases, the two are interchangeable, but RFC 3339 is more strict. Most implementations should not need to change anything.

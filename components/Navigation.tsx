@@ -284,7 +284,6 @@ export const navigation: NavGroup[] = [
             { title: "Follow", href: "/entities/follow" },
             { title: "FollowAccept", href: "/entities/follow-accept" },
             { title: "FollowReject", href: "/entities/follow-reject" },
-            { title: "Group", href: "/entities/group" },
             { title: "Notes", href: "/entities/note" },
             { title: "InstanceMetadata", href: "/entities/instance-metadata" },
             { title: "Unfollow", href: "/entities/unfollow" },
@@ -295,6 +294,7 @@ export const navigation: NavGroup[] = [
         title: "Extensions",
         links: [
             { title: "Custom Emojis", href: "/extensions/custom-emojis" },
+            { title: "Groups", href: "/extensions/groups" },
             {
                 title: "Instance Messaging",
                 href: "/extensions/instance-messaging",

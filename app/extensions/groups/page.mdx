@@ -1,9 +1,9 @@
 export const metadata = {
-    title: 'Groups',
+    title: 'Groups Extension',
     description: 'Groups are a way to organize users and notes into communities.'
 }
 
-# Groups
+# Groups Extension
 
 Groups are a way to organize users and notes into communities. They can be used for any purpose, such as forums, blogs, image galleries, video sharing, audio sharing, and messaging. They are similar to Discord's channels or Matrix's rooms. {{ className: 'lead' }}
 
@@ -14,6 +14,9 @@ Refer to [Note](/entities/note#entity-definition)'s `group` property for how not
 <Row>
     <Col>
         <Properties>
+            <Property name="type" type="string" required={true}>
+                Must be `pub.versia:groups/Group`.
+            </Property>
             <Property name="name" type="ContentFormat" required={false} typeLink="/structures/content-format">
                Group name/title.
                
@@ -46,7 +49,7 @@ Refer to [Note](/entities/note#entity-definition)'s `group` property for how not
 
     ```jsonc {{ title: "Example Group" }}
     {
-        "type": "Group",
+        "type": "pub.versia:groups/Group",
         "id": "ed480922-b095-4f09-9da5-c995be8f5960",
         "uri": "https://example.com/groups/ed480922-b095-4f09-9da5-c995be8f5960",
         "name": {
@@ -82,6 +85,9 @@ Indicates that a [User](/entities/user) wishes to subscribe to a group.
 <Row>
     <Col>
         <Properties>
+            <Property name="type" type="string" required={true}>
+                Must be `pub.versia:groups/Subscribe`.
+            </Property>
             <Property name="uri" type="null" required={false}>
                 This is a [**Transient Entity**](/entities#transient-entities) and does not have a URI.
             </Property>
@@ -98,7 +104,7 @@ Indicates that a [User](/entities/user) wishes to subscribe to a group.
 
     ```jsonc {{ title: "Example GroupSubscribe" }}
     {
-        "type": "GroupSubscribe",
+        "type": "pub.versia:groups/Subscribe",
         "id": "9a7e9345-4e4a-4d5a-8301-4dbbfe777ca0",
         "subscriber": "https://bob.social/users/e9277471-8aa1-4d40-a3d0-0878e818ccdc",
         "group": "https://example.com/groups/ed480922-b095-4f09-9da5-c995be8f5960",
@@ -116,6 +122,9 @@ Indicates that a [User](/entities/user) wishes to unsubscribe from a group.
 <Row>
     <Col>
         <Properties>
+            <Property name="type" type="string" required={true}>
+                Must be `pub.versia:groups/Unsubscribe`.
+            </Property>
             <Property name="uri" type="null" required={false}>
                 This is a [**Transient Entity**](/entities#transient-entities) and does not have a URI.
             </Property>
@@ -132,7 +141,7 @@ Indicates that a [User](/entities/user) wishes to unsubscribe from a group.
 
     ```jsonc {{ title: "Example GroupUnsubscribe" }}
     {
-        "type": "GroupUnsubscribe",
+        "type": "pub.versia:groups/Unsubscribe",
         "id": "9a7e9345-4e4a-4d5a-8301-4dbbfe777ca0",
         "subscriber": "https://bob.social/users/e9277471-8aa1-4d40-a3d0-0878e818ccdc",
         "group": "https://example.com/groups/ed480922-b095-4f09-9da5-c995be8f5960",
@@ -150,6 +159,9 @@ Indicates that a [Group](#entity-definition) has accepted a [User](/entities/use
 <Row>
     <Col>
         <Properties>
+            <Property name="type" type="string" required={true}>
+                Must be `pub.versia:groups/SubscribeAccept`.
+            </Property>
             <Property name="uri" type="null" required={false}>
                 This is a [**Transient Entity**](/entities#transient-entities) and does not have a URI.
             </Property>
@@ -166,7 +178,7 @@ Indicates that a [Group](#entity-definition) has accepted a [User](/entities/use
 
     ```jsonc {{ title: "Example GroupSubscribeAccept" }}
     {
-        "type": "GroupSubscribeAccept",
+        "type": "pub.versia:groups/SubscribeAccept",
         "id": "9a7e9345-4e4a-4d5a-8301-4dbbfe777ca0",
         "subscriber": "https://bob.social/users/e9277471-8aa1-4d40-a3d0-0878e818ccdc",
         "group": "https://example.com/groups/ed480922-b095-4f09-9da5-c995be8f5960",
@@ -184,6 +196,9 @@ Indicates that a [Group](#entity-definition) has rejected a [User](/entities/use
 <Row>
     <Col>
         <Properties>
+            <Property name="type" type="string" required={true}>
+                Must be `pub.versia:groups/SubscribeReject`.
+            </Property>
             <Property name="uri" type="null" required={false}>
                 This is a [**Transient Entity**](/entities#transient-entities) and does not have a URI.
             </Property>
@@ -200,7 +215,7 @@ Indicates that a [Group](#entity-definition) has rejected a [User](/entities/use
 
     ```jsonc {{ title: "Example GroupSubscribeReject" }}
     {
-        "type": "GroupSubscribeReject",
+        "type": "pub.versia:groups/SubscribeReject",
         "id": "9a7e9345-4e4a-4d5a-8301-4dbbfe777ca0",
         "subscriber": "https://bob.social/users/e9277471-8aa1-4d40-a3d0-0878e818ccdc",
         "group": "https://example.com/groups/ed480922-b095-4f09-9da5-c995be8f5960",
@@ -226,6 +241,9 @@ The `GroupFederate` entity allows a group to federate a note to all of its membe
 <Row>
     <Col>
         <Properties>
+            <Property name="type" type="string" required={true}>
+                Must be `pub.versia:groups/Federate`.
+            </Property>
             <Property name="uri" type="null" required={false}>
                 This is a [**Transient Entity**](/entities#transient-entities) and does not have a URI.
             </Property>
@@ -242,7 +260,7 @@ The `GroupFederate` entity allows a group to federate a note to all of its membe
 
     ```jsonc {{ title: "Example GroupFederate" }}
     {
-        "type": "GroupFederate",
+        "type": "pub.versia:groups/Federate",
         "id": "9a7e9345-4e4a-4d5a-8301-4dbbfe777ca0",
         "note": "https://example.com/notes/ed480922-b095-4f09-9da5-c995be8f5960",
         "group": "https://example.com/groups/ed480922-b095-4f09-9da5-c995be8f5960",
