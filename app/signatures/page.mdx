@@ -156,3 +156,27 @@ if (!isVerified) {
     return new Response("Signature verification failed", { status: 401 });
 }
 ```
+
+## Exporting the Public Key
+
+Public keys are always encoded using `base64` and must be in SPKI format. You will need to look up the appropriate method for your cryptographic library to convert the key to this format.
+
+<Note>
+    This is **not** the same as the key's raw bytes.
+
+    This is also not related to the commonly used "PEM" format.
+</Note>
+
+```typescript {{ title: "Example using TypeScript and the WebCrypto API" }}
+/**
+ * Using Node.js's Buffer API for brevity
+ * If using another runtime, you may need to use a different method to convert to/from Base64
+ */
+const spkiEncodedPublicKey = await crypto.subtle.exportKey(
+    "spki",
+    /* Your public key */
+    publicKey,
+);
+
+const base64PublicKey = Buffer.from(publicKey).toString("base64");
+```

@@ -74,7 +74,7 @@ Instance **must** be the host of the instance the user is on (hostname with opti
             The user's public key. Must follow the [Versia Public Key](/signatures) format. `actor` may be a URI to another user's profile, in which case this key may allow the other user act on behalf of this user (see [delegation](/federation/delegation)).
 
             - `algorithm`: Must be `ed25519` for now.
-            - `key`: The public key in SPKI-encoded base64 (from raw bytes, not a PEM format). Must be the key associated with the `actor` URI.
+            - `key`: The public key in [SPKI-encoded base64](/signatures#exporting-the-public-key). Must be the key associated with the `actor` URI.
             - `actor`: URI to a user's profile, most often the user's own profile.
 
             ```typescript
