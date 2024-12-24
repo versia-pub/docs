@@ -69,6 +69,9 @@ All properties are optional.
 
                 Location does not need to be precise, and can be as simple as `+46+002/` (France) or `+48.52+002.20/` (Paris, France).
             </Property>
+            <Property name="timezone" type="string" required={false}>
+                User's timezone. Should be a valid [IANA timezone](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones) string.
+            </Property>
             <Property name="aliases" type="URI[]" required={false} typeLink="/types#uri">
                 Versia profiles that should be considered aliases of this profile.
             </Property>
@@ -124,6 +127,7 @@ All properties are optional.
                 },
                 "birthday": "1998-04-12",
                 "location": "+40.6894-074.0447/",
+                "timezone": "America/New_York",
                 "aliases": [
                     "https://burger.social/accounts/349ee237-c672-41c1-aadc-677e185f795a",
                     "https://versia.social/users/f565ef02-035d-4974-ba5e-f62a8558331d"
