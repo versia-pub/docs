@@ -14,7 +14,7 @@ import { remToPx } from "../lib/remToPx";
 import { useSectionStore } from "./SectionProvider";
 import { Tag } from "./Tag";
 
-function AnchorIcon(props: ComponentPropsWithoutRef<"svg">) {
+export function AnchorIcon(props: ComponentPropsWithoutRef<"svg">) {
     return (
         <svg
             viewBox="0 0 20 20"
