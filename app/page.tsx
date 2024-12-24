@@ -1,3 +1,4 @@
+import { Guide } from "@/components/Guides";
 import { Resource, type ResourceType } from "@/components/Resources";
 import { TeamMember } from "@/components/Team";
 import { wrapper } from "@/components/mdx";
@@ -48,9 +49,9 @@ const Page: FC = () => {
             icon: "tabler:database",
         },
         {
-            name: "In-depth security docs",
+            name: "Tested in production :)",
             description:
-                "Docs provide lots of information on how to program a secure instance.",
+                "We know it works well, because we use it in our own projects.",
             icon: "tabler:shield",
         },
         {
@@ -98,7 +99,52 @@ const Page: FC = () => {
                     ))}
                 </div>
 
-                <h2 id="team">Team</h2>
+                <h2>Try it out</h2>
+
+                <p className="lead">
+                    Use the reference implementation,{" "}
+                    <strong>Versia Server</strong>! It's a microblogging server
+                    with a focus on feeling like current Fediverse platforms,
+                    like Sharkey and Mastodon.
+                </p>
+
+                <Guide
+                    name="Versia Server"
+                    href="https://github.com/versia-pub/server"
+                    description="The reference implementation of the Versia protocol."
+                />
+
+                <h2>Try a Versia instance</h2>
+
+                <p className="lead">
+                    If you want to try out Versia without setting up your own
+                    instance, you can use one of the following public instances:
+                </p>
+                <ul>
+                    <li>
+                        <a
+                            href="https://beta.versia.social"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            <code>beta.versia.social</code>
+                        </a>{" "}
+                        (send an email to{" "}
+                        <a
+                            href={`mailto:aprl@versia.pub?subject=${encodeURIComponent("beta.versia.social Account Request")}&body=${encodeURIComponent("Hello, I would like to request an account on beta.versia.social.")}`}
+                        >
+                            <code>aprl@versia.pub</code>
+                        </a>{" "}
+                        for an account)
+                    </li>
+                </ul>
+
+                <h2 id="team">People</h2>
+
+                <p className="lead">
+                    You can ask <code>Jesse</code> for help with anything
+                    Versia-related, or if you just want to chat!
+                </p>
 
                 <div className="not-prose mt-4 grid grid-cols-1 max-w-full gap-8 border-t border-zinc-900/5 pt-10 sm:grid-cols-2 xl:grid-cols-3 dark:border-white/5">
                     <TeamMember
@@ -135,7 +181,7 @@ const Page: FC = () => {
                             {
                                 name: "Signal",
                                 icon: "simple-icons:signal",
-                                url: "https://signal.me/#eu/mdX6iV0ayndNmJst43sNtlw3eFXgHSm7if4Y/mwYT1+qFDzl1PFAeroW+RpHGaRu",
+                                url: "https://signal.me/#eu/Qw6gQXvEfcNrgEFgl-KjOBFiF6-3gWSSghgcpSj9dSedVFIPny5NYazioN5t7E24",
                             },
                             {
                                 name: "Email",
