@@ -13,7 +13,7 @@ Refer to [Note](/entities/note#entity-definition)'s `group` property for how not
 
 <Row>
     <Col>
-        <Properties>
+        <Properties name="Group">
             <Property name="type" type="string" required={true}>
                 Must be `pub.versia:groups/Group`.
             </Property>
@@ -84,7 +84,7 @@ Indicates that a [User](/entities/user) wishes to subscribe to a group.
 
 <Row>
     <Col>
-        <Properties>
+        <Properties name="GroupSubscribe">
             <Property name="type" type="string" required={true}>
                 Must be `pub.versia:groups/Subscribe`.
             </Property>
@@ -121,7 +121,7 @@ Indicates that a [User](/entities/user) wishes to unsubscribe from a group.
 
 <Row>
     <Col>
-        <Properties>
+        <Properties name="GroupUnsubscribe">
             <Property name="type" type="string" required={true}>
                 Must be `pub.versia:groups/Unsubscribe`.
             </Property>
@@ -158,7 +158,7 @@ Indicates that a [Group](#entity-definition) has accepted a [User](/entities/use
 
 <Row>
     <Col>
-        <Properties>
+        <Properties name="GroupSubscribeAccept">
             <Property name="type" type="string" required={true}>
                 Must be `pub.versia:groups/SubscribeAccept`.
             </Property>
@@ -195,7 +195,7 @@ Indicates that a [Group](#entity-definition) has rejected a [User](/entities/use
 
 <Row>
     <Col>
-        <Properties>
+        <Properties name="GroupSubscribeReject">
             <Property name="type" type="string" required={true}>
                 Must be `pub.versia:groups/SubscribeReject`.
             </Property>
@@ -240,7 +240,7 @@ The `GroupFederate` entity allows a group to federate a note to all of its membe
 
 <Row>
     <Col>
-        <Properties>
+        <Properties name="GroupFederate">
             <Property name="type" type="string" required={true}>
                 Must be `pub.versia:groups/Federate`.
             </Property>

@@ -11,7 +11,7 @@ The Custom Emojis extension adds support for adding personalized emojis to feder
 
 <Row>
     <Col>
-        <Properties>
+        <Properties name="CustomEmoji">
             <Property name="name" type="string" required={true}>
                 Emoji name, surrounded by identification characters (for example, colons: `:happy_face:`).
 
@@ -72,7 +72,7 @@ Custom Emojis can be added to any entity with text content. The extension ID is 
 
 <Row>
     <Col>
-        <Properties>
+        <Properties name="CustomEmojisExtension">
             <Property name="emojis" type="CustomEmoji[]" required={true} typeLink="/extensions/custom-emoji#structure-definition">
                 [Custom emojis](/extensions/custom-emoji#structure-definition) to be added to the note.
             </Property>

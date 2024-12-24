@@ -19,7 +19,7 @@ Note that there is no `question` field: the question should be included in the `
 
 <Row>
     <Col>
-        <Properties>
+        <Properties name="Polls">
             <Property name="options" type="ContentFormat[]" required="true">
                 Array of options for the poll. Each option is a [ContentFormat](/structures/content-format) that can contain the same properties as a Note's `content` (e.g. [Custom Emojis](/extensions/custom-emojis) or HTML hyperlinks).
             </Property>
@@ -98,7 +98,7 @@ If a vote is cast to a poll that is closed, the vote should be rejected with a `
 
 <Row>
     <Col>
-        <Properties>
+        <Properties name="Vote">
             <Property name="type" type="string" required="true">
                 Must be `pub.versia:polls/Vote`.
             </Property>

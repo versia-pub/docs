@@ -14,7 +14,7 @@ ALL kinds of HTTP requests/responses between instances **MUST** include a [Signa
 
 <Row>
     <Col>
-        <Properties>
+        <Properties name="HTTP Request">
             <Property name="Accept" type="string" required={true}>
                 Must include `application/json`.
             </Property>
@@ -61,7 +61,7 @@ IETF draft [draft-polli-ratelimit-headers-02](https://www.ietf.org/archive/id/dr
 
 <Row>
     <Col>
-        <Properties>
+        <Properties name="HTTP Response">
             <Property name="Content-Type" type="string" required={true}>
                 Must include `application/json; charset=utf-8`.
             </Property>

@@ -17,7 +17,7 @@ Pages should be limited to a reasonable number of entities, such as 20 or 80.
 
 <Row>
     <Col>
-        <Properties>
+        <Properties name="Collection">
             <Property name="author" type="URI | null" required={true} typeLink="/types#uri">
                 Author of the collection. Usually the user who owns the collection. [Can be set to `null` to represent the instance](/entities/instance-metadata#the-null-author).
             </Property>
@@ -88,7 +88,7 @@ URI Collections are identical to regular collections, but they contain only URIs
 
 <Row>
     <Col>
-        <Properties>
+        <Properties name="URICollection">
             <Property name="author" type="URI | null" required={true} typeLink="/types#uri">
                 Author of the collection. Usually the user who owns the collection. [Can be set to `null` to represent the instance](/entities/instance-metadata#the-null-author).
             </Property>

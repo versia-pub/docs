@@ -44,7 +44,7 @@ Extensions can be found in two places: an [Entity](/entities#entity-definition)'
 
 <Row>
     <Col>
-        <Properties>
+        <Properties name="EntityExtension">
             <Property name="extensions" type="Record<string, JSONData>" required={false}>
                 Custom extensions to the entity.
 
@@ -85,7 +85,7 @@ Extensions can be found in two places: an [Entity](/entities#entity-definition)'
 
 <Row>
     <Col>
-        <Properties>
+        <Properties name="CustomEntity">
             <Property name="type" type="string" required={true}>
                 The extension type. [Must follow naming conventions](#naming).
             </Property>
