@@ -1,6 +1,7 @@
 import glob from "fast-glob";
 import type { Metadata } from "next";
 
+import PlausibleProvider from "next-plausible";
 import { Layout } from "../components/Layout";
 import type { Section } from "../components/SectionProvider";
 import { Providers } from "./providers";
@@ -46,6 +47,13 @@ export default async function RootLayout({
         <html lang="en" className="h-full" suppressHydrationWarning={true}>
             <head>
                 <link rel="icon" href="/favicon.png" type="image/png" />
+                <PlausibleProvider
+                    domain="logs.cpluspatch.com"
+                    customDomain="https://logs.cpluspatch.com"
+                    trackOutboundLinks={true}
+                    trackLocalhost={false}
+                    selfHosted={true}
+                />
             </head>
             <body className="flex min-h-full bg-white antialiased dark:bg-zinc-900">
                 <Providers>
