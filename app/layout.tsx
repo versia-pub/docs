@@ -46,7 +46,12 @@ export default async function RootLayout({
         <html lang="en" className="h-full" suppressHydrationWarning={true}>
             <head>
                 <link rel="icon" href="/favicon.png" type="image/png" />
-                <script defer={true} data-domain="versia.pub" src="/pl.js" />
+                <script
+                    defer={true}
+                    data-api="https://logs.cpluspatch.com/api/event"
+                    data-domain="dev.versia.pub"
+                    src="/pl.js"
+                />
             </head>
             <body className="flex min-h-full bg-white antialiased dark:bg-zinc-900">
                 <Providers>
