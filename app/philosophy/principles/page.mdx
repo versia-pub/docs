@@ -1,0 +1,33 @@
+# Principles
+
+When designing basically anything, it is very important to define its principles: many projects have failed because they accidentally strayed from their reason to exist. To not repeat the same mistakes, we need to define the core principles of the Versia Protocol.
+
+## Self-description
+
+Entities should contain all the data necessary for their processing (and only theirs) in a single JSON object. This object should also be roughly understandable by a human, and should be able to be serialized and deserialized without loss of information.
+
+This means that headers, transport mechanisms, encoding and other such things should be separate from the data itself. This is to ensure that the data can be processed by any system, regardless of the transport mechanism.
+
+## Determinism
+
+There must always be **one** canonical way of doing any single thing. There must always be **one** way to represent any single piece of data. There should be no ambiguity.
+
+## Simplicity over Functionality
+
+It's better to make something simple and easier to implement than something that supports every single edge case. This is not to say that edge cases should be ignored, but that they should be considered carefully.
+
+In general, **simplicity is preferred over functionality**. Extensions can potentially add fringe functionality back: however, if the core is too complex, it will be hard to add extensions.
+
+When in doubt, **leave it out**.
+
+### Client-facing vs Developer-facing
+
+Client-facing features (such as avatars, emoji reactions, quote posts, etc.) are usually "simpler" than the underlying federation mechanisms: as such, they should be prioritized and may contain more complexity than the underlying mechanisms.
+
+Developer-facing features (e.g. shared inboxes, reply backfilling, etc.) should be as simple as possible, as they are the building blocks of the client-facing features. When considering complexity, **client use-cases are more important than developer use-cases**.
+
+## Branching
+
+There should be **as little branching as possible**. This is reminiscent of the "one canonical way" principle: if there are multiple ways to do something, or a thing can be processed multiple ways, it should be simplified.
+
+If there is a need for branching, nesting should be avoided: branches should be as flat as possible.

@@ -14,7 +14,7 @@ All properties are optional.
 
 <Row>
     <Col>
-        <Properties>
+        <Properties name="Vanity">
             <Property name="avatar_overlays" type="ContentFormat[]" typeLink="/structures/content-format" required={false}>
                 Overlay images to be placed on top of the user's avatar, like this: [example overlay from Discord](https://cdn.discordapp.com/avatar-decoration-presets/a_949a575b693c81ced8f56a7579d0969f.png).
 
@@ -61,13 +61,16 @@ All properties are optional.
                 type LanguageCode = string;
                 ```
             </Property>
-            <Property name="birthday" type="ISO8601" required={false} typeLink="/types#iso8601">
+            <Property name="birthday" type="RFC3339" required={false} typeLink="/types#rfc3339">
                 User's birthday. If year is left out or set to `0000`, implementations **SHOULD** not display the year.
             </Property>
             <Property name="location" type="string" required={false}>
                 User's location. Can be an [ISO 6709 Annex H](https://en.wikipedia.org/wiki/ISO_6709#String_expression_(Annex_H)) string or a human-readale string (e.g. "New York, NY").
 
                 Location does not need to be precise, and can be as simple as `+46+002/` (France) or `+48.52+002.20/` (Paris, France).
+            </Property>
+            <Property name="timezone" type="string" required={false}>
+                User's timezone. Should be a valid [IANA timezone](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones) string.
             </Property>
             <Property name="aliases" type="URI[]" required={false} typeLink="/types#uri">
                 Versia profiles that should be considered aliases of this profile.
@@ -124,6 +127,7 @@ All properties are optional.
                 },
                 "birthday": "1998-04-12",
                 "location": "+40.6894-074.0447/",
+                "timezone": "America/New_York",
                 "aliases": [
                     "https://burger.social/accounts/349ee237-c672-41c1-aadc-677e185f795a",
                     "https://versia.social/users/f565ef02-035d-4974-ba5e-f62a8558331d"

@@ -209,6 +209,7 @@ function NavigationGroup({
                                 {link.href === pathname &&
                                     sections.length > 0 && (
                                         <motion.ul
+                                            // biome-ignore lint/a11y/useSemanticElements: already a <ul>
                                             role="list"
                                             initial={{ opacity: 0 }}
                                             animate={{
@@ -252,8 +253,13 @@ export const navigation: NavGroup[] = [
             { title: "Signatures", href: "/signatures" },
             { title: "Security", href: "/security" },
             { title: "Federation", href: "/federation" },
+            { title: "Links", href: "/links" },
             { title: "Extensions", href: "/extensions" },
         ],
+    },
+    {
+        title: "Philosophy",
+        links: [{ title: "Principles", href: "/philosophy/principles" }],
     },
     {
         title: "Federation",
@@ -262,6 +268,7 @@ export const navigation: NavGroup[] = [
             { title: "Validation", href: "/federation/validation" },
             { title: "Discovery", href: "/federation/discovery" },
             { title: "Delegation", href: "/federation/delegation" },
+            { title: "Example", href: "/federation/example" },
         ],
     },
     {
@@ -278,7 +285,6 @@ export const navigation: NavGroup[] = [
             { title: "Follow", href: "/entities/follow" },
             { title: "FollowAccept", href: "/entities/follow-accept" },
             { title: "FollowReject", href: "/entities/follow-reject" },
-            { title: "Group", href: "/entities/group" },
             { title: "Notes", href: "/entities/note" },
             { title: "InstanceMetadata", href: "/entities/instance-metadata" },
             { title: "Unfollow", href: "/entities/unfollow" },
@@ -289,9 +295,14 @@ export const navigation: NavGroup[] = [
         title: "Extensions",
         links: [
             { title: "Custom Emojis", href: "/extensions/custom-emojis" },
+            { title: "Groups", href: "/extensions/groups" },
             {
                 title: "Instance Messaging",
                 href: "/extensions/instance-messaging",
+            },
+            {
+                title: "Interaction Controls",
+                href: "/extensions/interaction-controls",
             },
             { title: "Likes", href: "/extensions/likes" },
             { title: "Migration", href: "/extensions/migration" },
@@ -323,7 +334,7 @@ export function Navigation(props: ComponentPropsWithoutRef<"nav">) {
                         variant="filled"
                         className="w-full"
                     >
-                        Working Draft 4
+                        Working Draft 5
                     </Button>
                 </li>
             </ul>

@@ -31,6 +31,7 @@ const highlighter = await createHighlighter({
         "html",
         "json5",
         "jsonc",
+        "markdown",
         "bash",
         "php",
         "python",

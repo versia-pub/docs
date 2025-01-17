@@ -15,7 +15,7 @@ Notes represent a piece of content on a Versia instance. They can be posted by [
 
 <Row>
     <Col>
-        <Properties>
+        <Properties name="Note">
             <Property name="attachments" type="ContentFormat[]" required={false} typeLink="/structures/content-format">
                 Media attachments to the note. May be any format. **Must** be remote.
             </Property>
@@ -36,6 +36,28 @@ Notes represent a piece of content on a Versia instance. They can be posted by [
                     | "messaging"; // Like Discord, Element (Matrix), Signal
                 ```
             </Property>
+            <Property name="collections" type="NoteCollections" required={true}>
+                Collections related to the note. Must contain at least `replies` and `quotes`.
+
+                ```typescript
+                type URI = string;
+
+                type NoteCollections = {
+                    replies: URI;
+                    quotes: URI;
+                    // Same format as type on Extensions
+                    [key: ExtensionsKey]: URI;
+                }
+                ```
+
+                All URIs must resolve to either a [Collection](/structures/collection) or a [URI Collection](/structures/collection#uri-collection) of the appropriate entities. Extensions may add additional collections.
+
+                ### Replies
+                All replies to this note (have this note as their `replies_to`). [URI Collection](/structures/collection#uri-collection) of [Note](/entities/note) entities.
+
+                ### Quotes
+                All quotes of this note (have this note as their `quotes`). [URI Collection](/structures/collection#uri-collection) of [Note](/entities/note) entities.
+            </Property>
             <Property name="content" type="ContentFormat" required={false} typeLink="/structures/content-format">
                 The content of the note. Must be text format (`text/html`, `text/markdown`, etc). Must not be remote.
             </Property>
@@ -51,11 +73,15 @@ Notes represent a piece of content on a Versia instance. They can be posted by [
                 ```
             </Property>
             <Property name="group" type="URI | &quot;public&quot; | &quot;followers&quot;" required={false} typeLink="/types#uri">
-                URI of a [Group](/entities/group) that the note is only visible in, or one of the following strings:
+                URI of a [Group](/extensions/groups) that the note is only visible in, or one of the following strings:
                 - `public`: The note is visible to anyone.
                 - `followers`: The note is visible only to the author's followers.
 
-                If not provided, the note is only visible to the author and those mentioned in the note.
+                If not provided, the note is only visible to the author and those mentioned in the note. If missing, the note is only visible to any mentioned users.
+
+                <Note>
+                    If the implementation does not support the [Groups Extension](/extensions/groups), any value other than `public` or `followers` should be treated as `null`.
+                </Note>
             </Property>
             <Property name="is_sensitive" type="boolean" required={false}>
                 Whether the note contains "sensitive content". This can be used with `subject` as a "content warning" feature.
@@ -126,6 +152,13 @@ Notes represent a piece of content on a Versia instance. They can be posted by [
         ],
         "author": "https://versia.social/users/018eb863-753f-76ff-83d6-fd590de7740a",
         "category": "microblog",
+        "collections": {
+            "replies": "https://versia.social/objects/01902e09-0f8b-72de-8ee3-9afc0cf5eae1/replies",
+            "quotes": "https://versia.social/objects/01902e09-0f8b-72de-8ee3-9afc0cf5eae1/quotes",
+            "pub.versia:likes/Likes": "https://versia.social/objects/01902e09-0f8b-72de-8ee3-9afc0cf5eae1/likes",
+            "pub.versia:likes/Dislikes": "https://versia.social/objects/01902e09-0f8b-72de-8ee3-9afc0cf5eae1/dislikes",
+            "pub.versia:reactions/Reactions": "https://versia.social/objects/01902e09-0f8b-72de-8ee3-9afc0cf5eae1/reactions"
+        },
         "content": {
             "text/html": {
                 "content": "<p>In the next versia-fe update: account settings, finally!</p>"

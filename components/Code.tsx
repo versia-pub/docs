@@ -144,7 +144,8 @@ function CodePanel({
     label?: string;
     code?: string;
 }) {
-    const child = Children.only(children);
+    // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+    const child = Children.only(children) as ReactNode & { props: any };
 
     if (isValidElement(child)) {
         tag = child.props.tag ?? tag;
@@ -205,7 +206,10 @@ function CodeGroupHeader({
                             )}
                         >
                             {getPanelTitle(
-                                isValidElement(child) ? child.props : {},
+                                isValidElement(child)
+                                    ? // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+                                      (child.props as any)
+                                    : {},
                             )}
                         </Tab>
                     ))}
@@ -238,7 +242,7 @@ function CodeGroupPanels({
 
 function usePreventLayoutShift() {
     const positionRef = useRef<HTMLElement>(null);
-    const rafRef = useRef<number>();
+    const rafRef = useRef<number | undefined>(undefined);
 
     useEffect(() => {
         return () => {
@@ -322,7 +326,8 @@ export function CodeGroup({
 }: ComponentPropsWithoutRef<typeof CodeGroupPanels> & { title: string }) {
     const languages =
         Children.map(children, (child) =>
-            getPanelTitle(isValidElement(child) ? child.props : {}),
+            // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+            getPanelTitle(isValidElement(child) ? (child.props as any) : {}),
         ) ?? [];
     const tabGroupProps = useTabGroupProps(languages);
     const hasTabs = Children.count(children) > 1;

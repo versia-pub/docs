@@ -17,7 +17,7 @@ Implementations **MUST** strictly validate all incoming data to ensure that it i
 Things that should be validated include, but are not limited to:
 
 - The presence of **all required fields**.
-- The **format** of all fields (integers should not be strings, dates should be in ISO 8601 format, etc.).
+- The **format** of all fields (integers should not be strings, timestamps should be in RFC 3339 format, etc.).
 - The presence of **all required headers**.
 - The presence of a **valid signature**.
 - The **length** of all fields (for example, the `username` field on a `User` entity) should be at least 1 character long.

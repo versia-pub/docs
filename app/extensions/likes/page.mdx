@@ -18,7 +18,7 @@ Likes are a way for users to show appreciation for a note, like Twitter's "heart
 
 <Row>
     <Col>
-        <Properties>
+        <Properties name="Like">
             <Property name="type" type="string" required={true}>
                 Must be `pub.versia:likes/Like`.
             </Property>
@@ -55,7 +55,7 @@ Dislikes are a way for users to show disapproval for a note, like YouTube's "dis
 
 <Row>
     <Col>
-        <Properties>
+        <Properties name="Dislike">
             <Property name="type" type="string" required={true}>
                 Must be `pub.versia:likes/Dislike`.
             </Property>
@@ -92,8 +92,8 @@ To undo a like or dislike, a [Delete](/entities/delete) entity should be used. T
 
 The Likes extension adds the following collections to the [User](/entities/user) entity:
 
-- `likes`: A [Collection](/structures/collection) of all the notes the user has liked.
-- `dislikes`: A [Collection](/structures/collection) of all the notes the user has disliked.
+- `likes`: A [URI Collection](/structures/collection#uri-collection) of all the notes the user has liked.
+- `dislikes`: A [URI Collection](/structures/collection#uri-collection) of all the notes the user has disliked.
 
 ```jsonc
 {
@@ -105,3 +105,33 @@ The Likes extension adds the following collections to the [User](/entities/user)
         "pub.versia:likes/Dislikes": "https://example.com/users/6e0204a2-746c-4972-8602-c4f37fc63bbe/dislikes"
     }
 }
+```
+
+## Note Collections
+
+The Likes extension adds the following collections to the [Note](/entities/note) entity:
+
+- `likes`: A [URI Collection](/structures/collection#uri-collection) of all the likes the note has received.
+- `dislikes`: A [URI Collection](/structures/collection#uri-collection) of all the dislikes the note has received.
+
+```jsonc
+{
+    "type": "Note",
+    ...
+    "collections": {
+        ...
+        "pub.versia:likes/Likes": "https://example.com/notes/fmKZ763jzIU8/likes",
+        "pub.versia:likes/Dislikes": "https://example.com/notes/fmKZ763jzIU8/dislikes"
+    }
+}
+```
+
+## Interaction Types
+
+<Note>
+    This section only applies to implementors of the [Interaction Controls Extension](/extensions/interaction-controls).
+</Note>
+
+This extension registers the following interaction types:
+- `pub.versia:likes#Like`, for liking a Note
+- `pub.versia:likes#Dislike`, for disliking a Note

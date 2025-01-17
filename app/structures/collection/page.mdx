@@ -17,7 +17,7 @@ Pages should be limited to a reasonable number of entities, such as 20 or 80.
 
 <Row>
     <Col>
-        <Properties>
+        <Properties name="Collection">
             <Property name="author" type="URI | null" required={true} typeLink="/types#uri">
                 Author of the collection. Usually the user who owns the collection. [Can be set to `null` to represent the instance](/entities/instance-metadata#the-null-author).
             </Property>
@@ -65,12 +65,73 @@ Pages should be limited to a reasonable number of entities, such as 20 or 80.
                 "type": "Note",
                 "uri": "https://versia.social/notes/456df8ed-daf1-4062-abab-491071c7b8dd",
                 "created_at": "2024-04-09T01:38:51.743Z",
+                "collections": {
+                    "replies": "https://versia.social/notes/456df8ed-daf1-4062-abab-491071c7b8dd/replies",
+                    "quotes": "https://versia.social/notes/456df8ed-daf1-4062-abab-491071c7b8dd/quotes"
+                },
                 "content": {
                     "text/plain": {
                         "content": "Hello, world!"
                     }
                 }
             }
+        ]
+    }
+    ```
+
+    </Col>
+</Row>
+
+## URI Collection
+
+URI Collections are identical to regular collections, but they contain only URIs instead of full entities. They are useful for cases when remote entities need to be included in a collection, as those are typically not stored in implementation databases. {{ className: 'lead' }}
+
+<Row>
+    <Col>
+        <Properties name="URICollection">
+            <Property name="author" type="URI | null" required={true} typeLink="/types#uri">
+                Author of the collection. Usually the user who owns the collection. [Can be set to `null` to represent the instance](/entities/instance-metadata#the-null-author).
+            </Property>
+            <Property name="first" type="URI" required={true} typeLink="/types#uri">
+                URI to the first page of the collection. Query parameters are allowed.
+            </Property>
+            <Property name="last" type="URI" required={true} typeLink="/types#uri">
+                URI to the last page of the collection. Query parameters are allowed.
+                
+                If the collection only has one page, this should be the same as `first`.
+            </Property>
+            <Property name="total" type="number" required={true} numberType="u64">
+                Total number of entities in the collection, across all pages.
+            </Property>
+            <Property name="next" type="URI" required={false} typeLink="/types#uri">
+                URI to the next page of the collection. Query parameters are allowed.
+                
+                If there is no next page, this should be `null`.
+            </Property>
+            <Property name="previous" type="URI" required={false} typeLink="/types#uri">
+                URI to the previous page of the collection. Query parameters are allowed.
+                
+                If there is no previous page, this should be `null`.
+            </Property>
+            <Property name="items" type="URI[]" required={true}>
+                Collection contents. Must be an array of URIs.
+            </Property>
+        </Properties>
+    </Col>
+
+    <Col sticky>
+
+    ```jsonc {{ 'title': 'Example URI Collection' }}
+    {
+        "author": "https://versia.social/users/018ec082-0ae1-761c-b2c5-22275a611771",
+        "first": "https://versia.social/users/018ec082-0ae1-761c-b2c5-22275a611771/followers?page=1",
+        "last": "https://versia.social/users/018ec082-0ae1-761c-b2c5-22275a611771/followers?page=3",
+        "total": 46,
+        "next": "https://versia.social/users/018ec082-0ae1-761c-b2c5-22275a611771/followers?page=2",
+        "previous": null,
+        "items": [
+            "https://versia.social/users/f8b0d4b4-d354-4798-bbc5-c2ba8acabfe3",
+            "https://social.bob.com/u/2B27E62snga763"
         ]
     }
     ```

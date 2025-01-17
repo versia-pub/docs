@@ -17,7 +17,7 @@ When a user shares a note, the note's original author **must** receive the entit
 
 <Row>
     <Col>
-        <Properties>
+        <Properties name="Share">
             <Property name="type" type="string" required={true}>
                 Must be `pub.versia:share/Share`.
             </Property>
@@ -45,3 +45,29 @@ When a user shares a note, the note's original author **must** receive the entit
 
     </Col>
 </Row>
+
+## Note Collections
+
+The Share extension adds the following collections to the [Note](/entities/note) entity:
+
+- `shares`: A [URI Collection](/structures/collection#uri-collection) of all the shares of the note.
+
+```jsonc
+{
+    "type": "Note",
+    ...
+    "collections": {
+        ...
+        "pub.versia:share/Shares": "https://example.com/notes/fmKZ763jzIU8/shares"
+    }
+}
+```
+
+## Interaction Types
+
+<Note>
+    This section only applies to implementors of the [Interaction Controls Extension](/extensions/interaction-controls).
+</Note>
+
+This extension registers the following interaction types:
+- `pub.versia:share#Share`, for sharing a Note.

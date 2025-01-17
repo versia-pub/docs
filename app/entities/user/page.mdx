@@ -23,7 +23,7 @@ For example:
 @018ec082-0ae1-761c-b2c5-22275a611771@versia.social
 ```
 
-This is similar to an email address or an ActivityPub address.
+This is similar to an email address or an ActivityPub address. Usernames are case-insensitive.
 
 ### Identifier
 
@@ -42,7 +42,7 @@ Instance **must** be the host of the instance the user is on (hostname with opti
 <Row>
   <Col>
 
-    <Properties>
+    <Properties name="User">
         <Property name="avatar" type="ContentFormat" required={false} typeLink="/structures/content-format">
             The user's avatar. Must be an image format (`image/*`).
         </Property>
@@ -65,7 +65,7 @@ Instance **must** be the host of the instance the user is on (hostname with opti
         <Property name="username" type="string" required={true}>
             Alpha-numeric username. Must be unique within the instance. **Must** be treated as changeable by the user.
 
-            Can only contain the following characters: `a-z` (lowercase), `0-9`, `_` and `-`. Should be limited to reasonable lengths.
+            Can only contain the following characters: `a-z`, `A-Z` (case-insensitive), `0-9`, `_` and `-`. Should be limited to reasonable lengths.
         </Property>
         <Property name="header" type="ContentFormat" required={false} typeLink="/structures/content-format">
             A header image for the user's profile. Also known as a cover photo or a banner. Must be an image format (`image/*`).
@@ -74,7 +74,7 @@ Instance **must** be the host of the instance the user is on (hostname with opti
             The user's public key. Must follow the [Versia Public Key](/signatures) format. `actor` may be a URI to another user's profile, in which case this key may allow the other user act on behalf of this user (see [delegation](/federation/delegation)).
 
             - `algorithm`: Must be `ed25519` for now.
-            - `key`: The public key in SPKI-encoded base64 (from raw bytes, not a PEM format). Must be the key associated with the `actor` URI.
+            - `key`: The public key in [SPKI-encoded base64](/signatures#exporting-the-public-key). Must be the key associated with the `actor` URI.
             - `actor`: URI to a user's profile, most often the user's own profile.
 
             ```typescript
@@ -114,19 +114,19 @@ Instance **must** be the host of the instance the user is on (hostname with opti
             }
             ```
 
-            All URIs must resolve to a [Collection](/structures/collection) of the appropriate entities. Extensions may add additional collections.
+            All URIs must resolve to either a [Collection](/structures/collection) or a [URI Collection](/structures/collection#uri-collection) of the appropriate entities. Extensions may add additional collections.
 
             ### Outbox
-            The user's federation outbox. Refer to the [federation documentation](/federation).
+            The user's federation outbox. Refer to the [federation documentation](/federation). [Collection](/structures/collection) of [Note](/entities/note) entities.
 
             ### Followers
-            User's followers. [Collection](/structures/collection) of [User](/entities/user) entities.
+            User's followers. [URI Collection](/structures/collection#uri-collection) of [User](/entities/user) entities.
 
             ### Following
-            Users that the user follows. [Collection](/structures/collection) of [User](/entities/user) entities.
+            Users that the user follows. [URI Collection](/structures/collection#uri-collection) of [User](/entities/user) entities.
 
             ### Featured
-            [Notes](/entities/note) that the user wants to feature (also known as "pin") on their profile. [Collection](/structures/collection) of [Note](/entities/note) entities.
+            [Notes](/entities/note) that the user wants to feature (also known as "pin") on their profile. [Collection](/structures/collection) of [Note](/entities/note) entities. Only notes authored by the user can be featured.
         </Property>
     </Properties>
 

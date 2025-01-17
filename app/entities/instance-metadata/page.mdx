@@ -17,7 +17,7 @@ Check the entity's documentation page to see if it supports this (it will be not
 
 <Row>
     <Col>
-        <Properties>
+        <Properties name="InstanceMetadata">
             <Property name="id" type="null">
                 This entity does not have an ID.
             </Property>
@@ -74,7 +74,7 @@ Check the entity's documentation page to see if it supports this (it will be not
                 ```
                 
                 - `algorithm`: Algorithm used for the public key. Can only be `ed25519` for now.
-                - `key`: Instance public key, in SPKI-encoded base64 (from raw bytes, not a PEM format).
+                - `key`: Instance public key, in [SPKI-encoded base64](/signatures#exporting-the-public-key).
             </Property>
             <Property name="moderators" type="URI" required={false}>
                 URI to [Collection](/structures/collection) of instance moderators.
@@ -112,7 +112,8 @@ Check the entity's documentation page to see if it supports this (it will be not
         "compatibility": {
             "versions": [
                 "0.3.0",
-                "0.4.0"
+                "0.4.0",
+                "0.5.0"
             ],
             "extensions": [
                 "pub.versia:reactions",

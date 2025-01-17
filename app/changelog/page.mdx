@@ -6,9 +6,35 @@ export const metadata = {
 
 # Changelog
 
-This page lists changes since Working Draft 03. {{ className: 'lead' }}
+This page lists changes since Working Draft 3. {{ className: 'lead' }}
 
-## Since WD 03
+## Since WD 4
+
+- Removed URI from [Report](/extensions/reports), and replaced `reason` with `tags`.
+- Docs now use the term "Transient Entity" where appropriate.
+- Mandated Unix-style `\n` line endings in all text fields.
+- Renamed the following headers, as per [RFC 6648](https://tools.ietf.org/html/rfc6648):
+  - `X-Signature` to `Versia-Signature`
+  - `X-Signed-By` to `Versia-Signed-By`
+- Removed the nonce from the [signature system](/signatures), replaced with `Versia-Signed-At` (timestamps).
+- Standardize rate limits with [IETF draft draft-polli-ratelimit-headers-02](https://www.ietf.org/archive/id/draft-polli-ratelimit-headers-02.html).
+- Properly documented [Group](/extensions/groups) federation and subscribing.
+- Moved [Groups](/extensions/groups) to an extension, as they were getting too complex for the core protocol.
+  - The [Note](/entities/note) `group` field documentation has been updated to reflect this.
+- Added [Versia Links](/links).
+- Switched from ISO 8601 to [RFC 3339](https://datatracker.ietf.org/doc/html/rfc3339) for timestamps.
+    - In most cases, the two are interchangeable, but RFC 3339 is more strict. Most implementations should not need to change anything.
+- Add optional `$schema` field to [Entities](/entities).
+- Added [Interaction Controls Extensions](/extensions/interaction-controls)
+- Added [URI Collections](/structures/collection#uri-collection)
+    - Changed all Collections that can contain remote entities to use URI Collections (eg. [User](/entities/user) `collections.followers`).
+- Add `collections` field to [Notes](/entities/note).
+    - [Likes Extension](/extensions/likes), [Reactions Extension](/extensions/reactions) and [Share Extension](/extensions/share) now use this field, instead of a custom field in `extensions`.
+- Allowed uppercase characters in [User](/entities/user) `username`.
+    - These are now case-insensitive.
+- Added `timezone` field to [Vanity Extension](/extensions/vanity).
+
+## Since WD 3
 
 - Rewrote the signature system from scratch to be simpler and not depend on dates.
 - Moved Likes and Dislikes to an extension.

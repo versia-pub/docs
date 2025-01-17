@@ -1,5 +1,5 @@
 {
-    "$schema": "https://biomejs.dev/schemas/1.9.2/schema.json",
+    "$schema": "https://biomejs.dev/schemas/1.9.4/schema.json",
     "organizeImports": {
         "enabled": true
     },
@@ -87,6 +87,6 @@
         "globals": ["Bun"]
     },
     "files": {
-        "ignore": ["node_modules", ".next", ".output", "out"]
+        "ignore": ["node_modules", ".next", ".output", "out", "public/pl.js"]
     }
 }

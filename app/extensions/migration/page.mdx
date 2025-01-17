@@ -32,9 +32,9 @@ Migration happens in three steps:
 
 <Row>
     <Col>
-        <Properties>
+        <Properties name="Migration">
             <Property name="uri" type="null" required={false}>
-                This entity does not have a URI.
+                This is a [**Transient Entity**](/entities#transient-entities) and does not have a URI.
             </Property>
             <Property name="type" type="string" required={true}>
                 Must be `pub.versia:migration/Migration`.
@@ -69,7 +69,7 @@ The following extensions to [User](/entities/user) are used by the migration ext
 
 <Row>
     <Col>
-        <Properties>
+        <Properties name="MigrationExtension">
             <Property name="previous" type="URI" required={true} typeLink="/types#uri">
                 If this user has migrated from another instance, this property **MUST** be set to the URI of the user on the previous instance.
             </Property>

@@ -51,6 +51,7 @@ export const Header = forwardRef<ElementRef<"div">, { className?: string }>(
                 ref={ref}
                 className={clsx(
                     className,
+                    // Add bg-construction bg-opacity-10 [background-size:57px_57px] classes to make it striped
                     "fixed inset-x-0 top-0 z-50 flex h-14 items-center justify-between gap-2 px-4 transition sm:px-6 lg:left-72 lg:z-30 lg:px-8 xl:left-80",
                     !isInsideMobileNavigation &&
                         "backdrop-blur-sm lg:left-72 xl:left-80 dark:backdrop-blur",
@@ -94,7 +95,7 @@ export const Header = forwardRef<ElementRef<"div">, { className?: string }>(
                         <ThemeToggle />
                     </div>
                     <div className="hidden min-[500px]:contents">
-                        <Button href="/changelog">Working Draft 4</Button>
+                        <Button href="/changelog">Working Draft 5</Button>
                     </div>
                 </div>
             </motion.div>

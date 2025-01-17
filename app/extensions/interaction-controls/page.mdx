@@ -1,0 +1,113 @@
+export const metadata = {
+    title: "Interaction Controls Extension",
+    description: "Allows users to control who can interact with their Notes"
+}
+
+# Interaction Controls
+
+Often, it is desirable to post a Note, but control who is allowed to interact with it (e.g. send replies, like, dislike, etc.). This has traditionally not been possible in most federated networks: the Interaction Controls extension adds this possibility.
+
+## Usage
+
+The entity defined in this document must be inserted in the `pub.versia:interaction_controls` key of a [Note](/entities/note)'s extensions field.
+
+```jsonc {{ title: "Example Usage" }}
+{
+    "id": "456df8ed-daf1-4062-abab-491071c7b8dd",
+    "type": "Note",
+    "uri": "https://versia.social/notes/456df8ed-daf1-4062-abab-491071c7b8dd",
+    "created_at": "2024-04-09T01:38:51.743Z",
+    "collections": {
+        "replies": "https://versia.social/notes/456df8ed-daf1-4062-abab-491071c7b8dd/replies",
+        "quotes": "https://versia.social/notes/456df8ed-daf1-4062-abab-491071c7b8dd/quotes"
+    },
+    "content": {
+        "text/plain": {
+            "content": "Hello, world :happy_face:!"
+        }
+    },
+    "extensions": { // [!code focus:9]
+        "pub.versia:interaction_controls": {
+            "reply": {
+                "allowed": ["followers"],
+            },
+        }
+    }
+}
+```
+
+## Entity Definition
+
+<Row>
+    <Col>
+        <Properties name="InteractionControls">
+            <Property name="interaction_type">
+                Describes permissions for a specific interaction.
+
+                ```typescript
+                type InteractionGroup = |
+                    "everyone" |
+                    "followers" |
+                    "followed" |
+                    "group" |
+                    "mutuals";
+
+                type InteractionPermissions = {
+                    allowed?: InteractionGroup[];
+                    disallowed?: InteractionGroup[];
+                }
+                ```
+
+                Permissions can either be whitelist (`allowed` property) or blacklist (`disallowed` property). Both options are mutually exclusive.
+
+                In order of priority:
+                - `everyone`: Includes every single User in the federation.
+                - `mentioned`: Includes every mentioned User.
+                - `followers`: Includes every follower of the author.
+                - `following`: Includes every User that the author follows.
+                - `mutuals`: Includes every mutual of the author (that is, every User that is both a follower and followed by the author).
+                - `group`: Includes every User in the [Group](/extensions/groups) that this Note was posted to, if any. If Note is not posted to a [Group](/extensions/groups), this value has no effect.
+
+                Permission groups are evaluated from highest to lowest priority: if two groups conflict each other, the group with the highest priority must be used.
+            </Property>
+        </Properties>
+    </Col>
+
+    <Col sticky>
+    ```jsonc {{ title: "Example"}}
+    {
+        "reply": {
+            "allowed": [
+                "group"
+            ],
+        },
+        "pub.versia:likes#Like": {
+            "disallowed": [
+                "everyone"
+            ]
+        }
+    }
+    ```
+    </Col>
+</Row>
+
+## Usage
+
+### Interaction Types
+
+The following interaction types are defined as part of the core Versia spec:
+
+- `reply`: Sending a Note with `replies_to` including this Note.
+- `quote`: Sending a Note with `quotes` including this Note.
+
+Extensions **may** choose to register their own interaction types (such as `pub.versia:likes#Like` for the [Like Extension](/extensions/likes)). The naming scheme for interaction types is identical to [Extensions](/extensions)'s `type` property, but with a hashtag (`#`) in place of a forward slash (`/`).
+
+### Handling Permission Errors
+
+Implementations that find a user attempting to create an interaction they are not allowed to **MUST** return a `403 Forbidden` HTTP status code when processing the Note during federation. The Note **must** also be discarded.
+
+It is important for implementations to backfill any related [Collections](/structures/collection)/[URI Collections](/structures/collection#uri-collection) (e.g. user followers) in order to not incorrectly reject Notes based off of outdated data.
+
+<Note>
+    To avoid server load from constant Collection refreshing, implementations **could** only refetch associated Collections when forbidden interactions are detected, then recalculate permissions again.
+</Note>

@@ -14,20 +14,20 @@ ALL kinds of HTTP requests/responses between instances **MUST** include a [Signa
 
 <Row>
     <Col>
-        <Properties>
+        <Properties name="HTTP Request">
             <Property name="Accept" type="string" required={true}>
                 Must include `application/json`.
             </Property>
             <Property name="Content-Type" type="string" required={true}>
                 Must include `application/json; charset=utf-8`, if the request has a body.
             </Property>
-            <Property name="X-Signature" type="string" required={false}>
+            <Property name="Versia-Signature" type="string" required={false}>
                 See [Signatures](/signatures) for more information.
             </Property>
-            <Property name="X-Signed-By" type="URI" required={false} typeLink="/types#uri">
+            <Property name="Versia-Signed-By" type="URI" required={false} typeLink="/types#uri">
                 See [Signatures](/signatures).
             </Property>
-            <Property name="X-Nonce" type="string" required={false}>
+            <Property name="Versia-Signed-At" type="string" required={false}>
                 See [Signatures](/signatures).
             </Property>
             <Property name="User-Agent" type="string" required={false}>
@@ -40,28 +40,38 @@ ALL kinds of HTTP requests/responses between instances **MUST** include a [Signa
         POST https://bob.com/users/1/inbox HTTP/1.1
         Accept: application/json
         User-Agent: CoolServer/1.0 (https://coolserver.com)
-        X-Signature: post /users/1/inbox a2ebc29eb6762a9164fbcffc9271e8a53562a5e725e7187ea7d88d03cbe59341 n4bQgYhMfWWaL+qgxVrQFaO/TxsrC4Is0V1sFbDwCgg=
-        X-Signed-By: https://example.com/users/1
-        X-Nonce: a2ebc29eb6762a9164fbcffc9271e8a53562a5e725e7187ea7d88d03cbe59341
+        Versia-Signature: /CjB2L9bcvRg+uP19B4/rqy7Ji9/cqMFPlL3GVCIndnQjYyOpBzJEAl9weDnXm7Jrqa3y6sBC+EYWKThO2r9Bw==
+        Versia-Signed-By: https://example.com/users/1
+        Versia-Signed-At: 1729241687
         ```
     </Col>
 </Row>
+
+## Rate limits
+
+Implementations **MUST** respect the rate limits of remote instances.
+
+IETF draft [draft-polli-ratelimit-headers-02](https://www.ietf.org/archive/id/draft-polli-ratelimit-headers-02.html) **MUST** be used to communicate rate limits. Other rate limit headers/formats are not allowed.
+
+<Note>
+    This IETF draft is, well, a draft. However, there are no standards for rate limiting in HTTP, so this is the best we have.
+</Note>
 
 ## Responses
 
 <Row>
     <Col>
-        <Properties>
+        <Properties name="HTTP Response">
             <Property name="Content-Type" type="string" required={true}>
                 Must include `application/json; charset=utf-8`.
             </Property>
-            <Property name="X-Signature" type="string" required={false}>
+            <Property name="Versia-Signature" type="string" required={false}>
                 See [Signatures](/signatures) for more information.
             </Property>
-            <Property name="X-Signed-By" type="URI" required={false} typeLink="/types#uri">
+            <Property name="Versia-Signed-By" type="URI" required={false} typeLink="/types#uri">
                 See [Signatures](/signatures).
             </Property>
-            <Property name="X-Nonce" type="string" required={false}>
+            <Property name="Versia-Signed-At" type="string" required={false}>
                 See [Signatures](/signatures).
             </Property>
         </Properties>
@@ -70,9 +80,9 @@ ALL kinds of HTTP requests/responses between instances **MUST** include a [Signa
         ```http {{ 'title': 'Example Response' }}
         HTTP/1.1 200 OK
         Content-Type: application/json; charset=utf-8
-        X-Signature: get /users/1/followers 8f872d4609d26819d03a7d60ce3db68f5b0dd5a80d5930260294f237e670ab76 YDA64iuZiGG847KPM+7BvnWKITyGyTwHbb6fVYwRx1I
-        X-Signed-By: https://example.com/users/1
-        X-Nonce: 8f872d4609d26819d03a7d60ce3db68f5b0dd5a80d5930260294f237e670ab76
+        Versia-Signature: /CjB2L9bcvRg+uP19B4/rqy7Ji9/cqMFPlL3GVCIndnQjYyOpBzJEAl9weDnXm7Jrqa3y6sBC+EYWKThO2r9Bw==+7BvnWKITyGyTwHbb6fVYwRx1I
+        Versia-Signed-By: https://example.com/users/1
+        Versia-Signed-At: 1729241717
         ```
     </Col>
 </Row>
