@@ -49,7 +49,7 @@ export default async function RootLayout({
                 <script
                     defer={true}
                     data-api="https://logs.cpluspatch.com/api/event"
-                    data-domain="dev.versia.pub"
+                    data-domain="versia.pub"
                     src="/pl.js"
                 />
             </head>

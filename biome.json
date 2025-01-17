@@ -87,6 +87,6 @@
         "globals": ["Bun"]
     },
     "files": {
-        "ignore": ["node_modules", ".next", ".output", "out"]
+        "ignore": ["node_modules", ".next", ".output", "out", "public/pl.js"]
     }
 }
