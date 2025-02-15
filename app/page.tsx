@@ -2,7 +2,9 @@ import { Guide } from "@/components/Guides";
 import { Resource, type ResourceType } from "@/components/Resources";
 import { TeamMember } from "@/components/Team";
 import { wrapper } from "@/components/mdx";
+import fastlyLogo from "@/images/logos/fastly.svg";
 import type { Metadata } from "next";
+import Image from "next/image";
 import type { FC } from "react";
 
 export const metadata: Metadata = {
@@ -247,6 +249,30 @@ const Page: FC = () => {
                         ]}
                     />
                 </div>
+
+                <h2 id="team">Thanks</h2>
+
+                <p className="lead">
+                    Thanks to{" "}
+                    <a
+                        href="https://fastly.com"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        Fastly
+                    </a>{" "}
+                    for supporting us with their resources!
+                </p>
+
+                <p>
+                    <Image
+                        src={fastlyLogo}
+                        alt="Fastly logo"
+                        height={144}
+                        className="p-10 rounded border border-zinc-900/10 dark:border-white/10"
+                        unoptimized={true}
+                    />
+                </p>
             </>
         ),
     });
