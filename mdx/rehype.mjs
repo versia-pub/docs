@@ -59,9 +59,15 @@ function rehypeShiki() {
                         lang: node.properties.language,
                         theme: "dark-plus",
                         transformers: [
-                            transformerNotationFocus(),
-                            transformerNotationHighlight(),
-                            transformerMetaHighlight(),
+                            transformerNotationFocus({
+                                matchAlgorithm: "v3",
+                            }),
+                            transformerNotationHighlight({
+                                matchAlgorithm: "v3",
+                            }),
+                            transformerMetaHighlight({
+                                matchAlgorithm: "v3",
+                            }),
                         ],
                     });
 

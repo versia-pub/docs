@@ -117,7 +117,7 @@ function CodePanelHeader({ tag, label }: { tag?: string; label?: string }) {
     }
 
     return (
-        <div className="flex h-9 items-center gap-2 border-y border-b-white/7.5 border-t-transparent bg-white/2.5 bg-zinc-900 px-4 dark:border-b-white/5 dark:bg-white/1">
+        <div className="flex h-9 items-center gap-2 border-y border-b-white/7.5 border-t-transparent bg-zinc-900 px-4 dark:border-b-white/5 dark:bg-white/1">
             {tag && (
                 <div className="dark flex">
                     <Tag variant="small">{tag}</Tag>
