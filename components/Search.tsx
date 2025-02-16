@@ -164,7 +164,7 @@ function LoadingIcon(props: ComponentPropsWithoutRef<"svg">) {
 
 function HighlightQuery({ text, query }: { text: string; query: string }) {
     return (
-        // @ts-expect-error types not properly updated to react 19
+        // @ts-ignore
         <Highlighter
             highlightClassName="underline bg-transparent text-brand-500"
             searchWords={[query]}
