@@ -54,10 +54,6 @@
     "sharp",
     "@biomejs/biome",
   ],
-  "overrides": {
-    "react": "^19.0.0-rc-91061073-20241121",
-    "react-dom": "^19.0.0-rc-91061073-20241121",
-  },
   "packages": {
     "@algolia/autocomplete-core": ["@algolia/autocomplete-core@1.18.1", "", { "dependencies": { "@algolia/autocomplete-plugin-algolia-insights": "1.18.1", "@algolia/autocomplete-shared": "1.18.1" } }, "sha512-+lOAwRkvxTt24AXNu3pT0EfCEh1ZOQkKlrgFa0Ji2jxSbY2WW3gb1k39JBPyXcCLlivdxYPXREdg8ImAF2Nw9Q=="],
 
