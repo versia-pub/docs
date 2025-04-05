@@ -39,6 +39,7 @@
         "typescript": "^5.8.3",
         "unist-util-filter": "^5.0.1",
         "unist-util-visit": "^5.0.0",
+        "uwuifier": "^4.2.2",
         "zustand": "^5.0.3",
       },
       "devDependencies": {
@@ -834,6 +835,8 @@
     "update-browserslist-db": ["update-browserslist-db@1.1.2", "", { "dependencies": { "escalade": "^3.2.0", "picocolors": "^1.1.1" }, "peerDependencies": { "browserslist": ">= 4.21.0" }, "bin": { "update-browserslist-db": "cli.js" } }, "sha512-PPypAm5qvlD7XMZC3BujecnaOxwhrtoFR+Dqkk5Aa/6DssiH0ibKoketaj9w8LP7Bont1rYeoV5plxD7RTEPRg=="],
 
     "util-deprecate": ["util-deprecate@1.0.2", "", {}, "sha512-EPD5q1uXyFxJpCrLnCc1nHnq3gOa6DZBocAIiI2TaSCA7VCJ1UJDMagCzIkXNsUYfD1daK//LTEQ8xiIbrHtcw=="],
+
+    "uwuifier": ["uwuifier@4.2.2", "", {}, "sha512-Fhtj3Yg3rrDTEs+L1fqkgM3VYGJrP4U9GY+4fPdw08T5kzOB8NSosZnZfa5Zhv1Hh7NCpH5G6t1DIZyM1wPK1w=="],
 
     "vfile": ["vfile@6.0.3", "", { "dependencies": { "@types/unist": "^3.0.0", "vfile-message": "^4.0.0" } }, "sha512-KzIbH/9tXat2u30jf+smMwFCsno4wHVdNmzFyL+T/L3UGqqk6JKfVqOFOZEpZSHADH1k40ab6NUIXZq422ov3Q=="],
 
