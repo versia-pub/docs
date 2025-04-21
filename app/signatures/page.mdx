@@ -23,6 +23,7 @@ A signature consists of a series of headers in an HTTP request. The following he
 
 Signatures are **required on ALL federation traffic**. If a request does not have a signature, it **MUST** be rejected. Specifically, signatures must be put on:
 - **All POST requests**.
+- **All GET requests**.
 - **All responses to GET requests** (for example, when fetching a user's profile). In this case, the HTTP method used in the signature string must be `GET`.
 
 If a signature fails, is missing or is invalid, the instance **MUST** return a `401 Unauthorized` HTTP status code. If the signature timestamp is too old or too new (more than 5 minutes from the current time), the instance **MUST** return a `422 Unprocessable Entity` status code.
