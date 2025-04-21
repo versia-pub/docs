@@ -1,0 +1,78 @@
+export const metadata = {
+    title: 'Delegation Extension',
+    description: 'Lets users perform actions on other accounts\' behalf.'
+}
+
+# Delegation Extension
+
+Delegation is used to authorize actions on behalf of another user. {{ className: 'lead '}}
+
+## Vocabulary
+
+- **Delegator**: The user that is delegating actions to another user. (The user that owns the key)
+- **Delegate**: The user that is being delegated actions. (The user that the key is pointing to)
+
+## Implementation Details
+
+Any actions or entities created by the **delegate** should be attributed to the **delegator** user in clients transparently to end-users (e.g. showing the **delegator** user's name and avatar). This allows for a form of "consensual impersonation" that is authorized by the **delegators** and **delegates**.
+
+This is useful as a way to centralize all of a user's many "alt accounts" into a single, unified feed.
+
+<Warning>
+    If an instance encounters an action from a User that has a Delegator listed, but that Delegator does not allow the User to perform actions on their behalf, the actions **MUST** be shown as the User's own.
+
+    Also, if a User has a Delegator listed, but that Delegator does not allow the User to perform actions on their behalf, instances **SHOULD** mark the User with a warning about possible impersonation or fraud.
+</Warning>
+
+## Extension Definition
+
+<Row>
+    <Col>
+        <Properties name="Delegation">
+            The Delegation extension uses an ID of `pub.versia:delegation`.
+
+            If the extension is present, exactly **one** of the fields **MUST** be specified:
+
+            <Property name="delegator" type="Reference">
+                If this user performs actions on behalf on another user, **MUST** have a reference to that user.
+            </Property>
+            <Property name="allowed_delegates" type="Reference[]">
+                If other users perform actions on behalf of this user, **MUST** have a list of references to all such users.
+            </Property>
+        </Properties>
+    </Col>
+
+    <Col sticky>
+
+    ```jsonc {{ title: "Example Delegator" }}
+    {
+        // ...
+        "type": "User",
+        "id": "73cb1728-75d7-4080-8d28-4adf49bb0a0d",
+        // ...
+        "extensions": { // [!code focus:5]
+            "pub.versia:delegation": {
+                "delegator": "versia.example.com:bfb6bb39-bb08-4226-91ac-8adebc3da046"
+            }
+        }
+    }
+    ```
+
+    ```jsonc {{ title: "Example Delegates List" }}
+    {
+        // ...
+        "type": "User",
+        "id": "bfb6bb39-bb08-4226-91ac-8adebc3da046",
+        // ...
+        "extensions": { // [!code focus:7]
+            "pub.versia:delegation": {
+                "allowed_delegates": [
+                    "versia.social:73cb1728-75d7-4080-8d28-4adf49bb0a0d"
+                ]
+            }
+        }
+    }
+    ```
+
+    </Col>
+</Row>
