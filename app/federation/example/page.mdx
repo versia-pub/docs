@@ -73,24 +73,16 @@ curl https://b.social/users/joe \
 {
     "id": "bde22zi3ca8762", // [!code focus:10]
     "type": "User",
-    "uri": "https://b.social/users/joe",
     "created_at": "2024-10-13T18:48:19Z",
     "avatar": {
         "image/webp": {
             "content": "https://cdn.b.social/avatars/joe.webp",
             "remote": true
         }
-    },
-    "collections": {
-        "featured": "https://b.social/users/joe/featured",
-        "followers": "https://b.social/users/joe/followers",
-        "following": "https://b.social/users/joe/following",
-        "outbox": "https://b.social/users/joe/outbox"
-    }, // [!code focus:9]
+    }, // [!code focus:8]
     "display_name": "Joe Swanson (Winter Arc :gigachad:)",
-    "inbox": "https://b.social/inbox",
     "public_key": {
-        "actor": "https://b.social/users/joe",
+        "actor": "b.social:bde22zi3ca8762",
         "algorithm": "ed25519",
         "key": "MCowBQYDK2VwAyEAOSCcfsde0Ya3vf/P6lzgK0pA8qCISqneaze3omLlQCQ="
     },
@@ -123,17 +115,12 @@ Finally, `a.social` serializes the note to send it to `joe`.
 {
     "id": "782addd9-c051-4eea-8ba4-23d561d0c5bb", // [!code focus:6]
     "type": "Note",
-    "uri": "https://a.social/notes/782addd9-c051-4eea-8ba4-23d561d0c5bb",
     "created_at": "2024-12-01T12:19:06Z",
-    "author": "https://a.social/users/alice",
-    "category": "microblog",
-    "collections": {
-        "replies": "https://a.social/notes/782addd9-c051-4eea-8ba4-23d561d0c5bb/replies",
-        "quotes": "https://a.social/notes/782addd9-c051-4eea-8ba4-23d561d0c5bb/quotes"
-    }, // [!code focus:11]
+    "author": "alice",
+    "category": "microblog", // [!code focus:11]
     "content": {
         "text/html": {
-            "content": "Hello, <a class=\"u-url mention\" href=\"https://b.social/users/joe\">@joe@b.social</a>! How are you doing today?",
+            "content": "Hello, <a class=\"u-url mention\" href=\"https://b.social/users/bde22zi3ca8762\">@joe@b.social</a>! How are you doing today?",
             "remote": false,
         },
         "text/plain": {
@@ -143,7 +130,7 @@ Finally, `a.social` serializes the note to send it to `joe`.
     },
     "group": "public",
     "mentions": [ // [!code focus:3]
-        "https://b.social/users/joe"
+        "b.social:bde22zi3ca8762"
     ]
 }
 ```
