@@ -267,7 +267,6 @@ export const navigation: NavGroup[] = [
             { title: "HTTP", href: "/federation/http" },
             { title: "Validation", href: "/federation/validation" },
             { title: "Discovery", href: "/federation/discovery" },
-            { title: "Delegation", href: "/federation/delegation" },
             { title: "Example", href: "/federation/example" },
         ],
     },
@@ -295,6 +294,7 @@ export const navigation: NavGroup[] = [
         title: "Extensions",
         links: [
             { title: "Custom Emojis", href: "/extensions/custom-emojis" },
+            { title: "Delegation", href: "/extensions/delegation" },
             { title: "Groups", href: "/extensions/groups" },
             {
                 title: "Instance Messaging",
