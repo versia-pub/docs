@@ -54,9 +54,9 @@ Migration happens in three steps:
     {
         "id": "016f3de2-ad63-4e06-999e-1e6b41c981c5",
         "type": "pub.versia:migration/Migration",
-        "author": "https://example.com/users/44df6e02-ef43-47e0-aff2-47041f3d09ed",
+        "author": "44df6e02-ef43-47e0-aff2-47041f3d09ed",
         "created_at": "2021-01-01T00:00:00.000Z",
-        "destination": "https://otherinstance.social/users/73e999a0-53d0-40a3-a5cc-be0408004726",
+        "destination": "otherinstance.social:73e999a0-53d0-40a3-a5cc-be0408004726",
     }
     ```
 
@@ -88,8 +88,8 @@ The following extensions to [User](/entities/user) are used by the migration ext
         // ...
         "extensions": { // [!code focus:100]
             "pub.versia:migration": {
-                "previous": "https://oldinstance.social/users/44df6e02-ef43-47e0-aff2-47041f3d09ed",
-                // "new": "https://newinstance.social/users/73e999a0-53d0-40a3-a5cc-be0408004726",
+                "previous": "oldinstance.social:44df6e02-ef43-47e0-aff2-47041f3d09ed",
+                // "new": "newinstance.social:73e999a0-53d0-40a3-a5cc-be0408004726",
             } 
         }
     }

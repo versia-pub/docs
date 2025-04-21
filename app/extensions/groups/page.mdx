@@ -51,7 +51,6 @@ Refer to [Note](/entities/note#entity-definition)'s `group` property for how not
     {
         "type": "pub.versia:groups/Group",
         "id": "ed480922-b095-4f09-9da5-c995be8f5960",
-        "uri": "https://example.com/groups/ed480922-b095-4f09-9da5-c995be8f5960",
         "name": {
             "text/html": {
                 "content": "The <strong>Woozy</strong> fan club"
@@ -62,8 +61,7 @@ Refer to [Note](/entities/note#entity-definition)'s `group` property for how not
                 "content": "A group for fans of the Woozy emoji."
             }
         },
-        "open": false,
-        "members": "https://example.com/groups/ed480922-b095-4f09-9da5-c995be8f5960/members",
+        "open": false
     }
     ```
 
@@ -106,8 +104,8 @@ Indicates that a [User](/entities/user) wishes to subscribe to a group.
     {
         "type": "pub.versia:groups/Subscribe",
         "id": "9a7e9345-4e4a-4d5a-8301-4dbbfe777ca0",
-        "subscriber": "https://bob.social/users/e9277471-8aa1-4d40-a3d0-0878e818ccdc",
-        "group": "https://example.com/groups/ed480922-b095-4f09-9da5-c995be8f5960",
+        "subscriber": "e9277471-8aa1-4d40-a3d0-0878e818ccdc",
+        "group": "example.com:ed480922-b095-4f09-9da5-c995be8f5960",
         "created_at": "2021-01-01T00:00:00Z"
     }
     ```
@@ -143,8 +141,8 @@ Indicates that a [User](/entities/user) wishes to unsubscribe from a group.
     {
         "type": "pub.versia:groups/Unsubscribe",
         "id": "9a7e9345-4e4a-4d5a-8301-4dbbfe777ca0",
-        "subscriber": "https://bob.social/users/e9277471-8aa1-4d40-a3d0-0878e818ccdc",
-        "group": "https://example.com/groups/ed480922-b095-4f09-9da5-c995be8f5960",
+        "subscriber": "e9277471-8aa1-4d40-a3d0-0878e818ccdc",
+        "group": "example.com:ed480922-b095-4f09-9da5-c995be8f5960",
         "created_at": "2021-01-01T00:00:00Z"
     }
     ```
@@ -180,8 +178,8 @@ Indicates that a [Group](#entity-definition) has accepted a [User](/entities/use
     {
         "type": "pub.versia:groups/SubscribeAccept",
         "id": "9a7e9345-4e4a-4d5a-8301-4dbbfe777ca0",
-        "subscriber": "https://bob.social/users/e9277471-8aa1-4d40-a3d0-0878e818ccdc",
-        "group": "https://example.com/groups/ed480922-b095-4f09-9da5-c995be8f5960",
+        "subscriber": "e9277471-8aa1-4d40-a3d0-0878e818ccdc",
+        "group": "example.com:ed480922-b095-4f09-9da5-c995be8f5960",
         "created_at": "2021-01-01T00:00:00Z"
     }
     ```
@@ -217,8 +215,8 @@ Indicates that a [Group](#entity-definition) has rejected a [User](/entities/use
     {
         "type": "pub.versia:groups/SubscribeReject",
         "id": "9a7e9345-4e4a-4d5a-8301-4dbbfe777ca0",
-        "subscriber": "https://bob.social/users/e9277471-8aa1-4d40-a3d0-0878e818ccdc",
-        "group": "https://example.com/groups/ed480922-b095-4f09-9da5-c995be8f5960",
+        "subscriber": "e9277471-8aa1-4d40-a3d0-0878e818ccdc",
+        "group": "example.com:ed480922-b095-4f09-9da5-c995be8f5960",
         "created_at": "2021-01-01T00:00:00Z"
     }
     ```
@@ -262,8 +260,8 @@ The `GroupFederate` entity allows a group to federate a note to all of its membe
     {
         "type": "pub.versia:groups/Federate",
         "id": "9a7e9345-4e4a-4d5a-8301-4dbbfe777ca0",
-        "note": "https://example.com/notes/ed480922-b095-4f09-9da5-c995be8f5960",
-        "group": "https://example.com/groups/ed480922-b095-4f09-9da5-c995be8f5960",
+        "note": "c5aa65fa-0356-4029-b61c-6b237e5d1393",
+        "group": "example.com:ed480922-b095-4f09-9da5-c995be8f5960",
         "created_at": "2021-01-01T00:00:00Z"
     }
     ```
