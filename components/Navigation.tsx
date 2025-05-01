@@ -271,6 +271,16 @@ export const navigation: NavGroup[] = [
         ],
     },
     {
+        title: "API",
+        links: [
+            { title: "Basics", href: "/api/basics" },
+            { title: "Endpoints", href: "/api/endpoints" },
+            { title: "Rate Limits", href: "/api/rate-limits" },
+            { title: "Errors", href: "/api/errors" },
+            { title: "HTML Redirects", href: "/api/html" },
+        ],
+    },
+    {
         title: "Structures",
         links: [
             { title: "ContentFormat", href: "/structures/content-format" },

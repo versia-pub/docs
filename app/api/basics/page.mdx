@@ -1,0 +1,27 @@
+export const metadata = {
+    title: "API",
+    description: "Defines the server-to-server API for Versia's federation.",
+}
+
+# API
+
+Versia defines a very simple API for server-to-server communication, mainly fetching and sending entities. It is clearly namespaced and versioned, to avoid confusion with implementations' existing HTTP APIs. {{ className: "lead" }}
+
+## API Versioning
+
+Every Versia API endpoint is prefixed with `/.versia/vX/`, where `X` is the version of the API. The current version is `0.6`, so the current API prefix is `/.versia/v0.6/`. This versioning is used to avoid breaking changes in the future, and to allow for backwards compatibility.
+
+<Note>
+    Implementations have no obligations to support more than one Versia version. It is recommended to always support the latest version, as it helps avoid bogging down the network with old versions.
+</Note>
+
+## Signatures
+
+- All API requests **MUST** be signed, unless otherwise specified. This includes `POST` and `GET` requests.
+- All API responses **MUST** be signed, unless otherwise specified.
+
+The signature mechanism is defined in the [Signatures](/signatures) document.
+
+## Encoding
+
+"URL-encoding" is the mechanism used to encode data containing special characters in URLs. When this specification refers to "URL-encoding", it means the encoding defined in [RFC 3986](https://datatracker.ietf.org/doc/html/rfc3986#section-2.1).
