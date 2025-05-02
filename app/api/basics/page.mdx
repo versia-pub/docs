@@ -11,6 +11,8 @@ Versia defines a very simple API for server-to-server communication, mainly fetc
 
 Every Versia API endpoint is prefixed with `/.versia/vX/`, where `X` is the version of the API. The current version is `0.6`, so the current API prefix is `/.versia/v0.6/`. This versioning is used to avoid breaking changes in the future, and to allow for backwards compatibility.
 
+Requests not encrypted with TLS (aka HTTPS) **MUST NOT** be sent or responded to. All implementations are required to use TLS 1.2 or higher, and to support HTTP/2.
+
 <Note>
     Implementations have no obligations to support more than one Versia version. It is recommended to always support the latest version, as it helps avoid bogging down the network with old versions.
 </Note>
@@ -25,3 +27,28 @@ The signature mechanism is defined in the [Signatures](/signatures) document.
 ## Encoding
 
 "URL-encoding" is the mechanism used to encode data containing special characters in URLs. When this specification refers to "URL-encoding", it means the encoding defined in [RFC 3986](https://datatracker.ietf.org/doc/html/rfc3986#section-2.1).
+
+## Redirects
+
+API endpoints **MUST NOT** redirect to other endpoints, with the following exceptions:
+- HTTP to HTTPS redirects (upgrading insecure requests).
+- When the request does not have an `Accept: application/vnd.versia+json` header, the server **MAY** redirect to an HTML representation of the resource.
+
+This is forbidden:
+
+```http
+GET /.versia/v0.6/entities/user/1234
+Host: example.com
+
+HTTP/1.1 301 Moved Permanently
+Location: https://example.com/users/1234
+```
+
+This is allowed:
+```http
+GET /.versia/v0.6/entities/user/1234
+Host: example.com
+
+HTTP/1.1 301 Moved Permanently
+Location: https://example.com/.versia/v0.6/entities/user/1234
+```
