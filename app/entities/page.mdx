@@ -19,7 +19,12 @@ Any field in an entity not marked as `required` may be omitted or set to `null`.
 
     <Properties name="Entity">
         <Property name="id" type="string" required={true}>
-            Unique identifier for the entity. Must be unique within the instance. Can be any string. Max of 512 UTF-8 characters.
+            Unique identifier for the entity. Must be unique within the instance. Can be any string with the following character sets:
+
+            - `a-z`
+            - `A-Z`
+            - `0-9`
+            - `-`, `_`
         </Property>
         <Property name="type" type="string" required={true}>
             Type of the entity. Custom types must follow [Extension Naming](/extensions#naming).
@@ -29,13 +34,6 @@ Any field in an entity not marked as `required` may be omitted or set to `null`.
 
             <Note>
             Handling of dates that are valid but obviously incorrect (e.g. in the future) is left to the Implementation's discretion.
-            </Note>
-        </Property>
-        <Property name="uri" type="URI" required={true} typeLink="/types#uri">
-            URI of the entity. Should be unique and resolve to the entity. Must be an absolute URI.
-
-            <Note>
-                [**Transient Entities**](/entities#transient-entities) do not require a URI.
             </Note>
         </Property>
         <Property name="$schema" type="string" required={false}>
@@ -86,7 +84,7 @@ Any field in an entity not marked as `required` may be omitted or set to `null`.
 
 ## Transient Entities
 
-Some entities are transient, meaning they do not have a URI. These entities are used for actions that do not require a permanent record, such as deletions or migrations.
+Some entities are transient, meaning they cannot be refetched using the [Federation API](/api/endpoints). These entities are used for actions that do not require a permanent record, such as deletions or migrations.
 
 Implementations **must not** rely on other implementations to store transient entities in their database.
 
@@ -95,5 +93,5 @@ Implementations **must not** rely on other implementations to store transient en
 When serialized to a string, the JSON representation of an entity must follow the following rules:
 - Keys must be sorted lexicographically.
 - Must use UTF-8 encoding.
-- Must be **signed** using the relevant [User](/entities/user)'s private key, or the [instance's private key](/entities/instance-metadata) if the entity is not associated with a particular user.
+- Must be **signed** using the the [instance's private key](/entities/instance-metadata).
 - Must use Unix-style `\n` line endings (LF).

@@ -26,13 +26,12 @@ This is useful as a way to centralize all of a user's many "alt accounts" into a
 
 ## Extension Definition
 
+The Delegation extension uses an ID of `pub.versia:delegation`.
+
+If the extension is present, exactly **one** of the fields **MUST** be specified:
 <Row>
     <Col>
         <Properties name="Delegation">
-            The Delegation extension uses an ID of `pub.versia:delegation`.
-
-            If the extension is present, exactly **one** of the fields **MUST** be specified:
-
             <Property name="delegator" type="Reference">
                 If this user performs actions on behalf on another user, **MUST** have a reference to that user.
             </Property>

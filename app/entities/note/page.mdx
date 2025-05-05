@@ -36,28 +36,6 @@ Notes represent a piece of content on a Versia instance. They can be posted by [
                     | "messaging"; // Like Discord, Element (Matrix), Signal
                 ```
             </Property>
-            <Property name="collections" type="NoteCollections" required={true}>
-                Collections related to the note. Must contain at least `replies` and `quotes`.
-
-                ```typescript
-                type URI = string;
-
-                type NoteCollections = {
-                    replies: URI;
-                    quotes: URI;
-                    // Same format as type on Extensions
-                    [key: ExtensionsKey]: URI;
-                }
-                ```
-
-                All URIs must resolve to either a [Collection](/structures/collection) or a [URI Collection](/structures/collection#uri-collection) of the appropriate entities. Extensions may add additional collections.
-
-                ### Replies
-                All replies to this note (have this note as their `replies_to`). [URI Collection](/structures/collection#uri-collection) of [Note](/entities/note) entities.
-
-                ### Quotes
-                All quotes of this note (have this note as their `quotes`). [URI Collection](/structures/collection#uri-collection) of [Note](/entities/note) entities.
-            </Property>
             <Property name="content" type="ContentFormat" required={false} typeLink="/structures/content-format">
                 The content of the note. Must be text format (`text/html`, `text/markdown`, etc). Must not be remote.
             </Property>
@@ -178,3 +156,12 @@ Notes represent a piece of content on a Versia instance. They can be posted by [
 
     </Col>
 </Row>
+
+### Collections
+
+The following [Collections](/structures/collection) are available:
+
+- `replies`: [URI Collection](/structures/collection#uri-collection) of [Note](/entities/note) entities that are replies to this note.
+- `quotes`: [URI Collection](/structures/collection#uri-collection) of [Note](/entities/note) entities that quote this note.
+
+These can be fetched using the [Federation API](/api/endpoints#entity-collections)

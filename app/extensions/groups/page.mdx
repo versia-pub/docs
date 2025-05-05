@@ -36,12 +36,6 @@ Refer to [Note](/entities/note#entity-definition)'s `group` property for how not
                     It is similar to a [User](/entities/user)'s `manually_approves_followers` field.
                 </Note>
             </Property>
-            <Property name="members" type="URI" required={true} typeLink="/types#uri">
-                URI of the group's members list. [URI Collection](/structures/collection#uri-collection) of [Users](/entities/user).
-            </Property>
-            <Property name="notes" type="URI" required={false} typeLink="/types#uri">
-                URI of the group's associated notes. [URI Collection](/structures/collection#uri-collection) of [Notes](/entities/note).
-            </Property>
         </Properties>
     </Col>
 
@@ -68,6 +62,15 @@ Refer to [Note](/entities/note#entity-definition)'s `group` property for how not
     </Col>
 </Row>
 
+### Collections
+
+The following [Collections](/structures/collection) are available:
+
+- `members`: [URI Collection](/structures/collection#uri-collection) of [Users](/entities/user) that are members of the group.
+- `notes`: [URI Collection](/structures/collection#uri-collection) of [Notes](/entities/note) that are associated with the group.
+
+These can be fetched using the [Federation API](/api/endpoints#entity-collections)
+
 ## Subscribing to Groups
 
 [Users](/entities/user) may "subscribe" to a Group in order to receive all [Notes](/entities/note) posted to it. The mechanism by which federation is handled is described at [the end of this document](#federation).
@@ -80,14 +83,15 @@ If the group accepts the subscription, the user will receive all notes posted to
 
 Indicates that a [User](/entities/user) wishes to subscribe to a group.
 
+<Warning>
+    This entity is a [**Transient Entity**](/entities#transient-entities).
+</Warning>
+
 <Row>
     <Col>
         <Properties name="GroupSubscribe">
             <Property name="type" type="string" required={true}>
                 Must be `pub.versia:groups/Subscribe`.
-            </Property>
-            <Property name="uri" type="null" required={false}>
-                This is a [**Transient Entity**](/entities#transient-entities) and does not have a URI.
             </Property>
             <Property name="subscriber" type="URI" required={true} typeLink="/types#uri">
                 URI of the [User](/entities/user) subscribing to the group.
@@ -117,14 +121,15 @@ Indicates that a [User](/entities/user) wishes to subscribe to a group.
 
 Indicates that a [User](/entities/user) wishes to unsubscribe from a group.
 
+<Warning>
+    This entity is a [**Transient Entity**](/entities#transient-entities).
+</Warning>
+
 <Row>
     <Col>
         <Properties name="GroupUnsubscribe">
             <Property name="type" type="string" required={true}>
                 Must be `pub.versia:groups/Unsubscribe`.
-            </Property>
-            <Property name="uri" type="null" required={false}>
-                This is a [**Transient Entity**](/entities#transient-entities) and does not have a URI.
             </Property>
             <Property name="subscriber" type="URI" required={true} typeLink="/types#uri">
                 URI of the [User](/entities/user) unsubscribing from the group.
@@ -152,16 +157,17 @@ Indicates that a [User](/entities/user) wishes to unsubscribe from a group.
 
 ### GroupSubscribeAccept
 
-Indicates that a [Group](#entity-definition) has accepted a [User](/entities/user)'s subscription request. Should be signed by the instance hosting the group.
+Indicates that a [Group](#entity-definition) has accepted a [User](/entities/user)'s subscription request. Should be sent by the instance hosting the group.
+
+<Warning>
+    This entity is a [**Transient Entity**](/entities#transient-entities).
+</Warning>
 
 <Row>
     <Col>
         <Properties name="GroupSubscribeAccept">
             <Property name="type" type="string" required={true}>
                 Must be `pub.versia:groups/SubscribeAccept`.
-            </Property>
-            <Property name="uri" type="null" required={false}>
-                This is a [**Transient Entity**](/entities#transient-entities) and does not have a URI.
             </Property>
             <Property name="subscriber" type="URI" required={true} typeLink="/types#uri">
                 URI of the [User](/entities/user) subscribing to the group.
@@ -189,16 +195,17 @@ Indicates that a [Group](#entity-definition) has accepted a [User](/entities/use
 
 ### GroupSubscribeReject
 
-Indicates that a [Group](#entity-definition) has rejected a [User](/entities/user)'s subscription request. Should be signed by the instance hosting the group.
+Indicates that a [Group](#entity-definition) has rejected a [User](/entities/user)'s subscription request. Should be sent by the instance hosting the group.
+
+<Warning>
+    This entity is a [**Transient Entity**](/entities#transient-entities).
+</Warning>
 
 <Row>
     <Col>
         <Properties name="GroupSubscribeReject">
             <Property name="type" type="string" required={true}>
                 Must be `pub.versia:groups/SubscribeReject`.
-            </Property>
-            <Property name="uri" type="null" required={false}>
-                This is a [**Transient Entity**](/entities#transient-entities) and does not have a URI.
             </Property>
             <Property name="subscriber" type="URI" required={true} typeLink="/types#uri">
                 URI of the [User](/entities/user) subscribing to the group.
@@ -228,22 +235,23 @@ Indicates that a [Group](#entity-definition) has rejected a [User](/entities/use
 
 Group federation represents a particularly challenging problem, as it requires a way to make sure every single [Note](/entities/note) posted to it is delivered to every single member of the group.
 
-All [Notes](/entities/note) posted to a group (using the `group` field) must be sent to its instance's [shared inbox](/federation#inboxes). Groups do not have an inbox of their own.
+All [Notes](/entities/note) posted to a group (using the `group` field) must be sent to its instance's [inbox](/api/endpoints#inbox).
 
 Once this is done, the group's instance must then federate this [Note](/entities/note) to every member of the group. However, this cannot be done the "normal way", as the group's instance does not have the private key to [sign](/signatures) the [Note](/entities/note).
 
 ### GroupFederate
 
-The `GroupFederate` entity allows a group to federate a note to all of its members, without needing to sign the note itself. It contains a URI to the note being federated, which must be fetched by the receiving instances. This entity is signed by the group's instance.
+The `GroupFederate` entity allows a group to federate a note to all of its members, without needing to sign the note itself. It contains a URI to the note being federated, which must be fetched by the receiving instances. This entity is sent by the group's instance.
+
+<Warning>
+    This entity is a [**Transient Entity**](/entities#transient-entities).
+</Warning>
 
 <Row>
     <Col>
         <Properties name="GroupFederate">
             <Property name="type" type="string" required={true}>
                 Must be `pub.versia:groups/Federate`.
-            </Property>
-            <Property name="uri" type="null" required={false}>
-                This is a [**Transient Entity**](/entities#transient-entities) and does not have a URI.
             </Property>
             <Property name="note" type="URI" required={true} typeLink="/types#uri">
                 URI of the note to federate.

@@ -7,7 +7,7 @@ export const metadata = {
 
 Versia provides a set of core entities and structures to build a barebones social network. However, it is not possible nor desirable to cover every use case. This is where extensions come in, allowing parts of the system to be extended or replaced with custom functionality. {{ className: 'lead' }}
 
-By design, extensions can be mitchmatched in any combination, without requiring any changes to the core system. This allows for a high degree of customization and flexibility. Implementations that do not support a particular extension can simply ignore it without any issues.
+By design, extensions can be implemented in any combination, without requiring any changes to the core system. This allows for a high degree of customization and flexibility. Implementations that do not support a particular extension can simply ignore it without any issues.
 
 Extensions **should** be standardized and publicly documented.
 
@@ -90,7 +90,7 @@ Extensions can be found in two places: an [Entity](/entities#entity-definition)'
             <Property name="other">
                 Other properties of the custom entity. These are specific to the extension, and should be documented by the extension author.
 
-                Note that `id`, `uri` and `created_at` are still required for custom entities, unless the extension author specifies otherwise.
+                Note that `id` and `created_at` are still required for custom entities, unless the extension author specifies otherwise.
             </Property>
         </Properties>
     </Col>

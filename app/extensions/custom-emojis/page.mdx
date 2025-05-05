@@ -15,7 +15,11 @@ The Custom Emojis extension adds support for adding personalized emojis to feder
             <Property name="name" type="string" required={true}>
                 Emoji name, surrounded by identification characters (for example, colons: `:happy_face:`).
 
-                Name must match the regex `^[a-zA-Z0-9_-]+$`.
+                The following characters are allowed:
+                - `a-z`
+                - `A-Z`
+                - `0-9`
+                - `_`, `-`
                 
                 Identification characters must not match the name regex (must not be alphanumeric/underscore/hyphen). There may only be two identification characters, one at the beginning and one at the end.
             </Property>

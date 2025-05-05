@@ -9,7 +9,7 @@ Contains metadata about a Versia instance, such as capabilities and endpoints. {
 
 ## The `null` Author
 
-On some entities that have an `author` field, the `author` can be `null` to represent the instance itself as the author (like ActivityPub's Server Actors). In this case, the instance's public key should be used to verify the entity. To know which instance's public key to use, the entity signature should be used.
+On some entities that have an `author` field, the `author` can be `null` to represent the instance itself as the author (like ActivityPub's Server Actors).
 
 Check the entity's documentation page to see if it supports this (it will be noted in the `author` field).
 
@@ -20,9 +20,6 @@ Check the entity's documentation page to see if it supports this (it will be not
         <Properties name="InstanceMetadata">
             <Property name="id" type="null">
                 This entity does not have an ID.
-            </Property>
-            <Property name="uri" type="null">
-                This entity does not have a URI.
             </Property>
             <Property name="name" type="string" required={true}>
                 Friendly name of the instance, for humans.
@@ -60,9 +57,6 @@ Check the entity's documentation page to see if it supports this (it will be not
             <Property name="host" type="string" required={true}>
                 Hostname of the instance. Includes the port if it is not the default (i.e. `443` for HTTPS).
             </Property>
-            <Property name="shared_inbox" type="URI" required={false}>
-                URI to the instance's shared inbox, if supported.
-            </Property>
             <Property name="public_key" type="PublicKey" required={true}>
                 Public key of the instance.
 
@@ -75,20 +69,6 @@ Check the entity's documentation page to see if it supports this (it will be not
                 
                 - `algorithm`: Algorithm used for the public key. Can only be `ed25519` for now.
                 - `key`: Instance public key, in [SPKI-encoded base64](/signatures#exporting-the-public-key).
-            </Property>
-            <Property name="moderators" type="URI" required={false}>
-                URI to [Collection](/structures/collection) of instance moderators.
-
-                <Note>
-                    This is for human consumption (such as moderator contact), not for any kind of protocol authorization.
-                </Note>
-            </Property>
-            <Property name="admins" type="URI" required={false}>
-                URI to [Collection](/structures/collection) of instance administrators.
-
-                <Note>
-                    This is for human consumption (such as admin contact), not for any kind of protocol authorization.
-                </Note>
             </Property>
             <Property name="logo" type="ContentFormat" required={false} typeLink="/structures/content-format">
                 Logo of the instance. Must be an image format (`image/*`).
@@ -145,3 +125,12 @@ Check the entity's documentation page to see if it supports this (it will be not
 
     </Col>
 </Row>
+
+### Collections
+
+The following [Collections](/structures/collection) are available:
+
+- `moderators`: [Collection](/structures/collection) of instance moderators ([Users](/entities/user)).
+- `admins`: [Collection](/structures/collection) of instance administrators ([Users](/entities/user)).
+
+These can be fetched using the [Federation API](/api/endpoints#entity-collections)

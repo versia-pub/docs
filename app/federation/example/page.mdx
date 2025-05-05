@@ -40,8 +40,8 @@ curl https://b.social/.well-known/webfinger?resource=acct:joe@b.social -H "Accep
     "links": [
         { // [!code focus:5]
             "rel": "self",
-            "type": "application/json",
-            "href": "https://b.social/users/joe"
+            "type": "application/vnd.versia+json",
+            "href": "https://b.social/.versia/entities/User/joe"
         }
     ]
 }
@@ -58,12 +58,12 @@ curl https://b.social/.well-known/webfinger?resource=acct:joe@b.social -H "Accep
 `a.social` fetches the user profile of `joe` from `b.social` using the URL provided in the WebFinger response.
 
 ```bash
-curl https://b.social/users/joe \
-    -H "Accept: application/json" \
+curl https://b.social/.versia/entities/User/joe \
+    -H "Accept: application/vnd.versia+json" \
     -H "User-Agent: CoolServer/1.0 (https://coolserver.com)" \
     # The request is signed by a.social's instance private key
     -H "Versia-Signature: /CjB2L9bcvRg+uP19B4/rqy7Ji9/cqMFPlL3GVCIndnQjYyOpBzJEAl9weDnXm7Jrqa3y6sBC+EYWKThO2r9Bw==" \
-    -H "Versia-Signed-By: https://a.social/users/alice" \
+    -H "Versia-Signed-By: a.social" \
     -H "Versia-Signed-At: 1729241687"
 ```
 
@@ -79,13 +79,8 @@ curl https://b.social/users/joe \
             "content": "https://cdn.b.social/avatars/joe.webp",
             "remote": true
         }
-    }, // [!code focus:8]
+    }, // [!code focus:3]
     "display_name": "Joe Swanson (Winter Arc :gigachad:)",
-    "public_key": {
-        "actor": "b.social:bde22zi3ca8762",
-        "algorithm": "ed25519",
-        "key": "MCowBQYDK2VwAyEAOSCcfsde0Ya3vf/P6lzgK0pA8qCISqneaze3omLlQCQ="
-    },
     "username": "joe",
     "extensions": {
         "pub.versia:custom_emojis": {
@@ -142,13 +137,13 @@ It is now time for `a.social` to send the note to `joe`.
 `a.social` sends the note to `joe`'s inbox at `b.social`.
 
 ```bash
-curl -X POST https://b.social/inbox \
-    -H "Content-Type: application/json; charset=utf-8" \
+curl -X POST https://b.social/.versia/v0.6/inbox \
+    -H "Content-Type: application/vnd.versia+json; charset=utf-8" \
     -H "Accept: application/json" \
     -H "User-Agent: CoolerServer/1.0 (https://coolerserver.com)" \
     # The request is signed by Alice's private key
     -H "Versia-Signature: 9BrfplAPVH6OEqlV5eX7MazaZAInSCPODZcBEvMliBi/OwfbCAsezlb0O9jUX9ZcbBA68ThA4WUgS9V+42rfAQ==" \
-    -H "Versia-Signed-By: https://a.social/users/alice" \
+    -H "Versia-Signed-By: a.social" \
     -H "Versia-Signed-At: 1733051946"
 ```
 

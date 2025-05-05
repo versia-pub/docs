@@ -49,17 +49,17 @@ Accept: application/jrd+json
 
 ## Instance Discovery
 
-Instaance metadata can be accessed by making a `GET` request to the instance's Versia metadata endpoint, which is located at `/.well-known/versia`. This endpoint does not need any signatures in the output.
+Instaance metadata can be accessed by making a `GET` request to the instance's Versia metadata endpoint, documented in the [Endpoints](/api/endpoints#instance-metadata) document.
 
 ### Example
 
-To discover the metadata of the instance `versia.social`, an instance would make a `GET` request to `https://versia.social/.well-known/versia`.
+To discover the metadata of the instance `versia.social`, an instance would make a `GET` request to `https://versia.social/.versia/v0.6/instance`.
 
 This endpoint will return an [InstanceMetadata](/entities/instance-metadata) entity.
 
 ```http {{ 'title': 'Example Request' }}
-GET /.well-known/versia HTTP/1.1
-Accept: application/json
+GET /.versia/v0.6/instance HTTP/1.1
+Accept: application/vnd.versia+json
 ```
     
 ```jsonc {{ 'title': 'Example Response' }}

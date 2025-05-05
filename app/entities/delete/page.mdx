@@ -17,12 +17,13 @@ Having the authorization is defined as:
 
 ## Entity Definition
 
+<Warning>
+    This entity is a [**Transient Entity**](/entities#transient-entities).
+</Warning>
+
 <Row>
     <Col>
         <Properties name="Delete">
-            <Property name="uri" type="null" required={false}>
-                This is a [**Transient Entity**](/entities#transient-entities) and does not have a URI.
-            </Property>
             <Property name="author" type="URI | null" required={true} typeLink="/types#uri">
                 URI of the `User` who is deleting the entity. [Can be set to `null` to represent the instance](/entities/instance-metadata#the-null-author).
             </Property>
@@ -43,6 +44,7 @@ Having the authorization is defined as:
         "id": "9b3212b8-529c-435a-8798-09ebbc17ca74",
         "created_at": "2021-01-01T00:00:00.000Z",
         "author": "6e0204a2-746c-4972-8602-c4f37fc63bbe",
+        "deleted_type": "Note",
         "deleted": "02e1e3b2-cb1f-4e4a-b82e-98866bee5de7"
     }
     ```

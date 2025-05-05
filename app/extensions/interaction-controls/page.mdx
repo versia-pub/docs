@@ -99,7 +99,7 @@ Extensions **may** choose to register their own interaction types (such as `pub.
 
 ### Handling Permission Errors
 
-Implementations that find a user attempting to create an interaction they are not allowed to **MUST** return a `403 Forbidden` HTTP status code when processing the Note during federation. The Note **must** also be discarded.
+Implementations that find a user attempting to create an interaction they are not allowed to **MAY** return a `403 Forbidden` HTTP status code when processing the Note during federation, or use the [Instance Messaging](/extensions/instance-messaging) extension. The Note **must** be discarded.
 
 It is important for implementations to backfill any related [Collections](/structures/collection)/[URI Collections](/structures/collection#uri-collection) (e.g. user followers) in order to not incorrectly reject Notes based off of outdated data.
 

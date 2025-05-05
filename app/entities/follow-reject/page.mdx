@@ -21,12 +21,13 @@ But it can also be used when Bob is already following Alice, in the case that:
 
 ## Entity Definition
 
+<Warning>
+    This entity is a [**Transient Entity**](/entities#transient-entities).
+</Warning>
+
 <Row>
     <Col>
         <Properties name="FollowReject">
-            <Property name="uri" type="null" required={false}>
-                This is a [**Transient Entity**](/entities#transient-entities) and does not have a URI.
-            </Property>
             <Property name="author" type="URI" required={true} typeLink="/types#uri">
                 URI of the `User` considered the 'followee', i.e. the user who is being followed.
             </Property>

@@ -53,18 +53,7 @@ User reactions are (like every other entity) federated to all followers, and can
 
 The Likes extension adds the following collections to the [Note](/entities/note) entity:
 
-- `reactions`: A [URI Collection](/structures/collection#uri-collection) of all the reactions to the note.
-
-```jsonc
-{
-    "type": "Note",
-    ...
-    "collections": {
-        ...
-        "pub.versia:reactions/Reactions": "https://example.com/publications/f08a124e-fe90-439e-8be4-15a428a72a19/reactions"
-    }
-}
-```
+- `pub.versia:reactions/Reactions`: [URI Collection](/structures/collection#uri-collection) of all the reactions to the note.
 
 ## Interaction Types
 

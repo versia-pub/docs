@@ -30,12 +30,13 @@ Migration happens in three steps:
 
 ## Entity Definition
 
+<Warning>
+    This entity is a [**Transient Entity**](/entities#transient-entities).
+</Warning>
+
 <Row>
     <Col>
         <Properties name="Migration">
-            <Property name="uri" type="null" required={false}>
-                This is a [**Transient Entity**](/entities#transient-entities) and does not have a URI.
-            </Property>
             <Property name="type" type="string" required={true}>
                 Must be `pub.versia:migration/Migration`.
             </Property>

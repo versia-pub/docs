@@ -53,12 +53,13 @@ Once a follow relationship is established, the **followee**'s instance should se
 
 ## Entity Definition
 
+<Warning>
+    This entity is a [**Transient Entity**](/entities#transient-entities).
+</Warning>
+
 <Row>
     <Col>
         <Properties name="Follow">
-            <Property name="uri" type="null" required={false}>
-                This is a [**Transient Entity**](/entities#transient-entities) and does not have a URI.
-            </Property>
             <Property name="author" type="URI" required={true} typeLink="/types#uri">
                 URI of the `User` considered the 'follower'.
             </Property>
