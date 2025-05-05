@@ -60,11 +60,11 @@ Once a follow relationship is established, the **followee**'s instance should se
 <Row>
     <Col>
         <Properties name="Follow">
-            <Property name="author" type="URI" required={true} typeLink="/types#uri">
-                URI of the `User` considered the 'follower'.
+            <Property name="author" type="Reference" required={true} typeLink="/types#reference">
+                [Reference](/types#reference) to the `User` considered the 'follower'.
             </Property>
-            <Property name="followee" type="URI" required={true} typeLink="/types#uri">
-                URI of the `User` that is being followed.
+            <Property name="followee" type="Reference" required={true} typeLink="/types#reference">
+                [Reference](/types#reference) to the `User` that is being followed.
             </Property>
         </Properties>
     </Col>

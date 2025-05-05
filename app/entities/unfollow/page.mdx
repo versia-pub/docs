@@ -33,11 +33,11 @@ Sometimes, [Users](/entities/user) want to unsubscribe from each other to stop s
 <Row>
     <Col>
         <Properties name="Unfollow">
-            <Property name="author" type="URI" required={true} typeLink="/types#uri">
-                URI of the `User` considered the 'follower', i.e. the user who is unsubscribing from the followee.
+            <Property name="author" type="Reference" required={true} typeLink="/types#reference">
+                [Reference](/types#reference) to the `User` considered the 'follower', i.e. the user who is unsubscribing from the followee.
             </Property>
-            <Property name="followee" type="URI" required={true} typeLink="/types#uri">
-                URI of the `User` considered the 'followee', i.e. the user who is being unsubscribed from.
+            <Property name="followee" type="Reference" required={true} typeLink="/types#reference">
+                [Reference](/types#reference) to the `User` considered the 'followee', i.e. the user who is being unsubscribed from.
             </Property>
         </Properties>
     </Col>

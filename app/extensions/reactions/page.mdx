@@ -19,11 +19,11 @@ User reactions are (like every other entity) federated to all followers, and can
             <Property name="type" type="string" required>
                 Must be `pub.versia:reactions/Reaction`.
             </Property>
-            <Property name="author" type="URI" required typeLink="/types#uri">
-                URI of the [User](/entities/user) that is reacting.
+            <Property name="author" type="Reference" required typeLink="/types#reference">
+                [Reference](/types#reference) to the [User](/entities/user) that is reacting.
             </Property>
-            <Property name="object" type="URI" required typeLink="/types#uri">
-                URI of the [Note](/entities/note) attached to the reaction.
+            <Property name="object" type="Reference" required typeLink="/types#reference">
+                [Reference](/types#reference) to the [Note](/entities/note) attached to the reaction.
             </Property>
             <Property name="content" type="string" required>
                 Emoji content of reaction. May also be arbitrary text, or [Custom Emoji](/extensions/custom-emojis) if supported.

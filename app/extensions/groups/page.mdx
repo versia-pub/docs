@@ -93,11 +93,11 @@ Indicates that a [User](/entities/user) wishes to subscribe to a group.
             <Property name="type" type="string" required={true}>
                 Must be `pub.versia:groups/Subscribe`.
             </Property>
-            <Property name="subscriber" type="URI" required={true} typeLink="/types#uri">
-                URI of the [User](/entities/user) subscribing to the group.
+            <Property name="subscriber" type="Reference" required={true} typeLink="/types#reference">
+                [Reference](/types#reference) to the [User](/entities/user) subscribing to the group.
             </Property>
-            <Property name="group" type="URI" required={true} typeLink="/types#uri">
-                URI of the group to subscribe to.
+            <Property name="group" type="Reference" required={true} typeLink="/types#reference">
+                [Reference](/types#reference) to the group to subscribe to.
             </Property>
         </Properties>
     </Col>
@@ -131,11 +131,11 @@ Indicates that a [User](/entities/user) wishes to unsubscribe from a group.
             <Property name="type" type="string" required={true}>
                 Must be `pub.versia:groups/Unsubscribe`.
             </Property>
-            <Property name="subscriber" type="URI" required={true} typeLink="/types#uri">
-                URI of the [User](/entities/user) unsubscribing from the group.
+            <Property name="subscriber" type="Reference" required={true} typeLink="/types#reference">
+                [Reference](/types#reference) to the [User](/entities/user) unsubscribing from the group.
             </Property>
-            <Property name="group" type="URI" required={true} typeLink="/types#uri">
-                URI of the group to unsubscribe from.
+            <Property name="group" type="Reference" required={true} typeLink="/types#reference">
+                [Reference](/types#reference) to the group to unsubscribe from.
             </Property>
         </Properties>
     </Col>
@@ -169,11 +169,11 @@ Indicates that a [Group](#entity-definition) has accepted a [User](/entities/use
             <Property name="type" type="string" required={true}>
                 Must be `pub.versia:groups/SubscribeAccept`.
             </Property>
-            <Property name="subscriber" type="URI" required={true} typeLink="/types#uri">
-                URI of the [User](/entities/user) subscribing to the group.
+            <Property name="subscriber" type="Reference" required={true} typeLink="/types#reference">
+                [Reference](/types#reference) to the [User](/entities/user) subscribing to the group.
             </Property>
-            <Property name="group" type="URI" required={true} typeLink="/types#uri">
-                URI of the group that accepted the subscription.
+            <Property name="group" type="Reference" required={true} typeLink="/types#reference">
+                [Reference](/types#reference) to the group that accepted the subscription.
             </Property>
         </Properties>
     </Col>
@@ -207,11 +207,11 @@ Indicates that a [Group](#entity-definition) has rejected a [User](/entities/use
             <Property name="type" type="string" required={true}>
                 Must be `pub.versia:groups/SubscribeReject`.
             </Property>
-            <Property name="subscriber" type="URI" required={true} typeLink="/types#uri">
-                URI of the [User](/entities/user) subscribing to the group.
+            <Property name="subscriber" type="Reference" required={true} typeLink="/types#reference">
+                [Reference](/types#reference) to the [User](/entities/user) subscribing to the group.
             </Property>
-            <Property name="group" type="URI" required={true} typeLink="/types#uri">
-                URI of the group that rejected the subscription.
+            <Property name="group" type="Reference" required={true} typeLink="/types#reference">
+                [Reference](/types#reference) to the group that rejected the subscription.
             </Property>
         </Properties>
     </Col>
@@ -253,11 +253,11 @@ The `GroupFederate` entity allows a group to federate a note to all of its membe
             <Property name="type" type="string" required={true}>
                 Must be `pub.versia:groups/Federate`.
             </Property>
-            <Property name="note" type="URI" required={true} typeLink="/types#uri">
-                URI of the note to federate.
+            <Property name="note" type="Reference" required={true} typeLink="/types#reference">
+                [Reference](/types#reference) to the note to federate.
             </Property>
-            <Property name="group" type="URI" required={true} typeLink="/types#uri">
-                URI of the group federating the note.
+            <Property name="group" type="Reference" required={true} typeLink="/types#reference">
+                [Reference](/types#reference) to the group federating the note.
             </Property>
         </Properties>
     </Col>

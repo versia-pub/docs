@@ -72,8 +72,8 @@ All properties are optional.
             <Property name="timezone" type="string" required={false}>
                 User's timezone. Should be a valid [IANA timezone](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones) string.
             </Property>
-            <Property name="aliases" type="URI[]" required={false} typeLink="/types#uri">
-                Versia profiles that should be considered aliases of this profile.
+            <Property name="aliases" type="References[]" required={false} typeLink="/types#reference">
+                [References](/types#reference) to Versia profiles that should be considered aliases (or "alt accounts") of this profile.
             </Property>
         </Properties>
     </Col>

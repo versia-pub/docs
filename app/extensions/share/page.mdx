@@ -21,11 +21,11 @@ When a user shares a note, the note's original author **must** receive the entit
             <Property name="type" type="string" required={true}>
                 Must be `pub.versia:share/Share`.
             </Property>
-            <Property name="author" type="URI" required={true} typeLink="/types#uri">
-                Creator of the Share.
+            <Property name="author" type="Reference" required={true} typeLink="/types#referece">
+                [Reference](/types#reference) to the creator of the Share.
             </Property>
-            <Property name="shared" type="URI" required={true} typeLink="/types#uri">
-                URI of the note being shared. Must link to a [Note](/entities/note).
+            <Property name="shared" type="Reference" required={true} typeLink="/types#reference">
+                [Reference](/types#reference) to the note being shared.
             </Property>
         </Properties>
     </Col>

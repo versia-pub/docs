@@ -22,11 +22,11 @@ Likes are a way for users to show appreciation for a note, like Twitter's "heart
             <Property name="type" type="string" required={true}>
                 Must be `pub.versia:likes/Like`.
             </Property>
-            <Property name="author" type="URI" required={true} typeLink="/types#uri">
-                Creator of the Like.
+            <Property name="author" type="Reference" required={true} typeLink="/types#reference">
+                [Reference](/types#reference) to the creator of the Like.
             </Property>
-            <Property name="liked" type="URI" required={true} typeLink="/types#uri">
-                URI of the note being liked. Must link to a [Note](/entities/note).
+            <Property name="liked" type="Reference" required={true} typeLink="/types#reference">
+                [Reference](/types#reference) to the note being liked.
             </Property>
         </Properties>
     </Col>
@@ -58,11 +58,11 @@ Dislikes are a way for users to show disapproval for a note, like YouTube's "dis
             <Property name="type" type="string" required={true}>
                 Must be `pub.versia:likes/Dislike`.
             </Property>
-            <Property name="author" type="URI" required={true} typeLink="/types#uri">
-                Creator of the Dislike.
+            <Property name="author" type="Reference" required={true} typeLink="/types#reference">
+                [Reference](/types#reference) to the creator of the Dislike.
             </Property>
-            <Property name="disliked" type="URI" required={true} typeLink="/types#uri">
-                URI of the note being disliked. Must link to a [Note](/entities/note).
+            <Property name="disliked" type="Reference" required={true} typeLink="/types#reference">
+                [Reference](/types#reference) to the note being disliked.
             </Property>
         </Properties>
     </Col>

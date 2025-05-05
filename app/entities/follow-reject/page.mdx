@@ -28,11 +28,11 @@ But it can also be used when Bob is already following Alice, in the case that:
 <Row>
     <Col>
         <Properties name="FollowReject">
-            <Property name="author" type="URI" required={true} typeLink="/types#uri">
-                URI of the `User` considered the 'followee', i.e. the user who is being followed.
+            <Property name="author" type="Reference" required={true} typeLink="/types#reference">
+                [Reference](/types#reference) to the `User` considered the 'followee', i.e. the user who is being followed.
             </Property>
-            <Property name="follower" type="URI" required={true} typeLink="/types#uri">
-                URI of the `User` considered the 'follower', i.e. the user who is trying to follow the author.
+            <Property name="follower" type="Reference" required={true} typeLink="/types#reference">
+                [Reference](/types#reference) to the `User` considered the 'follower', i.e. the user who is trying to follow the author.
             </Property>
         </Properties>
     </Col>

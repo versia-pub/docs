@@ -40,11 +40,11 @@ Migration happens in three steps:
             <Property name="type" type="string" required={true}>
                 Must be `pub.versia:migration/Migration`.
             </Property>
-            <Property name="author" type="URI" typeLink="/types#uri" required={true}>
-                URI of the [User](/entities/user) who is migrating.
+            <Property name="author" type="Reference" typeLink="/types#reference" required={true}>
+                [Reference](/types#reference) to the [User](/entities/user) who is migrating.
             </Property>
-            <Property name="destination" type="URI" required={true} typeLink="/types#uri">
-                URI of the destination [User](/entities/user) on the new instance.
+            <Property name="destination" type="Reference" required={true} typeLink="/types#reference">
+                [Reference](/types#reference) to the destination [User](/entities/user) on the new instance.
             </Property>
         </Properties>
     </Col>
@@ -71,11 +71,11 @@ The following extensions to [User](/entities/user) are used by the migration ext
 <Row>
     <Col>
         <Properties name="MigrationExtension">
-            <Property name="previous" type="URI" required={true} typeLink="/types#uri">
-                If this user has migrated from another instance, this property **MUST** be set to the URI of the user on the previous instance.
+            <Property name="previous" type="Reference" required={true} typeLink="/types#reference">
+                If this user has migrated from another instance, this property **MUST** be a [Reference](/types#reference) to the user on the previous instance.
             </Property>
-            <Property name="new" type="URI" required={false} typeLink="/types#uri">
-                If this user has migrated to another instance, this property **MUST** be set to the URI of the user on the new instance.
+            <Property name="new" type="Reference" required={false} typeLink="/types#reference">
+                If this user has migrated to another instance, this property **MUST** be a [Reference](/types#reference) to the URI of the user on the new instance.
             </Property>
         </Properties>
     </Col>

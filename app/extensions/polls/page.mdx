@@ -97,11 +97,11 @@ If a vote is cast to a poll that is closed, the vote should be rejected with a `
             <Property name="type" type="string" required="true">
                 Must be `pub.versia:polls/Vote`.
             </Property>
-            <Property name="author" type="URI" required="true" typeLink="/types#uri">
-                URI to the user who cast the vote.
+            <Property name="author" type="Reference" required="true" typeLink="/types#reference">
+                [Reference](/types#reference) of the user who cast the vote.
             </Property>
-            <Property name="poll" type="URI" required="true" typeLink="/types#uri">
-                URI to the poll that the user voted on. Must link to a [Note](/entities/note) with a valid poll.
+            <Property name="poll" type="Reference" required="true" typeLink="/types#reference">
+                [Reference](/types#reference) to the note with poll that the user voted on.
             </Property>
             <Property name="option" type="number" required="true" numberType="u64">
                 Index of the option that the user voted for. This should be a valid index into the `options` array of the poll.

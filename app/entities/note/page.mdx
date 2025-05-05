@@ -19,8 +19,8 @@ Notes represent a piece of content on a Versia instance. They can be posted by [
             <Property name="attachments" type="ContentFormat[]" required={false} typeLink="/structures/content-format">
                 Media attachments to the note. May be any format. **Must** be remote.
             </Property>
-            <Property name="author" type="URI" required={true} typeLink="/types#uri">
-                URI of the `User` considered the author of the note.
+            <Property name="author" type="Reference" required={true} typeLink="/types#reference">
+                [Reference](/types#reference) to the `User` considered the author of the note.
             </Property>
             <Property name="category" type="Category" required={false}>
                 Category of the note. Useful for clients to render notes differently depending on their intended purpose.
@@ -50,8 +50,8 @@ Notes represent a piece of content on a Versia instance. They can be posted by [
                 }
                 ```
             </Property>
-            <Property name="group" type="URI | &quot;public&quot; | &quot;followers&quot;" required={false} typeLink="/types#uri">
-                URI of a [Group](/extensions/groups) that the note is only visible in, or one of the following strings:
+            <Property name="group" type="Reference | &quot;public&quot; | &quot;followers&quot;" required={false} typeLink="/types#reference">
+                [Reference](/types#reference) to a [Group](/extensions/groups) that the note is only visible in, or one of the following strings:
                 - `public`: The note is visible to anyone.
                 - `followers`: The note is visible only to the author's followers.
 
@@ -64,8 +64,8 @@ Notes represent a piece of content on a Versia instance. They can be posted by [
             <Property name="is_sensitive" type="boolean" required={false}>
                 Whether the note contains "sensitive content". This can be used with `subject` as a "content warning" feature.
             </Property>
-            <Property name="mentions" type="URI[]" required={false} typeLink="/types#uri">
-                URIs of [Users](/entities/user) that should be notified of the note. Similar to Twitter's `@` mentions. The note may also contain mentions in the content, however only the mentions in this field should trigger notifications.
+            <Property name="mentions" type="Reference[]" required={false} typeLink="/types#reference">
+                [References](/types#reference) to [Users](/entities/user) that should be notified of the note. Similar to Twitter's `@` mentions. The note may also contain mentions in the content, however only the mentions in this field should trigger notifications.
             </Property>
             <Property name="previews" type="LinkPreview[]" required={false}>
                 Previews for any links in the publication. This is to avoid the [stampeding mastodon problem](https://github.com/mastodon/mastodon/issues/23662) where a link preview is fetched by every instance that sees the publication, creating an accidental DDOS attack.
@@ -84,11 +84,11 @@ Notes represent a piece of content on a Versia instance. They can be posted by [
                     Implementations should make sure not to trust the previews, as they could be faked by malicious remote instances. This is not a very good attack vector, but it is still possible to redirect users to malicious links.
                 </Note>
             </Property>
-            <Property name="quotes" type="URI" required={false} typeLink="/types#uri">
-                URI of the note that this note is quoting, if any. Quoting is similar to replying, but does not notify the author of the quoted note. Inspired by Twitter's "quote tweet" feature.
+            <Property name="quotes" type="Reference" required={false} typeLink="/types#reference">
+                [Reference](/types#reference) to the note that this note is quoting, if any. Quoting is similar to replying, but does not notify the author of the quoted note. Inspired by Twitter's "quote tweet" feature.
             </Property>
-            <Property name="replies_to" type="URI" required={false} typeLink="/types#uri">
-                URI of the note that this note is a reply to, if any.
+            <Property name="replies_to" type="Reference" required={false} typeLink="/types#reference">
+                [Reference](/types#reference) to the note that this note is a reply to, if any.
             </Property>
             <Property name="subject" type="string" required={false}>
                 A subject for the note. Useful for clients to display a "content warning" or "spoiler" feature, such as on Mastodon. Must be a plaintext string (`text/plain`).

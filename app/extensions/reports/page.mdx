@@ -21,11 +21,11 @@ When an instance receives a report, it *should* be reviewed by a moderator or ad
             <Property name="type" type="string" required={true}>
                 Must be `pub.versia:reports/Report`.
             </Property>
-            <Property name="author" type="URI" required={false} typeLink="/types#uri">
-                URI of the reporting [User](/entities/user). Optional if the report is anonymous.
+            <Property name="author" type="Reference" required={false} typeLink="/types#reference">
+                [Reference](/types#reference) to the reporting [User](/entities/user). Optional if the report is anonymous.
             </Property>
-            <Property name="reported" type="URI[]" required={true} typeLink="/types#uri">
-                URIs of the content being reported.
+            <Property name="reported" type="Reference[]" required={true} typeLink="/types#reference">
+                [References](/types#reference) to the content being reported.
             </Property>
             <Property name="tags" type="string[]" required={true}>
                 Report tags. Should be concise and clear, such as `spam`, `harassment`, `misinformation`, etc. Used for categorization.
