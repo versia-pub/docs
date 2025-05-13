@@ -37,7 +37,7 @@ export const metadata = {
     
     ```http {{ 'title': 'Example response' }}
     HTTP/1.1 200 OK
-    Content-Type: application/vnd.versia+json
+    Content-Type: application/vnd.versia+json; charset=utf-8
 
     {
         "type": "InstanceMetadata",
@@ -81,7 +81,7 @@ export const metadata = {
 
         ```http {{ 'title': 'Example response' }}
         HTTP/1.1 200 OK
-        Content-Type: application/vnd.versia+json
+        Content-Type: application/vnd.versia+json; charset=utf-8
 
         {
             "type": "User",
@@ -125,7 +125,7 @@ export const metadata = {
 
         ```http {{ 'title': 'Example response' }}
         HTTP/1.1 200 OK
-        Content-Type: application/vnd.versia+json
+        Content-Type: application/vnd.versia+json; charset=utf-8
 
         {
             "type": "Followers",
@@ -173,7 +173,7 @@ The delivery mechanism is described further in the [Federation](/federation) doc
         POST /.versia/v0.6/inbox
         Host: b.social
         Accept: application/vnd.versia+json
-        Content-Type: application/vnd.versia+json
+        Content-Type: application/vnd.versia+json; charset=utf-8
 
         {
             "type": "Note",

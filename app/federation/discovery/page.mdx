@@ -24,7 +24,7 @@ Accept: application/jrd+json
 {
     "subject": "acct:george@versia.social", // [!code focus:6]
     "aliases": [
-        "https://versia.social/users/018ec082-0ae1-761c-b2c5-22275a611771",
+        "https://versia.social/.versia/v0.6/entities/User/018ec082-0ae1-761c-b2c5-22275a611771",
         "https://versia.social/@george"
     ],
     "links": [
@@ -35,8 +35,8 @@ Accept: application/jrd+json
         },
         { // [!code focus:5]
             "rel": "self",
-            "type": "application/json",
-            "href": "https://versia.social/users/018ec082-0ae1-761c-b2c5-22275a611771"
+            "type": "application/vnd.versia+json",
+            "href": "https://versia.social/.versia/v0.6/entities/User/018ec082-0ae1-761c-b2c5-22275a611771"
         },
         {
             "rel": "http://webfinger.net/rel/avatar",
