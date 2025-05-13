@@ -25,6 +25,8 @@ Any field in an entity not marked as `required` may be omitted or set to `null`.
             - `A-Z`
             - `0-9`
             - `-`, `_`
+
+            Not present on [Transient Entities](#transient-entities).
         </Property>
         <Property name="type" type="string" required={true}>
             Type of the entity. Custom types must follow [Extension Naming](/extensions#naming).
@@ -54,11 +56,11 @@ Any field in an entity not marked as `required` may be omitted or set to `null`.
 
     ```jsonc {{ 'title': 'Example Entity' }}
     {
-        "id": "9a8928b6-2526-4979-aab1-ef2f88cd5700",
-        "type": "Delete",
-        "created_at": "2022-01-01T12:00:00Z",
-        "author": "63a00ab3-39b1-49eb-b88e-ed65d2361f3e",
-        "deleted": "54059ce2-9332-46fa-bf6a-598b5493b81b",
+        "id": "3e7e4750-afd4-4d99-a256-02f0710a0520",
+        "type": "pub.versia:likes/Like",
+        "created_at": "2021-01-01T00:00:00.000Z",
+        "author": "6e0204a2-746c-4972-8602-c4f37fc63bbe",
+        "liked": "otherexample.org:fmKZ763jzIU8"
     }
     ``` 
 
@@ -84,7 +86,7 @@ Any field in an entity not marked as `required` may be omitted or set to `null`.
 
 ## Transient Entities
 
-Some entities are transient, meaning they cannot be refetched using the [Federation API](/api/endpoints). These entities are used for actions that do not require a permanent record, such as deletions or migrations.
+Some entities are transient, meaning they cannot be refetched using the [Federation API](/api/endpoints). These entities are used for actions that do not require a permanent record, such as deletions or migrations. Transient Entities do not have an `id` field.
 
 Implementations **must not** rely on other implementations to store transient entities in their database.
 

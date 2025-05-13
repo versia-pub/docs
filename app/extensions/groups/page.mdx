@@ -107,7 +107,6 @@ Indicates that a [User](/entities/user) wishes to subscribe to a group.
     ```jsonc {{ title: "Example GroupSubscribe" }}
     {
         "type": "pub.versia:groups/Subscribe",
-        "id": "9a7e9345-4e4a-4d5a-8301-4dbbfe777ca0",
         "subscriber": "e9277471-8aa1-4d40-a3d0-0878e818ccdc",
         "group": "example.com:ed480922-b095-4f09-9da5-c995be8f5960",
         "created_at": "2021-01-01T00:00:00Z"
@@ -145,7 +144,6 @@ Indicates that a [User](/entities/user) wishes to unsubscribe from a group.
     ```jsonc {{ title: "Example GroupUnsubscribe" }}
     {
         "type": "pub.versia:groups/Unsubscribe",
-        "id": "9a7e9345-4e4a-4d5a-8301-4dbbfe777ca0",
         "subscriber": "e9277471-8aa1-4d40-a3d0-0878e818ccdc",
         "group": "example.com:ed480922-b095-4f09-9da5-c995be8f5960",
         "created_at": "2021-01-01T00:00:00Z"
@@ -183,7 +181,6 @@ Indicates that a [Group](#entity-definition) has accepted a [User](/entities/use
     ```jsonc {{ title: "Example GroupSubscribeAccept" }}
     {
         "type": "pub.versia:groups/SubscribeAccept",
-        "id": "9a7e9345-4e4a-4d5a-8301-4dbbfe777ca0",
         "subscriber": "e9277471-8aa1-4d40-a3d0-0878e818ccdc",
         "group": "example.com:ed480922-b095-4f09-9da5-c995be8f5960",
         "created_at": "2021-01-01T00:00:00Z"
@@ -221,7 +218,6 @@ Indicates that a [Group](#entity-definition) has rejected a [User](/entities/use
     ```jsonc {{ title: "Example GroupSubscribeReject" }}
     {
         "type": "pub.versia:groups/SubscribeReject",
-        "id": "9a7e9345-4e4a-4d5a-8301-4dbbfe777ca0",
         "subscriber": "e9277471-8aa1-4d40-a3d0-0878e818ccdc",
         "group": "example.com:ed480922-b095-4f09-9da5-c995be8f5960",
         "created_at": "2021-01-01T00:00:00Z"
@@ -267,7 +263,6 @@ The `GroupFederate` entity allows a group to federate a note to all of its membe
     ```jsonc {{ title: "Example GroupFederate" }}
     {
         "type": "pub.versia:groups/Federate",
-        "id": "9a7e9345-4e4a-4d5a-8301-4dbbfe777ca0",
         "note": "c5aa65fa-0356-4029-b61c-6b237e5d1393",
         "group": "example.com:ed480922-b095-4f09-9da5-c995be8f5960",
         "created_at": "2021-01-01T00:00:00Z"
