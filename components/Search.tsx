@@ -17,7 +17,7 @@ import clsx from "clsx";
 import { useRouter } from "next/navigation";
 import {
     type ComponentPropsWithoutRef,
-    type ElementRef,
+    type ComponentRef,
     Fragment,
     type MouseEvent,
     type KeyboardEvent as ReactKeyboardEvent,
@@ -283,7 +283,7 @@ function SearchResults({
 }
 
 const SearchInput = forwardRef<
-    ElementRef<"input">,
+    ComponentRef<"input">,
     {
         autocomplete: Autocomplete;
         autocompleteState: AutocompleteState<Result> | EmptyObject;
@@ -299,7 +299,7 @@ const SearchInput = forwardRef<
                 ref={inputRef}
                 data-autofocus={true}
                 className={clsx(
-                    "flex-auto appearance-none bg-transparent pl-10 text-zinc-900 outline-none placeholder:text-zinc-500 focus:w-full focus:flex-none sm:text-sm dark:text-white [&::-webkit-search-cancel-button]:hidden [&::-webkit-search-decoration]:hidden [&::-webkit-search-results-button]:hidden [&::-webkit-search-results-decoration]:hidden",
+                    "flex-auto appearance-none bg-transparent pl-10 text-zinc-900 outline-hidden placeholder:text-zinc-500 focus:w-full focus:flex-none sm:text-sm dark:text-white [&::-webkit-search-cancel-button]:hidden [&::-webkit-search-decoration]:hidden [&::-webkit-search-results-button]:hidden [&::-webkit-search-results-decoration]:hidden",
                     autocompleteState.status === "stalled" ? "pr-11" : "pr-4",
                 )}
                 {...inputProps}
@@ -354,9 +354,9 @@ function SearchDialog({
     setOpen: (open: boolean) => void;
     className?: string;
 }) {
-    const formRef = useRef<ElementRef<"form">>(null);
-    const panelRef = useRef<ElementRef<"div">>(null);
-    const inputRef = useRef<ElementRef<typeof SearchInput>>(null);
+    const formRef = useRef<ComponentRef<"form">>(null);
+    const panelRef = useRef<ComponentRef<"div">>(null);
+    const inputRef = useRef<ComponentRef<typeof SearchInput>>(null);
     const { autocomplete, autocompleteState } = useAutocomplete({
         close() {
             setOpen(false);
@@ -400,7 +400,7 @@ function SearchDialog({
                     leaveFrom="opacity-100"
                     leaveTo="opacity-0"
                 >
-                    <div className="fixed inset-0 bg-zinc-400/25 backdrop-blur-sm dark:bg-black/40" />
+                    <div className="fixed inset-0 bg-zinc-400/25 backdrop-blur-xs dark:bg-black/40" />
                 </TransitionChild>
 
                 <div className="fixed inset-0 overflow-y-auto px-4 py-4 sm:px-6 sm:py-20 md:py-32 lg:px-8 lg:py-[15vh]">
@@ -456,7 +456,7 @@ function SearchDialog({
 }
 
 function useSearchProps() {
-    const buttonRef = useRef<ElementRef<"button">>(null);
+    const buttonRef = useRef<ComponentRef<"button">>(null);
     const [open, setOpen] = useState(false);
 
     return {
@@ -493,7 +493,7 @@ export function Search() {
         <div className="hidden lg:block lg:max-w-md lg:flex-auto">
             <button
                 type="button"
-                className="hidden h-8 w-full items-center gap-2 rounded-md bg-white pl-2 pr-3 text-sm text-zinc-500 ring-1 ring-zinc-900/10 transition hover:ring-zinc-900/20 ui-not-focus-visible:outline-none lg:flex dark:bg-white/5 dark:text-zinc-400 dark:ring-inset dark:ring-white/10 dark:hover:ring-white/20"
+                className="hidden h-8 w-full items-center gap-2 rounded-md bg-white pl-2 pr-3 text-sm text-zinc-500 ring-1 ring-zinc-900/10 transition hover:ring-zinc-900/20 ui-not-focus-visible:outline-hidden lg:flex dark:bg-white/5 dark:text-zinc-400 dark:ring-inset dark:ring-white/10 dark:hover:ring-white/20"
                 {...buttonProps}
             >
                 <SearchIcon className="h-5 w-5 stroke-current" />
@@ -517,7 +517,7 @@ export function MobileSearch() {
         <div className="contents lg:hidden">
             <button
                 type="button"
-                className="flex h-6 w-6 items-center justify-center rounded-md transition hover:bg-zinc-900/5 ui-not-focus-visible:outline-none lg:hidden dark:hover:bg-white/5"
+                className="flex h-6 w-6 items-center justify-center rounded-md transition hover:bg-zinc-900/5 ui-not-focus-visible:outline-hidden lg:hidden dark:hover:bg-white/5"
                 aria-label="Find something..."
                 {...buttonProps}
             >

@@ -77,7 +77,7 @@ function CopyButton({ code }: { code: string }) {
         <button
             type="button"
             className={clsx(
-                "group/button absolute right-4 top-3.5 overflow-hidden rounded-md py-1 pl-2 pr-3 text-2xs font-medium opacity-0 backdrop-blur transition focus:opacity-100 group-hover:opacity-100",
+                "group/button absolute right-4 top-3.5 overflow-hidden rounded-md py-1 pl-2 pr-3 text-2xs font-medium opacity-0 backdrop-blur-sm transition focus:opacity-100 group-hover:opacity-100",
                 copied
                     ? "bg-brand-400/10 ring-1 ring-inset ring-brand-400/20"
                     : "bg-white/5 hover:bg-white/7.5 dark:bg-white/2.5 dark:hover:bg-white/5",
@@ -163,7 +163,7 @@ function CodePanel({
         <div className="group dark:bg-white/2.5">
             <CodePanelHeader tag={tag} label={label} />
             <div className="relative">
-                <pre className="overflow-x-auto p-4 text-sm text-white [&>code>pre]:!bg-transparent">
+                <pre className="overflow-x-auto p-4 text-sm text-white [&>code>pre]:bg-transparent!">
                     {children}
                 </pre>
                 <CopyButton code={code} />
@@ -188,7 +188,7 @@ function CodeGroupHeader({
     }
 
     return (
-        <div className="flex min-h-[calc(theme(spacing.12)+1px)] flex-wrap items-start gap-x-4 border-b border-zinc-700 bg-zinc-800 px-4 dark:border-zinc-800 dark:bg-transparent">
+        <div className="flex min-h-[calc(--spacing(12)+1px)] flex-wrap items-start gap-x-4 border-b border-zinc-700 bg-zinc-800 px-4 dark:border-zinc-800 dark:bg-transparent">
             {title && (
                 <h3 className="mr-auto pt-3 text-xs font-semibold text-white">
                     {title}
@@ -199,7 +199,7 @@ function CodeGroupHeader({
                     {Children.map(children, (child, childIndex) => (
                         <Tab
                             className={clsx(
-                                "border-b py-3 transition ui-not-focus-visible:outline-none",
+                                "border-b py-3 transition ui-not-focus-visible:outline-hidden",
                                 childIndex === selectedIndex
                                     ? "border-brand-500 text-brand-400"
                                     : "border-transparent text-zinc-400 hover:text-zinc-300",

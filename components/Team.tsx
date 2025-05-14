@@ -36,7 +36,7 @@ export const TeamMember: FC<{
 
             <ul className="pt-6 mt-auto flex gap-5 list-none px-6 flex-wrap">
                 {socials?.map((social) => (
-                    <li className="!m-0" key={social.name}>
+                    <li className="m-0!" key={social.name}>
                         <a
                             href={social.url}
                             target="_blank"
