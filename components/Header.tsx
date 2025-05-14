@@ -3,7 +3,7 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import Link from "next/link";
 import {
     type CSSProperties,
-    type ElementRef,
+    type ComponentRef,
     type ReactNode,
     forwardRef,
 } from "react";
@@ -37,7 +37,7 @@ function TopLevelNavItem({
     );
 }
 
-export const Header = forwardRef<ElementRef<"div">, { className?: string }>(
+export const Header = forwardRef<ComponentRef<"div">, { className?: string }>(
     function Header({ className }, ref) {
         const { isOpen: mobileNavIsOpen } = useMobileNavigationStore();
         const isInsideMobileNavigation = useIsInsideMobileNavigation();
@@ -51,13 +51,13 @@ export const Header = forwardRef<ElementRef<"div">, { className?: string }>(
                 ref={ref}
                 className={clsx(
                     className,
-                    // Add bg-construction bg-opacity-10 [background-size:57px_57px] classes to make it striped
-                    "fixed inset-x-0 top-0 z-50 flex h-14 items-center justify-between gap-2 px-4 transition sm:px-6 lg:left-72 lg:z-30 lg:px-8 xl:left-80 bg-construction bg-opacity-10 [background-size:57px_57px]",
+                    // Add "construction" class to make it striped
+                    "fixed inset-x-0 top-0 z-50 flex h-14 items-center justify-between gap-2 px-4 transition sm:px-6 lg:left-72 lg:z-30 lg:px-8 xl:left-80 construction",
                     !isInsideMobileNavigation &&
-                        "backdrop-blur-sm lg:left-72 xl:left-80 dark:backdrop-blur",
+                        "backdrop-blur-xs lg:left-72 xl:left-80 dark:backdrop-blur-sm",
                     isInsideMobileNavigation
                         ? "bg-white dark:bg-zinc-900"
-                        : "bg-white/[var(--bg-opacity-light)] dark:bg-zinc-900/[var(--bg-opacity-dark)]",
+                        : "bg-white/(--bg-opacity-light) dark:bg-zinc-900/(--bg-opacity-dark)",
                 )}
                 style={
                     {

@@ -80,7 +80,7 @@ function ResourcePattern({
 
     return (
         <div className="pointer-events-none">
-            <div className="absolute inset-0 rounded-md transition duration-300 [mask-image:linear-gradient(white,transparent)] group-hover:opacity-50">
+            <div className="absolute inset-0 rounded-md transition duration-300 mask-[linear-gradient(white,transparent)] group-hover:opacity-50">
                 <GridPattern
                     width={72}
                     height={56}
@@ -90,7 +90,7 @@ function ResourcePattern({
                 />
             </div>
             <motion.div
-                className="absolute inset-0 rounded-md bg-gradient-to-r from-brand-100 to-brand-50 opacity-0 transition duration-300 group-hover:opacity-100 dark:from-brand-900/30 dark:to-brand-950/30"
+                className="absolute inset-0 rounded-md bg-linear-to-r from-brand-100 to-brand-50 opacity-0 transition duration-300 group-hover:opacity-100 dark:from-brand-900/30 dark:to-brand-950/30"
                 style={style}
             />
             <motion.div

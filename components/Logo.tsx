@@ -15,10 +15,10 @@ export function Logo(props: ComponentPropsWithoutRef<"div">) {
             <img
                 src="https://cdn.versia.pub/branding/icon.svg"
                 alt="Logo"
-                className="h-full rounded-sm"
+                className="h-full rounded-xs"
             />
             <span className="fill-zinc-900 dark:fill-white font-semibold text-lg">
-                Versia Protocol <Badge className="!h-6">Dev</Badge>
+                Versia Protocol <Badge className="h-6!">Dev</Badge>
             </span>
         </div>
     );

@@ -269,7 +269,7 @@ const Page: FC = () => {
                         src={fastlyLogo}
                         alt="Fastly logo"
                         height={144}
-                        className="p-10 rounded border border-zinc-900/10 dark:border-white/10"
+                        className="p-10 rounded-sm border border-zinc-900/10 dark:border-white/10"
                         unoptimized={true}
                     />
                 </p>

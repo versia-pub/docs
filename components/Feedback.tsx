@@ -3,7 +3,7 @@
 import { Transition } from "@headlessui/react";
 import {
     type ComponentPropsWithoutRef,
-    type ElementRef,
+    type ComponentRef,
     type FormEvent,
     forwardRef,
     useState,
@@ -37,7 +37,7 @@ function FeedbackButton(
 }
 
 const FeedbackForm = forwardRef<
-    ElementRef<"form">,
+    ComponentRef<"form">,
     Pick<ComponentPropsWithoutRef<"form">, "onSubmit">
 >(function FeedbackForm({ onSubmit }, ref) {
     return (
@@ -49,7 +49,7 @@ const FeedbackForm = forwardRef<
             <p className="text-sm text-zinc-600 dark:text-zinc-400">
                 Was this page helpful?
             </p>
-            <div className="group grid h-8 grid-cols-[1fr,1px,1fr] overflow-hidden rounded-md border border-zinc-900/10 dark:border-white/10">
+            <div className="group grid h-8 grid-cols-[1fr_1px_1fr] overflow-hidden rounded-md border border-zinc-900/10 dark:border-white/10">
                 <FeedbackButton data-response="yes">Yes</FeedbackButton>
                 <div className="bg-zinc-900/10 dark:bg-white/10" />
                 <FeedbackButton data-response="no">No</FeedbackButton>
@@ -58,7 +58,7 @@ const FeedbackForm = forwardRef<
     );
 });
 
-const FeedbackThanks = forwardRef<ElementRef<"div">>(
+const FeedbackThanks = forwardRef<ComponentRef<"div">>(
     // biome-ignore lint/style/useNamingConvention: <explanation>
     function FeedbackThanks(_props, ref) {
         return (

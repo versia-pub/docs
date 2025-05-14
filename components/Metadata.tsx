@@ -24,7 +24,7 @@ export function Changelog({ children }: { children: ReactNode }) {
     const [isOpen, setIsOpen] = useState(false);
 
     return (
-        <dl className="rounded border border-zinc-200 dark:border-zinc-800 py-2 px-4 dark:bg-white/2.5">
+        <dl className="rounded-sm border border-zinc-200 dark:border-zinc-800 py-2 px-4 dark:bg-white/2.5">
             <dt>
                 <motion.button
                     className="grid grid-cols-[1fr_auto] items-center space-x-4 w-full"

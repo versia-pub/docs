@@ -48,7 +48,7 @@ export function Libraries() {
                         <Image
                             src={library.logo}
                             alt=""
-                            className="h-12 w-12 rounded m-0"
+                            className="h-12 w-12 rounded-sm m-0"
                             unoptimized={true}
                         />
                     </div>
