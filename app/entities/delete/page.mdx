@@ -24,8 +24,8 @@ Having the authorization is defined as:
 <Row>
     <Col>
         <Properties name="Delete">
-            <Property name="author" type="Reference | null" required={true} typeLink="/types#reference">
-                [Reference](/types#reference) to the `User` who is deleting the entity. [Can be set to `null` to represent the instance](/entities/instance-metadata#the-null-author).
+            <Property name="author" type="Reference" required={true} typeLink="/types#reference">
+                [Reference](/types#reference) to the `User` who is deleting the entity.
             </Property>
             <Property name="deleted_type" type="string" required={true}>
                 Type of the entity being deleted.

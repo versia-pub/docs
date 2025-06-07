@@ -16,8 +16,8 @@ Collections are a way to represent paginated groups of entities. They are used e
 <Row>
     <Col>
         <Properties name="Collection">
-            <Property name="author" type="Reference | null" required={true} typeLink="/types#reference">
-                [Reference](/types#reference) to the author of the collection. Usually the user who owns the collection. [Can be set to `null` to represent the instance](/entities/instance-metadata#the-null-author).
+            <Property name="author" type="Reference" required={false} typeLink="/types#reference">
+                [Reference](/types#reference) to the author of the collection. Usually the user who "owns" the collection.
             </Property>
             <Property name="total" type="number" required={true} numberType="u64">
                 Total number of entities in the collection, across all pages.
@@ -64,8 +64,8 @@ URI Collections are identical to regular collections, but they contain only URIs
 <Row>
     <Col>
         <Properties name="URICollection">
-            <Property name="author" type="Reference | null" required={true} typeLink="/types#reference">
-                [Reference](/types#reference) to the author of the collection. Usually the user who owns the collection. [Can be set to `null` to represent the instance](/entities/instance-metadata#the-null-author).
+            <Property name="author" type="Reference" required={false} typeLink="/types#reference">
+                [Reference](/types#reference) to the author of the collection. Usually the user who owns the collection.
             </Property>
             <Property name="total" type="number" required={true} numberType="u64">
                 Total number of entities in the collection, across all pages.
