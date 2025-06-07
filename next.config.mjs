@@ -17,6 +17,11 @@ const withMDX = nextMDX({
 const nextConfig = {
     pageExtensions: ["js", "jsx", "ts", "tsx", "mdx"],
     output: "export",
+    images: {
+        domains: [
+            "api.microlink.io", // Microlink Image Preview
+        ],
+    },
 };
 
 const withBundleAnalyzer = bundleAnalyzer({
