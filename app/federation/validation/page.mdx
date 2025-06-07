@@ -6,7 +6,7 @@ export const metadata = {
 
 # Validation
 
-Implementations **MUST** strictly validate all incoming data to ensure that it is well-formed and adheres to the Versia Protocol. If a request is invalid, the instance **MUST** return a `400 Bad Request` HTTP status code.
+Implementations **MUST** strictly validate all incoming data to ensure that it is well-formed and adheres to the Versia Protocol. If a request is invalid, the instance **MUST** return a `422 Unprocessable Entity` HTTP status code.
 
 <Note>
     Remember that while *your* implementation may disallow or restrict some user input, other implementations may not. You **should not** apply those restrictions to data coming from other instances.
@@ -16,13 +16,13 @@ Implementations **MUST** strictly validate all incoming data to ensure that it i
 
 Things that should be validated include, but are not limited to:
 
-- The presence of **all required fields**.
+- The presence of **all required fields**, and the presence of `null` on optional fields.
 - The **format** of all fields (integers should not be strings, timestamps should be in RFC 3339 format, etc.).
 - The presence of **all required headers**.
 - The presence of a **valid signature**.
 - The **length** of all fields (for example, the `username` field on a `User` entity) should be at least 1 character long.
   - Do not set arbitrary limits on the length of fields that other instances may send you. For example, a `bio` field should not be limited to 160 characters, even if your own implementation has such a limit.
-  - If you do set limits, they should be reasonable, well-documented and should allow Users to easily view the remote original, by, for example, linking to it.
+  - If you do set limits, they should be reasonable, well-documented and should allow Users to easily view the remote original, by, for example, linking to it. A limit of `100 000` characters for a `bio` field is acceptable, but a limit of `160` characters is not.
 - The **type**, **precision** and **scale** of all numeric fields.
   - For example, a `size` field on a `ContentFormat` structure should be a positive integer, not a negative number or a floating-point number.
 <Note>
@@ -30,7 +30,7 @@ Things that should be validated include, but are not limited to:
     
     Using the same type with a higher bit count, for example using a u128 instead of a u64, is acceptable. Beware of performance impacts this may cause.
 </Note>
-- The **validity** of all URLs and URIs (run them through your favorite URL parser, optionally fetch the linked URL).
+- The **validity** of all URLs and URIs (run them through your favorite URL parser).
 - The **time** of all dates and times (people should not be born in the future, or in the year 0).
 
 It is your implementation's duty to reject data from other instances that does not adhere to the strict spec. **This is crucial to ensure the integrity of your instance and the network as a whole**. Allowing data that is technically valid but semantically incorrect can lead to the degradation of the entire Versia ecosystem.

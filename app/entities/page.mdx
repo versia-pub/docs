@@ -6,9 +6,12 @@ export const metadata = {
 
 # Entities
 
-Entities are the foundation of the Versia protocol. A similar concept to entities are the [ActivityStreams](https://www.w3.org/TR/activitystreams-core/) objects, which are used to represent activities in the [ActivityPub](https://www.w3.org/TR/activitypub/) protocol. {{ className: 'lead' }}
+Entities are the foundation of the Versia protocol. They are similar to: {{ className: 'lead' }}
 
-## Entity Definition
+- [ActivityStreams](https://www.w3.org/TR/activitystreams-core/) objects
+- [Matrix](https://matrix.org/) events.
+
+## Definition
 
 An entity is a simple JSON object that represents a core data structure in Versia. Entities are used to represent various types of data, such as users, notes, and more. Each entity has a unique `id` property that is used to identify it within the instance.
 
@@ -31,11 +34,11 @@ Any field in an entity not marked as `required` may be set to `null`. These fiel
         <Property name="type" type="string" required={true}>
             Type of the entity. Custom types must follow [Extension Naming](/extensions#naming).
         </Property>
-        <Property name="created_at" type="RFC3339" required={true} typeLink="/types#rfc3339">
+        <Property name="created_at" type="RFC3339" required={true} typeLink="/types#rfc-3339">
             Date and time when the entity was created. Must be an [RFC 3339](https://datatracker.ietf.org/doc/html/rfc3339) timestamp.
 
             <Note>
-            Handling of dates that are valid but obviously incorrect (e.g. in the future) is left to the Implementation's discretion.
+            Handling of dates that are valid but obviously incorrect (e.g. in the future) is left to the Implementation's discretion. Sending a [Note](/entities/note) created on `13-12-1337` is very funny, but don't be surprised if it is rejected.
             </Note>
         </Property>
         <Property name="$schema" type="string" required={false}>
@@ -86,14 +89,6 @@ Any field in an entity not marked as `required` may be set to `null`. These fiel
 
 ## Transient Entities
 
-Some entities are transient, meaning they cannot be refetched using the [Federation API](/api/endpoints). These entities are used for actions that do not require a permanent record, such as deletions or migrations. Transient Entities do not have an `id` field.
+Some entities are **transient**, meaning they cannot be fetched using the [Federation API](/api/endpoints). These entities are used for actions that do not require a permanent record, such as deletions or migrations. Transient Entities do not have an `id` field.
 
 Implementations **must not** rely on other implementations to store transient entities in their database.
-
-## Serialization
-
-When serialized to a string, the JSON representation of an entity must follow the following rules:
-- Keys must be sorted lexicographically.
-- Must use UTF-8 encoding.
-- Must be **signed** using the the [instance's private key](/entities/instance-metadata).
-- Must use Unix-style `\n` line endings (LF).

@@ -20,6 +20,13 @@ This page lists changes since Working Draft 3. {{ className: 'lead' }}
 - Added [References](/types#reference) as a way to refer to other entities.
 - Mandated the usage of `null` for optional fields that are not set, instead of omitting them.
 - Changed usage of "`null` authors" to simply being an optional field.
+- Added more guidelines on [JSON data handling](/json).
+- Clarified the meaning of [Domain](/api/basics#domain) in the context of Versia.
+- Changes to [Note](/entities/note):
+    - `is_sensitive`, `attachments`, `mentions` and `previews` are now required.
+- Changes to [User](/entities/user):
+    - `fields`, `manually_approves_followers` and `indexable` are now required.
+- Removed "short pronoun" from [Vanity Extension](/extensions/vanity) (union types are tricky to parse in strongly typed languages).
 
 ## Since WD 4
 

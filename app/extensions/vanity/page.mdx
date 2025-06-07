@@ -42,13 +42,10 @@ All properties are optional.
                 Audio format (e.g. `audio/mpeg`).
             </Property>
             <Property name="pronouns" type="{ [key: LanguageCode]: Pronoun[] }" required={false}>
-                An array of internationalized pronouns the user uses. Can be represented as a string or an object.
+                An array of internationalized pronouns the user uses.
 
                 ```typescript
-                /* e.g. "he/him" */
-                type ShortPronoun = string;
-
-                interface LongPronoun {
+                interface Pronoun {
                     subject: string;
                     object: string;
                     dependent_possessive: string;
@@ -56,12 +53,11 @@ All properties are optional.
                     reflexive: string;
                 }
 
-                type Pronoun = ShortPronoun | LongPronoun;
                 /* Example: en-US or fr */
                 type LanguageCode = string;
                 ```
             </Property>
-            <Property name="birthday" type="RFC3339" required={false} typeLink="/types#rfc3339">
+            <Property name="birthday" type="RFC3339" required={false} typeLink="/types#rfc-3339">
                 User's birthday. If year is left out or set to `0000`, implementations **SHOULD** not display the year.
             </Property>
             <Property name="location" type="string" required={false}>
@@ -92,6 +88,14 @@ All properties are optional.
                         "image/png": {
                             "content": "https://cdn.example.com/ab5081cf-b11f-408f-92c2-7c246f290593/cat_ears.png",
                             "remote": true,
+                            "description": null,
+                            "size": null,
+                            "hash": null,
+                            "thumbhash": null,
+                            "width": null,
+                            "height": null,
+                            "fps": null,
+                            "duration": null
                         }
                     }
                 ],
@@ -99,23 +103,53 @@ All properties are optional.
                     "image/png": {
                         "content": "https://cdn.example.com/d8c42be1-d0f7-43ef-b4ab-5f614e1beba4/rounded_square.jpeg",
                         "remote": true,
+                        "description": null,
+                        "size": null,
+                        "hash": null,
+                        "thumbhash": null,
+                        "width": null,
+                        "height": null,
+                        "fps": null,
+                        "duration": null
                     }
                 },
                 "background": {
                     "image/png": {
                         "content": "https://cdn.example.com/6492ddcd-311e-4921-9567-41b497762b09/untitled-file-0019822.png",
                         "remote": true,
+                        "description": null,
+                        "size": null,
+                        "hash": null,
+                        "thumbhash": null,
+                        "width": null,
+                        "height": null,
+                        "fps": null,
+                        "duration": null
                     }
                 },
                 "audio": {
                     "audio/mpeg": {
                         "content": "https://cdn.example.com/4da2f0d4-4728-4819-83e4-d614e4c5bebc/michael-jackson-thriller.mp3",
                         "remote": true,
+                        "description": null,
+                        "size": null,
+                        "hash": null,
+                        "thumbhash": null,
+                        "width": null,
+                        "height": null,
+                        "fps": null,
+                        "duration": null
                     }
                 },
                 "pronouns": {
                     "en-us": [
-                        "he/him",
+                        {
+                            "subject": "he",
+                            "object": "him",
+                            "dependent_possessive": "his",
+                            "independent_possessive": "his",
+                            "reflexive": "himself"
+                        },
                         {
                             "subject": "they",
                             "object": "them",

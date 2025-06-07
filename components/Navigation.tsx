@@ -250,6 +250,7 @@ export const navigation: NavGroup[] = [
             { title: "Introduction", href: "/introduction" },
             { title: "SDKs", href: "/sdks" },
             { title: "Entities", href: "/entities" },
+            { title: "JSON", href: "/json" },
             { title: "Signatures", href: "/signatures" },
             { title: "Security", href: "/security" },
             { title: "Federation", href: "/federation" },
@@ -321,7 +322,6 @@ export const navigation: NavGroup[] = [
             { title: "Reports", href: "/extensions/reports" },
             { title: "Share", href: "/extensions/share" },
             { title: "Vanity", href: "/extensions/vanity" },
-            { title: "WebSockets", href: "/extensions/websockets" },
         ],
     },
 ];

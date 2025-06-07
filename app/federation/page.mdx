@@ -29,7 +29,7 @@ Ever [Instance](/entities/instance-metadata) has a personal HTTP endpoint called
 
 Let's consider the following example:
 
-> Alice, on the instance `alice.example`, sends a message to Bob on the instance `bob.example`.
+Alice, on the instance `alice.example`, sends a message to Bob on the instance `bob.example`.
 
 To perform this action, Alice's instance sends a `POST` request to Bob's instance's inbox endpoint. This request contains the [Note](/entities/note) entity that Alice wants to send to Bob, with [the appropriate metadata](/federation/http) to ensure the message is valid.
 
@@ -38,5 +38,13 @@ Bob's instance receives the message and processes it according to the rules defi
 ## Outboxes
 
 In addition to inboxes, every user has an outbox (at `/.versia/v0.6/entities/User/<id>/collections/outbox`). The outbox is simply a [Collection](/structures/collection) of all the messages that a user has sent. When a user sends a message to another user, a copy of that message is accessible in the sender's outbox.
+
+<Warning>
+    Implementations **should** filter out entities that are not relevant to the request author when returning the outbox.
+    
+    For example, if Alice sends a [Note](/entities/note) to Bob on `direct` visibility:
+    - Alice's instance **should** return the [Note](/entities/note) in response to a request from Bob's instance.
+    - Alice's instance **should not** display the [Note](/entities/note) in her outbox in response to a request from Joe's instance.
+</Warning>
 
 Outboxes are very useful for "backfilling" data when a new instance joins the network. By resolving the outboxes of all new users it encounters, a new instance can quickly catch up on all old messages.

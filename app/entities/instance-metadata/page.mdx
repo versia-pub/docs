@@ -48,8 +48,8 @@ Contains metadata about a Versia instance, such as capabilities and endpoints. {
             <Property name="description" type="string" required={false}>
                 Long description of the instance, for humans. Should be around 100-200 words.
             </Property>
-            <Property name="host" type="string" required={true}>
-                Hostname of the instance. Includes the port if it is not the default (i.e. `443` for HTTPS).
+            <Property name="domain" type="Domain" typeLink="/api/basics#domain" required={true}>
+                Domain of the instance, used for federation.
             </Property>
             <Property name="public_key" type="PublicKey" required={true}>
                 Public key of the instance.
@@ -96,7 +96,7 @@ Contains metadata about a Versia instance, such as capabilities and endpoints. {
             ]
         },
         "description": "Server for Jim's Jolly Jimjams, a social network for fans of Jimjams.",
-        "host": "social.jimjams.com",
+        "domain": "social.jimjams.com",
         "logo": {
             "image/png": {
                 "content": "https://social.jimjams.com/files/logo.png"

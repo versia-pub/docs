@@ -22,7 +22,7 @@ export const metadata = {
             Must be `GET`.
         </Property>
         <Property name="response">
-            Must be the instance's metadata, as defined in the [Instance Metadata](/entities/instance-metadata) document.
+            Instance's metadata, as defined in the [Instance Metadata](/entities/instance-metadata) document.
         </Property>
     </Properties>
 
@@ -66,7 +66,7 @@ export const metadata = {
                 Must be `GET`.
             </Property>
             <Property name="response">
-                Must be the entity's data as JSON, as defined in its [Entity](/entities) definition document.
+                Entity data as JSON, as defined in its [Entity](/entities) definition document.
             </Property>
         </Properties>
     </Col>
@@ -151,9 +151,9 @@ Accept: application/vnd.versia+json
 
 ## Inbox
 
-The inbox endpoint is used for other instances to send entities to this instance. It is a single endpoint that can receive messages for every user (also known as a shared inbox).
+The inbox endpoint is used for instances to send entities to each other. It is a single endpoint that can receive messages for every user (also known as a shared inbox).
 
-The delivery mechanism is described further in the [Federation](/federation) document.
+The delivery mechanism is described further in the [Federation](/federation#inboxes) document.
 
 <Row>
     <Col>

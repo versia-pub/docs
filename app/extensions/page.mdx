@@ -21,7 +21,7 @@ Extensions **must not** be designed in a way that makes them required to underst
 
 Versia extension names are composed of two parts:
 - The domain name of the extension author, in reverse order. Example: `pub.versia`
-- The extension name, separated by a colon. `snake_case`. Example: `likes`
+- The extension name, separated by a colon, in `snake_case`. Example: `likes`
 
 ``` {{ title: "Example Extension Name" }}
 pub.versia:likes
@@ -30,7 +30,7 @@ pub.versia:likes
 ### Custom entities
 
 Custom entities are named in the same way, but with an additional part:
-- The entity name, separated by a slash. `PascalCase`. Example: `Like`
+- The entity name, separated by a slash, in `PascalCase`. Example: `Like`
 
 ``` {{ title: "Example Custom Entity Type" }}
 pub.versia:likes/Like
@@ -49,9 +49,7 @@ Extensions can be found in two places: an [Entity](/entities#entity-definition)'
                 Custom extensions to the entity.
 
                 - `key`: The extension name.
-                - `value`: Extension data. Can be any JSON-serializable data.
-
-                Extension data can be any JSON-serializable data.
+                - `value`: Extension data. Can be any JSON object, following [Versia JSON rules](/json).
             </Property>
         </Properties>
     </Col>
@@ -63,6 +61,7 @@ Extensions can be found in two places: an [Entity](/entities#entity-definition)'
         "id": "ed480922-b095-4f09-9da5-c995be8f5960",
         "name": null,
         "description": null,
+        "open": true,
         "extensions": { // [!code focus:100]
             "com.example:gps": {
                 "location": {
@@ -85,7 +84,7 @@ Extensions can be found in two places: an [Entity](/entities#entity-definition)'
     <Col>
         <Properties name="CustomEntity">
             <Property name="type" type="string" required={true}>
-                The extension type. [Must follow naming conventions](#naming).
+                The extension type, [following naming conventions](#naming).
             </Property>
             <Property name="other">
                 Other properties of the custom entity. These are specific to the extension, and should be documented by the extension author.

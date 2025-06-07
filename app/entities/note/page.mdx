@@ -16,7 +16,7 @@ Notes represent a piece of content on a Versia instance. They can be posted by [
 <Row>
     <Col>
         <Properties name="Note">
-            <Property name="attachments" type="ContentFormat[]" required={false} typeLink="/structures/content-format">
+            <Property name="attachments" type="ContentFormat[]" required={true} typeLink="/structures/content-format">
                 Media attachments to the note. May be any format. **Must** be remote.
             </Property>
             <Property name="author" type="Reference" required={true} typeLink="/types#reference">
@@ -61,13 +61,13 @@ Notes represent a piece of content on a Versia instance. They can be posted by [
                     If the implementation does not support the [Groups Extension](/extensions/groups), any value other than `public` or `followers` should be treated as `null`.
                 </Note>
             </Property>
-            <Property name="is_sensitive" type="boolean" required={false}>
+            <Property name="is_sensitive" type="boolean" required={true}>
                 Whether the note contains "sensitive content". This can be used with `subject` as a "content warning" feature.
             </Property>
-            <Property name="mentions" type="Reference[]" required={false} typeLink="/types#reference">
+            <Property name="mentions" type="Reference[]" required={true} typeLink="/types#reference">
                 [References](/types#reference) to [Users](/entities/user) that should be notified of the note. Similar to Twitter's `@` mentions. The note may also contain mentions in the content, however only the mentions in this field should trigger notifications.
             </Property>
-            <Property name="previews" type="LinkPreview[]" required={false}>
+            <Property name="previews" type="LinkPreview[]" required={true}>
                 Previews for any links in the publication. This is to avoid the [stampeding mastodon problem](https://github.com/mastodon/mastodon/issues/23662) where a link preview is fetched by every instance that sees the publication, creating an accidental DDOS attack.
 
                 ```typescript
@@ -108,6 +108,9 @@ Notes represent a piece of content on a Versia instance. They can be posted by [
                     "content": "https://cdn.versia.social/29e810bf4707fef373d886af322089d5db300fce66e4e073efc26827f10825f6/image.webp",
                     "remote": true,
                     "thumbhash": "1QcSHQRnh493V4dIh4eXh1h4kJUI",
+                    "description": null,
+                    "fps": null,
+                    "duration": null,
                     "height": 960,
                     "size": 221275,
                     "hash": {
@@ -120,6 +123,12 @@ Notes represent a piece of content on a Versia instance. They can be posted by [
                 "text/plain": {
                     "content": "https://cdn.lysand.org/68c02dd11c179ef4d170b05393f6e72133dd0ad733f40d41b42363d8784e8d5d/fire.txt",
                     "remote": true,
+                    "description": null,
+                    "thumbhash": null,
+                    "width": null,
+                    "height": null,
+                    "fps": null,
+                    "duration": null
                     "size": 8,
                     "hash": {
                         "sha256": "68c02dd11c179ef4d170b05393f6e72133dd0ad733f40d41b42363d8784e8d5d"
@@ -150,7 +159,10 @@ Notes represent a piece of content on a Versia instance. They can be posted by [
         "group": "public",
         "is_sensitive": false,
         "mentions": [],
-        "subject": "Versia development"
+        "subject": "Versia development",
+        "previews": [],
+        "quotes": null,
+        "replies_to": null
     }
     ```
 

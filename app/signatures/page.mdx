@@ -18,15 +18,15 @@ Versia uses cryptographic signatures to ensure the integrity and authenticity of
 
 A signature consists of a series of headers in an HTTP request. The following headers are used:
 - **`Versia-Signature`**: The signature itself, encoded in base64.
-- **`Versia-Signed-By`**: Hostname of the instance that signed the request. This **MUST** be a hostname reachable over HTTPS (including port number if applicable), and **MUST NOT** be a URL.
-- **`Versia-Signed-At`**: The current Unix timestamp, in seconds (no milliseconds), when the request was signed. Timezone must be UTC, like all Unix timestamps.
+- **`Versia-Signed-By`**: [Domain](/api/basics#domain) of the instance authoring the request.
+- **`Versia-Signed-At`**: The current Unix timestamp, in seconds (integer), when the request was signed. Timezone must be UTC, like all Unix timestamps.
 
-Signatures are **required on ALL federation traffic**. If a request does not have a signature, it **MUST** be rejected. Specifically, signatures must be put on:
-- **All POST requests**.
-- **All GET requests**.
-- **All responses to GET requests** (for example, when fetching a user's profile). In this case, the HTTP method used in the signature string must be `GET`.
+Signatures must be put on:
+- **All `POST` requests**.
+- **All `GET` requests**.
+- **All responses to `GET` requests** (for example, when fetching a user's profile).
 
-If a signature fails, is missing or is invalid, the instance **MUST** return a `401 Unauthorized` HTTP status code. If the signature timestamp is too old or too new (more than 5 minutes from the current time), the instance **MUST** return a `422 Unprocessable Entity` status code.
+If a signature fails, is missing or is invalid, the instance **must** return a `401 Unauthorized` HTTP status code. If the signature is too old or too new (more than 5 minutes from the current time), the instance **must** return a `422 Unprocessable Entity` status code.
 
 ### Calculating the Signature
 
@@ -36,12 +36,12 @@ $0 $1 $2 $3
 ```
 
 Where:
-- `$0` is the HTTP method (e.g. `GET`, `POST`) in lowercase.
-- `$1` is the path of the request, in standard URI format (don't forget to URL-encode it).
-- `$2` is the Unix timestamp when the request was signed, in UTC seconds.
+- `$0` is the HTTP method (e.g. `GET`, `POST`) in lowercase. If signing a *response*, use the method of the original request.
+- `$1` is the request pathname, URL-encoded.
+- `$2` is the Unix timestamp when the request was signed, in UTC seconds (integer).
 - `$3` is the SHA-256 hash of the request body, encoded in base64. (if it's a `GET` request, this should be the hash of an empty string)
 
-Sign this string using the user's private key. The resulting signature should be encoded in base64.
+Sign this string using the instance's private key with the [Ed25519](https://en.wikipedia.org/wiki/EdDSA#Ed25519) algorithm. The resulting bytes **must** be encoded in base64.
 
 Example:
 ```
@@ -50,12 +50,12 @@ post /notes 1729243417 n4bQgYhMfWWaL+qgxVrQFaO/TxsrC4Is0V1sFbDwCgg=
 
 ### Verifying the Signature
 
-To verify a signature, the instance must:
+To verify a signature, the verifying instance must:
 - Recreate the string as described above.
 - Extract the signature provided in the `Versia-Signature` header.
 - Check that the `Versia-Signed-At` timestamp is within 5 minutes of the current time.
-- Decode the signature from base64.
-- Perform a signature verification using the user's public key.
+- Decode the signature from base64 to the raw bytes.
+- Perform a signature verification using the sender instance's public key.
 
 ### Example
 
@@ -68,7 +68,7 @@ The following example is written in TypeScript using the WebCrypto API.
 }
 ```
 
-Bob can be found at `https://bob.com/.versia/v0.6/entities/User/bf44e6ad-7c0a-4560-9938-cf3fd4066511`. His instance's ed25519 private key, encoded in Base64 PKCS8, is `MC4CAQAwBQYDK2VwBCIEILrNXhbWxC/MhKQDsJOAAF1FH/R+Am5G/eZKnqNum5ro`.
+Bob can be found at `https://bob.com/.versia/v0.6/entities/User/bf44e6ad-7c0a-4560-9938-cf3fd4066511`. His instance's ed25519 private key, encoded in Base64 [PKCS8](https://en.wikipedia.org/wiki/PKCS_8), is `MC4CAQAwBQYDK2VwBCIEILrNXhbWxC/MhKQDsJOAAF1FH/R+Am5G/eZKnqNum5ro`.
 
 Here's how Bob would sign the request:
 ```typescript
@@ -131,7 +131,7 @@ On Alice's side, she would verify the signature using Bob's instance's public ke
 const method = request.method.toLowerCase();
 const path = new URL(request.url).pathname;
 const signature = request.headers.get("Versia-Signature");
-const timestamp = request.headers.get("Versia-Signed-At");
+const timestamp = Number(request.headers.get("Versia-Signed-At")) * 1000; // Convert to milliseconds
 
 // Check if timestamp is within 5 minutes of the current time
 if (Math.abs(Date.now() - timestamp) > 300_000) {
@@ -160,10 +160,10 @@ if (!isVerified) {
 
 ## Exporting the Public Key
 
-Public keys are always encoded using `base64` and must be in SPKI format. You will need to look up the appropriate method for your cryptographic library to convert the key to this format.
+Public keys are always encoded using `base64` and must be in [SPKI](https://en.wikipedia.org/wiki/Simple_public-key_infrastructure) format. You will need to look up the appropriate method for your cryptographic library to convert the key to this format.
 
 <Note>
-    This is **not** the same as the key's raw bytes.
+    This is **not** merely the key's raw bytes encoded as base64. You must export the key in [SPKI](https://en.wikipedia.org/wiki/Simple_public-key_infrastructure) format, *then* encode it as base64.
 
     This is also not the commonly used "PEM" format.
 </Note>

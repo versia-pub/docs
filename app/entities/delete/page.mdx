@@ -5,14 +5,14 @@ export const metadata = {
 
 # Delete
 
-Signals the deletion of an entity. It is a [**Transient Entity**](/entities#transient-entities). {{ className: 'lead' }}
+Signals the deletion of an entity. {{ className: 'lead' }}
 
 ## Authorization
 
 Implementations **must** ensure that the author of the `Delete` entity has the authorization to delete the target entity.
 
 Having the authorization is defined as:
-- The author is the creator of the target entity (including [delegation](/federation/delegation)).
+- The author is the creator of the target entity (including [delegation](/extensions/delegation)).
 - The author is the instance.
 
 ## Entity Definition

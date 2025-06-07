@@ -35,7 +35,7 @@ Usernames can be changed by the user, so it is recommended to use `id` for long-
 
 ### Instance
 
-Instance **must** be the host of the instance the user is on (hostname with optional port).
+Instance **must** be the [Domain](/api/basics#domain) that the user is on.
 
 ## Entity Definition
 
@@ -52,7 +52,7 @@ Instance **must** be the host of the instance the user is on (hostname with opti
         <Property name="display_name" type="string" required={false}>
             Display name, as shown to other users. May contain emojis and any Unicode character.
         </Property>
-        <Property name="fields" type="Field[]" required={false}>
+        <Property name="fields" type="Field[]" required={true}>
             Custom key/value pairs. For example, metadata like socials or pronouns. Must be text format (`text/*`).
 
             ```typescript
@@ -70,11 +70,11 @@ Instance **must** be the host of the instance the user is on (hostname with opti
         <Property name="header" type="ContentFormat" required={false} typeLink="/structures/content-format">
             A header image for the user's profile. Also known as a cover photo or a banner. Must be an image format (`image/*`).
         </Property>
-        <Property name="manually_approves_followers" type="boolean" required={false}>
-            If `true`, the user must approve any new followers manually. If `false`, followers are automatically approved. This does not affect federation, and is meant to be used for clients to display correct UI. Defaults to `false`.
+        <Property name="manually_approves_followers" type="boolean" required={true}>
+            If `true`, the user must approve any new followers manually. If `false`, followers are automatically approved. This does not affect federation, and is meant to be used for clients to display correct UI.
         </Property>
-        <Property name="indexable" type="boolean" required={false}>
-            User consent to be indexed by search engines. If `false`, the user's profile should not be indexed. Defaults to `true`.
+        <Property name="indexable" type="boolean" required={true}>
+            User consent to be indexed by search engines. If `false`, the user's profile should not be indexed.
         </Property>
     </Properties>
 

@@ -50,7 +50,7 @@ curl https://b.social/.well-known/webfinger?resource=acct:joe@b.social -H "Accep
 <Note>
     In a real Versia implementation, usernames would **not** be included in user profile's URL, as they can be changed. Instead, the `id` could be used.
     
-    This is done for simplicity in this example. 
+    This is done for brevity here.
 </Note>
 
 ### Fetching the User
@@ -58,10 +58,10 @@ curl https://b.social/.well-known/webfinger?resource=acct:joe@b.social -H "Accep
 `a.social` fetches the user profile of `joe` from `b.social` using the URL provided in the WebFinger response.
 
 ```bash
+# The request is signed by a.social's instance private key
 curl https://b.social/.versia/entities/User/joe \
     -H "Accept: application/vnd.versia+json" \
     -H "User-Agent: CoolServer/1.0 (https://coolserver.com)" \
-    # The request is signed by a.social's instance private key
     -H "Versia-Signature: /CjB2L9bcvRg+uP19B4/rqy7Ji9/cqMFPlL3GVCIndnQjYyOpBzJEAl9weDnXm7Jrqa3y6sBC+EYWKThO2r9Bw==" \
     -H "Versia-Signed-By: a.social" \
     -H "Versia-Signed-At: 1729241687"
@@ -71,17 +71,30 @@ curl https://b.social/.versia/entities/User/joe \
 
 ```json
 {
-    "id": "bde22zi3ca8762", // [!code focus:10]
+    "id": "bde22zi3ca8762", // [!code focus:3]
     "type": "User",
     "created_at": "2024-10-13T18:48:19Z",
     "avatar": {
         "image/webp": {
             "content": "https://cdn.b.social/avatars/joe.webp",
-            "remote": true
+            "remote": true,
+            "description": null,
+            "size": null,
+            "hash": null,
+            "thumbhash": null,
+            "width": null,
+            "height": null,
+            "fps": null,
+            "duration": null
         }
     }, // [!code focus:3]
     "display_name": "Joe Swanson (Winter Arc :gigachad:)",
     "username": "joe",
+    "bio": null,
+    "header": null,
+    "fields": [],
+    "manually_approves_followers": false,
+    "indexable": true,
     "extensions": {
         "pub.versia:custom_emojis": {
             "emojis": [
@@ -90,7 +103,15 @@ curl https://b.social/.versia/entities/User/joe \
                     "content": {
                         "image/png": {
                             "content": "https://cdn.b.social/emojis/gigachad.png",
-                            "remote": true
+                            "remote": true,
+                            "description": null,
+                            "size": null,
+                            "hash": null,
+                            "thumbhash": null,
+                            "width": null,
+                            "height": null,
+                            "fps": null,
+                            "duration": null
                         }
                     }
                 }
@@ -112,21 +133,44 @@ Finally, `a.social` serializes the note to send it to `joe`.
     "type": "Note",
     "created_at": "2024-12-01T12:19:06Z",
     "author": "alice",
-    "category": "microblog", // [!code focus:11]
+    "category": "microblog",
     "content": {
-        "text/html": {
+        "text/html": { // [!code focus:12]
             "content": "Hello, <a class=\"u-url mention\" href=\"https://b.social/users/bde22zi3ca8762\">@joe@b.social</a>! How are you doing today?",
             "remote": false,
+            "description": null,
+            "size": null,
+            "hash": null,
+            "thumbhash": null,
+            "width": null,
+            "height": null,
+            "fps": null,
+            "duration": null
         },
         "text/plain": {
             "content": "Hello, @joe@b.social! How are you doing today?",
             "remote": false,
+            "description": null,
+            "size": null,
+            "hash": null,
+            "thumbhash": null,
+            "width": null,
+            "height": null,
+            "fps": null,
+            "duration": null
         }
     },
     "group": "public",
     "mentions": [ // [!code focus:3]
         "b.social:bde22zi3ca8762"
-    ]
+    ],
+    "attachments": [],
+    "is_sensitive": false,
+    "previews": [],
+    "replies_to": null,
+    "quotes": null,
+    "subject": null,
+    "device": null,
 }
 ```
 

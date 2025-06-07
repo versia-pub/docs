@@ -29,7 +29,7 @@ Note that there is no `question` field: the question should be included in the `
             <Property name="multiple_choice" type="boolean" required="true">
                 Whether the poll allows multiple votes to be cast for different options.
             </Property>
-            <Property name="expires_at" type="RFC3339" typeLink="/types#rfc3339">
+            <Property name="expires_at" type="RFC3339" typeLink="/types#rfc-3339">
                 RFC 3339 timestamp of when the poll ends and no more votes can be cast. If not present, the poll does not expire.
             </Property>
         </Properties>
@@ -49,6 +49,7 @@ Note that there is no `question` field: the question should be included in the `
                 "content": "What is your favourite color?"
             }
         },
+        ...
         "extensions": { // [!code focus:28]
             "pub.versia:polls": {
                 "options": [
