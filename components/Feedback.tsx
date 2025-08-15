@@ -59,7 +59,6 @@ const FeedbackForm = forwardRef<
 });
 
 const FeedbackThanks = forwardRef<ComponentRef<"div">>(
-    // biome-ignore lint/style/useNamingConvention: <explanation>
     function FeedbackThanks(_props, ref) {
         return (
             <div

@@ -6,10 +6,9 @@ import { Heading } from "./Heading";
 import { Prose } from "./Prose";
 
 export const a = Link;
-// biome-ignore lint/performance/noBarrelFile: <explanation>
 export { Button } from "./Button";
-export { CodeGroup, Code as code, Pre as pre } from "./Code";
-export { Property, Properties } from "./Property";
+export { Code as code, CodeGroup, Pre as pre } from "./Code";
+export { Properties, Property } from "./Property";
 
 export function wrapper({ children }: { children: ReactNode }) {
     return (

@@ -1,8 +1,8 @@
 "use client";
 
-import { uwuifyDocument } from "@/lib/uwuify";
 import { ThemeProvider, useTheme } from "next-themes";
 import { type ReactNode, useEffect } from "react";
+import { uwuifyDocument } from "@/lib/uwuify";
 
 function ThemeWatcher() {
     const { resolvedTheme, setTheme } = useTheme();

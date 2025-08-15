@@ -19,7 +19,11 @@ export function Guide({
     href,
     name,
     description,
-}: { href: string; name: string; description: string }) {
+}: {
+    href: string;
+    name: string;
+    description: string;
+}) {
     return (
         <div>
             <h3 className="text-sm font-semibold text-zinc-900 dark:text-white">

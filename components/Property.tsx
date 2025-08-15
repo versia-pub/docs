@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { type ReactNode, createContext, useContext } from "react";
+import { createContext, type ReactNode, useContext } from "react";
 import { AnchorIcon } from "./Heading";
 
 export const PropertyContext = createContext<{
@@ -13,7 +13,10 @@ export const PropertyContext = createContext<{
 export function Properties({
     children,
     name,
-}: { children: ReactNode; name: string }) {
+}: {
+    children: ReactNode;
+    name: string;
+}) {
     return (
         <div className="my-6">
             <ul className="m-0! max-w-[calc(var(--container-lg)-(--spacing(8)))] list-none divide-y divide-zinc-900/5 p-0 dark:divide-white/5">

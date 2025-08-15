@@ -37,7 +37,7 @@ export function GridPattern({
                 fill={`url(#${patternId})`}
             />
             {squares && (
-                // biome-ignore lint/a11y/noSvgWithoutTitle: <explanation>
+                // biome-ignore lint/a11y/noSvgWithoutTitle: it's decoration
                 <svg
                     x={x}
                     y={y}

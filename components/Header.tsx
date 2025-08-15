@@ -2,10 +2,10 @@ import clsx from "clsx";
 import { motion, useScroll, useTransform } from "framer-motion";
 import Link from "next/link";
 import {
-    type CSSProperties,
     type ComponentRef,
-    type ReactNode,
+    type CSSProperties,
     forwardRef,
+    type ReactNode,
 } from "react";
 
 import { Button } from "./Button";
@@ -13,8 +13,8 @@ import { Logo } from "./Logo";
 import {
     MobileNavigation,
     useIsInsideMobileNavigation,
+    useMobileNavigationStore,
 } from "./MobileNavigation";
-import { useMobileNavigationStore } from "./MobileNavigation";
 import { MobileSearch, Search } from "./Search";
 import { ThemeToggle } from "./ThemeToggle";
 

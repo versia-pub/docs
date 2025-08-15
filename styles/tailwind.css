@@ -143,12 +143,16 @@
     .prose [class*="language-"] .has-focused .line:not(.focused) {
         filter: blur(0.095rem);
         opacity: 0.4;
-        transition: filter 0.35s, opacity 0.35s;
+        transition:
+            filter 0.35s,
+            opacity 0.35s;
     }
 
     .prose [class*="language-"] .has-focused .line:not(.focused) {
         opacity: 0.7;
-        transition: filter 0.35s, opacity 0.35s;
+        transition:
+            filter 0.35s,
+            opacity 0.35s;
     }
 
     .prose [class*="language-"]:hover .has-focused .line:not(.focused) {

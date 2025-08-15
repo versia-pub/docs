@@ -1,11 +1,11 @@
-import { Guide } from "@/components/Guides";
-import { Resource, type ResourceType } from "@/components/Resources";
-import { TeamMember } from "@/components/Team";
-import { wrapper } from "@/components/mdx";
-import fastlyLogo from "@/images/logos/fastly.svg";
 import type { Metadata } from "next";
 import Image from "next/image";
 import type { FC } from "react";
+import { Guide } from "@/components/Guides";
+import { wrapper } from "@/components/mdx";
+import { Resource, type ResourceType } from "@/components/Resources";
+import { TeamMember } from "@/components/Team";
+import fastlyLogo from "@/images/logos/fastly.svg";
 
 export const metadata: Metadata = {
     title: "Versia Documentation",

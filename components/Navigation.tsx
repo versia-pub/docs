@@ -208,8 +208,8 @@ function NavigationGroup({
                             <AnimatePresence mode="popLayout" initial={false}>
                                 {link.href === pathname &&
                                     sections.length > 0 && (
+                                        // biome-ignore lint/a11y/useSemanticElements: already a <ul>
                                         <motion.ul
-                                            // biome-ignore lint/a11y/useSemanticElements: already a <ul>
                                             role="list"
                                             initial={{ opacity: 0 }}
                                             animate={{
