@@ -50,7 +50,7 @@
         "zustand": "^5.0.4"
     },
     "devDependencies": {
-        "@biomejs/biome": "^1.9.4",
+        "@biomejs/biome": "^2.2.2",
         "@iconify-icon/react": "^3.0.0",
         "@next/bundle-analyzer": "^15.3.2",
         "@shikijs/transformers": "^3.4.1",
