@@ -39,7 +39,7 @@ const highlighter = await createHighlighter({
     themes: [],
 });
 
-highlighter.loadTheme("dark-plus");
+await highlighter.loadTheme("dark-plus");
 
 function rehypeShiki() {
     return async (tree) => {
