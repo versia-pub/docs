@@ -52,8 +52,13 @@ https://bob.org    # ❌️ Invalid: protocol is not allowed
 ## Redirects
 
 API endpoints **MUST NOT** redirect to other endpoints, with the following exceptions:
-- HTTP to HTTPS redirects (upgrading insecure requests).
 - When the request does not have an `Accept: application/vnd.versia+json` header, the server **MAY** redirect to an HTML representation of the resource.
+
+<Warning>
+    HTTP to HTTPS redirects are **NOT** allowed for API endpoints.
+
+    This is to force all API communication to be encrypted, and to avoid accidentally leaking sensitive data over unencrypted connections.
+</Warning>
 
 This is forbidden:
 

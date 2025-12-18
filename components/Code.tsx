@@ -144,7 +144,7 @@ function CodePanel({
     label?: string;
     code?: string;
 }) {
-    const child = Children.only(children) as ReactNode & { props: any };
+    const child = children as ReactNode & { props: any };
 
     if (isValidElement(child)) {
         tag = child.props.tag ?? tag;
