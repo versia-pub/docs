@@ -21,11 +21,11 @@ When a user shares a note, the note's original author **must** receive the entit
             <Property name="type" type="string" required={true}>
                 Must be `pub.versia:share/Share`.
             </Property>
-            <Property name="author" type="URI" required={true} typeLink="/types#uri">
-                Creator of the Share.
+            <Property name="author" type="Reference" required={true} typeLink="/types#referece">
+                [Reference](/types#reference) to the creator of the Share.
             </Property>
-            <Property name="shared" type="URI" required={true} typeLink="/types#uri">
-                URI of the note being shared. Must link to a [Note](/entities/note).
+            <Property name="shared" type="Reference" required={true} typeLink="/types#reference">
+                [Reference](/types#reference) to the note being shared.
             </Property>
         </Properties>
     </Col>
@@ -37,9 +37,8 @@ When a user shares a note, the note's original author **must** receive the entit
         "id": "3e7e4750-afd4-4d99-a256-02f0710a0520",
         "type": "pub.versia:share/Share",
         "created_at": "2021-01-01T00:00:00.000Z",
-        "author": "https://example.com/users/6e0204a2-746c-4972-8602-c4f37fc63bbe",
-        "uri": "https://example.com/shares/3e7e4750-afd4-4d99-a256-02f0710a0520",
-        "shared": "https://otherexample.org/notes/fmKZ763jzIU8"
+        "author": "6e0204a2-746c-4972-8602-c4f37fc63bbe",
+        "shared": "otherexample.org:fmKZ763jzIU8"
     }
     ```
 
@@ -50,18 +49,7 @@ When a user shares a note, the note's original author **must** receive the entit
 
 The Share extension adds the following collections to the [Note](/entities/note) entity:
 
-- `shares`: A [URI Collection](/structures/collection#uri-collection) of all the shares of the note.
-
-```jsonc
-{
-    "type": "Note",
-    ...
-    "collections": {
-        ...
-        "pub.versia:share/Shares": "https://example.com/notes/fmKZ763jzIU8/shares"
-    }
-}
-```
+- `pub.versia:share/Shares`: [URI Collection](/structures/collection#uri-collection) of all the shares of the note.
 
 ## Interaction Types
 

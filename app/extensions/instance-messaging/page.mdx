@@ -23,65 +23,21 @@ For example, let's consider the following scenario:
 
 In this scenario, `jane.org` has no way of knowing what went wrong, as `joe.social` does not provide any feedback.
 
-## Instance Metadata Extensions
 
-This extension adds the following metadata to instances:
+## Sending Messages
 
-<Row>
-    <Col>
-        <Properties name="InstanceMessagingExtension">
-            <Property name="endpoint" type="string" required={true}>
-                The endpoint to send federation debug messages to.
+To send a federation debug message, instances **should** make a `POST` request to the `/.versia/v0.6/messaging` endpoint with a simple text body containing a helpful message.
 
-                ### Sending Messages
+No signatures are required (either on the request or response), and no response body is expected.
 
-                To send a federation debug message, instances **should** make a `POST` request to the appropriate endpoint with a simple text body containing a helpful message.
+```text {{ "title": "Helpful Message" }}
+Validation failed for https://jane.org/users/nkGEd8eI98.
+Reasons:
+    - `username` must be alphanumeric. Found invalid character `@`.
+```
 
-                ```text {{ "title": "Helpful Message" }}
-                Validation failed for https://jane.org/users/nkGEd8eI98.
-                Reasons:
-                  - `username` must be alphanumeric. Found invalid character `@`.
-                ```
+Do not send useless messages, such as:
 
-                Do not send useless messages, such as:
-
-                ```text {{ "title": "Unhelpful Message" }}
-                Federation failed.
-                ```
-            </Property>
-        </Properties>
-    </Col>
-
-    <Col sticky>
-
-    ```jsonc {{ "title": "Example Instance Metadata" }}
-    {
-        "type": "InstanceMetadata",
-        "name": "Jane.org",
-        "software": {
-            "name": "Versia Server",
-            "version": "0.7.0"
-        },
-        "compatibility": {
-            "versions": [
-                "0.5.0"
-            ],
-            "extensions": [
-                "pub.versia:reactions",
-                "pub.versia:polls",
-                "pub.versia:reports",
-                "pub.versia:instance_messaging"
-            ]
-        },
-        "host": "jane.org",
-        "created_at": "2021-07-01T00:00:00Z",
-        "extensions": { // [!code focus:5]
-            "pub.versia:instance_messaging": {
-                "endpoint": "https://jane.org/api/reports",
-            },
-        }
-    }
-    ```
-
-    </Col>
-</Row>
+```text {{ "title": "Unhelpful Message" }}
+Federation failed.
+```

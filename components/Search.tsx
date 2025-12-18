@@ -19,11 +19,11 @@ import {
     type ComponentPropsWithoutRef,
     type ComponentRef,
     Fragment,
+    forwardRef,
     type MouseEvent,
     type KeyboardEvent as ReactKeyboardEvent,
     Suspense,
     type SyntheticEvent,
-    forwardRef,
     useCallback,
     useEffect,
     useId,
@@ -164,7 +164,6 @@ function LoadingIcon(props: ComponentPropsWithoutRef<"svg">) {
 
 function HighlightQuery({ text, query }: { text: string; query: string }) {
     return (
-        // @ts-ignore
         <Highlighter
             highlightClassName="underline bg-transparent text-brand-500"
             searchWords={[query]}

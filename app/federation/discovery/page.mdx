@@ -24,7 +24,7 @@ Accept: application/jrd+json
 {
     "subject": "acct:george@versia.social", // [!code focus:6]
     "aliases": [
-        "https://versia.social/users/018ec082-0ae1-761c-b2c5-22275a611771",
+        "https://versia.social/.versia/v0.6/entities/User/018ec082-0ae1-761c-b2c5-22275a611771",
         "https://versia.social/@george"
     ],
     "links": [
@@ -35,8 +35,8 @@ Accept: application/jrd+json
         },
         { // [!code focus:5]
             "rel": "self",
-            "type": "application/json",
-            "href": "https://versia.social/users/018ec082-0ae1-761c-b2c5-22275a611771"
+            "type": "application/vnd.versia+json",
+            "href": "https://versia.social/.versia/v0.6/entities/User/018ec082-0ae1-761c-b2c5-22275a611771"
         },
         {
             "rel": "http://webfinger.net/rel/avatar",
@@ -49,17 +49,38 @@ Accept: application/jrd+json
 
 ## Instance Discovery
 
-Instaance metadata can be accessed by making a `GET` request to the instance's Versia metadata endpoint, which is located at `/.well-known/versia`. This endpoint does not need any signatures in the output.
+Instance metadata can be accessed in two steps:
+
+1. Making a `GET` request to the instance's [`/.well-known/versia` endpoint](/api/endpoints#well-known) to discover supported Versia Protocol versions.
+2. Picking a protocol version to use, and then querying the instance metadata endpoint as documented in the [Endpoints](/api/endpoints#instance-metadata) document.
 
 ### Example
 
-To discover the metadata of the instance `versia.social`, an instance would make a `GET` request to `https://versia.social/.well-known/versia`.
-
-This endpoint will return an [InstanceMetadata](/entities/instance-metadata) entity.
+To discover the metadata of the instance `versia.social`, an instance would first make a `GET` request to `https://versia.social/.well-known/versia`.
 
 ```http {{ 'title': 'Example Request' }}
 GET /.well-known/versia HTTP/1.1
 Accept: application/json
+```
+
+```jsonc {{ 'title': 'Example Response' }}
+{
+    "versions": [
+        "0.6.0",
+        "0.5.0"
+    ]
+}
+```
+
+Then, we
+- Pick version `0.6.0` to use
+- Make a `GET` request to `https://versia.social/.versia/v0.6/instance`.
+
+This endpoint will return an [InstanceMetadata](/entities/instance-metadata) entity.
+
+```http {{ 'title': 'Example Request' }}
+GET /.versia/v0.6/instance HTTP/1.1
+Accept: application/vnd.versia+json
 ```
     
 ```jsonc {{ 'title': 'Example Response' }}
@@ -72,7 +93,8 @@ Accept: application/json
     },
     "compatibility": {
         "versions": [
-            "0.5.0"
+            "0.5.0",
+            "0.6.0"
         ],
         "extensions": [
             "pub.versia:reactions",
@@ -80,7 +102,10 @@ Accept: application/json
             "pub.versia:reports"
         ]
     },
-    "host": "versia.social",
-    "created_at": "2021-07-01T00:00:00Z"
+    "domain": "versia.social",
+    "created_at": "2021-07-01T00:00:00Z",
+    "description": null,
+    "logo": null,
+    "banner": null
 }
 ```

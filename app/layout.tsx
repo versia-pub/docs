@@ -6,8 +6,8 @@ import type { Section } from "../components/SectionProvider";
 import { Providers } from "./providers";
 
 import "@/styles/tailwind.css";
-import logo from "@/images/branding/logo.webp";
 import type { ReactNode } from "react";
+import logo from "@/images/branding/logo.webp";
 
 export const metadata: Metadata = {
     title: {

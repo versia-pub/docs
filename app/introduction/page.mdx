@@ -3,7 +3,7 @@ import { HeroPattern } from '@/components/HeroPattern'
 
 export const metadata = {
     title: 'Versia Documentation',
-    description: 'Introduction to the Versia Protocol, a communication medium for federated applications, leveraging the HTTP stack.',
+    description: 'Introduction to the Versia Protocol, a communication medium for federated applications, using the HTTP stack.',
 }
 
 export const sections = [
@@ -16,7 +16,7 @@ export const sections = [
 
 # Versia Federation Protocol
 
-The Versia Protocol is designed as a communication medium for federated applications, leveraging the HTTP stack. Its simplicity ensures ease of implementation and comprehension. {{ className: 'lead' }}
+The Versia Protocol is designed as a communication medium for federated applications, using the HTTP stack. Its simplicity ensures ease of implementation and comprehension. {{ className: 'lead' }}
 
 <div className="not-prose mb-16 mt-6 flex gap-3">
   <Button href="/entities" arrow="right">
@@ -45,9 +45,8 @@ The Versia Protocol uses the following terms:
 
 The Versia Protocol is heavily inspired by the [ActivityPub](https://www.w3.org/TR/activitypub/) specification. It is designed to be simple and easy to implement, with a focus on the following concepts:
 - **Simple Structures**: Entities are represented as JSON objects. No JSON-LD, no complex data structures, just plain JSON.
+    - As structures are kept simple, they are easy to parse with strongly-typed languages like Rust.
 - **Modularity**: The protocol is divided into a **core protocol** and **extensions**. Implementations can choose to support only the core protocol or add extensions as needed.
 - **Namespacing**: To avoid extension conflicts, all extensions are namespaced.
 - **Signatures**: Most types of interactions **must** be signed with a private key. Unlike other protocols, signatures are **mandatory**, not optional.
 - **Developer-Friendliness**: Understanding and implementing your own Versia server should be easy. Documentation is aimed at developers first.
-
-<Resources />

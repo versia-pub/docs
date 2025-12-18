@@ -1,7 +1,7 @@
 import clsx from "clsx";
 import type { ComponentPropsWithoutRef } from "react";
 // Uncomment this on dev branches
-// import { Badge } from "./Metadata";
+import { Badge } from "./Metadata";
 
 export function Logo(props: ComponentPropsWithoutRef<"div">) {
     return (
@@ -17,9 +17,9 @@ export function Logo(props: ComponentPropsWithoutRef<"div">) {
                 alt="Logo"
                 className="h-full rounded-xs"
             />
-            <span className="fill-zinc-900 dark:fill-white font-semibold text-lg">
-                Versia Protocol {/* <Badge className="h-6!">Dev</Badge> */}
-            </span>
+            {/* <span className="fill-zinc-900 dark:fill-white font-semibold text-lg">
+                Versia Protocol <Badge className="h-6!">Dev</Badge>
+            </span> */}
         </div>
     );
 }

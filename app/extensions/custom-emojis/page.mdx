@@ -15,7 +15,11 @@ The Custom Emojis extension adds support for adding personalized emojis to feder
             <Property name="name" type="string" required={true}>
                 Emoji name, surrounded by identification characters (for example, colons: `:happy_face:`).
 
-                Name must match the regex `^[a-zA-Z0-9_-]+$`.
+                The following characters are allowed:
+                - `a-z`
+                - `A-Z`
+                - `0-9`
+                - `_`, `-`
                 
                 Identification characters must not match the name regex (must not be alphanumeric/underscore/hyphen). There may only be two identification characters, one at the beginning and one at the end.
             </Property>
@@ -34,7 +38,7 @@ The Custom Emojis extension adds support for adding personalized emojis to feder
             "image/webp": {
                 "content": "https://cdn.example.com/emojis/happy_face.webp",
                 "remote": true,
-                "description": "A happy emoji smiling.",
+                "description": "A happy emoji smiling."
             }
         }
     }
@@ -85,18 +89,14 @@ Custom Emojis can be added to any entity with text content. The extension ID is 
     {
         "id": "456df8ed-daf1-4062-abab-491071c7b8dd",
         "type": "Note",
-        "uri": "https://versia.social/notes/456df8ed-daf1-4062-abab-491071c7b8dd",
         "created_at": "2024-04-09T01:38:51.743Z",
-        "collections": {
-            "replies": "https://versia.social/notes/456df8ed-daf1-4062-abab-491071c7b8dd/replies",
-            "quotes": "https://versia.social/notes/456df8ed-daf1-4062-abab-491071c7b8dd/quotes"
-        },
         "content": {
             "text/plain": {
                 "content": "Hello, world :happy_face:!"
             }
         },
-        "extensions": { // [!code focus:16]
+        ...
+        "extensions": { // [!code focus:23]
             "pub.versia:custom_emojis": {
                 "emojis": [
                     {
@@ -105,7 +105,7 @@ Custom Emojis can be added to any entity with text content. The extension ID is 
                             "image/webp": {
                                 "content": "https://cdn.example.com/emojis/happy_face.webp",
                                 "remote": true,
-                                "description": "A happy emoji smiling.",
+                                "description": "A happy emoji smiling."
                             }
                         }
                     }

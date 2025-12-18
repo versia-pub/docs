@@ -27,7 +27,7 @@ Refer to [Note](/entities/note#entity-definition)'s `group` property for how not
                 
                 Text only (`text/plain`, `text/html`, etc).
             </Property>
-            <Property name="open" type="boolean" required={false}>
+            <Property name="open" type="boolean" required={true}>
                 Whether the group is open to all users or requires approval to join.
 
                 <Note>
@@ -35,12 +35,6 @@ Refer to [Note](/entities/note#entity-definition)'s `group` property for how not
 
                     It is similar to a [User](/entities/user)'s `manually_approves_followers` field.
                 </Note>
-            </Property>
-            <Property name="members" type="URI" required={true} typeLink="/types#uri">
-                URI of the group's members list. [URI Collection](/structures/collection#uri-collection) of [Users](/entities/user).
-            </Property>
-            <Property name="notes" type="URI" required={false} typeLink="/types#uri">
-                URI of the group's associated notes. [URI Collection](/structures/collection#uri-collection) of [Notes](/entities/note).
             </Property>
         </Properties>
     </Col>
@@ -51,7 +45,6 @@ Refer to [Note](/entities/note#entity-definition)'s `group` property for how not
     {
         "type": "pub.versia:groups/Group",
         "id": "ed480922-b095-4f09-9da5-c995be8f5960",
-        "uri": "https://example.com/groups/ed480922-b095-4f09-9da5-c995be8f5960",
         "name": {
             "text/html": {
                 "content": "The <strong>Woozy</strong> fan club"
@@ -62,13 +55,21 @@ Refer to [Note](/entities/note#entity-definition)'s `group` property for how not
                 "content": "A group for fans of the Woozy emoji."
             }
         },
-        "open": false,
-        "members": "https://example.com/groups/ed480922-b095-4f09-9da5-c995be8f5960/members",
+        "open": false
     }
     ```
 
     </Col>
 </Row>
+
+### Collections
+
+The following [Collections](/structures/collection) are available:
+
+- `members`: [URI Collection](/structures/collection#uri-collection) of [Users](/entities/user) that are members of the group.
+- `notes`: [URI Collection](/structures/collection#uri-collection) of [Notes](/entities/note) that are associated with the group.
+
+These can be fetched using the [Federation API](/api/endpoints#entity-collections)
 
 ## Subscribing to Groups
 
@@ -82,20 +83,21 @@ If the group accepts the subscription, the user will receive all notes posted to
 
 Indicates that a [User](/entities/user) wishes to subscribe to a group.
 
+<Warning>
+    This entity is a [**Transient Entity**](/entities#transient-entities).
+</Warning>
+
 <Row>
     <Col>
         <Properties name="GroupSubscribe">
             <Property name="type" type="string" required={true}>
                 Must be `pub.versia:groups/Subscribe`.
             </Property>
-            <Property name="uri" type="null" required={false}>
-                This is a [**Transient Entity**](/entities#transient-entities) and does not have a URI.
+            <Property name="subscriber" type="Reference" required={true} typeLink="/types#reference">
+                [Reference](/types#reference) to the [User](/entities/user) subscribing to the group.
             </Property>
-            <Property name="subscriber" type="URI" required={true} typeLink="/types#uri">
-                URI of the [User](/entities/user) subscribing to the group.
-            </Property>
-            <Property name="group" type="URI" required={true} typeLink="/types#uri">
-                URI of the group to subscribe to.
+            <Property name="group" type="Reference" required={true} typeLink="/types#reference">
+                [Reference](/types#reference) to the group to subscribe to.
             </Property>
         </Properties>
     </Col>
@@ -105,9 +107,8 @@ Indicates that a [User](/entities/user) wishes to subscribe to a group.
     ```jsonc {{ title: "Example GroupSubscribe" }}
     {
         "type": "pub.versia:groups/Subscribe",
-        "id": "9a7e9345-4e4a-4d5a-8301-4dbbfe777ca0",
-        "subscriber": "https://bob.social/users/e9277471-8aa1-4d40-a3d0-0878e818ccdc",
-        "group": "https://example.com/groups/ed480922-b095-4f09-9da5-c995be8f5960",
+        "subscriber": "e9277471-8aa1-4d40-a3d0-0878e818ccdc",
+        "group": "example.com:ed480922-b095-4f09-9da5-c995be8f5960",
         "created_at": "2021-01-01T00:00:00Z"
     }
     ```
@@ -119,20 +120,21 @@ Indicates that a [User](/entities/user) wishes to subscribe to a group.
 
 Indicates that a [User](/entities/user) wishes to unsubscribe from a group.
 
+<Warning>
+    This entity is a [**Transient Entity**](/entities#transient-entities).
+</Warning>
+
 <Row>
     <Col>
         <Properties name="GroupUnsubscribe">
             <Property name="type" type="string" required={true}>
                 Must be `pub.versia:groups/Unsubscribe`.
             </Property>
-            <Property name="uri" type="null" required={false}>
-                This is a [**Transient Entity**](/entities#transient-entities) and does not have a URI.
+            <Property name="subscriber" type="Reference" required={true} typeLink="/types#reference">
+                [Reference](/types#reference) to the [User](/entities/user) unsubscribing from the group.
             </Property>
-            <Property name="subscriber" type="URI" required={true} typeLink="/types#uri">
-                URI of the [User](/entities/user) unsubscribing from the group.
-            </Property>
-            <Property name="group" type="URI" required={true} typeLink="/types#uri">
-                URI of the group to unsubscribe from.
+            <Property name="group" type="Reference" required={true} typeLink="/types#reference">
+                [Reference](/types#reference) to the group to unsubscribe from.
             </Property>
         </Properties>
     </Col>
@@ -142,9 +144,8 @@ Indicates that a [User](/entities/user) wishes to unsubscribe from a group.
     ```jsonc {{ title: "Example GroupUnsubscribe" }}
     {
         "type": "pub.versia:groups/Unsubscribe",
-        "id": "9a7e9345-4e4a-4d5a-8301-4dbbfe777ca0",
-        "subscriber": "https://bob.social/users/e9277471-8aa1-4d40-a3d0-0878e818ccdc",
-        "group": "https://example.com/groups/ed480922-b095-4f09-9da5-c995be8f5960",
+        "subscriber": "e9277471-8aa1-4d40-a3d0-0878e818ccdc",
+        "group": "example.com:ed480922-b095-4f09-9da5-c995be8f5960",
         "created_at": "2021-01-01T00:00:00Z"
     }
     ```
@@ -154,7 +155,11 @@ Indicates that a [User](/entities/user) wishes to unsubscribe from a group.
 
 ### GroupSubscribeAccept
 
-Indicates that a [Group](#entity-definition) has accepted a [User](/entities/user)'s subscription request. Should be signed by the instance hosting the group.
+Indicates that a [Group](#entity-definition) has accepted a [User](/entities/user)'s subscription request. Should be sent by the instance hosting the group.
+
+<Warning>
+    This entity is a [**Transient Entity**](/entities#transient-entities).
+</Warning>
 
 <Row>
     <Col>
@@ -162,14 +167,11 @@ Indicates that a [Group](#entity-definition) has accepted a [User](/entities/use
             <Property name="type" type="string" required={true}>
                 Must be `pub.versia:groups/SubscribeAccept`.
             </Property>
-            <Property name="uri" type="null" required={false}>
-                This is a [**Transient Entity**](/entities#transient-entities) and does not have a URI.
+            <Property name="subscriber" type="Reference" required={true} typeLink="/types#reference">
+                [Reference](/types#reference) to the [User](/entities/user) subscribing to the group.
             </Property>
-            <Property name="subscriber" type="URI" required={true} typeLink="/types#uri">
-                URI of the [User](/entities/user) subscribing to the group.
-            </Property>
-            <Property name="group" type="URI" required={true} typeLink="/types#uri">
-                URI of the group that accepted the subscription.
+            <Property name="group" type="Reference" required={true} typeLink="/types#reference">
+                [Reference](/types#reference) to the group that accepted the subscription.
             </Property>
         </Properties>
     </Col>
@@ -179,9 +181,8 @@ Indicates that a [Group](#entity-definition) has accepted a [User](/entities/use
     ```jsonc {{ title: "Example GroupSubscribeAccept" }}
     {
         "type": "pub.versia:groups/SubscribeAccept",
-        "id": "9a7e9345-4e4a-4d5a-8301-4dbbfe777ca0",
-        "subscriber": "https://bob.social/users/e9277471-8aa1-4d40-a3d0-0878e818ccdc",
-        "group": "https://example.com/groups/ed480922-b095-4f09-9da5-c995be8f5960",
+        "subscriber": "e9277471-8aa1-4d40-a3d0-0878e818ccdc",
+        "group": "example.com:ed480922-b095-4f09-9da5-c995be8f5960",
         "created_at": "2021-01-01T00:00:00Z"
     }
     ```
@@ -191,7 +192,11 @@ Indicates that a [Group](#entity-definition) has accepted a [User](/entities/use
 
 ### GroupSubscribeReject
 
-Indicates that a [Group](#entity-definition) has rejected a [User](/entities/user)'s subscription request. Should be signed by the instance hosting the group.
+Indicates that a [Group](#entity-definition) has rejected a [User](/entities/user)'s subscription request. Should be sent by the instance hosting the group.
+
+<Warning>
+    This entity is a [**Transient Entity**](/entities#transient-entities).
+</Warning>
 
 <Row>
     <Col>
@@ -199,14 +204,11 @@ Indicates that a [Group](#entity-definition) has rejected a [User](/entities/use
             <Property name="type" type="string" required={true}>
                 Must be `pub.versia:groups/SubscribeReject`.
             </Property>
-            <Property name="uri" type="null" required={false}>
-                This is a [**Transient Entity**](/entities#transient-entities) and does not have a URI.
+            <Property name="subscriber" type="Reference" required={true} typeLink="/types#reference">
+                [Reference](/types#reference) to the [User](/entities/user) subscribing to the group.
             </Property>
-            <Property name="subscriber" type="URI" required={true} typeLink="/types#uri">
-                URI of the [User](/entities/user) subscribing to the group.
-            </Property>
-            <Property name="group" type="URI" required={true} typeLink="/types#uri">
-                URI of the group that rejected the subscription.
+            <Property name="group" type="Reference" required={true} typeLink="/types#reference">
+                [Reference](/types#reference) to the group that rejected the subscription.
             </Property>
         </Properties>
     </Col>
@@ -216,9 +218,8 @@ Indicates that a [Group](#entity-definition) has rejected a [User](/entities/use
     ```jsonc {{ title: "Example GroupSubscribeReject" }}
     {
         "type": "pub.versia:groups/SubscribeReject",
-        "id": "9a7e9345-4e4a-4d5a-8301-4dbbfe777ca0",
-        "subscriber": "https://bob.social/users/e9277471-8aa1-4d40-a3d0-0878e818ccdc",
-        "group": "https://example.com/groups/ed480922-b095-4f09-9da5-c995be8f5960",
+        "subscriber": "e9277471-8aa1-4d40-a3d0-0878e818ccdc",
+        "group": "example.com:ed480922-b095-4f09-9da5-c995be8f5960",
         "created_at": "2021-01-01T00:00:00Z"
     }
     ```
@@ -230,13 +231,17 @@ Indicates that a [Group](#entity-definition) has rejected a [User](/entities/use
 
 Group federation represents a particularly challenging problem, as it requires a way to make sure every single [Note](/entities/note) posted to it is delivered to every single member of the group.
 
-All [Notes](/entities/note) posted to a group (using the `group` field) must be sent to its instance's [shared inbox](/federation#inboxes). Groups do not have an inbox of their own.
+All [Notes](/entities/note) posted to a group (using the `group` field) must be sent to its instance's [inbox](/api/endpoints#inbox).
 
 Once this is done, the group's instance must then federate this [Note](/entities/note) to every member of the group. However, this cannot be done the "normal way", as the group's instance does not have the private key to [sign](/signatures) the [Note](/entities/note).
 
 ### GroupFederate
 
-The `GroupFederate` entity allows a group to federate a note to all of its members, without needing to sign the note itself. It contains a URI to the note being federated, which must be fetched by the receiving instances. This entity is signed by the group's instance.
+The `GroupFederate` entity allows a group to federate a note to all of its members, without needing to sign the note itself. It contains a URI to the note being federated, which must be fetched by the receiving instances. This entity is sent by the group's instance.
+
+<Warning>
+    This entity is a [**Transient Entity**](/entities#transient-entities).
+</Warning>
 
 <Row>
     <Col>
@@ -244,14 +249,11 @@ The `GroupFederate` entity allows a group to federate a note to all of its membe
             <Property name="type" type="string" required={true}>
                 Must be `pub.versia:groups/Federate`.
             </Property>
-            <Property name="uri" type="null" required={false}>
-                This is a [**Transient Entity**](/entities#transient-entities) and does not have a URI.
+            <Property name="note" type="Reference" required={true} typeLink="/types#reference">
+                [Reference](/types#reference) to the note to federate.
             </Property>
-            <Property name="note" type="URI" required={true} typeLink="/types#uri">
-                URI of the note to federate.
-            </Property>
-            <Property name="group" type="URI" required={true} typeLink="/types#uri">
-                URI of the group federating the note.
+            <Property name="group" type="Reference" required={true} typeLink="/types#reference">
+                [Reference](/types#reference) to the group federating the note.
             </Property>
         </Properties>
     </Col>
@@ -261,9 +263,8 @@ The `GroupFederate` entity allows a group to federate a note to all of its membe
     ```jsonc {{ title: "Example GroupFederate" }}
     {
         "type": "pub.versia:groups/Federate",
-        "id": "9a7e9345-4e4a-4d5a-8301-4dbbfe777ca0",
-        "note": "https://example.com/notes/ed480922-b095-4f09-9da5-c995be8f5960",
-        "group": "https://example.com/groups/ed480922-b095-4f09-9da5-c995be8f5960",
+        "note": "c5aa65fa-0356-4029-b61c-6b237e5d1393",
+        "group": "example.com:ed480922-b095-4f09-9da5-c995be8f5960",
         "created_at": "2021-01-01T00:00:00Z"
     }
     ```

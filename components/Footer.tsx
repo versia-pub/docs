@@ -1,9 +1,8 @@
 "use client";
 
+import { Icon } from "@iconify-icon/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-
-import { Icon } from "@iconify-icon/react";
 import type { ReactNode } from "react";
 import { Button } from "./Button";
 import { navigation } from "./Navigation";
@@ -130,7 +129,7 @@ function SmallPrint() {
 
 export function Footer() {
     return (
-        <footer className="mx-auto w-full max-w-2xl space-y-10 pb-16 lg:max-w-5xl">
+        <footer className="mx-auto w-full max-w-2xl space-y-10 pb-16 lg:max-w-5xl print:hidden">
             <PageNavigation />
             <SmallPrint />
         </footer>

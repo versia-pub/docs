@@ -1,5 +1,6 @@
 "use client";
 
+import { Icon } from "@iconify-icon/react";
 import {
     type MotionValue,
     motion,
@@ -7,8 +8,6 @@ import {
     useMotionValue,
 } from "framer-motion";
 import Link from "next/link";
-
-import { Icon } from "@iconify-icon/react";
 import type { ComponentPropsWithoutRef, MouseEvent } from "react";
 import { GridPattern } from "./GridPattern";
 import { Heading } from "./Heading";

@@ -1,0 +1,82 @@
+export const metadata = {
+    title: "API",
+    description: "Defines the server-to-server API for Versia's federation.",
+}
+
+# API
+
+Versia defines a very simple API for server-to-server communication, mainly fetching and sending entities. It is clearly namespaced and versioned, to avoid confusion with implementations' existing HTTP APIs. {{ className: "lead" }}
+
+## API Versioning
+
+Every Versia API endpoint is prefixed with `/.versia/vX/`, where `X` is the version of the API. The current version is `0.6`, so the current API prefix is `/.versia/v0.6/`. This versioning is used to avoid breaking changes in the future, and to allow for backwards compatibility.
+
+Requests not encrypted with TLS (aka HTTPS) **must not** be sent or responded to. All implementations are required to use TLS 1.2 or higher, and to support HTTP/2.
+
+<Note>
+    Implementations have no obligation to support more than one Versia version. It is recommended to always support the latest version, as it helps avoid bogging down the network with old versions.
+</Note>
+
+## Signatures
+
+API requests/responses between instances **must** include a [Signature](/signatures), signed with the [instance's private key](/entities/instance-metadata), as defined in [Signatures](/signatures).
+
+## Encoding
+
+"URL-encoding" is the mechanism used to encode data containing special characters in URLs. When this specification refers to "URL-encoding", it means the encoding defined in [RFC 3986](https://datatracker.ietf.org/doc/html/rfc3986#section-2.1).
+
+## Domain
+
+Versia defines a **domain** as the hostname of an instance, which is used to identify the instance in the network. It **must** be a valid hostname, and cannot include a port number (the HTTPS port is always 443).
+
+Defining a domain is very complicated, so please refer to the following examples:
+
+``` {{ "title": "Valid Domains" }}
+example.com
+test.localhost
+sus.example.org
+xn--ls8h.la
+1.0.1.7.0.8.0.0.0.0.7.4.0.1.0.0.2.ip6.arpa # We know what you did
+```
+
+``` {{ "title": "Invalid Domains" }}
+example.com:3000   # ❌️ Invalid: port number is not allowed
+test..localhost    # ❌️ Invalid: double dot is not allowed
+example.com.       # ❌️ Invalid: trailing dot is not allowed
+test.org/          # ❌️ Invalid: trailing slash is not allowed
+test.org/sus       # ❌️ Invalid: path is not allowed
+💩.la              # ❌️ Invalid: IDNs must be Punycode encoded
+https://bob.org    # ❌️ Invalid: protocol is not allowed
+```
+
+## Redirects
+
+API endpoints **MUST NOT** redirect to other endpoints, with the following exceptions:
+- When the request does not have an `Accept: application/vnd.versia+json` header, the server **MAY** redirect to an HTML representation of the resource.
+
+<Warning>
+    HTTP to HTTPS redirects are **NOT** allowed for API endpoints.
+
+    This is to force all API communication to be encrypted, and to avoid accidentally leaking sensitive data over unencrypted connections.
+</Warning>
+
+This is forbidden:
+
+```http
+GET /.versia/v0.6/entities/user/1234
+Host: example.com
+Accept: application/vnd.versia+json
+
+HTTP/1.1 301 Moved Permanently
+Location: https://example.com/users/1234
+```
+
+This is allowed:
+```http
+GET /.versia/v0.6/entities/user/1234
+Host: example.com
+Accept: text/html
+
+HTTP/1.1 301 Moved Permanently
+Location: https://example.com/users/1234
+```

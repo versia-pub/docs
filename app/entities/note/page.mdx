@@ -16,11 +16,11 @@ Notes represent a piece of content on a Versia instance. They can be posted by [
 <Row>
     <Col>
         <Properties name="Note">
-            <Property name="attachments" type="ContentFormat[]" required={false} typeLink="/structures/content-format">
+            <Property name="attachments" type="ContentFormat[]" required={true} typeLink="/structures/content-format">
                 Media attachments to the note. May be any format. **Must** be remote.
             </Property>
-            <Property name="author" type="URI" required={true} typeLink="/types#uri">
-                URI of the `User` considered the author of the note.
+            <Property name="author" type="Reference" required={true} typeLink="/types#reference">
+                [Reference](/types#reference) to the `User` considered the author of the note.
             </Property>
             <Property name="category" type="Category" required={false}>
                 Category of the note. Useful for clients to render notes differently depending on their intended purpose.
@@ -36,28 +36,6 @@ Notes represent a piece of content on a Versia instance. They can be posted by [
                     | "messaging"; // Like Discord, Element (Matrix), Signal
                 ```
             </Property>
-            <Property name="collections" type="NoteCollections" required={true}>
-                Collections related to the note. Must contain at least `replies` and `quotes`.
-
-                ```typescript
-                type URI = string;
-
-                type NoteCollections = {
-                    replies: URI;
-                    quotes: URI;
-                    // Same format as type on Extensions
-                    [key: ExtensionsKey]: URI;
-                }
-                ```
-
-                All URIs must resolve to either a [Collection](/structures/collection) or a [URI Collection](/structures/collection#uri-collection) of the appropriate entities. Extensions may add additional collections.
-
-                ### Replies
-                All replies to this note (have this note as their `replies_to`). [URI Collection](/structures/collection#uri-collection) of [Note](/entities/note) entities.
-
-                ### Quotes
-                All quotes of this note (have this note as their `quotes`). [URI Collection](/structures/collection#uri-collection) of [Note](/entities/note) entities.
-            </Property>
             <Property name="content" type="ContentFormat" required={false} typeLink="/structures/content-format">
                 The content of the note. Must be text format (`text/html`, `text/markdown`, etc). Must not be remote.
             </Property>
@@ -72,8 +50,8 @@ Notes represent a piece of content on a Versia instance. They can be posted by [
                 }
                 ```
             </Property>
-            <Property name="group" type="URI | &quot;public&quot; | &quot;followers&quot;" required={false} typeLink="/types#uri">
-                URI of a [Group](/extensions/groups) that the note is only visible in, or one of the following strings:
+            <Property name="group" type="Reference | &quot;public&quot; | &quot;followers&quot;" required={false} typeLink="/types#reference">
+                [Reference](/types#reference) to a [Group](/extensions/groups) that the note is only visible in, or one of the following strings:
                 - `public`: The note is visible to anyone.
                 - `followers`: The note is visible only to the author's followers.
 
@@ -83,13 +61,13 @@ Notes represent a piece of content on a Versia instance. They can be posted by [
                     If the implementation does not support the [Groups Extension](/extensions/groups), any value other than `public` or `followers` should be treated as `null`.
                 </Note>
             </Property>
-            <Property name="is_sensitive" type="boolean" required={false}>
+            <Property name="is_sensitive" type="boolean" required={true}>
                 Whether the note contains "sensitive content". This can be used with `subject` as a "content warning" feature.
             </Property>
-            <Property name="mentions" type="URI[]" required={false} typeLink="/types#uri">
-                URIs of [Users](/entities/user) that should be notified of the note. Similar to Twitter's `@` mentions. The note may also contain mentions in the content, however only the mentions in this field should trigger notifications.
+            <Property name="mentions" type="Reference[]" required={true} typeLink="/types#reference">
+                [References](/types#reference) to [Users](/entities/user) that should be notified of the note. Similar to Twitter's `@` mentions. The note may also contain mentions in the content, however only the mentions in this field should trigger notifications.
             </Property>
-            <Property name="previews" type="LinkPreview[]" required={false}>
+            <Property name="previews" type="LinkPreview[]" required={true}>
                 Previews for any links in the publication. This is to avoid the [stampeding mastodon problem](https://github.com/mastodon/mastodon/issues/23662) where a link preview is fetched by every instance that sees the publication, creating an accidental DDOS attack.
 
                 ```typescript
@@ -106,11 +84,11 @@ Notes represent a piece of content on a Versia instance. They can be posted by [
                     Implementations should make sure not to trust the previews, as they could be faked by malicious remote instances. This is not a very good attack vector, but it is still possible to redirect users to malicious links.
                 </Note>
             </Property>
-            <Property name="quotes" type="URI" required={false} typeLink="/types#uri">
-                URI of the note that this note is quoting, if any. Quoting is similar to replying, but does not notify the author of the quoted note. Inspired by Twitter's "quote tweet" feature.
+            <Property name="quotes" type="Reference" required={false} typeLink="/types#reference">
+                [Reference](/types#reference) to the note that this note is quoting, if any. Quoting is similar to replying, but does not notify the author of the quoted note. Inspired by Twitter's "quote tweet" feature.
             </Property>
-            <Property name="replies_to" type="URI" required={false} typeLink="/types#uri">
-                URI of the note that this note is a reply to, if any.
+            <Property name="replies_to" type="Reference" required={false} typeLink="/types#reference">
+                [Reference](/types#reference) to the note that this note is a reply to, if any.
             </Property>
             <Property name="subject" type="string" required={false}>
                 A subject for the note. Useful for clients to display a "content warning" or "spoiler" feature, such as on Mastodon. Must be a plaintext string (`text/plain`).
@@ -123,7 +101,6 @@ Notes represent a piece of content on a Versia instance. They can be posted by [
     {
         "id": "01902e09-0f8b-72de-8ee3-9afc0cf5eae1",
         "type": "Note",
-        "uri": "https://versia.social/objects/01902e09-0f8b-72de-8ee3-9afc0cf5eae1",
         "created_at": "2024-06-19T01:07:44.139Z",
         "attachments": [ // [!code focus:100]
             {
@@ -131,6 +108,9 @@ Notes represent a piece of content on a Versia instance. They can be posted by [
                     "content": "https://cdn.versia.social/29e810bf4707fef373d886af322089d5db300fce66e4e073efc26827f10825f6/image.webp",
                     "remote": true,
                     "thumbhash": "1QcSHQRnh493V4dIh4eXh1h4kJUI",
+                    "description": null,
+                    "fps": null,
+                    "duration": null,
                     "height": 960,
                     "size": 221275,
                     "hash": {
@@ -143,6 +123,12 @@ Notes represent a piece of content on a Versia instance. They can be posted by [
                 "text/plain": {
                     "content": "https://cdn.lysand.org/68c02dd11c179ef4d170b05393f6e72133dd0ad733f40d41b42363d8784e8d5d/fire.txt",
                     "remote": true,
+                    "description": null,
+                    "thumbhash": null,
+                    "width": null,
+                    "height": null,
+                    "fps": null,
+                    "duration": null
                     "size": 8,
                     "hash": {
                         "sha256": "68c02dd11c179ef4d170b05393f6e72133dd0ad733f40d41b42363d8784e8d5d"
@@ -150,15 +136,8 @@ Notes represent a piece of content on a Versia instance. They can be posted by [
                 }
             }
         ],
-        "author": "https://versia.social/users/018eb863-753f-76ff-83d6-fd590de7740a",
+        "author": "018eb863-753f-76ff-83d6-fd590de7740a",
         "category": "microblog",
-        "collections": {
-            "replies": "https://versia.social/objects/01902e09-0f8b-72de-8ee3-9afc0cf5eae1/replies",
-            "quotes": "https://versia.social/objects/01902e09-0f8b-72de-8ee3-9afc0cf5eae1/quotes",
-            "pub.versia:likes/Likes": "https://versia.social/objects/01902e09-0f8b-72de-8ee3-9afc0cf5eae1/likes",
-            "pub.versia:likes/Dislikes": "https://versia.social/objects/01902e09-0f8b-72de-8ee3-9afc0cf5eae1/dislikes",
-            "pub.versia:reactions/Reactions": "https://versia.social/objects/01902e09-0f8b-72de-8ee3-9afc0cf5eae1/reactions"
-        },
         "content": {
             "text/html": {
                 "content": "<p>In the next versia-fe update: account settings, finally!</p>"
@@ -180,9 +159,21 @@ Notes represent a piece of content on a Versia instance. They can be posted by [
         "group": "public",
         "is_sensitive": false,
         "mentions": [],
-        "subject": "Versia development"
+        "subject": "Versia development",
+        "previews": [],
+        "quotes": null,
+        "replies_to": null
     }
     ```
 
     </Col>
 </Row>
+
+### Collections
+
+The following [Collections](/structures/collection) are available:
+
+- `replies`: [URI Collection](/structures/collection#uri-collection) of [Note](/entities/note) entities that are replies to this note.
+- `quotes`: [URI Collection](/structures/collection#uri-collection) of [Note](/entities/note) entities that quote this note.
+
+These can be fetched using the [Federation API](/api/endpoints#entity-collections)

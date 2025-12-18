@@ -1,0 +1,119 @@
+export const metadata = {
+    title: 'JSON',
+    description:
+        'Guidelines on JSON handling and serialization',
+}
+
+# JSON
+
+Identical data structures can be represented in many different ways in JSON. This document describes the rules that must be followed when using JSON in the Versia protocol.
+
+## Encoding
+
+All JSON data **must** be encoded in UTF-8. This is the only encoding supported by the Versia protocol.
+
+Line endings must be in Unix-style `\n` (LF) format. The use of Windows-style `\r\n` (CRLF) line endings is not allowed.
+
+## Keys
+
+Keys in JSON must be strings, cannot be empty, and may only contain the following characters:
+- `a-z`
+- `A-Z`
+- `0-9`
+- `-`, `_`, `.`, `#`, `/`, `:`
+
+Duplicate keys are **not** allowed.
+
+``` json {{ "title": "Valid Keys" }}
+{
+    "valid-key": "value",
+    "valid_key": "value",
+    "valid.key": "value",
+    "valid#key": "value",
+    "valid/key": "value",
+    "valid:key": "value"
+}
+```
+
+```json {{ "title": "Invalid Keys" }}
+{
+    "invalid key": "value", // ❌️ Invalid: space is not allowed
+    "invalid@key": "value", // ❌️ Invalid: @ is not allowed
+    "": "value", // ❌️ Invalid: empty key is not allowed
+    9: "value", // ❌️ How did you even serialize this??
+}
+```
+
+## Values
+
+### Numbers
+
+Numbers in JSON must be represented as decimal numbers. They can be integers or floating-point numbers, but must follow the following rules:
+
+```json {{ "title": "Must not use scientific notation" }}
+{
+    "value": 1e3, // ❌️ Invalid
+    "value2": 1000 // ✅ Valid
+}
+```
+
+```json {{ "title": "Must not have leading zeros" }}
+{
+    "value": 01, // ❌️ Invalid
+    "value2": 1 // ✅ Valid
+}
+```
+
+```json {{ "title": "Must not have trailing decimal points" }}
+{
+    "value": 1., // ❌️ Invalid
+    "value2": 1 // ✅ Valid
+}
+```
+
+```json {{ "title": "Must not have trailing zeros after the decimal point" }}
+{
+    "value": 1.00, // ❌️ Invalid
+    "value2": 1.0, // ❌️ Invalid
+    "value3": 1 // ✅ Valid
+}
+```
+
+```json {{ "title": "Must not have leading decimal points" }}
+{
+    "value": .1, // ❌️ Invalid
+    "value2": 0.1 // ✅ Valid
+}
+```
+
+```json {{ "title": "Must not use numbers outside the range -2⁵³ to 2⁵³ (included)." }}
+{
+    "value": 18014398509481984, // ❌️ Invalid
+    "value2": -20873930 // ✅ Valid
+}
+```
+
+```json {{ "title": "Must not use the negative zero" }}
+{
+    "value": -0, // ❌️ Invalid
+    "value2": 0 // ✅ Valid
+}
+```
+
+```json {{ "title": "Must not use Infinity or NaN" }}
+{
+    "value": Infinity, // ❌️ Invalid
+    "value2": NaN // ❌️ Invalid
+}
+```
+
+```json {{ "title": "Must not use hexadecimal or octal notation" }}
+{
+    "value": 0x1A, // ❌️ Invalid
+    "value2": 0o17 // ❌️ Invalid
+}
+```
+
+### Optional Fields
+
+Fields that are not marked as **required** may be set to `null`, or simply omitted.

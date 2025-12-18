@@ -8,7 +8,7 @@ export const metadata = {
 
 Versia uses the HTTP protocol for all communications between instances. HTTP requests must conform to certain standards to ensure compatibility between different implementations, as well as to ensure the security and integrity of the data being exchanged.
 
-ALL kinds of HTTP requests/responses between instances **MUST** include a [Signature](/signatures), signed with either the relevant [User](/entities/user)'s private key or the [instance's private key](/entities/instance-metadata).
+HTTP requests/responses between instances **must** include a [Signature](/signatures), signed with the [instance's private key](/entities/instance-metadata), as defined in [Signatures](/signatures).
 
 ## Requests
 
@@ -16,32 +16,37 @@ ALL kinds of HTTP requests/responses between instances **MUST** include a [Signa
     <Col>
         <Properties name="HTTP Request">
             <Property name="Accept" type="string" required={true}>
-                Must include `application/json`.
+                Must be `application/vnd.versia+json`, unless specified otherwise. Basic `application/json` is **not** allowed.
             </Property>
             <Property name="Content-Type" type="string" required={true}>
-                Must include `application/json; charset=utf-8`, if the request has a body.
+                Must be `application/vnd.versia+json; charset=utf-8` if the request has a body.
             </Property>
-            <Property name="Versia-Signature" type="string" required={false}>
+            <Property name="Versia-Signature" type="string" required={true}>
                 See [Signatures](/signatures) for more information.
             </Property>
-            <Property name="Versia-Signed-By" type="URI" required={false} typeLink="/types#uri">
+            <Property name="Versia-Signed-By" type="Domain" required={true} typeLink="/api/basics#domain">
                 See [Signatures](/signatures).
             </Property>
-            <Property name="Versia-Signed-At" type="string" required={false}>
+            <Property name="Versia-Signed-At" type="number" required={true}>
                 See [Signatures](/signatures).
             </Property>
             <Property name="User-Agent" type="string" required={false}>
-                A string identifying the software making the request.
+                A string identifying the software making the request. Should contain the name of the software, its version, and a link to its homepage.
+
+                ``` {{ 'title': 'Example User-Agent' }}
+                CoolServer/1.0 (https://coolserver.com)
+                ```
             </Property>
         </Properties>
     </Col>
     <Col sticky>
         ```http {{ 'title': 'Example Request' }}
-        POST https://bob.com/users/1/inbox HTTP/1.1
+        POST https://bob.com/.versia/v0.6/inbox HTTP/1.1
+        # This specific endpoint returns plain JSON
         Accept: application/json
         User-Agent: CoolServer/1.0 (https://coolserver.com)
         Versia-Signature: /CjB2L9bcvRg+uP19B4/rqy7Ji9/cqMFPlL3GVCIndnQjYyOpBzJEAl9weDnXm7Jrqa3y6sBC+EYWKThO2r9Bw==
-        Versia-Signed-By: https://example.com/users/1
+        Versia-Signed-By: example.com
         Versia-Signed-At: 1729241687
         ```
     </Col>
@@ -49,9 +54,9 @@ ALL kinds of HTTP requests/responses between instances **MUST** include a [Signa
 
 ## Rate limits
 
-Implementations **MUST** respect the rate limits of remote instances.
+Implementations **must** respect the rate limits of remote instances.
 
-IETF draft [draft-polli-ratelimit-headers-02](https://www.ietf.org/archive/id/draft-polli-ratelimit-headers-02.html) **MUST** be used to communicate rate limits. Other rate limit headers/formats are not allowed.
+IETF draft [draft-polli-ratelimit-headers-02](https://www.ietf.org/archive/id/draft-polli-ratelimit-headers-02.html) **must** be used to communicate rate limits. Other rate limit headers/formats are not allowed.
 
 <Note>
     This IETF draft is, well, a draft. However, there are no standards for rate limiting in HTTP, so this is the best we have.
@@ -63,15 +68,15 @@ IETF draft [draft-polli-ratelimit-headers-02](https://www.ietf.org/archive/id/dr
     <Col>
         <Properties name="HTTP Response">
             <Property name="Content-Type" type="string" required={true}>
-                Must include `application/json; charset=utf-8`.
+                Must include `application/vnd.versia+json; charset=utf-8`, unless specified otherwise.
             </Property>
-            <Property name="Versia-Signature" type="string" required={false}>
+            <Property name="Versia-Signature" type="string" required={true}>
                 See [Signatures](/signatures) for more information.
             </Property>
-            <Property name="Versia-Signed-By" type="URI" required={false} typeLink="/types#uri">
+            <Property name="Versia-Signed-By" type="Domain" required={true} typeLink="/api/basics#domain">
                 See [Signatures](/signatures).
             </Property>
-            <Property name="Versia-Signed-At" type="string" required={false}>
+            <Property name="Versia-Signed-At" type="number" required={true}>
                 See [Signatures](/signatures).
             </Property>
         </Properties>
@@ -79,9 +84,9 @@ IETF draft [draft-polli-ratelimit-headers-02](https://www.ietf.org/archive/id/dr
     <Col sticky>
         ```http {{ 'title': 'Example Response' }}
         HTTP/1.1 200 OK
-        Content-Type: application/json; charset=utf-8
+        Content-Type: application/vnd.versia+json; charset=utf-8
         Versia-Signature: /CjB2L9bcvRg+uP19B4/rqy7Ji9/cqMFPlL3GVCIndnQjYyOpBzJEAl9weDnXm7Jrqa3y6sBC+EYWKThO2r9Bw==+7BvnWKITyGyTwHbb6fVYwRx1I
-        Versia-Signed-By: https://example.com/users/1
+        Versia-Signed-By: example.com
         Versia-Signed-At: 1729241717
         ```
     </Col>

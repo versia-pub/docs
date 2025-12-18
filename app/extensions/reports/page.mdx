@@ -11,20 +11,21 @@ When an instance receives a report, it *should* be reviewed by a moderator or ad
 
 ## Entity Definition
 
+<Warning>
+    This entity is a [**Transient Entity**](/entities#transient-entities).
+</Warning>
+
 <Row>
     <Col>
         <Properties name="Report">
-            <Property name="uri" type="null" required={false}>
-                This is a [**Transient Entity**](/entities#transient-entities) and does not have a URI.
-            </Property>
             <Property name="type" type="string" required={true}>
                 Must be `pub.versia:reports/Report`.
             </Property>
-            <Property name="author" type="URI" required={false} typeLink="/types#uri">
-                URI of the reporting [User](/entities/user). Optional if the report is anonymous.
+            <Property name="author" type="Reference" required={false} typeLink="/types#reference">
+                [Reference](/types#reference) to the reporting [User](/entities/user). Optional if the report is anonymous.
             </Property>
-            <Property name="reported" type="URI[]" required={true} typeLink="/types#uri">
-                URIs of the content being reported.
+            <Property name="reported" type="Reference[]" required={true} typeLink="/types#reference">
+                [References](/types#reference) to the content being reported.
             </Property>
             <Property name="tags" type="string[]" required={true}>
                 Report tags. Should be concise and clear, such as `spam`, `harassment`, `misinformation`, etc. Used for categorization.
@@ -39,12 +40,11 @@ When an instance receives a report, it *should* be reviewed by a moderator or ad
 
     ```jsonc {{ title: "Example Report" }}
     {
-        "id": "6f3001a1-641b-4763-a9c4-a089852eec84",
         "type": "pub.versia:reports/Report",
-        "author": "https://example.com/users/6f3001a1-641b-4763-a9c4-a089852eec84",
+        "author": "6f3001a1-641b-4763-a9c4-a089852eec84",
         "reported": [
-            "https://test.com/publications/46f936a3-9a1e-4b02-8cde-0902a89769fa",
-            "https://test.com/publications/213d7c56-fb9b-4646-a4d2-7d70aa7d106a"
+            "test.com:46f936a3-9a1e-4b02-8cde-0902a89769fa",
+            "test.com:213d7c56-fb9b-4646-a4d2-7d70aa7d106a"
         ],
         "tags": [
             "spam",

@@ -32,8 +32,8 @@ Versia Links are a way to reference entities in the Versia Protocol, in a way th
                 - `share/:instance/:id`: Share a note.
                 - `compose/:text`: Compose a new note. Text passed at the end will be added in the note compose field. Used for "Share with Versia" buttons on websites.
             </Property>
-            <Property name="instance" type="string" required={false}>
-                Instance hosting the referenced content, including the port if it is not the default (i.e. `443` for HTTPS).
+            <Property name="instance" type="Domain" typeLink="/api/basics#domain" required={false}>
+                Instance hosting the referenced content.
             </Property>
         </Properties>
     </Col>
@@ -57,7 +57,7 @@ Versia Links are a way to reference entities in the Versia Protocol, in a way th
 
 Versia clients **should** register themselves as handlers for the `web+versia://` scheme in the user's operating system. When a Versia Link is clicked, the client should open the entity in the client's interface.
 
-The default client ("frontend") on a Versia instance **should** also display Versia links for logged-out users on:
+The default web client ("frontend") on a Versia instance **should** also display Versia links for logged-out users on:
 - Profiles
 - Notes
 - Groups

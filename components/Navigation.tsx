@@ -209,7 +209,6 @@ function NavigationGroup({
                                 {link.href === pathname &&
                                     sections.length > 0 && (
                                         <motion.ul
-                                            // biome-ignore lint/a11y/useSemanticElements: already a <ul>
                                             role="list"
                                             initial={{ opacity: 0 }}
                                             animate={{
@@ -250,6 +249,7 @@ export const navigation: NavGroup[] = [
             { title: "Introduction", href: "/introduction" },
             { title: "SDKs", href: "/sdks" },
             { title: "Entities", href: "/entities" },
+            { title: "JSON", href: "/json" },
             { title: "Signatures", href: "/signatures" },
             { title: "Security", href: "/security" },
             { title: "Federation", href: "/federation" },
@@ -267,8 +267,14 @@ export const navigation: NavGroup[] = [
             { title: "HTTP", href: "/federation/http" },
             { title: "Validation", href: "/federation/validation" },
             { title: "Discovery", href: "/federation/discovery" },
-            { title: "Delegation", href: "/federation/delegation" },
             { title: "Example", href: "/federation/example" },
+        ],
+    },
+    {
+        title: "API",
+        links: [
+            { title: "Basics", href: "/api/basics" },
+            { title: "Endpoints", href: "/api/endpoints" },
         ],
     },
     {
@@ -295,6 +301,7 @@ export const navigation: NavGroup[] = [
         title: "Extensions",
         links: [
             { title: "Custom Emojis", href: "/extensions/custom-emojis" },
+            { title: "Delegation", href: "/extensions/delegation" },
             { title: "Groups", href: "/extensions/groups" },
             {
                 title: "Instance Messaging",
@@ -311,7 +318,6 @@ export const navigation: NavGroup[] = [
             { title: "Reports", href: "/extensions/reports" },
             { title: "Share", href: "/extensions/share" },
             { title: "Vanity", href: "/extensions/vanity" },
-            { title: "WebSockets", href: "/extensions/websockets" },
         ],
     },
 ];
@@ -334,7 +340,7 @@ export function Navigation(props: ComponentPropsWithoutRef<"nav">) {
                         variant="filled"
                         className="w-full"
                     >
-                        Working Draft 5
+                        Working Draft 6
                     </Button>
                 </li>
             </ul>

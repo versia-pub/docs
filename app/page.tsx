@@ -1,16 +1,16 @@
-import { Guide } from "@/components/Guides";
-import { Resource, type ResourceType } from "@/components/Resources";
-import { TeamMember } from "@/components/Team";
-import { wrapper } from "@/components/mdx";
-import fastlyLogo from "@/images/logos/fastly.svg";
 import type { Metadata } from "next";
 import Image from "next/image";
 import type { FC } from "react";
+import { Guide } from "@/components/Guides";
+import { wrapper } from "@/components/mdx";
+import { Resource, type ResourceType } from "@/components/Resources";
+import { TeamMember } from "@/components/Team";
+import fastlyLogo from "@/images/logos/fastly.svg";
 
 export const metadata: Metadata = {
     title: "Versia Documentation",
     description:
-        "Introduction to the Versia Protocol, a communication medium for federated applications, leveraging the HTTP stack.",
+        "Introduction to the Versia Protocol, a communication medium for federated applications, using the HTTP stack.",
 };
 
 const Page: FC = () => {
@@ -222,29 +222,6 @@ const Page: FC = () => {
                                 name: "Email",
                                 icon: "bx:bxs-envelope",
                                 url: "mailto:aprl@acab.dev",
-                            },
-                        ]}
-                    />
-                    <TeamMember
-                        name="Anna"
-                        username="devminer"
-                        avatarUrl="https://i.imgur.com/grHNY7G.png"
-                        bio="Golang SDK, spec design."
-                        socials={[
-                            {
-                                name: "Website",
-                                icon: "bx:link",
-                                url: "https://devminer.xyz/",
-                            },
-                            {
-                                name: "GitHub",
-                                icon: "bxl:github",
-                                url: "https://github.com/TheDevMinerTV",
-                            },
-                            {
-                                name: "Matrix",
-                                icon: "simple-icons:matrix",
-                                url: "https://matrix.to/#/@devminer:devminer.xyz",
                             },
                         ]}
                     />

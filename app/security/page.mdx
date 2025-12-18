@@ -16,7 +16,7 @@ export const metadata = {
 
 Versia's security model is designed to ensure the integrity and authenticity of data, with a simple but robust system of cryptographic signatures. This system is designed to be easy to implement and understand, while still providing strong guarantees.
 
-However, **it is of critical importance to understand the limitations of this system**. Versia's security model is designed to prevent impersonation attacks and data tampering, but it does not provide confidentiality. This means that while you can trust the data you receive, you should not assume that it is private.
+However, **it is very important to understand the limitations of this system**. Versia's security model is designed to prevent impersonation attacks and data tampering, but it does not provide confidentiality. This means that while you can trust the data you receive, you should not assume that it is private.
 
 <Note>
     There are three main kinds of security that are commonly discussed in the context of cryptography:
@@ -47,13 +47,12 @@ There are several reasons why confidentiality is not covered as part of this spe
 - Email
 - The Web
 - Twitter
-- TCP
 
 Confidentiality is **several orders of magnitude more complex** than integrity and authenticity. It requires a completely different set of tools and assumptions, which are not feasible to reliably implement in a complex federated system (if you've ever seen `** Unable to decrypt: The sender's device has not sent us the keys for this message. **`, you know what we're talking about).
 
 Furthermore, adding more complex cryptography would make the specification significantly more complex, which would likely make it harder to implement for smaller developers with less resources.
 
-Additionally, we would like to avoid re-creating what would essentially be a shoddier version of much stronger centralized platforms like [Signal](https://signal.org/). We feel, just like many others before us, that it is better to leave the confidentiality to the experts.
+Additionally, we would like to avoid re-creating what would essentially be a shoddier version of much stronger centralized platforms like [Signal](https://signal.org/). We feel that it is better to leave the confidentiality to the experts.
 
 ## Conclusion
 

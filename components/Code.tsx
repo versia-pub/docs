@@ -5,9 +5,9 @@ import clsx from "clsx";
 import {
     Children,
     type ComponentPropsWithoutRef,
-    type ReactNode,
     createContext,
     isValidElement,
+    type ReactNode,
     useContext,
     useEffect,
     useRef,
@@ -144,8 +144,7 @@ function CodePanel({
     label?: string;
     code?: string;
 }) {
-    // biome-ignore lint/suspicious/noExplicitAny: <explanation>
-    const child = Children.only(children) as ReactNode & { props: any };
+    const child = children as ReactNode & { props: any };
 
     if (isValidElement(child)) {
         tag = child.props.tag ?? tag;
@@ -207,8 +206,7 @@ function CodeGroupHeader({
                         >
                             {getPanelTitle(
                                 isValidElement(child)
-                                    ? // biome-ignore lint/suspicious/noExplicitAny: <explanation>
-                                      (child.props as any)
+                                    ? (child.props as any)
                                     : {},
                             )}
                         </Tab>
@@ -326,7 +324,6 @@ export function CodeGroup({
 }: ComponentPropsWithoutRef<typeof CodeGroupPanels> & { title: string }) {
     const languages =
         Children.map(children, (child) =>
-            // biome-ignore lint/suspicious/noExplicitAny: <explanation>
             getPanelTitle(isValidElement(child) ? (child.props as any) : {}),
         ) ?? [];
     const tabGroupProps = useTabGroupProps(languages);
@@ -375,8 +372,8 @@ export function Code({ children, ...props }: ComponentPropsWithoutRef<"code">) {
             );
         }
         return (
-            // biome-ignore lint/security/noDangerouslySetInnerHtml: <explanation>
-            // biome-ignore lint/style/useNamingConvention: <explanation>
+            // biome-ignore lint/security/noDangerouslySetInnerHtml: HTML is trusted
+            // biome-ignore lint/style/useNamingConvention: Biome incorrectly tags this as bad naming
             <code {...props} dangerouslySetInnerHTML={{ __html: children }} />
         );
     }

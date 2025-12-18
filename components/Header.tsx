@@ -2,10 +2,10 @@ import clsx from "clsx";
 import { motion, useScroll, useTransform } from "framer-motion";
 import Link from "next/link";
 import {
-    type CSSProperties,
     type ComponentRef,
-    type ReactNode,
+    type CSSProperties,
     forwardRef,
+    type ReactNode,
 } from "react";
 
 import { Button } from "./Button";
@@ -13,8 +13,8 @@ import { Logo } from "./Logo";
 import {
     MobileNavigation,
     useIsInsideMobileNavigation,
+    useMobileNavigationStore,
 } from "./MobileNavigation";
-import { useMobileNavigationStore } from "./MobileNavigation";
 import { MobileSearch, Search } from "./Search";
 import { ThemeToggle } from "./ThemeToggle";
 
@@ -95,7 +95,7 @@ export const Header = forwardRef<ComponentRef<"div">, { className?: string }>(
                         <ThemeToggle />
                     </div>
                     <div className="hidden min-[500px]:contents">
-                        <Button href="/changelog">Working Draft 5</Button>
+                        <Button href="/changelog">Working Draft 6</Button>
                     </div>
                 </div>
             </motion.div>

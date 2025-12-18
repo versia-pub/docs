@@ -15,17 +15,13 @@ The entity defined in this document must be inserted in the `pub.versia:interact
 {
     "id": "456df8ed-daf1-4062-abab-491071c7b8dd",
     "type": "Note",
-    "uri": "https://versia.social/notes/456df8ed-daf1-4062-abab-491071c7b8dd",
     "created_at": "2024-04-09T01:38:51.743Z",
-    "collections": {
-        "replies": "https://versia.social/notes/456df8ed-daf1-4062-abab-491071c7b8dd/replies",
-        "quotes": "https://versia.social/notes/456df8ed-daf1-4062-abab-491071c7b8dd/quotes"
-    },
     "content": {
         "text/plain": {
             "content": "Hello, world :happy_face:!"
         }
     },
+    ...
     "extensions": { // [!code focus:9]
         "pub.versia:interaction_controls": {
             "reply": {
@@ -104,7 +100,7 @@ Extensions **may** choose to register their own interaction types (such as `pub.
 
 ### Handling Permission Errors
 
-Implementations that find a user attempting to create an interaction they are not allowed to **MUST** return a `403 Forbidden` HTTP status code when processing the Note during federation. The Note **must** also be discarded.
+Implementations that find a user attempting to create an interaction they are not allowed to **MAY** return a `403 Forbidden` HTTP status code when processing the Note during federation, or use the [Instance Messaging](/extensions/instance-messaging) extension. The Note **must** be discarded.
 
 It is important for implementations to backfill any related [Collections](/structures/collection)/[URI Collections](/structures/collection#uri-collection) (e.g. user followers) in order to not incorrectly reject Notes based off of outdated data.
 
