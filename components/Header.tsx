@@ -52,7 +52,7 @@ export const Header = forwardRef<ComponentRef<"div">, { className?: string }>(
                 className={clsx(
                     className,
                     // Add "construction" class to make it striped
-                    "fixed inset-x-0 top-0 z-50 flex h-14 items-center justify-between gap-2 px-4 transition sm:px-6 lg:left-72 lg:z-30 lg:px-8 xl:left-80 construction",
+                    "fixed inset-x-0 top-0 z-50 flex h-14 items-center justify-between gap-2 px-4 transition sm:px-6 lg:left-72 lg:z-30 lg:px-8 xl:left-80",
                     !isInsideMobileNavigation &&
                         "backdrop-blur-xs lg:left-72 xl:left-80 dark:backdrop-blur-sm",
                     isInsideMobileNavigation

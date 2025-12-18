@@ -17,9 +17,9 @@ export function Logo(props: ComponentPropsWithoutRef<"div">) {
                 alt="Logo"
                 className="h-full rounded-xs"
             />
-            <span className="fill-zinc-900 dark:fill-white font-semibold text-lg">
+            {/* <span className="fill-zinc-900 dark:fill-white font-semibold text-lg">
                 Versia Protocol <Badge className="h-6!">Dev</Badge>
-            </span>
+            </span> */}
         </div>
     );
 }
