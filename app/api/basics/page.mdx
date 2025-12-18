@@ -65,6 +65,7 @@ This is forbidden:
 ```http
 GET /.versia/v0.6/entities/user/1234
 Host: example.com
+Accept: application/vnd.versia+json
 
 HTTP/1.1 301 Moved Permanently
 Location: https://example.com/users/1234
@@ -74,7 +75,8 @@ This is allowed:
 ```http
 GET /.versia/v0.6/entities/user/1234
 Host: example.com
+Accept: text/html
 
 HTTP/1.1 301 Moved Permanently
-Location: https://example.com/.versia/v0.6/entities/user/1234
+Location: https://example.com/users/1234
 ```

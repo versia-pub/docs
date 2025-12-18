@@ -11,8 +11,10 @@ This page lists changes since Working Draft 3. {{ className: 'lead' }}
 ## Since WD 5
 
 - Added a new `content-type` for Versia entities: `application/vnd.versia+json`.
+- Overhauled the Instance-to-Instance API to have clearly defined and namespaced endpoints, under `/.versia/v0.6/`, instead of letting implementations define their own endpoints.
 - Removed per-User keypairs: now, only the instance keypair is used for signing.
 - Moved [Delegation](/extensions/delegation) to an extension
+- Changed the contents of the [Well-Known Versia Endpoint](/api/endpoints#well-known) to only list supported protocol versions.
 - Modified how URIs and references to other entities are handled:
     - The `uri` field has been removed from all entities.
     - Every field that used to be a URI now uses that entity's `id` field.

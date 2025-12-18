@@ -275,9 +275,6 @@ export const navigation: NavGroup[] = [
         links: [
             { title: "Basics", href: "/api/basics" },
             { title: "Endpoints", href: "/api/endpoints" },
-            { title: "Rate Limits", href: "/api/rate-limits" },
-            { title: "Errors", href: "/api/errors" },
-            { title: "HTML Redirects", href: "/api/html" },
         ],
     },
     {

@@ -5,6 +5,58 @@ export const metadata = {
 
 # Endpoints
 
+## Well-known
+
+<Warning>
+    This endpoint is exempt from the signature requirement. No signatures are required for requests or responses to it.
+
+    The following `Accept` headers are also allowed for requests to this endpoint:
+    - `application/jrd+json`
+    - `application/json`
+</Warning>
+
+<Row>
+  <Col>
+
+    <Properties name="Well-known">
+        <Property name="endpoint">
+            Must be `/.well-known/versia`.
+        </Property>
+        <Property name="method">
+            Must be `GET`.
+        </Property>
+        <Property name="response">
+            A small JSON object with a single attribute:
+
+            - `versions`: Supported Versia Protocol versions.
+                  - Versions marked as "Working Draft X" are represented as `0.X`.
+        </Property>
+    </Properties>
+
+  </Col>
+  <Col sticky>
+
+    ```http {{ 'title': 'Example request' }}
+    GET /.well-known/versia
+    Host: b.social
+    Accept: application/jrd+json
+    ```
+    
+    ```http {{ 'title': 'Example response' }}
+    HTTP/1.1 200 OK
+    Content-Type: application/jrd+json
+
+    {
+        "versions": [
+            "0.6.0",
+            "0.5.0"
+        ]
+    }
+    ```
+
+  </Col>
+</Row>
+
 ## Instance metadata
 
 <Warning>

@@ -49,11 +49,32 @@ Accept: application/jrd+json
 
 ## Instance Discovery
 
-Instance metadata can be accessed by making a `GET` request to the instance's Versia metadata endpoint, documented in the [Endpoints](/api/endpoints#instance-metadata) document.
+Instance metadata can be accessed in two steps:
+
+1. Making a `GET` request to the instance's [`/.well-known/versia` endpoint](/api/endpoints#well-known) to discover supported Versia Protocol versions.
+2. Picking a protocol version to use, and then querying the instance metadata endpoint as documented in the [Endpoints](/api/endpoints#instance-metadata) document.
 
 ### Example
 
-To discover the metadata of the instance `versia.social`, an instance would make a `GET` request to `https://versia.social/.versia/v0.6/instance`.
+To discover the metadata of the instance `versia.social`, an instance would first make a `GET` request to `https://versia.social/.well-known/versia`.
+
+```http {{ 'title': 'Example Request' }}
+GET /.well-known/versia HTTP/1.1
+Accept: application/json
+```
+
+```jsonc {{ 'title': 'Example Response' }}
+{
+    "versions": [
+        "0.6.0",
+        "0.5.0"
+    ]
+}
+```
+
+Then, we
+- Pick version `0.6.0` to use
+- Make a `GET` request to `https://versia.social/.versia/v0.6/instance`.
 
 This endpoint will return an [InstanceMetadata](/entities/instance-metadata) entity.
 
@@ -72,7 +93,8 @@ Accept: application/vnd.versia+json
     },
     "compatibility": {
         "versions": [
-            "0.5.0"
+            "0.5.0",
+            "0.6.0"
         ],
         "extensions": [
             "pub.versia:reactions",
