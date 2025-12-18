@@ -85,15 +85,7 @@ It is a good idea to provide at least two versions of an image (if possible): on
             Size of the content in bytes.
         </Property>
         <Property name="hash" type="Hash" required={false}>
-            Hash of the content. Encoded in hexadecimal.
-
-            ```typescript
-            type HashNames = "sha256" | "sha512" | "sha3-256" | "sha3-512" | "blake2b-256" | "blake2b-512" | "blake3-256" | "blake3-512" | "md5" | "sha1" | "sha224" | "sha384" | "sha3-224" | "sha3-384" | "blake2s-256" | "blake2s-512" | "blake3-224" | "blake3-384";
-
-            type Hash = {
-                [key in HashNames]: string;
-            }
-            ```
+            SHA-256 hash of the content. Encoded in hexadecimal.
         </Property>
         <Property name="thumbhash" type="string" required={false}>
             Image in [ThumbHash](https://evanw.github.io/thumbhash/) format.
@@ -122,9 +114,7 @@ It is a good idea to provide at least two versions of an image (if possible): on
             "remote": true,
             "description": "A jolly horse running through mountains",
             "size": 453933,
-            "hash": {
-                "sha256": "91714fc336210d459d4f9d9233de663be2b87ffe923f1cfd76ece9d06f7c965d"
-            },
+            "hash": "91714fc336210d459d4f9d9233de663be2b87ffe923f1cfd76ece9d06f7c965d",
             "thumbhash": "3OcRJYB4d3h/iIeHeEh3eIhw+j2w",
             "width": 1920,
             "height": 1080
