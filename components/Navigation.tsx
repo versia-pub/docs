@@ -291,7 +291,7 @@ export const navigation: NavGroup[] = [
             { title: "Follow", href: "/entities/follow" },
             { title: "FollowAccept", href: "/entities/follow-accept" },
             { title: "FollowReject", href: "/entities/follow-reject" },
-            { title: "Notes", href: "/entities/note" },
+            { title: "Note", href: "/entities/note" },
             { title: "InstanceMetadata", href: "/entities/instance-metadata" },
             { title: "Unfollow", href: "/entities/unfollow" },
             { title: "Users", href: "/entities/user" },
