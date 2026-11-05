@@ -1,0 +1,279 @@
+---
+title: "Groups Extension"
+description: "Groups are a way to organize users and notes into communities."
+kind: Extension
+---
+
+import Col from "../../../components/spec/Col.astro";
+import Note from "../../../components/Note.astro";
+import Properties from "../../../components/spec/Properties.astro";
+import Property from "../../../components/spec/Property.astro";
+import Row from "../../../components/spec/Row.astro";
+import Warning from "../../../components/Warning.astro";
+
+Groups are a way to organize users and notes into communities. They can be used for any purpose, such as forums, blogs, image galleries, video sharing, audio sharing, and messaging. They are similar to Discord's channels or Matrix's rooms.
+
+Refer to [Note](/entities/note#entity-definition)'s `group` property for how notes can be associated with groups.
+
+## Entity Definition
+
+<Row>
+    <Col>
+        <Properties name="Group">
+            <Property name="type" type="string" required={true}>
+                Must be `pub.versia:groups/Group`.
+            </Property>
+            <Property name="name" type="ContentFormat" required={false} typeLink="/structures/content-format">
+               Group name/title.
+               
+               Text only (`text/plain`, `text/html`, etc).
+            </Property>
+            <Property name="description" type="ContentFormat" required={false} typeLink="/structures/content-format">
+                Short description of the group's contents and purpose.
+                
+                Text only (`text/plain`, `text/html`, etc).
+            </Property>
+            <Property name="open" type="boolean" required={true}>
+                Whether the group is open to all users or requires approval to join.
+
+                <Note>
+                    **This is meant as a UI hint** and does not guarantee that group subscriptions will be accepted or rejected.
+
+                    It is similar to a [User](/entities/user)'s `manually_approves_followers` field.
+                </Note>
+            </Property>
+        </Properties>
+    </Col>
+
+    <Col sticky>
+
+    ```jsonc title="Example Group"
+    {
+        "type": "pub.versia:groups/Group",
+        "id": "ed480922-b095-4f09-9da5-c995be8f5960",
+        "name": {
+            "text/html": {
+                "content": "The <strong>Woozy</strong> fan club"
+            }
+        },
+        "description": {
+            "text/plain": {
+                "content": "A group for fans of the Woozy emoji."
+            }
+        },
+        "open": false
+    }
+    ```
+
+    </Col>
+</Row>
+
+### Collections
+
+The following [Collections](/structures/collection) are available:
+
+- `members`: [URI Collection](/structures/collection#uri-collection) of [Users](/entities/user) that are members of the group.
+- `notes`: [URI Collection](/structures/collection#uri-collection) of [Notes](/entities/note) that are associated with the group.
+
+These can be fetched using the [Federation API](/api/endpoints#entity-collections)
+
+## Subscribing to Groups
+
+[Users](/entities/user) may "subscribe" to a Group in order to receive all [Notes](/entities/note) posted to it. The mechanism by which federation is handled is described at [the end of this document](#federation).
+
+First, a [User](/entities/user) must send a `GroupSubscribe` activity to the group. The group will then respond with either a `GroupSubscribeAccept` or a `GroupSubscribeReject` activity.
+
+If the group accepts the subscription, the user will receive all notes posted to the group. If the group rejects the subscription, the user will not receive any notes posted to the group.
+
+### GroupSubscribe
+
+Indicates that a [User](/entities/user) wishes to subscribe to a group.
+
+<Warning>
+    This entity is a [**Transient Entity**](/entities#transient-entities).
+</Warning>
+
+<Row>
+    <Col>
+        <Properties name="GroupSubscribe">
+            <Property name="type" type="string" required={true}>
+                Must be `pub.versia:groups/Subscribe`.
+            </Property>
+            <Property name="subscriber" type="Reference" required={true} typeLink="/types#reference">
+                [Reference](/types#reference) to the [User](/entities/user) subscribing to the group.
+            </Property>
+            <Property name="group" type="Reference" required={true} typeLink="/types#reference">
+                [Reference](/types#reference) to the group to subscribe to.
+            </Property>
+        </Properties>
+    </Col>
+
+    <Col sticky>
+
+    ```jsonc title="Example GroupSubscribe"
+    {
+        "type": "pub.versia:groups/Subscribe",
+        "subscriber": "e9277471-8aa1-4d40-a3d0-0878e818ccdc",
+        "group": "example.com:ed480922-b095-4f09-9da5-c995be8f5960",
+        "created_at": "2021-01-01T00:00:00Z"
+    }
+    ```
+
+    </Col>
+</Row>
+
+### GroupUnsubscribe
+
+Indicates that a [User](/entities/user) wishes to unsubscribe from a group.
+
+<Warning>
+    This entity is a [**Transient Entity**](/entities#transient-entities).
+</Warning>
+
+<Row>
+    <Col>
+        <Properties name="GroupUnsubscribe">
+            <Property name="type" type="string" required={true}>
+                Must be `pub.versia:groups/Unsubscribe`.
+            </Property>
+            <Property name="subscriber" type="Reference" required={true} typeLink="/types#reference">
+                [Reference](/types#reference) to the [User](/entities/user) unsubscribing from the group.
+            </Property>
+            <Property name="group" type="Reference" required={true} typeLink="/types#reference">
+                [Reference](/types#reference) to the group to unsubscribe from.
+            </Property>
+        </Properties>
+    </Col>
+
+    <Col sticky>
+
+    ```jsonc title="Example GroupUnsubscribe"
+    {
+        "type": "pub.versia:groups/Unsubscribe",
+        "subscriber": "e9277471-8aa1-4d40-a3d0-0878e818ccdc",
+        "group": "example.com:ed480922-b095-4f09-9da5-c995be8f5960",
+        "created_at": "2021-01-01T00:00:00Z"
+    }
+    ```
+
+    </Col>
+</Row>
+
+### GroupSubscribeAccept
+
+Indicates that a [Group](#entity-definition) has accepted a [User](/entities/user)'s subscription request. Should be sent by the instance hosting the group.
+
+<Warning>
+    This entity is a [**Transient Entity**](/entities#transient-entities).
+</Warning>
+
+<Row>
+    <Col>
+        <Properties name="GroupSubscribeAccept">
+            <Property name="type" type="string" required={true}>
+                Must be `pub.versia:groups/SubscribeAccept`.
+            </Property>
+            <Property name="subscriber" type="Reference" required={true} typeLink="/types#reference">
+                [Reference](/types#reference) to the [User](/entities/user) subscribing to the group.
+            </Property>
+            <Property name="group" type="Reference" required={true} typeLink="/types#reference">
+                [Reference](/types#reference) to the group that accepted the subscription.
+            </Property>
+        </Properties>
+    </Col>
+
+    <Col sticky>
+
+    ```jsonc title="Example GroupSubscribeAccept"
+    {
+        "type": "pub.versia:groups/SubscribeAccept",
+        "subscriber": "e9277471-8aa1-4d40-a3d0-0878e818ccdc",
+        "group": "example.com:ed480922-b095-4f09-9da5-c995be8f5960",
+        "created_at": "2021-01-01T00:00:00Z"
+    }
+    ```
+
+    </Col>
+</Row>
+
+### GroupSubscribeReject
+
+Indicates that a [Group](#entity-definition) has rejected a [User](/entities/user)'s subscription request. Should be sent by the instance hosting the group.
+
+<Warning>
+    This entity is a [**Transient Entity**](/entities#transient-entities).
+</Warning>
+
+<Row>
+    <Col>
+        <Properties name="GroupSubscribeReject">
+            <Property name="type" type="string" required={true}>
+                Must be `pub.versia:groups/SubscribeReject`.
+            </Property>
+            <Property name="subscriber" type="Reference" required={true} typeLink="/types#reference">
+                [Reference](/types#reference) to the [User](/entities/user) subscribing to the group.
+            </Property>
+            <Property name="group" type="Reference" required={true} typeLink="/types#reference">
+                [Reference](/types#reference) to the group that rejected the subscription.
+            </Property>
+        </Properties>
+    </Col>
+
+    <Col sticky>
+
+    ```jsonc title="Example GroupSubscribeReject"
+    {
+        "type": "pub.versia:groups/SubscribeReject",
+        "subscriber": "e9277471-8aa1-4d40-a3d0-0878e818ccdc",
+        "group": "example.com:ed480922-b095-4f09-9da5-c995be8f5960",
+        "created_at": "2021-01-01T00:00:00Z"
+    }
+    ```
+
+    </Col>
+</Row>
+
+## Federation
+
+Group federation represents a particularly challenging problem, as it requires a way to make sure every single [Note](/entities/note) posted to it is delivered to every single member of the group.
+
+All [Notes](/entities/note) posted to a group (using the `group` field) must be sent to its instance's [inbox](/api/endpoints#inbox).
+
+Once this is done, the group's instance must then federate this [Note](/entities/note) to every member of the group. However, this cannot be done the "normal way", as the group's instance does not have the private key to [sign](/signatures) the [Note](/entities/note).
+
+### GroupFederate
+
+The `GroupFederate` entity allows a group to federate a note to all of its members, without needing to sign the note itself. It contains a URI to the note being federated, which must be fetched by the receiving instances. This entity is sent by the group's instance.
+
+<Warning>
+    This entity is a [**Transient Entity**](/entities#transient-entities).
+</Warning>
+
+<Row>
+    <Col>
+        <Properties name="GroupFederate">
+            <Property name="type" type="string" required={true}>
+                Must be `pub.versia:groups/Federate`.
+            </Property>
+            <Property name="note" type="Reference" required={true} typeLink="/types#reference">
+                [Reference](/types#reference) to the note to federate.
+            </Property>
+            <Property name="group" type="Reference" required={true} typeLink="/types#reference">
+                [Reference](/types#reference) to the group federating the note.
+            </Property>
+        </Properties>
+    </Col>
+
+    <Col sticky>
+
+    ```jsonc title="Example GroupFederate"
+    {
+        "type": "pub.versia:groups/Federate",
+        "note": "c5aa65fa-0356-4029-b61c-6b237e5d1393",
+        "group": "example.com:ed480922-b095-4f09-9da5-c995be8f5960",
+        "created_at": "2021-01-01T00:00:00Z"
+    }
+    ```
+
+    </Col>
+</Row>

@@ -1,0 +1,134 @@
+---
+title: "Instance Metadata"
+description: "Metadata about a Versia instance, such as capabilities and endpoints."
+kind: Entity · Core
+---
+
+import Col from "../../../components/spec/Col.astro";
+import Properties from "../../../components/spec/Properties.astro";
+import Property from "../../../components/spec/Property.astro";
+import Row from "../../../components/spec/Row.astro";
+
+Contains metadata about a Versia instance, such as capabilities and endpoints.
+
+## Entity Definition
+
+<Row>
+    <Col>
+        <Properties name="InstanceMetadata">
+            <Property name="id" type="null">
+                This entity does not have an ID.
+            </Property>
+            <Property name="name" type="string" required={true}>
+                Friendly name of the instance, for humans.
+            </Property>
+            <Property name="software" type="Software" required={true}>
+                Information about the software running the instance.
+
+                ```typescript
+                type Software = {
+                    name: string;
+                    version: string;
+                }
+                ```
+
+                - `name`: Name of the software.
+                - `version`: Version of the software. Should use [SemVer](https://semver.org/).
+            </Property>
+            <Property name="compatibility" type="Compatibility" required={true}>
+                Information about the compatibility of the instance.
+
+                ```typescript
+                type Compatibility = {
+                    versions: string[];
+                    extensions: string[];
+                }
+                ```
+
+                - `versions`: Supported Versia Protocol versions.
+                  - Versions marked as "Working Draft X" are represented as `0.X`.
+                - `extensions`: Supported extensions.
+            </Property>
+            <Property name="description" type="string" required={false}>
+                Long description of the instance, for humans. Should be around 100-200 words.
+            </Property>
+            <Property name="domain" type="Domain" typeLink="/api/basics#domain" required={true}>
+                Domain of the instance, used for federation.
+            </Property>
+            <Property name="public_key" type="PublicKey" required={true}>
+                Public key of the instance.
+
+                ```typescript
+                type PublicKey = {
+                    algorithm: string;
+                    key: string;
+                }
+                ```
+                
+                - `algorithm`: Algorithm used for the public key. Can only be `ed25519` for now.
+                - `key`: Instance public key, in [SPKI-encoded base64](/signatures#exporting-the-public-key).
+            </Property>
+            <Property name="logo" type="ContentFormat" required={false} typeLink="/structures/content-format">
+                Logo of the instance. Must be an image format (`image/*`).
+            </Property>
+            <Property name="banner" type="ContentFormat" required={false} typeLink="/structures/content-format">
+                Banner of the instance. Must be an image format (`image/*`).
+            </Property>
+        </Properties>
+    </Col>
+
+    <Col sticky>
+
+    ```jsonc title="InstanceMetadata"
+    {
+        "type": "InstanceMetadata",
+        "name": "Jim's Jolly Jimjams",
+        "software": {
+            "name": "Versia Server",
+            "version": "1.2.0-beta.3"
+        },
+        "compatibility": {
+            "versions": [
+                "0.3.0",
+                "0.4.0",
+                "0.5.0"
+            ],
+            "extensions": [
+                "pub.versia:reactions",
+                "pub.versia:polls",
+                "pub.versia:reports"
+            ]
+        },
+        "description": "Server for Jim's Jolly Jimjams, a social network for fans of Jimjams.",
+        "domain": "social.jimjams.com",
+        "logo": {
+            "image/png": {
+                "content": "https://social.jimjams.com/files/logo.png"
+            },
+            "image/webp": {
+                "content": "https://social.jimjams.com/files/logo.webp"
+            }
+        },
+        "public_key": {
+            "algorithm": "ed25519",
+            "key": "MCowBQYDK2VwAyEA9zhEMtQZetRl4QrLcz99i7jOa6ZVjX7aLfRUsMuKByI="
+        },
+        "banner": null,
+        "created_at": "2021-07-01T00:00:00Z",
+        "extensions": {
+            "example.extension:monthly_active_users": 1000
+        }
+    }
+    ```
+
+    </Col>
+</Row>
+
+### Collections
+
+The following [Collections](/structures/collection) are available:
+
+- `moderators`: [Collection](/structures/collection) of instance moderators ([Users](/entities/user)).
+- `admins`: [Collection](/structures/collection) of instance administrators ([Users](/entities/user)).
+
+These can be fetched using the [Federation API](/api/endpoints#entity-collections)

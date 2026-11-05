@@ -1,0 +1,146 @@
+---
+title: "Users"
+description: "Definition of the User entity"
+kind: Entity · Core
+---
+
+import Col from "../../../components/spec/Col.astro";
+import Note from "../../../components/Note.astro";
+import Properties from "../../../components/spec/Properties.astro";
+import Property from "../../../components/spec/Property.astro";
+import Row from "../../../components/spec/Row.astro";
+
+The `User` entity represents an account on a Versia instance. Users can post [Notes](/entities/note), follow other users, and interact with content. Users are identified by their `id` property, which is unique within the instance.
+
+## Addresses
+
+Users may be represented by a shorthand address, in the following formats:
+
+```
+@username@instance
+@id@instance
+```
+
+For example:
+
+```
+@jessew@versia.social
+@018ec082-0ae1-761c-b2c5-22275a611771@versia.social
+```
+
+This is similar to an email address or an ActivityPub address. Usernames are case-insensitive.
+
+### Identifier
+
+Identifier **must** be either a valid `username` or a valid `id`. It should have the same username/id as the user's profile.
+
+<Note>
+Usernames can be changed by the user, so it is recommended to use `id` for long-term references.
+</Note>
+
+### Instance
+
+Instance **must** be the [Domain](/api/basics#domain) that the user is on.
+
+## Entity Definition
+
+<Row>
+  <Col>
+
+    <Properties name="User">
+        <Property name="avatar" type="ContentFormat" required={false} typeLink="/structures/content-format">
+            The user's avatar. Must be an image format (`image/*`).
+        </Property>
+        <Property name="bio" type="ContentFormat" required={false} typeLink="/structures/content-format">
+            Short description of the user. Must be text format (`text/*`).
+        </Property>
+        <Property name="display_name" type="string" required={false}>
+            Display name, as shown to other users. May contain emojis and any Unicode character.
+        </Property>
+        <Property name="fields" type="Field[]" required={true}>
+            Custom key/value pairs. For example, metadata like socials or pronouns. Must be text format (`text/*`).
+
+            ```typescript
+            type Field = {
+                key: ContentFormat;
+                value: ContentFormat;
+            }
+            ```
+        </Property>
+        <Property name="username" type="string" required={true}>
+            Alpha-numeric username. Must be unique within the instance. **Must** be treated as changeable by the user.
+
+            Can only contain the following characters: `a-z`, `A-Z` (case-insensitive), `0-9`, `_` and `-`. Should be limited to reasonable lengths.
+        </Property>
+        <Property name="header" type="ContentFormat" required={false} typeLink="/structures/content-format">
+            A header image for the user's profile. Also known as a cover photo or a banner. Must be an image format (`image/*`).
+        </Property>
+        <Property name="manually_approves_followers" type="boolean" required={true}>
+            If `true`, the user must approve any new followers manually. If `false`, followers are automatically approved. This does not affect federation, and is meant to be used for clients to display correct UI.
+        </Property>
+        <Property name="indexable" type="boolean" required={true}>
+            User consent to be indexed by search engines. If `false`, the user's profile should not be indexed.
+        </Property>
+    </Properties>
+
+  </Col>
+  <Col sticky>
+
+    ```jsonc title="Example User"
+    {
+        "id": "018ec082-0ae1-761c-b2c5-22275a611771",
+        "type": "User",
+        "created_at": "2024-04-09T01:38:51.743Z",
+        "avatar": { // [!code focus:100]
+            "image/png": {
+                "content": "https://avatars.githubusercontent.com/u/30842467?v=4"
+            }
+        },
+        "bio": {
+            "text/html": {
+                "content": "<p>🌸🌸🌸</p>"
+            },
+            "text/plain": {
+                "content": "🌸🌸🌸"
+            }
+        },
+        "display_name": "April The Pink (limited Sand Edition)",
+        "extensions": {
+            "pub.versia:custom_emojis": {
+                "emojis": []
+            }
+        },
+        "fields": [
+            {
+                "key": {
+                    "text/html": {
+                        "content": "<p>Pronouns</p>"
+                    }
+                },
+                "value": {
+                    "text/html": {
+                        "content": "<p>It/its</p>"
+                    }
+                }
+            }
+        ],
+        "header": null,
+        "indexable": false,
+        "manually_approves_followers": false,
+        "username": "aprl"
+    }
+    ```
+
+  </Col>
+</Row>
+
+### Collections
+
+The following [Collections](/structures/collection) are available:
+
+- `outbox`: [Collection](/structures/collection) of notes authored by the user.
+- `followers`: [URI Collection](/structures/collection#uri-collection) of users that follow the user.
+- `following`: [URI Collection](/structures/collection#uri-collection) of users that the user follows.
+- `featured`: [Collection](/structures/collection) of notes that the user wants to feature on their profile ("pinned" notes).
+
+These can be fetched using the [Federation API](/api/endpoints#entity-collections)
