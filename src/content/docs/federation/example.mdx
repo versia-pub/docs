@@ -5,6 +5,8 @@ kind: Federation
 ---
 
 import Note from "../../../components/Note.astro";
+import Message from "../../../components/spec/Message.astro";
+import WireTrace from "../../../components/spec/WireTrace.astro";
 
 This page describes a typical federation flow between two servers, `a.social` and `b.social`, in several different contexts.
 
@@ -15,6 +17,20 @@ This page describes a typical federation flow between two servers, `a.social` an
 </Note>
 
 ## Sending a Note
+
+The whole exchange looks like this, and the sections below go through each step.
+
+<WireTrace a="a.social" b="b.social">
+    <Message from="a" local>`@alice` posts a note that mentions `@joe@b.social`.</Message>
+    <Message from="a" label="GET /.well-known/webfinger?resource=acct:joe@b.social">[Resolve the mention](#resolving-the-mention) using WebFinger.</Message>
+    <Message from="b">Responds with the URL of `joe`'s profile.</Message>
+    <Message from="a" label="GET /.versia/entities/User/joe">[Fetch the user](#fetching-the-user) from that URL.</Message>
+    <Message from="b">Responds with the `User` entity.</Message>
+    <Message from="a" local>[Serialize the note](#serializing-the-note).</Message>
+    <Message from="a" label="POST /.versia/v0.6/inbox">[Send the note](#sending-the-note) to the inbox.</Message>
+    <Message from="b" label="202 Accepted" />
+    <Message from="b" local>[Display the note](#displaying-the-note) to `joe`.</Message>
+</WireTrace>
 
 `@alice` on `a.social` creates a note with the following content:
 

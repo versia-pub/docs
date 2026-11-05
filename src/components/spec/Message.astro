@@ -1,0 +1,84 @@
+---
+interface Props {
+    /** The lane this starts from: `a` on the left sends requests, `b` on the right answers. */
+    from: "a" | "b";
+    /** Something an instance does by itself, with no arrow. */
+    local?: boolean;
+    /** The request line or status code, when the message has one worth showing. */
+    label?: string;
+}
+
+const { from, local = false, label } = Astro.props;
+---
+
+<li class:list={["step", `from-${from}`, { local }]}>
+    {!local && <span class="visually-hidden">{from === "a" ? "Request:" : "Response:"}</span>}
+    {label && <code class="label">{label}</code>}
+    {!local && <span class="arrow" aria-hidden="true"></span>}
+    {Astro.slots.has("default") && <div class="text"><slot /></div>}
+</li>
+
+<style>
+    .step {
+        margin: 0;
+        padding: 0.75rem 1rem;
+        font-size: 0.95rem;
+        line-height: 1.45;
+    }
+
+    /* Requests read from the left and responses from the right, like the arrows under them. */
+    .from-b {
+        text-align: right;
+    }
+
+    .local .text {
+        color: var(--ink-soft);
+        font-style: italic;
+    }
+
+    .label {
+        display: block;
+        font-size: 0.8rem;
+        font-weight: 600;
+        overflow-wrap: anywhere;
+    }
+
+    /* Direction has a colour: pink leaves `a`, the companion colour comes back from `b`. */
+    .arrow {
+        position: relative;
+        display: block;
+        height: 2px;
+        margin: 0.35rem -1rem 0.4rem;
+        background: var(--accent);
+    }
+
+    .from-b .arrow {
+        background: var(--value);
+    }
+
+    .arrow::after {
+        content: "";
+        position: absolute;
+        top: -0.3rem;
+        right: 0;
+        width: 0.6rem;
+        height: calc(0.6rem + 2px);
+        background: inherit;
+        clip-path: polygon(0 0, 100% 50%, 0 100%);
+    }
+
+    .from-b .arrow::after {
+        right: auto;
+        left: 0;
+        clip-path: polygon(100% 0, 0 50%, 100% 100%);
+    }
+
+    .visually-hidden {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+        clip-path: inset(50%);
+        white-space: nowrap;
+    }
+</style>

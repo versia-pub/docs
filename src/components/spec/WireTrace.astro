@@ -1,0 +1,41 @@
+---
+interface Props {
+    /** The instances on the left and right lanes. */
+    a: string;
+    b: string;
+}
+
+const { a, b } = Astro.props;
+---
+
+<figure class="trace wide">
+    <div class="lanes" aria-hidden="true">
+        <span>{a}</span>
+        <span>{b}</span>
+    </div>
+    <ol><slot /></ol>
+</figure>
+
+<style>
+    .trace {
+        margin: 0.5rem 0 2rem;
+    }
+
+    .lanes {
+        display: flex;
+        justify-content: space-between;
+        gap: 1rem;
+        padding-bottom: 0.5rem;
+        font-family: var(--font-mono);
+        font-size: 0.875rem;
+        font-weight: 700;
+    }
+
+    /* The two instances, as rails running down each side. */
+    ol {
+        margin: 0;
+        padding: 0;
+        border-inline: 1px solid var(--ink-faint);
+        list-style: none;
+    }
+</style>
