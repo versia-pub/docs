@@ -65,35 +65,12 @@ const addLinks = (code: Code, links: string[]) => {
     code.meta = `${code.meta ?? ""} links="${links.join(",")}"`.trim();
 };
 
-/** Same anchors as the previous site's `Property`, which ignored nesting. Examples are not checked. */
-const linkRow = (row: JsxElement) => {
-    const links: string[] = [];
-    for (const properties of elementsIn(row, "Properties")) {
-        const prefix = anchorPart(nameOf(properties));
-        for (const property of elementsIn(properties, "Property")) {
-            const name = nameOf(property);
-            const anchor = `${prefix}-${anchorPart(name)}`;
-            setAnchor(property, anchor);
-            links.push(`${name}=#${anchor}`);
-        }
-    }
-    for (const col of elementsIn(row, "Col")) {
-        if (attribute(col, "sticky")) {
-            for (const code of codeIn(col)) {
-                if (code.lang === "json" || code.lang === "jsonc") {
-                    addLinks(code, links);
-                }
-            }
-        }
-    }
-};
-
 const checkExample = (
     code: Code,
     file: VFile,
     prefix: string,
     fields: { name: string; required: boolean }[],
-    inherited: string[],
+    inherited: { name: string; required: boolean }[],
 ) => {
     const errors: { error: number; offset: number; length: number }[] = [];
     const data = parse(code.value, errors, { allowTrailingComma: false });
@@ -107,9 +84,10 @@ const checkExample = (
     }
 
     const keys = Object.keys(data);
-    const known = new Set([...fields.map((f) => f.name), ...inherited]);
+    const all = [...fields, ...inherited];
+    const known = new Set(all.map((f) => f.name));
     const unknown = keys.filter((k) => !known.has(k));
-    const missing = fields.filter((f) => f.required && !keys.includes(f.name));
+    const missing = all.filter((f) => f.required && !keys.includes(f.name));
     if (unknown.length > 0) {
         file.fail(
             `Example for ${prefix} has unlisted keys: ${unknown.join(", ")}`,
@@ -160,9 +138,7 @@ const linkEntity = (entity: JsxElement, file: VFile) => {
         skipped.push("id");
     }
     const inherited = hasInherited
-        ? inheritedFields
-              .map((f) => f.name)
-              .filter((name) => !skipped.includes(name))
+        ? inheritedFields.filter((f) => !skipped.includes(f.name))
         : [];
     for (const node of elementsIn(entity, "Inherits")) {
         node.attributes.push({
@@ -174,10 +150,13 @@ const linkEntity = (entity: JsxElement, file: VFile) => {
 
     const links = [
         ...fields.map((f) => `${f.name}=#${prefix}-${anchorPart(f.name)}`),
-        ...inherited.map((k) => `${k}=${inheritedFieldHref(k)}`),
+        ...inherited.map((f) => `${f.name}=${inheritedFieldHref(f.name)}`),
     ];
     for (const example of elementsIn(entity, "Example")) {
-        for (const code of codeIn(example)) {
+        const jsonBlocks = codeIn(example).filter(
+            (code) => code.lang === "json" || code.lang === "jsonc",
+        );
+        for (const code of jsonBlocks) {
             if (!attribute(example, "unchecked")) {
                 checkExample(code, file, prefix, fields, inherited);
             }
@@ -187,17 +166,17 @@ const linkEntity = (entity: JsxElement, file: VFile) => {
 };
 
 /**
- * Gives each `Field` in an `Entity` its anchor, tells the example's code blocks
- * which keys can link to a field, and fails the build when an example and its
- * field list disagree.
+ * Gives each `Field` in an `Entity` or `Fields` sheet its anchor, tells the
+ * example's JSON blocks which keys can link to a field, and fails the build
+ * when an example and its field list disagree.
  */
 export function remarkSpec() {
     return (tree: Root, file: VFile) => {
-        for (const row of elementsIn(tree, "Row")) {
-            linkRow(row);
-        }
-        for (const entity of elementsIn(tree, "Entity")) {
-            linkEntity(entity, file);
+        for (const sheet of [
+            ...elementsIn(tree, "Entity"),
+            ...elementsIn(tree, "Fields"),
+        ]) {
+            linkEntity(sheet, file);
         }
     };
 }

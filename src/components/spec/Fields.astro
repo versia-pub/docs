@@ -1,0 +1,35 @@
+---
+import Col from "./Col.astro";
+import Fact from "./Fact.astro";
+import Facts from "./Facts.astro";
+import Sheet from "./Sheet.astro";
+import SheetLabel from "./SheetLabel.astro";
+
+interface Props {
+    /** Prefix of each field's anchor, read by `remark-spec`. */
+    name: string;
+    /** What the fields are, when they are not JSON fields, such as "Headers". */
+    label?: string;
+    /** The key these fields live under in an entity's `extensions`. */
+    extension?: string;
+    /** The entity that carries the extension. */
+    on?: "Note" | "User";
+}
+
+const { name, label = "Fields", extension, on } = Astro.props;
+const onHref = { Note: "/entities/note", User: "/entities/user" };
+---
+
+<Sheet entity={name}>
+    {extension && (
+        <Facts slot="meta">
+            <Fact label="Extension ID"><code>{extension}</code></Fact>
+            {on && <Fact label="Extends"><a href={onHref[on]}>{on}</a></Fact>}
+        </Facts>
+    )}
+    <Col>
+        <SheetLabel>{label}</SheetLabel>
+        <slot />
+    </Col>
+    <Col sticky><slot name="example" /></Col>
+</Sheet>
