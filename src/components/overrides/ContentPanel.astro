@@ -1,0 +1,15 @@
+<div class="panel"><slot /></div>
+
+<style>
+    .panel {
+        max-width: var(--sheet-width);
+        margin-inline: auto;
+        padding: 0 1.25rem;
+    }
+
+    @media (min-width: 50rem) {
+        .panel {
+            padding-inline: 3rem;
+        }
+    }
+</style>

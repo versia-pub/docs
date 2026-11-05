@@ -1,0 +1,89 @@
+/* Unlayered, so these win over Starlight's layered defaults. */
+
+:root {
+    --font-prose: "Source Serif 4 Variable", Georgia, serif;
+    --font-mono: "JetBrains Mono Variable", ui-monospace, monospace;
+
+    --sl-font: var(--font-prose);
+    --sl-font-mono: var(--font-mono);
+
+    --rail-width: 17.5rem;
+    --prose-width: 41rem;
+    --margin-width: 16rem;
+    --sheet-width: 80rem;
+}
+
+/* Starlight always renders data-theme="dark", and only its script corrects it,
+   so visitors without JavaScript get their system preference from the block below. */
+:root,
+:root[data-theme="dark"] {
+    color-scheme: dark;
+    --paper: #0c0c0c;
+    --paper-raised: #181818;
+    --ink: #f2f2f2;
+    --ink-soft: #bdbdbd;
+    --ink-faint: #949494;
+    --hair: #ffffff2b;
+    --accent: #ff5fa8;
+    --accent-tint: #ff5fa824;
+    --value: #4fd1c0;
+    --warn: #e6b95c;
+    --warn-tint: #e6b95c14;
+}
+
+:root[data-theme="light"] {
+    color-scheme: light;
+    --paper: #ffffff;
+    --paper-raised: #f6f6f6;
+    --ink: #1a1a1a;
+    --ink-soft: #4d4d4d;
+    --ink-faint: #6e6e6e;
+    --hair: #00000024;
+    --accent: #b5175a;
+    --accent-tint: #b5175a14;
+    --value: #0b6f66;
+    --warn: #8a5a00;
+    --warn-tint: #8a5a0012;
+}
+
+@media (scripting: none) and (prefers-color-scheme: light) {
+    :root[data-theme] {
+        color-scheme: light;
+        --paper: #ffffff;
+        --paper-raised: #f6f6f6;
+        --ink: #1a1a1a;
+        --ink-soft: #4d4d4d;
+        --ink-faint: #6e6e6e;
+        --hair: #00000024;
+        --accent: #b5175a;
+        --accent-tint: #b5175a14;
+        --value: #0b6f66;
+        --warn: #8a5a00;
+        --warn-tint: #8a5a0012;
+    }
+}
+
+/* Keeps Starlight's own search dialog consistent with the tokens above. */
+:root,
+:root[data-theme] {
+    --sl-color-white: var(--ink);
+    --sl-color-gray-1: var(--ink);
+    --sl-color-gray-2: var(--ink-soft);
+    --sl-color-gray-3: var(--ink-faint);
+    --sl-color-gray-4: var(--ink-faint);
+    --sl-color-gray-5: var(--hair);
+    --sl-color-gray-6: var(--paper-raised);
+    --sl-color-gray-7: var(--paper-raised);
+    --sl-color-black: var(--paper);
+    --sl-color-accent: var(--accent);
+    --sl-color-accent-high: var(--accent);
+    --sl-color-accent-low: var(--accent-tint);
+    --sl-color-text: var(--ink);
+    --sl-color-text-accent: var(--accent);
+    --sl-color-bg: var(--paper);
+    --sl-color-bg-nav: var(--paper);
+    --sl-color-bg-sidebar: var(--paper);
+    --sl-color-hairline: var(--hair);
+    --sl-color-hairline-light: var(--hair);
+    --sl-color-hairline-shade: var(--hair);
+}

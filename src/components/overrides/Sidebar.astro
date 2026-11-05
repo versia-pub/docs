@@ -1,0 +1,71 @@
+---
+import NavList from "./NavList.astro";
+import { CURRENT_VERSION } from "../../lib/spec";
+
+const { sidebar } = Astro.locals.starlightRoute;
+---
+
+<NavList entries={sidebar} />
+<div class="rail-status">
+    <a class="version" href="/changelog">{CURRENT_VERSION}</a>
+    <a href="https://github.com/versia-pub">GitHub</a>
+</div>
+
+<script>
+    // Enhancement only: the links work without it.
+    const links = [...document.querySelectorAll<HTMLAnchorElement>(".sublinks a")];
+    const targets = links.flatMap((link) => {
+        const target = document.getElementById(link.hash.slice(1));
+        return target ? [{ link, target }] : [];
+    });
+
+    if (targets.length > 0) {
+        const update = () => {
+            const passed = targets.filter(({ target }) => target.getBoundingClientRect().top < innerHeight / 3);
+            const current = passed.at(-1) ?? targets[0];
+            for (const { link } of targets) {
+                link.classList.toggle("is-current", link === current?.link);
+            }
+        };
+        addEventListener("scroll", update, { passive: true });
+        update();
+    }
+
+    // Close the mobile menu after jumping to a section on the same page.
+    for (const link of links) {
+        link.addEventListener("click", () => {
+            const pane = document.getElementById("site-nav");
+            if (pane?.matches(":popover-open")) {
+                pane.hidePopover();
+            }
+        });
+    }
+</script>
+
+<style>
+    .rail-status {
+        display: flex;
+        justify-content: space-between;
+        gap: 1rem;
+        margin-top: 1.75rem;
+        padding-top: 0.9rem;
+        border-top: 1px solid var(--hair);
+        font-size: 0.875rem;
+    }
+
+    .rail-status a {
+        color: var(--ink-faint);
+        text-decoration: none;
+    }
+
+    .rail-status a:hover {
+        color: var(--accent);
+    }
+
+    /* Above the breakpoint the version is in `Header`. */
+    @media (min-width: 50rem) {
+        .version {
+            display: none;
+        }
+    }
+</style>

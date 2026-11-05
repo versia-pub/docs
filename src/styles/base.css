@@ -1,0 +1,28 @@
+html {
+    scroll-padding-top: 4.5rem;
+}
+
+@media (min-width: 50rem) {
+    html {
+        scroll-padding-top: 1.5rem;
+    }
+}
+
+body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--font-prose);
+    -webkit-font-smoothing: antialiased;
+}
+
+a:focus-visible,
+button:focus-visible,
+summary:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+}
+
+::selection {
+    background: var(--accent);
+    color: var(--paper);
+}

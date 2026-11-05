@@ -1,0 +1,87 @@
+---
+import Search from "@astrojs/starlight/components/Search.astro";
+import { CURRENT_VERSION } from "../../lib/spec";
+import ThemeSelect from "./ThemeSelect.astro";
+---
+
+<div class="masthead">
+    <a class="brand" href="/">
+        <img src="/logo.webp" width="26" height="26" alt="" />
+        <span>Versia</span>
+    </a>
+    <a class="version" href="/changelog">{CURRENT_VERSION}</a>
+</div>
+<div class="rail-tools">
+    <Search />
+    <ThemeSelect />
+</div>
+
+<style>
+    .brand {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.6rem;
+        color: var(--ink);
+        font-weight: 700;
+        font-size: 1.125rem;
+        text-decoration: none;
+    }
+
+    .brand img {
+        border-radius: 6px;
+    }
+
+    /* Below the breakpoint the version moves to the drawer, in `Sidebar`. */
+    .version {
+        display: none;
+        color: var(--ink-soft);
+        font-size: 0.875rem;
+        text-decoration: none;
+    }
+
+    .version:hover {
+        color: var(--accent);
+    }
+
+    .rail-tools {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .rail-tools :global(site-search button[data-open-modal]) {
+        padding: 0.25rem 0;
+        color: var(--ink-soft);
+        background: none;
+        border: 0;
+        border-radius: 0;
+        font-size: 0.92rem;
+    }
+
+    .rail-tools :global(site-search button[data-open-modal]:hover) {
+        color: var(--accent);
+    }
+
+    /* Starlight's script shows the shortcut hint through an inline style. */
+    .rail-tools :global(site-search button[data-open-modal] > kbd) {
+        display: none !important;
+    }
+
+    @media (min-width: 50rem) {
+        .version {
+            display: block;
+            margin-top: 0.15rem;
+        }
+
+        .rail-tools :global(site-search) {
+            flex: 1;
+        }
+    }
+
+    /* Search needs JavaScript, so it is hidden rather than shown as a dead control. */
+    @media (scripting: none) {
+        .rail-tools :global(site-search) {
+            display: none;
+        }
+    }
+</style>

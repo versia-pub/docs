@@ -1,0 +1,134 @@
+---
+import type { StarlightRouteData } from "@astrojs/starlight/route-data";
+
+type Entry = StarlightRouteData["sidebar"][number];
+
+interface Props {
+    entries: Entry[];
+    depth?: number;
+}
+
+const { entries, depth = 0 } = Astro.props;
+const { headings } = Astro.locals.starlightRoute;
+
+const sections = headings.filter((heading) => heading.depth === 2);
+
+const hasCurrent = (entry: Entry): boolean =>
+    entry.type === "link" ? entry.isCurrent : entry.entries.some(hasCurrent);
+---
+
+<ul class:list={["nav-list", `nav-depth-${depth}`]}>
+    {entries.map((entry) => (
+        <li>
+            {entry.type === "link" ? (
+                <>
+                    <a
+                        href={entry.href}
+                        class:list={["nav-link", entry.attrs.class]}
+                        aria-current={entry.isCurrent ? "page" : undefined}
+                    >
+                        {entry.label}
+                    </a>
+                    {entry.isCurrent && sections.length > 0 && (
+                        <ul class="sublinks">
+                            {sections.map((section) => (
+                                <li><a href={`#${section.slug}`}>{section.text}</a></li>
+                            ))}
+                        </ul>
+                    )}
+                </>
+            ) : depth === 0 ? (
+                <>
+                    <p class="nav-label">{entry.label}</p>
+                    <Astro.self entries={entry.entries} depth={depth + 1} />
+                </>
+            ) : (
+                <details open={hasCurrent(entry)}>
+                    <summary class="nav-link">{entry.label}</summary>
+                    <Astro.self entries={entry.entries} depth={depth + 1} />
+                </details>
+            )}
+        </li>
+    ))}
+</ul>
+
+<style>
+    .nav-label {
+        margin: 1.5rem 0 0.4rem;
+        color: var(--ink);
+        font-size: 0.92rem;
+        font-weight: 700;
+    }
+
+    .nav-list > li:first-child > .nav-label {
+        margin-top: 0;
+    }
+
+    .nav-list,
+    .sublinks {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
+
+    .nav-link {
+        display: block;
+        padding: 0.2rem 0;
+        color: var(--ink-soft);
+        font-size: 0.92rem;
+        line-height: 1.45;
+        text-decoration: none;
+        cursor: pointer;
+    }
+
+    .nav-link:hover {
+        color: var(--ink);
+    }
+
+    .nav-link[aria-current="page"] {
+        margin-inline: -0.5rem;
+        padding-inline: 0.5rem;
+        background: var(--accent);
+        color: var(--paper);
+        font-weight: 600;
+    }
+
+    /* `ident` is set in the sidebar config, on entries named after identifiers. */
+    .nav-link.ident {
+        font-family: var(--font-mono);
+        font-size: 0.82rem;
+    }
+
+    .nav-depth-2 {
+        margin: 0.1rem 0 0.4rem 0.2rem;
+        padding-left: 0.75rem;
+        border-left: 1px solid var(--hair);
+    }
+
+    .sublinks {
+        margin: 0.1rem 0 0.5rem;
+        padding-left: 0.75rem;
+        border-left: 1px solid var(--hair);
+    }
+
+    .sublinks a {
+        display: block;
+        padding: 0.15rem 0;
+        color: var(--ink-soft);
+        font-size: 0.875rem;
+        line-height: 1.35;
+        text-decoration: none;
+    }
+
+    /* `is-current` comes from the scroll spy in `Sidebar`. */
+    .sublinks a:hover,
+    .sublinks a.is-current {
+        color: var(--ink);
+    }
+
+    .sublinks a.is-current {
+        margin-left: calc(-0.75rem - 1px);
+        padding-left: calc(0.75rem - 2px + 1px);
+        border-left: 2px solid var(--accent);
+    }
+</style>

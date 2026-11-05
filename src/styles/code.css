@@ -1,0 +1,70 @@
+/* Shiki's output, which no component renders. */
+.astro-code {
+    margin: 0 0 1.25rem;
+    padding: 0.75rem 0;
+    /* Wrapping keeps long hashes and URLs readable without sideways scrolling. */
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+    /* Beats the inline background Shiki adds. */
+    background: none !important;
+    border-block: 1px solid var(--hair);
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    line-height: 1.6;
+}
+
+:root[data-theme="light"] .astro-code,
+:root[data-theme="light"] .astro-code span {
+    color: var(--shiki-light);
+}
+
+:root[data-theme="dark"] .astro-code,
+:root[data-theme="dark"] .astro-code span {
+    color: var(--shiki-dark);
+}
+
+@media (scripting: none) and (prefers-color-scheme: light) {
+    :root[data-theme] .astro-code,
+    :root[data-theme] .astro-code span {
+        color: var(--shiki-light);
+    }
+}
+
+.astro-code[data-title]::before {
+    content: attr(data-title);
+    display: block;
+    margin-bottom: 0.75rem;
+    color: var(--ink-soft);
+    font-family: var(--font-prose);
+    font-size: 0.875rem;
+    font-style: italic;
+}
+
+/* Wrapped lines stay at their own indent. --indent comes from the Shiki transformer. */
+.astro-code .line {
+    display: inline-block;
+    width: 100%;
+    padding-left: var(--indent, 0);
+    text-indent: calc(-1 * var(--indent, 0));
+}
+
+.has-focused .line:not(.focused) {
+    opacity: 0.5;
+    transition: opacity 0.2s;
+}
+
+.has-focused:hover .line:not(.focused) {
+    opacity: 1;
+}
+
+/* JSON keys linked to their fields by `shiki-field-links`. */
+.field-key {
+    text-decoration-style: dotted;
+    text-decoration-color: var(--ink-faint);
+}
+
+.field-key:hover,
+.field-key.is-linked {
+    background: var(--accent-tint);
+    text-decoration-color: var(--accent);
+}

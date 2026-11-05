@@ -1,0 +1,62 @@
+---
+const { prev, next } = Astro.locals.starlightRoute.pagination;
+---
+
+<footer class="page-foot">
+    <nav class="pager" aria-label="Pagination">
+        {prev && <a rel="prev" href={prev.href}><span>Previous</span>{prev.label}</a>}
+        {next && <a rel="next" href={next.href}><span>Next</span>{next.label}</a>}
+    </nav>
+    <p class="licence">
+        © Copyright {new Date().getFullYear()}. Licensed under{" "}
+        <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.en">CC BY-SA 4.0</a>.
+    </p>
+</footer>
+
+<style>
+    .page-foot {
+        max-width: calc(var(--prose-width) + var(--margin-width) + 3rem);
+        margin-top: 4rem;
+        padding-top: 1.5rem;
+        border-top: 1px solid var(--hair);
+    }
+
+    .pager {
+        display: flex;
+        justify-content: space-between;
+        gap: 1rem;
+    }
+
+    .pager a {
+        display: flex;
+        flex-direction: column;
+        color: var(--ink);
+        font-weight: 700;
+        text-decoration: none;
+    }
+
+    .pager a:hover {
+        color: var(--accent);
+    }
+
+    .pager a[rel="next"] {
+        margin-left: auto;
+        text-align: right;
+    }
+
+    .pager span {
+        color: var(--ink-faint);
+        font-size: 0.875rem;
+        font-weight: 400;
+    }
+
+    .licence {
+        margin: 1.5rem 0 0;
+        color: var(--ink-faint);
+        font-size: 0.8rem;
+    }
+
+    .licence a {
+        color: inherit;
+    }
+</style>
