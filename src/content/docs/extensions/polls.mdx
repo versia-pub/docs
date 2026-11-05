@@ -4,11 +4,12 @@ description: "The Polls Extension allows users to create and vote on polls"
 kind: Extension
 ---
 
-import Col from "../../../components/spec/Col.astro";
+import Entity from "../../../components/spec/Entity.astro";
+import Example from "../../../components/spec/Example.astro";
+import Field from "../../../components/spec/Field.astro";
+import Fields from "../../../components/spec/Fields.astro";
+import Inherits from "../../../components/spec/Inherits.astro";
 import Note from "../../../components/Note.astro";
-import Properties from "../../../components/spec/Properties.astro";
-import Property from "../../../components/spec/Property.astro";
-import Row from "../../../components/spec/Row.astro";
 
 Polls (also known as surveys) are a useful tool for gathering feedback from followers and friends. The Polls Extension allows users to create and vote on polls.
 
@@ -22,26 +23,21 @@ This is reflected in the presence of total votes as numbers and not as an array 
 
 Note that there is no `question` field: the question should be included in the `content` of the Note itself.
 
-<Row>
-    <Col>
-        <Properties name="Polls">
-            <Property name="options" type="ContentFormat[]" required="true">
-                Array of options for the poll. Each option is a [ContentFormat](/structures/content-format) that can contain the same properties as a Note's `content` (e.g. [Custom Emojis](/extensions/custom-emojis) or HTML hyperlinks).
-            </Property>
-            <Property name="votes" type="number[]" required="true" numberType="u64">
-                Array of the number of votes for each option. The length of this array should match the length of the `options` array.
-            </Property>
-            <Property name="multiple_choice" type="boolean" required="true">
-                Whether the poll allows multiple votes to be cast for different options.
-            </Property>
-            <Property name="expires_at" type="RFC3339" typeLink="/types#rfc-3339">
-                RFC 3339 timestamp of when the poll ends and no more votes can be cast. If not present, the poll does not expire.
-            </Property>
-        </Properties>
-    </Col>
+<Fields name="Polls" extension="pub.versia:polls" on="Note">
+    <Field name="options" type="ContentFormat[]" required>
+        Array of options for the poll. Each option is a [ContentFormat](/structures/content-format) that can contain the same properties as a Note's `content` (e.g. [Custom Emojis](/extensions/custom-emojis) or HTML hyperlinks).
+    </Field>
+    <Field name="votes" type="number[]" required numberType="u64">
+        Array of the number of votes for each option. The length of this array should match the length of the `options` array.
+    </Field>
+    <Field name="multiple_choice" type="boolean" required>
+        Whether the poll allows multiple votes to be cast for different options.
+    </Field>
+    <Field name="expires_at" type="RFC3339">
+        RFC 3339 timestamp of when the poll ends and no more votes can be cast. If not present, the poll does not expire.
+    </Field>
 
-    <Col sticky>
-
+    <Example slot="example" unchecked>
     ```jsonc title="Example Note"
     {
         "id": "01902e09-0f8b-72de-8ee3-9afc0cf5eae1",
@@ -89,34 +85,30 @@ Note that there is no `question` field: the question should be included in the `
     }
 
     ```
-    
-    </Col>
-</Row>
+    </Example>
+</Fields>
 
 ## Vote Entity Definition
 
 If a vote is cast to a poll that is closed, the vote should be rejected with a `422 Unprocessable Entity` error.
 
-<Row>
-    <Col>
-        <Properties name="Vote">
-            <Property name="type" type="string" required="true">
-                Must be `pub.versia:polls/Vote`.
-            </Property>
-            <Property name="author" type="Reference" required="true" typeLink="/types#reference">
-                [Reference](/types#reference) of the user who cast the vote.
-            </Property>
-            <Property name="poll" type="Reference" required="true" typeLink="/types#reference">
-                [Reference](/types#reference) to the note with poll that the user voted on.
-            </Property>
-            <Property name="option" type="number" required="true" numberType="u64">
-                Index of the option that the user voted for. This should be a valid index into the `options` array of the poll.
-            </Property>
-        </Properties>
-    </Col>
+<Entity name="Vote" type="pub.versia:polls/Vote">
+    <Field name="type" type="string" required>
+        Must be `pub.versia:polls/Vote`.
+    </Field>
+    <Field name="author" type="Reference" required>
+        [Reference](/types#reference) of the user who cast the vote.
+    </Field>
+    <Field name="poll" type="Reference" required>
+        [Reference](/types#reference) to the note with poll that the user voted on.
+    </Field>
+    <Field name="option" type="number" required numberType="u64">
+        Index of the option that the user voted for. This should be a valid index into the `options` array of the poll.
+    </Field>
 
-    <Col sticky>
+    <Inherits />
 
+    <Example slot="example">
     ```jsonc title="Example Vote"
     {
         "id": "6f27bc77-58ee-4c9b-b804-8cc1c1182fa9",
@@ -127,9 +119,8 @@ If a vote is cast to a poll that is closed, the vote should be rejected with a `
         "option": 1
     }
     ```
-    
-    </Col>
-</Row>
+    </Example>
+</Entity>
 
 ## Interaction Types
 

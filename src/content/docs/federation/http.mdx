@@ -4,11 +4,10 @@ description: "How Versia uses the HTTP protocol for all communications between i
 kind: Federation
 ---
 
-import Col from "../../../components/spec/Col.astro";
+import Example from "../../../components/spec/Example.astro";
+import Field from "../../../components/spec/Field.astro";
+import Fields from "../../../components/spec/Fields.astro";
 import Note from "../../../components/Note.astro";
-import Properties from "../../../components/spec/Properties.astro";
-import Property from "../../../components/spec/Property.astro";
-import Row from "../../../components/spec/Row.astro";
 
 Versia uses the HTTP protocol for all communications between instances. HTTP requests must conform to certain standards to ensure compatibility between different implementations, as well as to ensure the security and integrity of the data being exchanged.
 
@@ -16,45 +15,42 @@ HTTP requests/responses between instances **must** include a [Signature](/signat
 
 ## Requests
 
-<Row>
-    <Col>
-        <Properties name="HTTP Request">
-            <Property name="Accept" type="string" required={true}>
-                Must be `application/vnd.versia+json`, unless specified otherwise. Basic `application/json` is **not** allowed.
-            </Property>
-            <Property name="Content-Type" type="string" required={true}>
-                Must be `application/vnd.versia+json; charset=utf-8` if the request has a body.
-            </Property>
-            <Property name="Versia-Signature" type="string" required={true}>
-                See [Signatures](/signatures) for more information.
-            </Property>
-            <Property name="Versia-Signed-By" type="Domain" required={true} typeLink="/api/basics#domain">
-                See [Signatures](/signatures).
-            </Property>
-            <Property name="Versia-Signed-At" type="number" required={true}>
-                See [Signatures](/signatures).
-            </Property>
-            <Property name="User-Agent" type="string" required={false}>
-                A string identifying the software making the request. Should contain the name of the software, its version, and a link to its homepage.
+<Fields name="HTTP Request" label="Headers">
+    <Field name="Accept" type="string" required>
+        Must be `application/vnd.versia+json`, unless specified otherwise. Basic `application/json` is **not** allowed.
+    </Field>
+    <Field name="Content-Type" type="string" required>
+        Must be `application/vnd.versia+json; charset=utf-8` if the request has a body.
+    </Field>
+    <Field name="Versia-Signature" type="string" required>
+        See [Signatures](/signatures) for more information.
+    </Field>
+    <Field name="Versia-Signed-By" type="Domain" required>
+        See [Signatures](/signatures).
+    </Field>
+    <Field name="Versia-Signed-At" type="number" required>
+        See [Signatures](/signatures).
+    </Field>
+    <Field name="User-Agent" type="string">
+        A string identifying the software making the request. Should contain the name of the software, its version, and a link to its homepage.
 
-                ```text title="Example User-Agent"
-                CoolServer/1.0 (https://coolserver.com)
-                ```
-            </Property>
-        </Properties>
-    </Col>
-    <Col sticky>
-        ```http title="Example Request"
-        POST https://bob.com/.versia/v0.6/inbox HTTP/1.1
-        # This specific endpoint returns plain JSON
-        Accept: application/json
-        User-Agent: CoolServer/1.0 (https://coolserver.com)
-        Versia-Signature: /CjB2L9bcvRg+uP19B4/rqy7Ji9/cqMFPlL3GVCIndnQjYyOpBzJEAl9weDnXm7Jrqa3y6sBC+EYWKThO2r9Bw==
-        Versia-Signed-By: example.com
-        Versia-Signed-At: 1729241687
+        ```text title="Example User-Agent"
+        CoolServer/1.0 (https://coolserver.com)
         ```
-    </Col>
-</Row>
+    </Field>
+
+    <Example slot="example">
+    ```http title="Example Request"
+    POST https://bob.com/.versia/v0.6/inbox HTTP/1.1
+    # This specific endpoint returns plain JSON
+    Accept: application/json
+    User-Agent: CoolServer/1.0 (https://coolserver.com)
+    Versia-Signature: /CjB2L9bcvRg+uP19B4/rqy7Ji9/cqMFPlL3GVCIndnQjYyOpBzJEAl9weDnXm7Jrqa3y6sBC+EYWKThO2r9Bw==
+    Versia-Signed-By: example.com
+    Versia-Signed-At: 1729241687
+    ```
+    </Example>
+</Fields>
 
 ## Rate limits
 
@@ -68,30 +64,27 @@ IETF draft [draft-polli-ratelimit-headers-02](https://www.ietf.org/archive/id/dr
 
 ## Responses
 
-<Row>
-    <Col>
-        <Properties name="HTTP Response">
-            <Property name="Content-Type" type="string" required={true}>
-                Must include `application/vnd.versia+json; charset=utf-8`, unless specified otherwise.
-            </Property>
-            <Property name="Versia-Signature" type="string" required={true}>
-                See [Signatures](/signatures) for more information.
-            </Property>
-            <Property name="Versia-Signed-By" type="Domain" required={true} typeLink="/api/basics#domain">
-                See [Signatures](/signatures).
-            </Property>
-            <Property name="Versia-Signed-At" type="number" required={true}>
-                See [Signatures](/signatures).
-            </Property>
-        </Properties>
-    </Col>
-    <Col sticky>
-        ```http title="Example Response"
-        HTTP/1.1 200 OK
-        Content-Type: application/vnd.versia+json; charset=utf-8
-        Versia-Signature: /CjB2L9bcvRg+uP19B4/rqy7Ji9/cqMFPlL3GVCIndnQjYyOpBzJEAl9weDnXm7Jrqa3y6sBC+EYWKThO2r9Bw==+7BvnWKITyGyTwHbb6fVYwRx1I
-        Versia-Signed-By: example.com
-        Versia-Signed-At: 1729241717
-        ```
-    </Col>
-</Row>
+<Fields name="HTTP Response" label="Headers">
+    <Field name="Content-Type" type="string" required>
+        Must include `application/vnd.versia+json; charset=utf-8`, unless specified otherwise.
+    </Field>
+    <Field name="Versia-Signature" type="string" required>
+        See [Signatures](/signatures) for more information.
+    </Field>
+    <Field name="Versia-Signed-By" type="Domain" required>
+        See [Signatures](/signatures).
+    </Field>
+    <Field name="Versia-Signed-At" type="number" required>
+        See [Signatures](/signatures).
+    </Field>
+
+    <Example slot="example">
+    ```http title="Example Response"
+    HTTP/1.1 200 OK
+    Content-Type: application/vnd.versia+json; charset=utf-8
+    Versia-Signature: /CjB2L9bcvRg+uP19B4/rqy7Ji9/cqMFPlL3GVCIndnQjYyOpBzJEAl9weDnXm7Jrqa3y6sBC+EYWKThO2r9Bw==+7BvnWKITyGyTwHbb6fVYwRx1I
+    Versia-Signed-By: example.com
+    Versia-Signed-At: 1729241717
+    ```
+    </Example>
+</Fields>

@@ -4,37 +4,31 @@ description: "The Custom Emojis extension adds support for custom emojis in note
 kind: Extension
 ---
 
-import Col from "../../../components/spec/Col.astro";
-import Properties from "../../../components/spec/Properties.astro";
-import Property from "../../../components/spec/Property.astro";
-import Row from "../../../components/spec/Row.astro";
+import Example from "../../../components/spec/Example.astro";
+import Field from "../../../components/spec/Field.astro";
+import Fields from "../../../components/spec/Fields.astro";
 
 The Custom Emojis extension adds support for adding personalized emojis to federated data.
 
 ## Structure Definition
 
-<Row>
-    <Col>
-        <Properties name="CustomEmoji">
-            <Property name="name" type="string" required={true}>
-                Emoji name, surrounded by identification characters (for example, colons: `:happy_face:`).
+<Fields name="CustomEmoji">
+    <Field name="name" type="string" required>
+        Emoji name, surrounded by identification characters (for example, colons: `:happy_face:`).
 
-                The following characters are allowed:
-                - `a-z`
-                - `A-Z`
-                - `0-9`
-                - `_`, `-`
-                
-                Identification characters must not match the name regex (must not be alphanumeric/underscore/hyphen). There may only be two identification characters, one at the beginning and one at the end.
-            </Property>
-            <Property name="content" type="ContentFormat" required={true} typeLink="/structures/content-format">
-                Emoji content. Must be an image format (`image/*`).
-            </Property>
-        </Properties>
-    </Col>
+        The following characters are allowed:
+        - `a-z`
+        - `A-Z`
+        - `0-9`
+        - `_`, `-`
 
-    <Col sticky>
+        Identification characters must not match the name regex (must not be alphanumeric/underscore/hyphen). There may only be two identification characters, one at the beginning and one at the end.
+    </Field>
+    <Field name="content" type="ContentFormat" required>
+        Emoji content. Must be an image format (`image/*`).
+    </Field>
 
+    <Example slot="example">
     ```jsonc title="Example Emoji"
     {
         "name": ":happy_face:",
@@ -47,9 +41,8 @@ The Custom Emojis extension adds support for adding personalized emojis to feder
         }
     }
     ```
-
-    </Col>
-</Row>
+    </Example>
+</Fields>
 
 ## Rendering
 
@@ -78,17 +71,12 @@ Emojis **should** be displayed at a fixed height (such as `1em`), but their widt
 
 Custom Emojis can be added to any entity with text content. The extension ID is `pub.versia:custom_emojis`.
 
-<Row>
-    <Col>
-        <Properties name="CustomEmojisExtension">
-            <Property name="emojis" type="CustomEmoji[]" required={true} typeLink="/extensions/custom-emojis#structure-definition">
-                [Custom emojis](/extensions/custom-emojis#structure-definition) to be added to the note.
-            </Property>
-        </Properties>
-    </Col>
+<Fields name="CustomEmojisExtension" extension="pub.versia:custom_emojis">
+    <Field name="emojis" type="CustomEmoji[]" required>
+        [Custom emojis](/extensions/custom-emojis#structure-definition) to be added to the note.
+    </Field>
 
-    <Col sticky>
-
+    <Example slot="example" unchecked>
     ```jsonc title="Example Usage"
     {
         "id": "456df8ed-daf1-4062-abab-491071c7b8dd",
@@ -118,6 +106,5 @@ Custom Emojis can be added to any entity with text content. The extension ID is 
         }
     }
     ```
-
-    </Col>
-</Row>
+    </Example>
+</Fields>

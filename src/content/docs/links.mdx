@@ -4,57 +4,52 @@ description: "How Versia Links work and how they are used in the Versia Protocol
 kind: Core concept
 ---
 
-import Col from "../../components/spec/Col.astro";
-import Properties from "../../components/spec/Properties.astro";
-import Property from "../../components/spec/Property.astro";
-import Row from "../../components/spec/Row.astro";
+import Example from "../../components/spec/Example.astro";
+import Field from "../../components/spec/Field.astro";
+import Fields from "../../components/spec/Fields.astro";
 
 Versia Links are a way to reference entities in the Versia Protocol, in a way that can be handled by browsers and applications. They function the same way as `mailto:` links, but for Versia entities.
 
 ## Syntax
 
-<Row>
-    <Col>
-        <Properties name="Versia Link">
-            <Property name="scheme" type="string" required={true}>
-                Must be `web+versia://` so that browsers and applications can recognize it.
+<Fields name="Versia Link" label="Parts">
+    <Field name="scheme" type="string" required>
+        Must be `web+versia://` so that browsers and applications can recognize it.
 
-                An IANA registration for the `versia://` scheme will be requested in the future.
-            </Property>
-            <Property name="action" type="string" required={true}>
-                Action to take on the entity. Can have multiple slashes as a way to segment the action.
-                Links that reference instance-specific content (like Entities) **must** reference a Instance.
+        An IANA registration for the `versia://` scheme will be requested in the future.
+    </Field>
+    <Field name="action" type="string" required>
+        Action to take on the entity. Can have multiple slashes as a way to segment the action.
+        Links that reference instance-specific content (like Entities) **must** reference a Instance.
 
-                Possible actions:
+        Possible actions:
 
-                - `users/:instance/:id`: Open a user profile.
-                - `notes/:instance/:id`: Open a note.
-                - `groups/:instance/:id`: Open a group.
-                - `reply/:instance/:id`: Open the composer to reply to a note.
-                - `quote/:instance/:id`: Open the composer to quote a note.
-                - `share/:instance/:id`: Share a note.
-                - `compose/:text`: Compose a new note. Text passed at the end will be added in the note compose field. Used for "Share with Versia" buttons on websites.
-            </Property>
-            <Property name="instance" type="Domain" typeLink="/api/basics#domain" required={false}>
-                Instance hosting the referenced content.
-            </Property>
-        </Properties>
-    </Col>
+        - `users/:instance/:id`: Open a user profile.
+        - `notes/:instance/:id`: Open a note.
+        - `groups/:instance/:id`: Open a group.
+        - `reply/:instance/:id`: Open the composer to reply to a note.
+        - `quote/:instance/:id`: Open the composer to quote a note.
+        - `share/:instance/:id`: Share a note.
+        - `compose/:text`: Compose a new note. Text passed at the end will be added in the note compose field. Used for "Share with Versia" buttons on websites.
+    </Field>
+    <Field name="instance" type="Domain">
+        Instance hosting the referenced content.
+    </Field>
 
-    <Col sticky>
-        ```text title="Viewing a user profile"
-        web+versia://users/bob.social/alice
-        ```
+    <Example slot="example">
+    ```text title="Viewing a user profile"
+    web+versia://users/bob.social/alice
+    ```
 
-        ```text title="Viewing a note"
-        web+versia://notes/jimbob.com/01902e09-0f8b-72de-8ee3-9afc0cf5eae1
-        ```
+    ```text title="Viewing a note"
+    web+versia://notes/jimbob.com/01902e09-0f8b-72de-8ee3-9afc0cf5eae1
+    ```
 
-        ```text title="Replying to a note"
-        web+versia://reply/bob.social/01902e09-0f8b-72de-8ee3-9afc0cf5eae1
-        ```
-    </Col>
-</Row>
+    ```text title="Replying to a note"
+    web+versia://reply/bob.social/01902e09-0f8b-72de-8ee3-9afc0cf5eae1
+    ```
+    </Example>
+</Fields>
 
 ## Handling
 

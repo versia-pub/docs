@@ -4,10 +4,9 @@ description: "Lets users perform actions on other accounts' behalf."
 kind: Extension
 ---
 
-import Col from "../../../components/spec/Col.astro";
-import Properties from "../../../components/spec/Properties.astro";
-import Property from "../../../components/spec/Property.astro";
-import Row from "../../../components/spec/Row.astro";
+import Example from "../../../components/spec/Example.astro";
+import Field from "../../../components/spec/Field.astro";
+import Fields from "../../../components/spec/Fields.astro";
 import Warning from "../../../components/Warning.astro";
 
 Delegation is used to authorize actions on behalf of another user.
@@ -34,20 +33,15 @@ This is useful as a way to centralize all of a user's many "alt accounts" into a
 The Delegation extension uses an ID of `pub.versia:delegation`.
 
 If the extension is present, exactly **one** of the fields **MUST** be specified:
-<Row>
-    <Col>
-        <Properties name="Delegation">
-            <Property name="delegator" type="Reference">
-                If this user performs actions on behalf on another user, **MUST** have a reference to that user.
-            </Property>
-            <Property name="allowed_delegates" type="Reference[]">
-                If other users perform actions on behalf of this user, **MUST** have a list of references to all such users.
-            </Property>
-        </Properties>
-    </Col>
+<Fields name="Delegation" extension="pub.versia:delegation" on="User">
+    <Field name="delegator" type="Reference">
+        If this user performs actions on behalf on another user, **MUST** have a reference to that user.
+    </Field>
+    <Field name="allowed_delegates" type="Reference[]">
+        If other users perform actions on behalf of this user, **MUST** have a list of references to all such users.
+    </Field>
 
-    <Col sticky>
-
+    <Example slot="example" unchecked>
     ```jsonc title="Example Delegator"
     {
         // ...
@@ -77,6 +71,5 @@ If the extension is present, exactly **one** of the fields **MUST** be specified
         }
     }
     ```
-
-    </Col>
-</Row>
+    </Example>
+</Fields>

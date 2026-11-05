@@ -13,7 +13,7 @@ import Example from "../../../components/spec/Example.astro";
     name="Well-known"
     method="GET"
     path="/.well-known/versia"
-    exempt
+    signature="exempt"
     accept={["application/jrd+json", "application/json"]}
 >
     <div slot="response">
@@ -46,7 +46,7 @@ import Example from "../../../components/spec/Example.astro";
 
 ## Instance metadata
 
-<Endpoint name="InstanceMetadata" method="GET" path="/.versia/v0.6/instance" exempt>
+<Endpoint name="InstanceMetadata" method="GET" path="/.versia/v0.6/instance" signature="exempt">
     <div slot="response">
         Instance's metadata, as defined in the [Instance Metadata](/entities/instance-metadata) document.
     </div>
@@ -157,7 +157,7 @@ The inbox endpoint is used for instances to send entities to each other. It is a
 
 The delivery mechanism is described further in the [Federation](/federation#inboxes) document.
 
-<Endpoint name="Inbox" method="POST" path="/.versia/v0.6/inbox">
+<Endpoint name="Inbox" method="POST" path="/.versia/v0.6/inbox" signature="request">
     <Example slot="example">
     ```http title="Example request"
     POST /.versia/v0.6/inbox

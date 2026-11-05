@@ -4,11 +4,10 @@ description: "Allows users to control who can interact with their Notes"
 kind: Extension
 ---
 
-import Col from "../../../components/spec/Col.astro";
+import Example from "../../../components/spec/Example.astro";
+import Field from "../../../components/spec/Field.astro";
+import Fields from "../../../components/spec/Fields.astro";
 import Note from "../../../components/Note.astro";
-import Properties from "../../../components/spec/Properties.astro";
-import Property from "../../../components/spec/Property.astro";
-import Row from "../../../components/spec/Row.astro";
 
 Often, it is desirable to post a Note, but control who is allowed to interact with it (e.g. send replies, like, dislike, etc.). This has traditionally not been possible in most federated networks: the Interaction Controls extension adds this possibility.
 
@@ -39,42 +38,27 @@ The entity defined in this document must be inserted in the `pub.versia:interact
 
 ## Entity Definition
 
-<Row>
-    <Col>
-        <Properties name="InteractionControls">
-            <Property name="interaction_type">
-                Describes permissions for a specific interaction.
+<Fields name="InteractionControls" extension="pub.versia:interaction_controls" on="Note">
+    <Field name="interaction_type">
+        Describes permissions for a specific interaction.
 
-                ```typescript
-                type InteractionGroup = |
-                    "everyone" |
-                    "followers" |
-                    "followed" |
-                    "group" |
-                    "mutuals";
+        <Field name="allowed" type="InteractionGroup[]" />
+        <Field name="disallowed" type="InteractionGroup[]" />
 
-                type InteractionPermissions = {
-                    allowed?: InteractionGroup[];
-                    disallowed?: InteractionGroup[];
-                }
-                ```
+        Permissions can either be whitelist (`allowed` property) or blacklist (`disallowed` property). Both options are mutually exclusive.
 
-                Permissions can either be whitelist (`allowed` property) or blacklist (`disallowed` property). Both options are mutually exclusive.
+        Values of `InteractionGroup`, in order of priority:
+        - `everyone`: Includes every single User in the federation.
+        - `mentioned`: Includes every mentioned User.
+        - `followers`: Includes every follower of the author.
+        - `following`: Includes every User that the author follows.
+        - `mutuals`: Includes every mutual of the author (that is, every User that is both a follower and followed by the author).
+        - `group`: Includes every User in the [Group](/extensions/groups) that this Note was posted to, if any. If Note is not posted to a [Group](/extensions/groups), this value has no effect.
 
-                In order of priority:
-                - `everyone`: Includes every single User in the federation.
-                - `mentioned`: Includes every mentioned User.
-                - `followers`: Includes every follower of the author.
-                - `following`: Includes every User that the author follows.
-                - `mutuals`: Includes every mutual of the author (that is, every User that is both a follower and followed by the author).
-                - `group`: Includes every User in the [Group](/extensions/groups) that this Note was posted to, if any. If Note is not posted to a [Group](/extensions/groups), this value has no effect.
+        Permission groups are evaluated from highest to lowest priority: if two groups conflict each other, the group with the highest priority must be used.
+    </Field>
 
-                Permission groups are evaluated from highest to lowest priority: if two groups conflict each other, the group with the highest priority must be used.
-            </Property>
-        </Properties>
-    </Col>
-
-    <Col sticky>
+    <Example slot="example" unchecked>
     ```jsonc title="Example"
     {
         "reply": {
@@ -89,8 +73,8 @@ The entity defined in this document must be inserted in the `pub.versia:interact
         }
     }
     ```
-    </Col>
-</Row>
+    </Example>
+</Fields>
 
 ## Usage
 

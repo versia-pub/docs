@@ -4,11 +4,11 @@ description: "Migration can be used when users want to move their data from one 
 kind: Extension
 ---
 
-import Col from "../../../components/spec/Col.astro";
-import Properties from "../../../components/spec/Properties.astro";
-import Property from "../../../components/spec/Property.astro";
-import Row from "../../../components/spec/Row.astro";
-import Warning from "../../../components/Warning.astro";
+import Entity from "../../../components/spec/Entity.astro";
+import Example from "../../../components/spec/Example.astro";
+import Field from "../../../components/spec/Field.astro";
+import Fields from "../../../components/spec/Fields.astro";
+import Inherits from "../../../components/spec/Inherits.astro";
 
 Sometimes, users may want to move their data from one instance to another. This could be due to a change in administration, a desire to be closer to friends, or any other reason. Migration can be done using the migration extension.
 
@@ -34,57 +34,44 @@ Migration happens in three steps:
 
 ## Entity Definition
 
-<Warning>
-    This entity is a [**Transient Entity**](/entities#transient-entities).
-</Warning>
+<Entity name="Migration" type="pub.versia:migration/Migration" transient>
+    <Field name="type" type="string" required>
+        Must be `pub.versia:migration/Migration`.
+    </Field>
+    <Field name="author" type="Reference" required>
+        [Reference](/types#reference) to the [User](/entities/user) who is migrating.
+    </Field>
+    <Field name="destination" type="Reference" required>
+        [Reference](/types#reference) to the destination [User](/entities/user) on the new instance.
+    </Field>
 
-<Row>
-    <Col>
-        <Properties name="Migration">
-            <Property name="type" type="string" required={true}>
-                Must be `pub.versia:migration/Migration`.
-            </Property>
-            <Property name="author" type="Reference" typeLink="/types#reference" required={true}>
-                [Reference](/types#reference) to the [User](/entities/user) who is migrating.
-            </Property>
-            <Property name="destination" type="Reference" required={true} typeLink="/types#reference">
-                [Reference](/types#reference) to the destination [User](/entities/user) on the new instance.
-            </Property>
-        </Properties>
-    </Col>
+    <Inherits />
 
-    <Col sticky>
-
+    <Example slot="example">
     ```json title="Example Entity"
     {
         "type": "pub.versia:migration/Migration",
         "author": "44df6e02-ef43-47e0-aff2-47041f3d09ed",
         "created_at": "2021-01-01T00:00:00.000Z",
-        "destination": "otherinstance.social:73e999a0-53d0-40a3-a5cc-be0408004726",
+        "destination": "otherinstance.social:73e999a0-53d0-40a3-a5cc-be0408004726"
     }
     ```
-
-    </Col>
-</Row>
+    </Example>
+</Entity>
 
 ## User Extensions
 
 The following extensions to [User](/entities/user) are used by the migration extension:
 
-<Row>
-    <Col>
-        <Properties name="MigrationExtension">
-            <Property name="previous" type="Reference" required={true} typeLink="/types#reference">
-                If this user has migrated from another instance, this property **MUST** be a [Reference](/types#reference) to the user on the previous instance.
-            </Property>
-            <Property name="new" type="Reference" required={false} typeLink="/types#reference">
-                If this user has migrated to another instance, this property **MUST** be a [Reference](/types#reference) to the URI of the user on the new instance.
-            </Property>
-        </Properties>
-    </Col>
+<Fields name="MigrationExtension" extension="pub.versia:migration" on="User">
+    <Field name="previous" type="Reference" required>
+        If this user has migrated from another instance, this property **MUST** be a [Reference](/types#reference) to the user on the previous instance.
+    </Field>
+    <Field name="new" type="Reference">
+        If this user has migrated to another instance, this property **MUST** be a [Reference](/types#reference) to the URI of the user on the new instance.
+    </Field>
 
-    <Col sticky>
-
+    <Example slot="example" unchecked>
     ```jsonc title="Example"
     {
         // ...
@@ -94,10 +81,9 @@ The following extensions to [User](/entities/user) are used by the migration ext
             "pub.versia:migration": {
                 "previous": "oldinstance.social:44df6e02-ef43-47e0-aff2-47041f3d09ed",
                 // "new": "newinstance.social:73e999a0-53d0-40a3-a5cc-be0408004726",
-            } 
+            }
         }
     }
     ```
-
-    </Col>
-</Row>
+    </Example>
+</Fields>

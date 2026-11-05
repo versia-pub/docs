@@ -4,11 +4,11 @@ description: "The Reactions Extension allows users to react to posts with emojis
 kind: Extension
 ---
 
-import Col from "../../../components/spec/Col.astro";
+import Entity from "../../../components/spec/Entity.astro";
+import Example from "../../../components/spec/Example.astro";
+import Field from "../../../components/spec/Field.astro";
+import Inherits from "../../../components/spec/Inherits.astro";
 import Note from "../../../components/Note.astro";
-import Properties from "../../../components/spec/Properties.astro";
-import Property from "../../../components/spec/Property.astro";
-import Row from "../../../components/spec/Row.astro";
 
 The Reactions Extension allows users to express their reactions ("react") to posts with emojis.
 
@@ -18,28 +18,25 @@ User reactions are (like every other entity) federated to all followers, and can
 
 ## Entity Definition
 
-<Row>
-    <Col>
-        <Properties name="Reaction">
-            <Property name="type" type="string" required>
-                Must be `pub.versia:reactions/Reaction`.
-            </Property>
-            <Property name="author" type="Reference" required typeLink="/types#reference">
-                [Reference](/types#reference) to the [User](/entities/user) that is reacting.
-            </Property>
-            <Property name="object" type="Reference" required typeLink="/types#reference">
-                [Reference](/types#reference) to the [Note](/entities/note) attached to the reaction.
-            </Property>
-            <Property name="content" type="string" required>
-                Emoji content of reaction. May also be arbitrary text, or [Custom Emoji](/extensions/custom-emojis) if supported.
+<Entity name="Reaction" type="pub.versia:reactions/Reaction">
+    <Field name="type" type="string" required>
+        Must be `pub.versia:reactions/Reaction`.
+    </Field>
+    <Field name="author" type="Reference" required>
+        [Reference](/types#reference) to the [User](/entities/user) that is reacting.
+    </Field>
+    <Field name="object" type="Reference" required>
+        [Reference](/types#reference) to the [Note](/entities/note) attached to the reaction.
+    </Field>
+    <Field name="content" type="string" required>
+        Emoji content of reaction. May also be arbitrary text, or [Custom Emoji](/extensions/custom-emojis) if supported.
 
-                Clients are encouraged to disfavour text in favour of emoji where possible.
-            </Property>
-        </Properties>
-    </Col>
+        Clients are encouraged to disfavour text in favour of emoji where possible.
+    </Field>
 
-    <Col sticky>
+    <Inherits />
 
+    <Example slot="example">
     ```jsonc title="Example Entity"
     {
         "id": "6f27bc77-58ee-4c9b-b804-8cc1c1182fa9",
@@ -47,12 +44,11 @@ User reactions are (like every other entity) federated to all followers, and can
         "created_at": "2021-01-01T00:00:00.000Z",
         "author": "6e0204a2-746c-4972-8602-c4f37fc63bbe", // [!code focus:3]
         "object": "example.com:f08a124e-fe90-439e-8be4-15a428a72a19",
-        "content": "😀",
+        "content": "😀"
     }
     ```
-    
-    </Col>
-</Row>
+    </Example>
+</Entity>
 
 ## Note Collections
 

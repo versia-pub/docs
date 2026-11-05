@@ -19,14 +19,12 @@ Notes represent a piece of content on a Versia instance. They can be posted by [
 
 ## Entity Definition
 
-<Entity
-    name="Note"
-    type="Note"
-    collections={[
-        { name: "replies", of: "Note", description: "replies to this note." },
-        { name: "quotes", of: "Note", description: "notes that quote this note." },
-    ]}
->
+<Entity name="Note" type="Note">
+    <div slot="collections">
+        - `replies`: [URI Collection](/structures/collection#uri-collection) of [Note](/entities/note) entities that are replies to this note.
+        - `quotes`: [URI Collection](/structures/collection#uri-collection) of [Note](/entities/note) entities that quote this note.
+    </div>
+
     <Field name="attachments" type="ContentFormat[]" required>
         Media attachments to the note. May be any format. **Must** be remote.
     </Field>

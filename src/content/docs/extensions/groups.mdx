@@ -4,12 +4,11 @@ description: "Groups are a way to organize users and notes into communities."
 kind: Extension
 ---
 
-import Col from "../../../components/spec/Col.astro";
+import Entity from "../../../components/spec/Entity.astro";
+import Example from "../../../components/spec/Example.astro";
+import Field from "../../../components/spec/Field.astro";
+import Inherits from "../../../components/spec/Inherits.astro";
 import Note from "../../../components/Note.astro";
-import Properties from "../../../components/spec/Properties.astro";
-import Property from "../../../components/spec/Property.astro";
-import Row from "../../../components/spec/Row.astro";
-import Warning from "../../../components/Warning.astro";
 
 Groups are a way to organize users and notes into communities. They can be used for any purpose, such as forums, blogs, image galleries, video sharing, audio sharing, and messaging. They are similar to Discord's channels or Matrix's rooms.
 
@@ -17,40 +16,43 @@ Refer to [Note](/entities/note#entity-definition)'s `group` property for how not
 
 ## Entity Definition
 
-<Row>
-    <Col>
-        <Properties name="Group">
-            <Property name="type" type="string" required={true}>
-                Must be `pub.versia:groups/Group`.
-            </Property>
-            <Property name="name" type="ContentFormat" required={false} typeLink="/structures/content-format">
-               Group name/title.
-               
-               Text only (`text/plain`, `text/html`, etc).
-            </Property>
-            <Property name="description" type="ContentFormat" required={false} typeLink="/structures/content-format">
-                Short description of the group's contents and purpose.
-                
-                Text only (`text/plain`, `text/html`, etc).
-            </Property>
-            <Property name="open" type="boolean" required={true}>
-                Whether the group is open to all users or requires approval to join.
+<Entity name="Group" type="pub.versia:groups/Group">
+    <div slot="collections">
+        - `members`: [URI Collection](/structures/collection#uri-collection) of [Users](/entities/user) that are members of the group.
+        - `notes`: [URI Collection](/structures/collection#uri-collection) of [Notes](/entities/note) that are associated with the group.
+    </div>
 
-                <Note>
-                    **This is meant as a UI hint** and does not guarantee that group subscriptions will be accepted or rejected.
+    <Field name="type" type="string" required>
+        Must be `pub.versia:groups/Group`.
+    </Field>
+    <Field name="name" type="ContentFormat">
+       Group name/title.
 
-                    It is similar to a [User](/entities/user)'s `manually_approves_followers` field.
-                </Note>
-            </Property>
-        </Properties>
-    </Col>
+       Text only (`text/plain`, `text/html`, etc).
+    </Field>
+    <Field name="description" type="ContentFormat">
+        Short description of the group's contents and purpose.
 
-    <Col sticky>
+        Text only (`text/plain`, `text/html`, etc).
+    </Field>
+    <Field name="open" type="boolean" required>
+        Whether the group is open to all users or requires approval to join.
 
+        <Note>
+            **This is meant as a UI hint** and does not guarantee that group subscriptions will be accepted or rejected.
+
+            It is similar to a [User](/entities/user)'s `manually_approves_followers` field.
+        </Note>
+    </Field>
+
+    <Inherits />
+
+    <Example slot="example">
     ```jsonc title="Example Group"
     {
         "type": "pub.versia:groups/Group",
         "id": "ed480922-b095-4f09-9da5-c995be8f5960",
+        "created_at": "2021-01-01T00:00:00Z",
         "name": {
             "text/html": {
                 "content": "The <strong>Woozy</strong> fan club"
@@ -64,18 +66,8 @@ Refer to [Note](/entities/note#entity-definition)'s `group` property for how not
         "open": false
     }
     ```
-
-    </Col>
-</Row>
-
-### Collections
-
-The following [Collections](/structures/collection) are available:
-
-- `members`: [URI Collection](/structures/collection#uri-collection) of [Users](/entities/user) that are members of the group.
-- `notes`: [URI Collection](/structures/collection#uri-collection) of [Notes](/entities/note) that are associated with the group.
-
-These can be fetched using the [Federation API](/api/endpoints#entity-collections)
+    </Example>
+</Entity>
 
 ## Subscribing to Groups
 
@@ -89,27 +81,20 @@ If the group accepts the subscription, the user will receive all notes posted to
 
 Indicates that a [User](/entities/user) wishes to subscribe to a group.
 
-<Warning>
-    This entity is a [**Transient Entity**](/entities#transient-entities).
-</Warning>
+<Entity name="GroupSubscribe" type="pub.versia:groups/Subscribe" transient>
+    <Field name="type" type="string" required>
+        Must be `pub.versia:groups/Subscribe`.
+    </Field>
+    <Field name="subscriber" type="Reference" required>
+        [Reference](/types#reference) to the [User](/entities/user) subscribing to the group.
+    </Field>
+    <Field name="group" type="Reference" required>
+        [Reference](/types#reference) to the group to subscribe to.
+    </Field>
 
-<Row>
-    <Col>
-        <Properties name="GroupSubscribe">
-            <Property name="type" type="string" required={true}>
-                Must be `pub.versia:groups/Subscribe`.
-            </Property>
-            <Property name="subscriber" type="Reference" required={true} typeLink="/types#reference">
-                [Reference](/types#reference) to the [User](/entities/user) subscribing to the group.
-            </Property>
-            <Property name="group" type="Reference" required={true} typeLink="/types#reference">
-                [Reference](/types#reference) to the group to subscribe to.
-            </Property>
-        </Properties>
-    </Col>
+    <Inherits />
 
-    <Col sticky>
-
+    <Example slot="example">
     ```jsonc title="Example GroupSubscribe"
     {
         "type": "pub.versia:groups/Subscribe",
@@ -118,35 +103,27 @@ Indicates that a [User](/entities/user) wishes to subscribe to a group.
         "created_at": "2021-01-01T00:00:00Z"
     }
     ```
-
-    </Col>
-</Row>
+    </Example>
+</Entity>
 
 ### GroupUnsubscribe
 
 Indicates that a [User](/entities/user) wishes to unsubscribe from a group.
 
-<Warning>
-    This entity is a [**Transient Entity**](/entities#transient-entities).
-</Warning>
+<Entity name="GroupUnsubscribe" type="pub.versia:groups/Unsubscribe" transient>
+    <Field name="type" type="string" required>
+        Must be `pub.versia:groups/Unsubscribe`.
+    </Field>
+    <Field name="subscriber" type="Reference" required>
+        [Reference](/types#reference) to the [User](/entities/user) unsubscribing from the group.
+    </Field>
+    <Field name="group" type="Reference" required>
+        [Reference](/types#reference) to the group to unsubscribe from.
+    </Field>
 
-<Row>
-    <Col>
-        <Properties name="GroupUnsubscribe">
-            <Property name="type" type="string" required={true}>
-                Must be `pub.versia:groups/Unsubscribe`.
-            </Property>
-            <Property name="subscriber" type="Reference" required={true} typeLink="/types#reference">
-                [Reference](/types#reference) to the [User](/entities/user) unsubscribing from the group.
-            </Property>
-            <Property name="group" type="Reference" required={true} typeLink="/types#reference">
-                [Reference](/types#reference) to the group to unsubscribe from.
-            </Property>
-        </Properties>
-    </Col>
+    <Inherits />
 
-    <Col sticky>
-
+    <Example slot="example">
     ```jsonc title="Example GroupUnsubscribe"
     {
         "type": "pub.versia:groups/Unsubscribe",
@@ -155,35 +132,27 @@ Indicates that a [User](/entities/user) wishes to unsubscribe from a group.
         "created_at": "2021-01-01T00:00:00Z"
     }
     ```
-
-    </Col>
-</Row>
+    </Example>
+</Entity>
 
 ### GroupSubscribeAccept
 
 Indicates that a [Group](#entity-definition) has accepted a [User](/entities/user)'s subscription request. Should be sent by the instance hosting the group.
 
-<Warning>
-    This entity is a [**Transient Entity**](/entities#transient-entities).
-</Warning>
+<Entity name="GroupSubscribeAccept" type="pub.versia:groups/SubscribeAccept" transient>
+    <Field name="type" type="string" required>
+        Must be `pub.versia:groups/SubscribeAccept`.
+    </Field>
+    <Field name="subscriber" type="Reference" required>
+        [Reference](/types#reference) to the [User](/entities/user) subscribing to the group.
+    </Field>
+    <Field name="group" type="Reference" required>
+        [Reference](/types#reference) to the group that accepted the subscription.
+    </Field>
 
-<Row>
-    <Col>
-        <Properties name="GroupSubscribeAccept">
-            <Property name="type" type="string" required={true}>
-                Must be `pub.versia:groups/SubscribeAccept`.
-            </Property>
-            <Property name="subscriber" type="Reference" required={true} typeLink="/types#reference">
-                [Reference](/types#reference) to the [User](/entities/user) subscribing to the group.
-            </Property>
-            <Property name="group" type="Reference" required={true} typeLink="/types#reference">
-                [Reference](/types#reference) to the group that accepted the subscription.
-            </Property>
-        </Properties>
-    </Col>
+    <Inherits />
 
-    <Col sticky>
-
+    <Example slot="example">
     ```jsonc title="Example GroupSubscribeAccept"
     {
         "type": "pub.versia:groups/SubscribeAccept",
@@ -192,35 +161,27 @@ Indicates that a [Group](#entity-definition) has accepted a [User](/entities/use
         "created_at": "2021-01-01T00:00:00Z"
     }
     ```
-
-    </Col>
-</Row>
+    </Example>
+</Entity>
 
 ### GroupSubscribeReject
 
 Indicates that a [Group](#entity-definition) has rejected a [User](/entities/user)'s subscription request. Should be sent by the instance hosting the group.
 
-<Warning>
-    This entity is a [**Transient Entity**](/entities#transient-entities).
-</Warning>
+<Entity name="GroupSubscribeReject" type="pub.versia:groups/SubscribeReject" transient>
+    <Field name="type" type="string" required>
+        Must be `pub.versia:groups/SubscribeReject`.
+    </Field>
+    <Field name="subscriber" type="Reference" required>
+        [Reference](/types#reference) to the [User](/entities/user) subscribing to the group.
+    </Field>
+    <Field name="group" type="Reference" required>
+        [Reference](/types#reference) to the group that rejected the subscription.
+    </Field>
 
-<Row>
-    <Col>
-        <Properties name="GroupSubscribeReject">
-            <Property name="type" type="string" required={true}>
-                Must be `pub.versia:groups/SubscribeReject`.
-            </Property>
-            <Property name="subscriber" type="Reference" required={true} typeLink="/types#reference">
-                [Reference](/types#reference) to the [User](/entities/user) subscribing to the group.
-            </Property>
-            <Property name="group" type="Reference" required={true} typeLink="/types#reference">
-                [Reference](/types#reference) to the group that rejected the subscription.
-            </Property>
-        </Properties>
-    </Col>
+    <Inherits />
 
-    <Col sticky>
-
+    <Example slot="example">
     ```jsonc title="Example GroupSubscribeReject"
     {
         "type": "pub.versia:groups/SubscribeReject",
@@ -229,9 +190,8 @@ Indicates that a [Group](#entity-definition) has rejected a [User](/entities/use
         "created_at": "2021-01-01T00:00:00Z"
     }
     ```
-
-    </Col>
-</Row>
+    </Example>
+</Entity>
 
 ## Federation
 
@@ -245,27 +205,20 @@ Once this is done, the group's instance must then federate this [Note](/entities
 
 The `GroupFederate` entity allows a group to federate a note to all of its members, without needing to sign the note itself. It contains a URI to the note being federated, which must be fetched by the receiving instances. This entity is sent by the group's instance.
 
-<Warning>
-    This entity is a [**Transient Entity**](/entities#transient-entities).
-</Warning>
+<Entity name="GroupFederate" type="pub.versia:groups/Federate" transient>
+    <Field name="type" type="string" required>
+        Must be `pub.versia:groups/Federate`.
+    </Field>
+    <Field name="note" type="Reference" required>
+        [Reference](/types#reference) to the note to federate.
+    </Field>
+    <Field name="group" type="Reference" required>
+        [Reference](/types#reference) to the group federating the note.
+    </Field>
 
-<Row>
-    <Col>
-        <Properties name="GroupFederate">
-            <Property name="type" type="string" required={true}>
-                Must be `pub.versia:groups/Federate`.
-            </Property>
-            <Property name="note" type="Reference" required={true} typeLink="/types#reference">
-                [Reference](/types#reference) to the note to federate.
-            </Property>
-            <Property name="group" type="Reference" required={true} typeLink="/types#reference">
-                [Reference](/types#reference) to the group federating the note.
-            </Property>
-        </Properties>
-    </Col>
+    <Inherits />
 
-    <Col sticky>
-
+    <Example slot="example">
     ```jsonc title="Example GroupFederate"
     {
         "type": "pub.versia:groups/Federate",
@@ -274,6 +227,5 @@ The `GroupFederate` entity allows a group to federate a note to all of its membe
         "created_at": "2021-01-01T00:00:00Z"
     }
     ```
-
-    </Col>
-</Row>
+    </Example>
+</Entity>

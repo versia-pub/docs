@@ -6,8 +6,6 @@ import Type from "./Type.astro";
 interface Props {
     name: string;
     type?: string;
-    /** Where the type is defined, for types `Type` cannot link by itself. */
-    typeLink?: string;
     required?: boolean;
     numberType?: "f64" | "i64" | "u64";
     /** Added by `remark-spec`, in the form `note-is-sensitive`. */
@@ -20,13 +18,13 @@ const numberTitles = {
     u64: "64-bit unsigned integer",
 };
 
-const { name, type, typeLink, required = false, numberType, anchor } = Astro.props;
+const { name, type, required = false, numberType, anchor } = Astro.props;
 ---
 
 <div class="field" id={anchor} data-field={name}>
     <div class="field-head">
         <FieldName name={name} href={`#${anchor}`} />
-        {type && <Type value={type} link={typeLink} />}
+        {type && <Type value={type} />}
         {numberType && <abbr class="field-number" title={numberTitles[numberType]}>{numberType}</abbr>}
         {required && <RequiredTag />}
     </div>
@@ -76,6 +74,10 @@ const { name, type, typeLink, required = false, numberType, anchor } = Astro.pro
 
     .field-body .field .field-head {
         margin-bottom: 0;
+    }
+
+    .field-body .field + :global(:not(.field)) {
+        margin-top: 0.75rem;
     }
 
     .field-body :global(.note) {

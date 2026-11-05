@@ -4,7 +4,7 @@ description: "Definition of the ContentFormat structure"
 kind: Structure
 ---
 
-import Entity from "../../../components/spec/Entity.astro";
+import Fields from "../../../components/spec/Fields.astro";
 import Example from "../../../components/spec/Example.astro";
 import Field from "../../../components/spec/Field.astro";
 import Note from "../../../components/Note.astro";
@@ -72,7 +72,7 @@ It is a good idea to provide at least two versions of an image (if possible): on
 
 ## Entity Definition
 
-<Entity name="ContentFormat">
+<Fields name="ContentFormat">
     <Field name="content" type="string | URI" required>
         Structure data. If `Content-Type` is a binary format, this field should be a URI to the binary data. Otherwise, it should be the content itself. Refer to the `remote` property for more information.
     </Field>
@@ -137,4 +137,4 @@ It is a good idea to provide at least two versions of an image (if possible): on
     }
     ```
     </Example>
-</Entity>
+</Fields>

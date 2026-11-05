@@ -4,11 +4,11 @@ description: "Share Extension lets users share notes they like with others."
 kind: Extension
 ---
 
-import Col from "../../../components/spec/Col.astro";
+import Entity from "../../../components/spec/Entity.astro";
+import Example from "../../../components/spec/Example.astro";
+import Field from "../../../components/spec/Field.astro";
+import Inherits from "../../../components/spec/Inherits.astro";
 import Note from "../../../components/Note.astro";
-import Properties from "../../../components/spec/Properties.astro";
-import Property from "../../../components/spec/Property.astro";
-import Row from "../../../components/spec/Row.astro";
 
 The Share Extension lets users share notes they like with others. This is the same as Twitter's "retweet" and Mastodon's "boost".
 
@@ -20,23 +20,20 @@ When a user shares a note, the note's original author **must** receive the entit
 
 ## Entity Definition
 
-<Row>
-    <Col>
-        <Properties name="Share">
-            <Property name="type" type="string" required={true}>
-                Must be `pub.versia:share/Share`.
-            </Property>
-            <Property name="author" type="Reference" required={true} typeLink="/types#reference">
-                [Reference](/types#reference) to the creator of the Share.
-            </Property>
-            <Property name="shared" type="Reference" required={true} typeLink="/types#reference">
-                [Reference](/types#reference) to the note being shared.
-            </Property>
-        </Properties>
-    </Col>
+<Entity name="Share" type="pub.versia:share/Share">
+    <Field name="type" type="string" required>
+        Must be `pub.versia:share/Share`.
+    </Field>
+    <Field name="author" type="Reference" required>
+        [Reference](/types#reference) to the creator of the Share.
+    </Field>
+    <Field name="shared" type="Reference" required>
+        [Reference](/types#reference) to the note being shared.
+    </Field>
 
-    <Col sticky>
+    <Inherits />
 
+    <Example slot="example">
     ```jsonc title="Example Share"
     {
         "id": "3e7e4750-afd4-4d99-a256-02f0710a0520",
@@ -46,9 +43,8 @@ When a user shares a note, the note's original author **must** receive the entit
         "shared": "otherexample.org:fmKZ763jzIU8"
     }
     ```
-
-    </Col>
-</Row>
+    </Example>
+</Entity>
 
 ## Note Collections
 

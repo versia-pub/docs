@@ -4,12 +4,11 @@ description: "The Unfollow entity allows users to unsubscribe from each other"
 kind: Entity · Core
 ---
 
-import Col from "../../../components/spec/Col.astro";
+import Entity from "../../../components/spec/Entity.astro";
+import Example from "../../../components/spec/Example.astro";
+import Field from "../../../components/spec/Field.astro";
+import Inherits from "../../../components/spec/Inherits.astro";
 import Note from "../../../components/Note.astro";
-import Properties from "../../../components/spec/Properties.astro";
-import Property from "../../../components/spec/Property.astro";
-import Row from "../../../components/spec/Row.astro";
-import Warning from "../../../components/Warning.astro";
 
 Sometimes, [Users](/entities/user) want to unsubscribe from each other to stop seeing each other's content. The `Unfollow` defines such a change.
 
@@ -32,24 +31,17 @@ Sometimes, [Users](/entities/user) want to unsubscribe from each other to stop s
 
 ## Entity Definition
 
-<Warning>
-    This entity is a [**Transient Entity**](/entities#transient-entities).
-</Warning>
+<Entity name="Unfollow" type="Unfollow" transient>
+    <Field name="author" type="Reference" required>
+        [Reference](/types#reference) to the `User` considered the 'follower', i.e. the user who is unsubscribing from the followee.
+    </Field>
+    <Field name="followee" type="Reference" required>
+        [Reference](/types#reference) to the `User` considered the 'followee', i.e. the user who is being unsubscribed from.
+    </Field>
 
-<Row>
-    <Col>
-        <Properties name="Unfollow">
-            <Property name="author" type="Reference" required={true} typeLink="/types#reference">
-                [Reference](/types#reference) to the `User` considered the 'follower', i.e. the user who is unsubscribing from the followee.
-            </Property>
-            <Property name="followee" type="Reference" required={true} typeLink="/types#reference">
-                [Reference](/types#reference) to the `User` considered the 'followee', i.e. the user who is being unsubscribed from.
-            </Property>
-        </Properties>
-    </Col>
+    <Inherits />
 
-    <Col sticky>
-
+    <Example slot="example">
     ```jsonc title="Example Unfollow"
     {
         "type": "Unfollow",
@@ -58,6 +50,5 @@ Sometimes, [Users](/entities/user) want to unsubscribe from each other to stop s
         "followee": "example.com:02e1e3b2-cb1f-4e4a-b82e-98866bee5de7"
     }
     ```
-
-    </Col>
-</Row>
+    </Example>
+</Entity>

@@ -4,11 +4,10 @@ description: "Definition of the Collection structure"
 kind: Structure
 ---
 
-import Col from "../../../components/spec/Col.astro";
+import Example from "../../../components/spec/Example.astro";
+import Field from "../../../components/spec/Field.astro";
+import Fields from "../../../components/spec/Fields.astro";
 import Note from "../../../components/Note.astro";
-import Properties from "../../../components/spec/Properties.astro";
-import Property from "../../../components/spec/Property.astro";
-import Row from "../../../components/spec/Row.astro";
 
 Collections are a way to represent paginated groups of entities. They are used everywhere lists of entities can be found, such as a user's outbox.
 
@@ -18,23 +17,18 @@ Collections are a way to represent paginated groups of entities. They are used e
 
 ## Entity Definition
 
-<Row>
-    <Col>
-        <Properties name="Collection">
-            <Property name="author" type="Reference" required={false} typeLink="/types#reference">
-                [Reference](/types#reference) to the author of the collection. Usually the user who "owns" the collection.
-            </Property>
-            <Property name="total" type="number" required={true} numberType="u64">
-                Total number of entities in the collection, across all pages.
-            </Property>
-            <Property name="items" type="Entity[]" required={true}>
-                Collection contents. Must be an array of entities.
-            </Property>
-        </Properties>
-    </Col>
+<Fields name="Collection">
+    <Field name="author" type="Reference">
+        [Reference](/types#reference) to the author of the collection. Usually the user who "owns" the collection.
+    </Field>
+    <Field name="total" type="number" required numberType="u64">
+        Total number of entities in the collection, across all pages.
+    </Field>
+    <Field name="items" type="Entity[]" required>
+        Collection contents. Must be an array of entities.
+    </Field>
 
-    <Col sticky>
-
+    <Example slot="example" unchecked>
     ```jsonc title="Example Collection"
     {
         "author": "018ec082-0ae1-761c-b2c5-22275a611771",
@@ -54,31 +48,25 @@ Collections are a way to represent paginated groups of entities. They are used e
         ]
     }
     ```
-
-    </Col>
-</Row>
+    </Example>
+</Fields>
 
 ## URI Collection
 
 URI Collections are identical to regular collections, but they contain only URIs instead of full entities. They are useful for cases when remote entities need to be included in a collection, as those are typically not stored in implementation databases.
 
-<Row>
-    <Col>
-        <Properties name="URICollection">
-            <Property name="author" type="Reference" required={false} typeLink="/types#reference">
-                [Reference](/types#reference) to the author of the collection. Usually the user who owns the collection.
-            </Property>
-            <Property name="total" type="number" required={true} numberType="u64">
-                Total number of entities in the collection, across all pages.
-            </Property>
-            <Property name="items" type="Reference[]" required={true}>
-                Collection contents. Must be an array of [References](/types#reference).
-            </Property>
-        </Properties>
-    </Col>
+<Fields name="URICollection">
+    <Field name="author" type="Reference">
+        [Reference](/types#reference) to the author of the collection. Usually the user who owns the collection.
+    </Field>
+    <Field name="total" type="number" required numberType="u64">
+        Total number of entities in the collection, across all pages.
+    </Field>
+    <Field name="items" type="Reference[]" required>
+        Collection contents. Must be an array of [References](/types#reference).
+    </Field>
 
-    <Col sticky>
-
+    <Example slot="example">
     ```jsonc title="Example URI Collection"
     {
         "author": "018ec082-0ae1-761c-b2c5-22275a611771",
@@ -89,6 +77,5 @@ URI Collections are identical to regular collections, but they contain only URIs
         ]
     }
     ```
-
-    </Col>
-</Row>
+    </Example>
+</Fields>

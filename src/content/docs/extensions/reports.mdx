@@ -4,11 +4,10 @@ description: "Reporting can be used to report content to moderators or administr
 kind: Extension
 ---
 
-import Col from "../../../components/spec/Col.astro";
-import Properties from "../../../components/spec/Properties.astro";
-import Property from "../../../components/spec/Property.astro";
-import Row from "../../../components/spec/Row.astro";
-import Warning from "../../../components/Warning.astro";
+import Entity from "../../../components/spec/Entity.astro";
+import Example from "../../../components/spec/Example.astro";
+import Field from "../../../components/spec/Field.astro";
+import Inherits from "../../../components/spec/Inherits.astro";
 
 Reporting can be used to report content to moderators or administrators of a remote instance for review.
 
@@ -16,36 +15,30 @@ When an instance receives a report, it *should* be reviewed by a moderator or ad
 
 ## Entity Definition
 
-<Warning>
-    This entity is a [**Transient Entity**](/entities#transient-entities).
-</Warning>
+<Entity name="Report" type="pub.versia:reports/Report" transient>
+    <Field name="type" type="string" required>
+        Must be `pub.versia:reports/Report`.
+    </Field>
+    <Field name="author" type="Reference">
+        [Reference](/types#reference) to the reporting [User](/entities/user). Optional if the report is anonymous.
+    </Field>
+    <Field name="reported" type="Reference[]" required>
+        [References](/types#reference) to the content being reported.
+    </Field>
+    <Field name="tags" type="string[]" required>
+        Report tags. Should be concise and clear, such as `spam`, `harassment`, `misinformation`, etc. Used for categorization.
+    </Field>
+    <Field name="comment" type="string">
+        Additional comments about the report. Can be used to provide more context or details.
+    </Field>
 
-<Row>
-    <Col>
-        <Properties name="Report">
-            <Property name="type" type="string" required={true}>
-                Must be `pub.versia:reports/Report`.
-            </Property>
-            <Property name="author" type="Reference" required={false} typeLink="/types#reference">
-                [Reference](/types#reference) to the reporting [User](/entities/user). Optional if the report is anonymous.
-            </Property>
-            <Property name="reported" type="Reference[]" required={true} typeLink="/types#reference">
-                [References](/types#reference) to the content being reported.
-            </Property>
-            <Property name="tags" type="string[]" required={true}>
-                Report tags. Should be concise and clear, such as `spam`, `harassment`, `misinformation`, etc. Used for categorization.
-            </Property>
-            <Property name="comment" type="string" required={false}>
-                Additional comments about the report. Can be used to provide more context or details.
-            </Property>
-        </Properties>
-    </Col>
+    <Inherits />
 
-    <Col sticky>
-
+    <Example slot="example">
     ```jsonc title="Example Report"
     {
         "type": "pub.versia:reports/Report",
+        "created_at": "2021-01-01T00:00:00Z",
         "author": "6f3001a1-641b-4763-a9c4-a089852eec84",
         "reported": [
             "test.com:46f936a3-9a1e-4b02-8cde-0902a89769fa",
@@ -58,6 +51,5 @@ When an instance receives a report, it *should* be reviewed by a moderator or ad
         "comment": "This is spam."
     }
     ```
-
-    </Col>
-</Row>
+    </Example>
+</Entity>
