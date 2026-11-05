@@ -37,8 +37,7 @@
         "typescript": "^7.0.2",
         "unist-util-filter": "^5.0.1",
         "unist-util-visit": "^5.2.0",
-        "uwuifier": "^4.2.2",
-        "zustand": "^5.0.16"
+        "uwuifier": "^4.2.2"
     },
     "devDependencies": {
         "@biomejs/biome": "^2.6.5",

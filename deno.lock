@@ -40,8 +40,7 @@
     "npm:typescript@^7.0.2": "7.0.2",
     "npm:unist-util-filter@^5.0.1": "5.0.1",
     "npm:unist-util-visit@^5.2.0": "5.2.0",
-    "npm:uwuifier@^4.2.2": "4.2.2",
-    "npm:zustand@^5.0.16": "5.0.16_@types+react@19.3.0_react@19.3.1"
+    "npm:uwuifier@^4.2.2": "4.2.2"
   },
   "npm": {
     "@algolia/abtesting@1.27.0": {
@@ -2542,17 +2541,6 @@
         "vfile-message"
       ]
     },
-    "zustand@5.0.16_@types+react@19.3.0_react@19.3.1": {
-      "integrity": "sha512-Uv7e327ihlCfayfja3hDc0M64Upev1LWBKpRobdK4NyovDDPeeX4imWXc/wzC1yc6fkYPoAY/ncKVPAs2jrtQw==",
-      "dependencies": [
-        "@types/react",
-        "react"
-      ],
-      "optionalPeers": [
-        "@types/react",
-        "react"
-      ]
-    },
     "zwitch@2.0.4": {
       "integrity": "sha512-bXE4cR/kVZhKZX/RjPEflHaKVhUVl85noU3v6b8apfQEc1x4A+zBxjZ4lN8LqGd6WZ3dl98pY4o717VFmoPp+A=="
     }
@@ -2596,8 +2584,7 @@
         "npm:typescript@^7.0.2",
         "npm:unist-util-filter@^5.0.1",
         "npm:unist-util-visit@^5.2.0",
-        "npm:uwuifier@^4.2.2",
-        "npm:zustand@^5.0.16"
+        "npm:uwuifier@^4.2.2"
       ]
     }
   }
