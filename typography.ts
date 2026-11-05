@@ -143,11 +143,11 @@ export default function typographyStyles() {
                     maxWidth: "none",
                     marginLeft: "--spacing(-4)",
                     marginRight: "--spacing(-4)",
-                    "@screen sm": {
+                    "@media (width >= theme(--breakpoint-sm))": {
                         marginLeft: "--spacing(-6)",
                         marginRight: "--spacing(-6)",
                     },
-                    "@screen lg": {
+                    "@media (width >= theme(--breakpoint-lg))": {
                         marginLeft: "--spacing(-8)",
                         marginRight: "--spacing(-8)",
                     },
