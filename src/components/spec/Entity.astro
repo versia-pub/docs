@@ -1,13 +1,15 @@
 ---
 import { API_PREFIX } from "../../lib/spec";
 import Col from "./Col.astro";
+import Fact from "./Fact.astro";
+import Facts from "./Facts.astro";
 import Sheet from "./Sheet.astro";
 import SheetLabel from "./SheetLabel.astro";
 
 interface Props {
     name: string;
-    /** Value of the `type` field, such as "Note" or "pub.versia:groups/Group". */
-    type: string;
+    /** Value of the `type` field, such as "Note" or "pub.versia:groups/Group". Structures have none. */
+    type?: string;
     transient?: boolean;
     collections?: { name: string; of: string; description: string }[];
 }
@@ -16,24 +18,19 @@ const { name, type, transient = false, collections = [] } = Astro.props;
 ---
 
 <Sheet entity={name}>
-    <dl slot="meta" class="sheet-meta">
-        <div><dt>Type</dt><dd><code class="type-value">"{type}"</code></dd></div>
-        {transient ? (
-            <div>
-                <dt>Lifetime</dt>
-                <dd><a href="/entities#transient-entities">Transient Entity</a></dd>
-            </div>
-        ) : (
-            <div>
-                <dt><a href="/api/endpoints#entity-data">Fetch</a></dt>
-                <dd><code>GET {API_PREFIX}/entities/{encodeURIComponent(type)}/{"{id}"}</code></dd>
-            </div>
-        )}
-        {collections.length > 0 && (
-            <div id="collections">
-                <dt><a href="/api/endpoints#entity-collections">Collections</a></dt>
-                <dd>
-                    <ul>
+    {type && (
+        <Facts slot="meta">
+            <Fact label="Type"><code class="type-value">"{type}"</code></Fact>
+            {transient ? (
+                <Fact label="Lifetime"><a href="/entities#transient-entities">Transient Entity</a></Fact>
+            ) : (
+                <Fact label="Fetch" href="/api/endpoints#entity-data">
+                    <code>GET {API_PREFIX}/entities/{encodeURIComponent(type)}/{"{id}"}</code>
+                </Fact>
+            )}
+            {collections.length > 0 && (
+                <Fact label="Collections" href="/api/endpoints#entity-collections" id="collections">
+                    <ul class="collections">
                         {collections.map((collection) => (
                             <li>
                                 <code>{collection.name}</code>{" "}
@@ -42,10 +39,10 @@ const { name, type, transient = false, collections = [] } = Astro.props;
                             </li>
                         ))}
                     </ul>
-                </dd>
-            </div>
-        )}
-    </dl>
+                </Fact>
+            )}
+        </Facts>
+    )}
     <Col>
         <SheetLabel>Fields</SheetLabel>
         <slot />
@@ -54,49 +51,11 @@ const { name, type, transient = false, collections = [] } = Astro.props;
 </Sheet>
 
 <style>
-    /* Header facts. */
-    .sheet-meta {
-        margin: 0;
-        border-bottom: 1px solid var(--hair);
-        font-size: 0.9rem;
-        line-height: 1.45;
-    }
-
-    .sheet-meta > div {
-        display: grid;
-        grid-template-columns: 7rem minmax(0, 1fr);
-        gap: 0 1rem;
-        padding-block: 0.55rem;
-    }
-
-    @media (max-width: 30rem) {
-        .sheet-meta > div {
-            grid-template-columns: minmax(0, 1fr);
-        }
-    }
-
-    .sheet-meta > div + div {
-        border-top: 1px solid var(--hair);
-    }
-
-    .sheet-meta dt {
-        color: var(--ink-soft);
-    }
-
-    .sheet-meta dt a {
-        color: inherit;
-        text-decoration-color: var(--hair);
-    }
-
     .type-value {
         color: var(--value);
     }
 
-    .sheet-meta dd {
-        margin: 0;
-    }
-
-    .sheet-meta ul {
+    .collections {
         margin: 0;
         padding: 0;
         list-style: none;

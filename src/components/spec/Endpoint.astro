@@ -1,0 +1,79 @@
+---
+import { anchorPart } from "../../lib/spec-fields";
+import Col from "./Col.astro";
+import Fact from "./Fact.astro";
+import Facts from "./Facts.astro";
+import Sheet from "./Sheet.astro";
+
+interface Props {
+    /** Prefix of the anchors, in the form `well-known-method`. */
+    name: string;
+    method: "GET" | "POST";
+    path: string;
+    /** No signatures are required for requests or responses. */
+    exempt?: boolean;
+    /** `Accept` headers allowed in addition to the Versia one. */
+    accept?: string[];
+}
+
+const { name, method, path, exempt = false, accept = [] } = Astro.props;
+const prefix = anchorPart(name);
+// The capture group keeps the parameters in the result, at the odd indexes.
+const pathParts = path.split(/(\{[^}]+\})/);
+---
+
+<Sheet>
+    <p slot="meta" class="request">
+        <code id={`${prefix}-method`} class="method">{method}</code>
+        <code id={`${prefix}-endpoint`} class="path">{pathParts.map((part, index) =>
+            index % 2 === 1 ? <span class="parameter">{part}</span> : part
+        )}</code>
+    </p>
+    <Col>
+        <Facts>
+            <Fact label="Signature" href="/signatures">
+                {exempt ? "Not required for requests or responses." : "Required."}
+            </Fact>
+            {accept.length > 0 && (
+                <Fact label="Accept">
+                    Also allowed: {accept.map((value, index) => <>{index > 0 && ", "}<code>{value}</code></>)}.
+                </Fact>
+            )}
+            {Astro.slots.has("parameters") && <Fact label="Parameters"><slot name="parameters" /></Fact>}
+            {Astro.slots.has("response") && <Fact label="Response" id={`${prefix}-response`}><slot name="response" /></Fact>}
+        </Facts>
+    </Col>
+    <Col sticky><slot name="example" /></Col>
+</Sheet>
+
+<style>
+    .request {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0 0.75rem;
+        margin: 0;
+        padding-block: 0.6rem;
+        border-bottom: 1px solid var(--hair);
+        font-size: 1rem;
+    }
+
+    .request code {
+        padding: 0;
+        background: none;
+        font-size: inherit;
+        overflow-wrap: anywhere;
+    }
+
+    .request code:target {
+        background: var(--accent-tint);
+    }
+
+    .request .method {
+        color: var(--accent);
+        font-weight: 650;
+    }
+
+    .parameter {
+        color: var(--value);
+    }
+</style>

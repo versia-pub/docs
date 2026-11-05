@@ -20,8 +20,9 @@ const { sticky = false } = Astro.props;
         }
     }
 
-    /* The first block lines up with the Fields label across from it. */
-    .sheet-example :global(.astro-code:first-child) {
+    /* The first block lines up with the Fields label across from it, and the rule under
+       each block is enough to separate the next one. */
+    .sheet-example :global(.astro-code) {
         padding-top: 0;
         border-top: 0;
     }

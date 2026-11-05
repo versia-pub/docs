@@ -3,12 +3,20 @@ import { inheritedFieldHref, inheritedFields } from "../../lib/spec-fields";
 import FieldName from "./FieldName.astro";
 import RequiredTag from "./RequiredTag.astro";
 import Type from "./Type.astro";
+
+interface Props {
+    /** Added by `remark-spec`, with the names this entity lists itself or does not have. */
+    omit?: string;
+}
+
+const omitted = Astro.props.omit?.split(",") ?? [];
+const fields = inheritedFields.filter((field) => !omitted.includes(field.name));
 ---
 
 <details class="inherits">
-    <summary>Inherited from <a href="/entities#definition">Entity</a>: {inheritedFields.map((f) => f.name).join(", ")}</summary>
+    <summary>Inherited from <a href="/entities#definition">Entity</a>: {fields.map((f) => f.name).join(", ")}</summary>
     <ul>
-        {inheritedFields.map((field) => (
+        {fields.map((field) => (
             <li>
                 <FieldName name={field.name} href={inheritedFieldHref(field.name)} />
                 <Type value={field.type} />

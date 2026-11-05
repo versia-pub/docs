@@ -107,10 +107,8 @@ const checkExample = (
     }
 
     const keys = Object.keys(data);
-    const known = new Set(fields.map((f) => f.name));
-    const unknown = keys.filter(
-        (k) => !(known.has(k) || inherited.includes(k)),
-    );
+    const known = new Set([...fields.map((f) => f.name), ...inherited]);
+    const unknown = keys.filter((k) => !known.has(k));
     const missing = fields.filter((f) => f.required && !keys.includes(f.name));
     if (unknown.length > 0) {
         file.fail(
@@ -124,13 +122,6 @@ const checkExample = (
             code,
         );
     }
-
-    addLinks(code, [
-        ...fields.map((f) => `${f.name}=#${prefix}-${anchorPart(f.name)}`),
-        ...inherited
-            .filter((k) => !known.has(k))
-            .map((k) => `${k}=${inheritedFieldHref(k)}`),
-    ]);
 };
 
 const linkEntity = (entity: JsxElement, file: VFile) => {
@@ -161,10 +152,36 @@ const linkEntity = (entity: JsxElement, file: VFile) => {
     };
     walk((entity as JsxElement).children, prefix, true);
 
-    const inherited = hasInherited ? inheritedFields.map((f) => f.name) : [];
+    // A field the entity lists itself, such as an extension's `type`, wins over the inherited one.
+    // Transient entities have no `id`, as /entities says.
+    const listed = new Set(fields.map((f) => f.name));
+    const skipped = [...listed];
+    if (attribute(entity, "transient")) {
+        skipped.push("id");
+    }
+    const inherited = hasInherited
+        ? inheritedFields
+              .map((f) => f.name)
+              .filter((name) => !skipped.includes(name))
+        : [];
+    for (const node of elementsIn(entity, "Inherits")) {
+        node.attributes.push({
+            type: "mdxJsxAttribute",
+            name: "omit",
+            value: skipped.join(","),
+        });
+    }
+
+    const links = [
+        ...fields.map((f) => `${f.name}=#${prefix}-${anchorPart(f.name)}`),
+        ...inherited.map((k) => `${k}=${inheritedFieldHref(k)}`),
+    ];
     for (const example of elementsIn(entity, "Example")) {
         for (const code of codeIn(example)) {
-            checkExample(code, file, prefix, fields, inherited);
+            if (!attribute(example, "unchecked")) {
+                checkExample(code, file, prefix, fields, inherited);
+            }
+            addLinks(code, links);
         }
     }
 };

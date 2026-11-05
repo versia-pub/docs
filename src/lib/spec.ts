@@ -5,6 +5,7 @@ export const API_PREFIX = "/.versia/v0.6";
 export const typeLinks: Record<string, string> = {
     Collection: "/structures/collection",
     ContentFormat: "/structures/content-format",
+    CustomEmoji: "/extensions/custom-emojis#structure-definition",
     Domain: "/api/basics#domain",
     Entity: "/entities",
     Extensions: "/types#extensions",

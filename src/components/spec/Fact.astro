@@ -1,0 +1,58 @@
+---
+interface Props {
+    label: string;
+    /** Where the label is explained. */
+    href?: string;
+    id?: string;
+}
+
+const { label, href, id } = Astro.props;
+---
+
+<div class="fact" id={id}>
+    <dt>{href ? <a href={href}>{label}</a> : label}</dt>
+    <dd><slot /></dd>
+</div>
+
+<style>
+    .fact {
+        display: grid;
+        grid-template-columns: 7rem minmax(0, 1fr);
+        gap: 0 1rem;
+        padding-block: 0.55rem;
+    }
+
+    @media (max-width: 30rem) {
+        .fact {
+            grid-template-columns: minmax(0, 1fr);
+        }
+    }
+
+    .fact + .fact {
+        border-top: 1px solid var(--hair);
+    }
+
+    .fact:target {
+        background: var(--accent-tint);
+        box-shadow:
+            -0.75rem 0 0 var(--accent-tint),
+            0.75rem 0 0 var(--accent-tint);
+    }
+
+    dt {
+        color: var(--ink-soft);
+    }
+
+    dt a {
+        color: inherit;
+        text-decoration-color: var(--hair);
+    }
+
+    dd {
+        margin: 0;
+    }
+
+    dd :global(:last-child) {
+        margin-bottom: 0;
+    }
+</style>
