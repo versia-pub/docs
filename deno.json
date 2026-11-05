@@ -1,11 +1,10 @@
 {
     "nodeModulesDir": "auto",
     "tasks": {
-        "dev": "deno run -A npm:next dev",
-        "build": "deno run -A npm:next build && deno run -A npm:pagefind --site out",
-        "start": "deno run -A npm:next start",
-        "analyze": "deno run -A npm:next analyze",
-        "typecheck": "deno run -A npm:next typegen && deno run -A npm:typescript/tsc -p .",
+        "dev": "deno run -A npm:astro dev",
+        "build": "deno run -A npm:astro build",
+        "preview": "deno run -A npm:astro preview",
+        "typecheck": "deno run -A npm:astro check",
         "lint": "deno run -A npm:@biomejs/biome check .",
         "check-links": "deno run -A scripts/check-links.mjs",
         "knip": "deno run -A npm:knip",

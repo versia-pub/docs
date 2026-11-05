@@ -1,6 +1,16 @@
 {
     "$schema": "https://unpkg.com/knip@6/schema.json",
-    "entry": ["components/mdx.tsx", "mdx/*.mjs", "scripts/*.mjs"],
-    "project": ["**/*.{ts,tsx,mjs,mdx,css}"],
-    "ignoreDependencies": ["@biomejs/biome", "pagefind"]
+    "entry": [
+        "src/lib/route-middleware.ts",
+        "src/components/overrides/*.astro",
+        "scripts/*.mjs"
+    ],
+    "project": ["**/*.{astro,ts,mjs,mdx}"],
+    "ignoreDependencies": [
+        "@astrojs/check",
+        "@biomejs/biome",
+        "@fontsource-variable/.+",
+        "clsx",
+        "yaml"
+    ]
 }

@@ -1,11 +1,6 @@
 {
     "$schema": "https://biomejs.dev/schemas/2.6.5/schema.json",
     "assist": { "actions": { "source": { "organizeImports": "on" } } },
-    "css": {
-        "parser": {
-            "tailwindDirectives": true
-        }
-    },
     "linter": {
         "enabled": true,
         "rules": {
@@ -102,6 +97,6 @@
         "useIgnoreFile": true
     },
     "files": {
-        "includes": ["**", "!public", "!**/*.svg"]
+        "includes": ["**", "!public", "!**/*.svg", "!**/*.mdx", "!**/*.astro"]
     }
 }

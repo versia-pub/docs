@@ -21,6 +21,7 @@ for (const file of globSync(`${OUT_DIR}/**/*.html`)) {
 
 /** @type {string[]} */
 const problems = [];
+let checked = 0;
 
 for (const [route, html] of pages) {
     const main = getMain(html);
@@ -38,6 +39,7 @@ for (const [route, html] of pages) {
             continue;
         }
 
+        checked++;
         const page = pages.get(target);
         if (page === undefined) {
             problems.push(`${route}: broken link to ${href}`);
@@ -49,10 +51,14 @@ for (const [route, html] of pages) {
 
 if (pages.size === 0) {
     problems.push(`no pages found in ${OUT_DIR}/, build the site first`);
+} else if (checked === 0) {
+    problems.push("no links found, so nothing was checked");
 }
 
 for (const problem of problems) {
     console.error(problem);
 }
-console.log(`Checked ${pages.size} pages: ${problems.length} problems`);
+console.log(
+    `Checked ${checked} links on ${pages.size} pages: ${problems.length} problems`,
+);
 process.exitCode = problems.length > 0 ? 1 : 0;
