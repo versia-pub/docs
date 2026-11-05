@@ -7,13 +7,3 @@ declare module "mdx-annotations" {
         recma: () => Transformer;
     };
 }
-
-declare module "hast" {
-    interface RootContentMap {
-        mdxjsEsm: {
-            type: "mdxjsEsm";
-            value: string;
-            data?: { estree?: unknown };
-        };
-    }
-}

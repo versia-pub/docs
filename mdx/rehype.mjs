@@ -1,4 +1,4 @@
-/** @import { Element, Root } from "hast" */
+/** @import { Root, RootContent } from "hast" */
 import { transformerNotationFocus } from "@shikijs/transformers";
 import { slugifyWithCounter } from "@sindresorhus/slugify";
 import * as acorn from "acorn";
@@ -62,7 +62,7 @@ function rehypeSlugify() {
 }
 
 /**
- * @param {Root | Element} node
+ * @param {{ children: RootContent[] }} node
  * @returns {{ title: string; id: string }[]}
  */
 function getSections(node) {

@@ -29,7 +29,7 @@
         "next-env.d.ts",
         "**/*.ts",
         "**/*.tsx",
-        "mdx/{rehype,remark,recma}.mjs",
+        "mdx/*.mjs",
         "scripts/*.mjs",
         "next.config.mjs",
         ".next/types/**/*.ts",

@@ -1,10 +1,6 @@
 {
     "$schema": "https://unpkg.com/knip@6/schema.json",
-    "entry": [
-        "components/mdx.tsx",
-        "mdx/{rehype,remark,recma}.mjs",
-        "scripts/*.mjs"
-    ],
+    "entry": ["components/mdx.tsx", "mdx/*.mjs", "scripts/*.mjs"],
     "project": ["**/*.{ts,tsx,mjs,mdx,css}"],
     "ignoreDependencies": ["@biomejs/biome", "pagefind"]
 }
