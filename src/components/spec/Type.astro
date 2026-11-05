@@ -1,0 +1,52 @@
+---
+import { typeLinks } from "../../lib/spec";
+
+interface Props {
+    value: string;
+    /** Used for the first name when it has no known definition. */
+    link?: string;
+}
+
+// Splits `Reference | "public"` into names, string literals and punctuation.
+const { value, link } = Astro.props;
+const tokens = value.match(/"[^"]*"|[A-Za-z_][A-Za-z0-9_]*|[^\s"A-Za-z_]+/g) ?? [];
+const firstName = tokens.find((token) => /^[A-Za-z_]/.test(token));
+const hrefFor = (token: string) => typeLinks[token] ?? (token === firstName ? link : undefined);
+---
+
+<span class="type">
+    {tokens.map((token) =>
+        hrefFor(token) ? <a href={hrefFor(token)}>{token}</a>
+        : token.startsWith('"') ? <span class="type-literal">{token}</span>
+        : token === "|" ? <span class="type-op"> | </span>
+        : <span>{token}</span>
+    )}
+</span>
+
+<style>
+    .type {
+        color: var(--ink-soft);
+        font-family: var(--font-mono);
+        font-size: 0.78rem;
+    }
+
+    /* The sentence below usually links the same word, so this one stays quiet. */
+    .type a {
+        color: inherit;
+        text-decoration-color: var(--hair);
+    }
+
+    .type a:hover {
+        color: var(--accent);
+        text-decoration-color: currentColor;
+    }
+
+    .type-literal {
+        color: var(--value);
+    }
+
+    .type-op {
+        color: var(--ink-faint);
+        white-space: pre;
+    }
+</style>

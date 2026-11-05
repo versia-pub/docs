@@ -1,0 +1,23 @@
+---
+interface Props {
+    href: string;
+    arrow?: "right";
+    variant?: "outline";
+}
+
+const { href, arrow, variant } = Astro.props;
+---
+
+<a class:list={["button", variant && `button-${variant}`]} href={href}>
+    <slot />{arrow && <span aria-hidden="true"> →</span>}
+</a>
+
+<style>
+    .button {
+        font-weight: 700;
+    }
+
+    .button-outline {
+        font-weight: 400;
+    }
+</style>

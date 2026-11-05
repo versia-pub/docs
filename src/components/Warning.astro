@@ -1,0 +1,15 @@
+<aside class="warning"><slot /></aside>
+
+<style>
+    .warning {
+        margin: 1.25rem 0;
+        padding: 0.8rem 1rem;
+        background: var(--warn-tint);
+        border-top: 1px solid var(--warn);
+        font-size: 0.95rem;
+    }
+
+    .warning > :global(:last-child) {
+        margin-bottom: 0;
+    }
+</style>

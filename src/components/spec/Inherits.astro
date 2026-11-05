@@ -1,0 +1,46 @@
+---
+import { inheritedFieldHref, inheritedFields } from "../../lib/spec-fields";
+import FieldName from "./FieldName.astro";
+import RequiredTag from "./RequiredTag.astro";
+import Type from "./Type.astro";
+---
+
+<details class="inherits">
+    <summary>Inherited from <a href="/entities#definition">Entity</a>: {inheritedFields.map((f) => f.name).join(", ")}</summary>
+    <ul>
+        {inheritedFields.map((field) => (
+            <li>
+                <FieldName name={field.name} href={inheritedFieldHref(field.name)} />
+                <Type value={field.type} />
+                {field.required && <RequiredTag />}
+            </li>
+        ))}
+    </ul>
+</details>
+
+<style>
+    .inherits {
+        padding-block: 0.8rem;
+        border-block: 1px solid var(--hair);
+        color: var(--ink-soft);
+        font-size: 0.85rem;
+    }
+
+    .inherits summary {
+        cursor: pointer;
+    }
+
+    .inherits ul {
+        margin: 0.6rem 0 0;
+        padding: 0;
+        list-style: none;
+    }
+
+    .inherits li {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: baseline;
+        gap: 0.75rem;
+        padding-block: 0.15rem;
+    }
+</style>

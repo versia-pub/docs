@@ -1,0 +1,29 @@
+---
+interface Props {
+    name: string;
+    href: string;
+}
+
+const { name, href } = Astro.props;
+---
+
+<a class="field-name" href={href}><code>{name}</code></a>
+
+<style>
+    .field-name {
+        color: var(--accent);
+        font-weight: 600;
+        text-decoration: none;
+    }
+
+    .field-name code {
+        padding: 0;
+        background: none;
+        font-size: 0.9rem;
+        font-weight: 600;
+    }
+
+    .field-name:hover {
+        text-decoration: underline;
+    }
+</style>

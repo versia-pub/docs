@@ -1,0 +1,36 @@
+---
+interface Props {
+    entity?: string;
+}
+---
+
+<section class="sheet" data-entity={Astro.props.entity}>
+    <slot name="meta" />
+    <div class="sheet-body"><slot /></div>
+</section>
+
+<script>
+    import "../../lib/sheet-hover";
+</script>
+
+<style>
+    .sheet {
+        margin-block: 1rem 2rem;
+        border-top: 3px solid var(--accent);
+    }
+
+    .sheet-body {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr);
+        gap: 2rem;
+        padding-top: 1.5rem;
+    }
+
+    @media (min-width: 78rem) {
+        .sheet-body {
+            grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+            gap: 3rem;
+            align-items: start;
+        }
+    }
+</style>

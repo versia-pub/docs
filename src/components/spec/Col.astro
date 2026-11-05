@@ -1,0 +1,32 @@
+---
+interface Props {
+    /** The column holding examples, which stays in view beside the fields. */
+    sticky?: boolean;
+}
+
+const { sticky = false } = Astro.props;
+---
+
+{sticky ? <aside class="sheet-example"><slot /></aside> : <div class="sheet-fields"><slot /></div>}
+
+<style>
+    @media (min-width: 78rem) {
+        /* Long examples scroll inside the panel instead of running off the screen. */
+        .sheet-example {
+            position: sticky;
+            top: 1.5rem;
+            max-height: calc(100dvh - 3rem);
+            overflow-y: auto;
+        }
+    }
+
+    /* The first block lines up with the Fields label across from it. */
+    .sheet-example :global(.astro-code:first-child) {
+        padding-top: 0;
+        border-top: 0;
+    }
+
+    .sheet-example :global(.astro-code:last-child) {
+        margin-bottom: 0;
+    }
+</style>

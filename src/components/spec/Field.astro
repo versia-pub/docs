@@ -1,0 +1,93 @@
+---
+import FieldName from "./FieldName.astro";
+import RequiredTag from "./RequiredTag.astro";
+import Type from "./Type.astro";
+
+interface Props {
+    name: string;
+    type?: string;
+    /** Where the type is defined, for types `Type` cannot link by itself. */
+    typeLink?: string;
+    required?: boolean;
+    numberType?: "f64" | "i64" | "u64";
+    /** Added by `remark-spec`, in the form `note-is-sensitive`. */
+    anchor?: string;
+}
+
+const numberTitles = {
+    f64: "64-bit floating-point number",
+    i64: "64-bit signed integer",
+    u64: "64-bit unsigned integer",
+};
+
+const { name, type, typeLink, required = false, numberType, anchor } = Astro.props;
+---
+
+<div class="field" id={anchor} data-field={name}>
+    <div class="field-head">
+        <FieldName name={name} href={`#${anchor}`} />
+        {type && <Type value={type} link={typeLink} />}
+        {numberType && <abbr class="field-number" title={numberTitles[numberType]}>{numberType}</abbr>}
+        {required && <RequiredTag />}
+    </div>
+    {Astro.slots.has("default") && <div class="field-body"><slot /></div>}
+</div>
+
+<style>
+    .field {
+        padding-block: 0.9rem;
+        border-top: 1px solid var(--hair);
+        scroll-margin-top: 1.5rem;
+        transition: background-color 0.15s;
+    }
+
+    .field-head {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: baseline;
+        gap: 0.15rem 0.75rem;
+        margin-bottom: 0.35rem;
+    }
+
+    .field-number {
+        color: var(--ink-faint);
+        font-family: var(--font-mono);
+        font-size: 0.72rem;
+        text-decoration: none;
+    }
+
+    .field-body {
+        font-size: 0.975rem;
+        line-height: 1.55;
+    }
+
+    .field-body > :global(:last-child) {
+        margin-bottom: 0;
+    }
+
+    /* Nested structure fields. */
+    .field-body .field {
+        padding-block: 0.5rem;
+        margin-left: 0.25rem;
+        padding-left: 0.75rem;
+        border-top: 0;
+        border-left: 1px solid var(--hair);
+    }
+
+    .field-body .field .field-head {
+        margin-bottom: 0;
+    }
+
+    .field-body :global(.note) {
+        margin-top: 0.75rem;
+    }
+
+    /* `is-linked` comes from `sheet-hover`, when the matching example key is hovered. */
+    .field:target,
+    .field.is-linked {
+        background: var(--accent-tint);
+        box-shadow:
+            -0.75rem 0 0 var(--accent-tint),
+            0.75rem 0 0 var(--accent-tint);
+    }
+</style>

@@ -1,0 +1,39 @@
+---
+interface Props {
+    /** Replaced by the `name` slot when the name needs markup. */
+    name?: string;
+    href: string;
+    description: string;
+}
+
+const { name, href, description } = Astro.props;
+---
+
+<a class="guide" href={href}>
+    <slot name="icon" />
+    <strong><slot name="name">{name}</slot></strong>
+    <span>{description}</span>
+</a>
+
+<style>
+    .guide {
+        display: grid;
+        gap: 0.15rem;
+        padding: 0.75rem 0;
+        border-bottom: 1px solid var(--hair);
+        color: var(--ink);
+        text-decoration: none;
+    }
+
+    .guide strong {
+        font-weight: 600;
+    }
+
+    .guide span {
+        color: var(--ink-soft);
+    }
+
+    .guide:hover strong {
+        color: var(--accent);
+    }
+</style>

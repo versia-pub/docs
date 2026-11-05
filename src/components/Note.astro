@@ -1,0 +1,15 @@
+<aside class="note"><slot /></aside>
+
+<style>
+    /* Plain text beside the reading column. Only warnings get a filled block. */
+    .note {
+        margin: 0 0 1.25rem;
+        color: var(--ink-soft);
+        font-size: 0.9rem;
+        line-height: 1.5;
+    }
+
+    .note > :global(:last-child) {
+        margin-bottom: 0;
+    }
+</style>

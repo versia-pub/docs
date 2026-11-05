@@ -1,0 +1,39 @@
+---
+interface Props {
+    values: Record<string, string>;
+}
+
+const { values } = Astro.props;
+---
+
+<dl class="values">
+    {Object.entries(values).map(([value, description]) => (
+        <div>
+            <dt><code>"{value}"</code></dt>
+            <dd>{description}</dd>
+        </div>
+    ))}
+</dl>
+
+<style>
+    .values {
+        margin: 0.5rem 0 0;
+        font-size: 0.9rem;
+    }
+
+    .values > div {
+        display: grid;
+        grid-template-columns: 7.5rem minmax(0, 1fr);
+        gap: 0 0.75rem;
+        padding-block: 0.1rem;
+    }
+
+    .values dt code {
+        color: var(--value);
+    }
+
+    .values dd {
+        margin: 0;
+        color: var(--ink-soft);
+    }
+</style>
