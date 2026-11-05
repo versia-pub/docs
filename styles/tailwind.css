@@ -73,7 +73,7 @@
         display: none;
     }
 
-    .prose [class*="language-"] .has-focused .line:not(.focused) {
+    .prose .has-focused .line:not(.focused) {
         filter: blur(0.095rem);
         opacity: 0.7;
         transition:
@@ -81,7 +81,7 @@
             opacity 0.35s;
     }
 
-    .prose [class*="language-"]:hover .has-focused .line:not(.focused) {
+    .prose .has-focused:hover .line:not(.focused) {
         filter: blur(0);
         opacity: 1;
     }

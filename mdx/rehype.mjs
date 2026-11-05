@@ -6,17 +6,6 @@ import { mdxAnnotations } from "mdx-annotations";
 import { createHighlighter } from "shiki";
 import { visit } from "unist-util-visit";
 
-function rehypeParseCodeBlocks() {
-    return (tree) => {
-        visit(tree, "element", (node, _nodeIndex, parentNode) => {
-            if (node.tagName === "code" && node.properties.className) {
-                parentNode.properties.language =
-                    node.properties.className[0]?.replace(/^language-/, "");
-            }
-        });
-    };
-}
-
 const highlighter = await createHighlighter({
     langs: ["typescript", "json", "html", "jsonc", "markdown", "bash", "http"],
     themes: [],
@@ -24,32 +13,31 @@ const highlighter = await createHighlighter({
 
 await highlighter.loadTheme("dark-plus");
 
+// Replaces each code block's children with an `html` prop for the `pre`
+// component to render, so that MDX doesn't turn every token into a React element.
 function rehypeShiki() {
-    return async (tree) => {
+    return (tree) => {
         visit(tree, "element", (node) => {
-            if (
-                node.tagName === "pre" &&
-                node.children[0]?.tagName === "code"
-            ) {
-                const codeNode = node.children[0];
-                const textNode = codeNode.children[0];
-
-                node.properties.code = textNode.value;
-
-                if (node.properties.language) {
-                    const html = highlighter.codeToHtml(textNode.value, {
-                        lang: node.properties.language,
-                        theme: "dark-plus",
-                        transformers: [
-                            transformerNotationFocus({
-                                matchAlgorithm: "v3",
-                            }),
-                        ],
-                    });
-
-                    textNode.value = html;
-                }
+            const code = node.children[0];
+            if (node.tagName !== "pre" || code?.tagName !== "code") {
+                return;
             }
+
+            node.properties.html = highlighter.codeToHtml(
+                code.children[0].value,
+                {
+                    lang:
+                        code.properties.className?.[0]?.replace(
+                            /^language-/,
+                            "",
+                        ) ?? "text",
+                    theme: "dark-plus",
+                    transformers: [
+                        transformerNotationFocus({ matchAlgorithm: "v3" }),
+                    ],
+                },
+            );
+            node.children = [];
         });
     };
 }
@@ -118,7 +106,6 @@ function getSections(node) {
 export default function rehypePlugin() {
     const transformers = [
         mdxAnnotations.rehype(),
-        rehypeParseCodeBlocks(),
         rehypeShiki(),
         rehypeSlugify(),
         rehypeAddMDXExports((tree) => ({
