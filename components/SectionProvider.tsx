@@ -3,139 +3,58 @@
 import {
     createContext,
     type ReactNode,
-    type RefObject,
     useContext,
     useEffect,
-    useLayoutEffect,
     useState,
 } from "react";
-import { createStore, type StoreApi, useStore } from "zustand";
 
 import { remToPx } from "../lib/remToPx";
 
 export interface Section {
     id: string;
     title: string;
-    offsetRem?: number;
-    tag?: string;
-    headingRef?: RefObject<HTMLHeadingElement>;
 }
 
-interface SectionState {
+const HEADING_OFFSET_REM = 6;
+
+const SectionContext = createContext<{
     sections: Section[];
     visibleSections: string[];
-    setVisibleSections: (visibleSections: string[]) => void;
-    registerHeading: ({
-        id,
-        ref,
-        offsetRem,
-    }: {
-        id: string;
-        ref: RefObject<HTMLHeadingElement>;
-        offsetRem: number;
-    }) => void;
-}
+}>({ sections: [], visibleSections: [] });
 
-function createSectionStore(sections: Section[]) {
-    return createStore<SectionState>()((set) => ({
-        sections,
-        visibleSections: [],
-        setVisibleSections: (visibleSections) =>
-            set((state) =>
-                state.visibleSections.join() === visibleSections.join()
-                    ? {}
-                    : { visibleSections },
-            ),
-        registerHeading: ({ id, ref, offsetRem }) =>
-            set((state) => {
-                return {
-                    sections: state.sections.map((section) => {
-                        if (section.id === id) {
-                            return {
-                                ...section,
-                                headingRef: ref,
-                                offsetRem,
-                            };
-                        }
-                        return section;
-                    }),
-                };
-            }),
-    }));
-}
+function getVisibleSections(sections: Section[]) {
+    const { innerHeight, scrollY } = window;
+    const offset = remToPx(HEADING_OFFSET_REM);
+    const visibleSections: string[] = [];
+    const getTop = (section?: Section) => {
+        const element = section && document.getElementById(section.id);
+        return element && element.getBoundingClientRect().top + scrollY;
+    };
 
-function useVisibleSections(sectionStore: StoreApi<SectionState>) {
-    const setVisibleSections = useStore(
-        sectionStore,
-        (s) => s.setVisibleSections,
-    );
-    const sections = useStore(sectionStore, (s) => s.sections);
-
-    useEffect(() => {
-        function checkVisibleSections() {
-            const { innerHeight, scrollY } = window;
-            const newVisibleSections: string[] = [];
-
-            for (
-                let sectionIndex = 0;
-                sectionIndex < sections.length;
-                sectionIndex++
-            ) {
-                const {
-                    id,
-                    headingRef,
-                    offsetRem = 0,
-                } = sections[sectionIndex];
-
-                if (!headingRef?.current) {
-                    continue;
-                }
-
-                const offset = remToPx(offsetRem);
-                const top =
-                    headingRef.current.getBoundingClientRect().top + scrollY;
-
-                if (sectionIndex === 0 && top - offset > scrollY) {
-                    newVisibleSections.push("_top");
-                }
-
-                const nextSection = sections[sectionIndex + 1];
-                const bottom =
-                    (nextSection?.headingRef?.current?.getBoundingClientRect()
-                        .top ?? Number.POSITIVE_INFINITY) +
-                    scrollY -
-                    remToPx(nextSection?.offsetRem ?? 0);
-
-                if (
-                    (top > scrollY && top < scrollY + innerHeight) ||
-                    (bottom > scrollY && bottom < scrollY + innerHeight) ||
-                    (top <= scrollY && bottom >= scrollY + innerHeight)
-                ) {
-                    newVisibleSections.push(id);
-                }
-            }
-
-            setVisibleSections(newVisibleSections);
+    for (const [index, section] of sections.entries()) {
+        const top = getTop(section);
+        if (top === undefined || top === null) {
+            continue;
         }
 
-        const raf = window.requestAnimationFrame(() => checkVisibleSections());
-        window.addEventListener("scroll", checkVisibleSections, {
-            passive: true,
-        });
-        window.addEventListener("resize", checkVisibleSections);
+        if (index === 0 && top - offset > scrollY) {
+            visibleSections.push("_top");
+        }
 
-        return () => {
-            window.cancelAnimationFrame(raf);
-            window.removeEventListener("scroll", checkVisibleSections);
-            window.removeEventListener("resize", checkVisibleSections);
-        };
-    }, [setVisibleSections, sections]);
+        const nextTop = getTop(sections[index + 1]);
+        const bottom = (nextTop ?? Number.POSITIVE_INFINITY) - offset;
+
+        if (
+            (top > scrollY && top < scrollY + innerHeight) ||
+            (bottom > scrollY && bottom < scrollY + innerHeight) ||
+            (top <= scrollY && bottom >= scrollY + innerHeight)
+        ) {
+            visibleSections.push(section.id);
+        }
+    }
+
+    return visibleSections;
 }
-
-const SectionStoreContext = createContext<StoreApi<SectionState> | null>(null);
-
-const useIsomorphicLayoutEffect =
-    typeof window === "undefined" ? useEffect : useLayoutEffect;
 
 export function SectionProvider({
     sections,
@@ -144,22 +63,34 @@ export function SectionProvider({
     sections: Section[];
     children: ReactNode;
 }) {
-    const [sectionStore] = useState(() => createSectionStore(sections));
+    const [visibleSections, setVisibleSections] = useState<string[]>([]);
 
-    useVisibleSections(sectionStore);
+    useEffect(() => {
+        function update() {
+            const next = getVisibleSections(sections);
+            setVisibleSections((current) =>
+                current.join() === next.join() ? current : next,
+            );
+        }
 
-    useIsomorphicLayoutEffect(() => {
-        sectionStore.setState({ sections });
-    }, [sectionStore, sections]);
+        const raf = window.requestAnimationFrame(update);
+        window.addEventListener("scroll", update, { passive: true });
+        window.addEventListener("resize", update);
+
+        return () => {
+            window.cancelAnimationFrame(raf);
+            window.removeEventListener("scroll", update);
+            window.removeEventListener("resize", update);
+        };
+    }, [sections]);
 
     return (
-        <SectionStoreContext.Provider value={sectionStore}>
+        <SectionContext.Provider value={{ sections, visibleSections }}>
             {children}
-        </SectionStoreContext.Provider>
+        </SectionContext.Provider>
     );
 }
 
-export function useSectionStore<T>(selector: (state: SectionState) => T) {
-    const store = useContext(SectionStoreContext);
-    return useStore(store as NonNullable<typeof store>, selector);
+export function useSections() {
+    return useContext(SectionContext);
 }

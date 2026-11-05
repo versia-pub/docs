@@ -2,12 +2,12 @@ import clsx from "clsx";
 import Link from "next/link";
 
 import type { ComponentPropsWithoutRef, ReactNode } from "react";
-import { Heading } from "./Heading";
 import { Prose } from "./Prose";
 
 export const a = Link;
 export { Button } from "./Button";
 export { Pre as pre } from "./Code";
+export { Heading as h2 } from "./Heading";
 export { Properties, Property } from "./Property";
 
 export function wrapper({ children }: { children: ReactNode }) {
@@ -17,12 +17,6 @@ export function wrapper({ children }: { children: ReactNode }) {
         </article>
     );
 }
-
-export const h2 = function H2(
-    props: Omit<ComponentPropsWithoutRef<typeof Heading>, "level">,
-) {
-    return <Heading level={2} {...props} />;
-};
 
 function InfoIcon(props: ComponentPropsWithoutRef<"svg">) {
     return (

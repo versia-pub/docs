@@ -9,8 +9,7 @@ import { type ComponentPropsWithoutRef, type ReactNode, useRef } from "react";
 import { remToPx } from "../lib/remToPx";
 import { Button } from "./Button";
 import { useIsInsideMobileNavigation } from "./MobileNavigation";
-import { useSectionStore } from "./SectionProvider";
-import { Tag } from "./Tag";
+import { useSections } from "./SectionProvider";
 
 interface NavGroup {
     title: string;
@@ -47,13 +46,11 @@ function TopLevelNavItem({
 function NavLink({
     href,
     children,
-    tag,
     active = false,
     isAnchorLink = false,
 }: {
     href: string;
     children: ReactNode;
-    tag?: string;
     active?: boolean;
     isAnchorLink?: boolean;
 }) {
@@ -70,11 +67,6 @@ function NavLink({
             )}
         >
             <span className="truncate">{children}</span>
-            {tag && (
-                <Tag variant="small" color="zinc">
-                    {tag}
-                </Tag>
-            )}
         </Link>
     );
 }
@@ -86,11 +78,8 @@ function VisibleSectionHighlight({
     group: NavGroup;
     pathname: string;
 }) {
-    const [sections, visibleSections] = useInitialValue(
-        [
-            useSectionStore((s) => s.sections),
-            useSectionStore((s) => s.visibleSections),
-        ],
+    const { sections, visibleSections } = useInitialValue(
+        useSections(),
         useIsInsideMobileNavigation(),
     );
 
@@ -159,7 +148,7 @@ function NavigationGroup({
     // The state will still update when we re-open (re-render) the navigation.
     const isInsideMobileNavigation = useIsInsideMobileNavigation();
     const [pathname, sections] = useInitialValue(
-        [usePathname(), useSectionStore((s) => s.sections)],
+        [usePathname(), useSections().sections],
         isInsideMobileNavigation,
     );
 
@@ -224,7 +213,6 @@ function NavigationGroup({
                                                 <li key={section.id}>
                                                     <NavLink
                                                         href={`${link.href}#${section.id}`}
-                                                        tag={section.tag}
                                                         isAnchorLink={true}
                                                     >
                                                         {section.title}

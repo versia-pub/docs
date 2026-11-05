@@ -11,6 +11,8 @@ import { Logo } from "./Logo";
 import { Navigation } from "./Navigation";
 import { type Section, SectionProvider } from "./SectionProvider";
 
+const NO_SECTIONS: Section[] = [];
+
 export function Layout({
     children,
     allSections,
@@ -21,7 +23,7 @@ export function Layout({
     const pathname = usePathname();
 
     return (
-        <SectionProvider sections={allSections[pathname] ?? []}>
+        <SectionProvider sections={allSections[pathname] ?? NO_SECTIONS}>
             <div className="h-full lg:ml-72 xl:ml-80">
                 <motion.header
                     layoutScroll={true}

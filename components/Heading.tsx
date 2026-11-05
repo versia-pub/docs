@@ -2,17 +2,9 @@
 
 import { useInView } from "framer-motion";
 import Link from "next/link";
-import {
-    type ComponentPropsWithoutRef,
-    type ReactNode,
-    type RefObject,
-    useEffect,
-    useRef,
-} from "react";
+import { type ComponentPropsWithoutRef, type ReactNode, useRef } from "react";
 
 import { remToPx } from "../lib/remToPx";
-import { useSectionStore } from "./SectionProvider";
-import { Tag } from "./Tag";
 
 export function AnchorIcon(props: ComponentPropsWithoutRef<"svg">) {
     return (
@@ -25,24 +17,6 @@ export function AnchorIcon(props: ComponentPropsWithoutRef<"svg">) {
         >
             <path d="m6.5 11.5-.964-.964a3.535 3.535 0 1 1 5-5l.964.964m2 2 .964.964a3.536 3.536 0 0 1-5 5L8.5 13.5m0-5 3 3" />
         </svg>
-    );
-}
-
-function Eyebrow({ tag, label }: { tag?: string; label?: string }) {
-    if (!(tag || label)) {
-        return null;
-    }
-
-    return (
-        <div className="flex items-center gap-x-3">
-            {tag && <Tag>{tag}</Tag>}
-            {tag && label && (
-                <span className="h-0.5 w-0.5 rounded-md bg-zinc-300 dark:bg-zinc-600" />
-            )}
-            {label && (
-                <span className="font-mono text-xs text-zinc-400">{label}</span>
-            )}
-        </div>
     );
 }
 
@@ -72,56 +46,21 @@ function Anchor({
     );
 }
 
-export function Heading<Level extends 2 | 3>({
+export function Heading({
     children,
-    tag,
-    label,
-    level,
-    anchor = true,
     ...props
-}: ComponentPropsWithoutRef<`h${Level}`> & {
-    id: string;
-    tag?: string;
-    label?: string;
-    level?: Level;
-    anchor?: boolean;
-}) {
-    level = level ?? (2 as Level);
-    const Component = `h${level}` as "h2" | "h3";
+}: ComponentPropsWithoutRef<"h2"> & { id: string }) {
     const ref = useRef<HTMLHeadingElement | null>(null);
-    const registerHeading = useSectionStore((s) => s.registerHeading);
-
     const inView = useInView(ref, {
         margin: `${remToPx(-3.5)}px 0px 0px 0px`,
         amount: "all",
     });
 
-    useEffect(() => {
-        if (level === 2 && ref.current) {
-            registerHeading({
-                id: props.id,
-                ref: ref as RefObject<HTMLHeadingElement>,
-                offsetRem: tag || label ? 8 : 6,
-            });
-        }
-    });
-
     return (
-        <>
-            <Eyebrow tag={tag} label={label} />
-            <Component
-                ref={ref}
-                className={tag || label ? "mt-2 scroll-mt-32" : "scroll-mt-24"}
-                {...props}
-            >
-                {anchor ? (
-                    <Anchor id={props.id} inView={inView}>
-                        {children}
-                    </Anchor>
-                ) : (
-                    children
-                )}
-            </Component>
-        </>
+        <h2 ref={ref} className="scroll-mt-24" {...props}>
+            <Anchor id={props.id} inView={inView}>
+                {children}
+            </Anchor>
+        </h2>
     );
 }
