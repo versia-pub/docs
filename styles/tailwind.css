@@ -26,14 +26,6 @@
     --text-4xl--line-height: 2.5rem;
     --text-5xl: 3rem;
     --text-5xl--line-height: 1;
-    --text-6xl: 3.75rem;
-    --text-6xl--line-height: 1;
-    --text-7xl: 4.5rem;
-    --text-7xl--line-height: 1;
-    --text-8xl: 6rem;
-    --text-8xl--line-height: 1;
-    --text-9xl: 8rem;
-    --text-9xl--line-height: 1;
 
     --color-brand-50: var(--color-pink-50);
     --color-brand-100: var(--color-pink-100);
@@ -76,79 +68,13 @@
     }
 }
 
-@utility construction {
-    --opacity: 0.1;
-    --black: rgb(46 39 37 / var(--opacity));
-    --yellow: rgb(255 195 0 / var(--opacity));
-    background-image: linear-gradient(
-        45deg,
-        var(--yellow) 25%,
-        var(--black) 25%,
-        var(--black) 50%,
-        var(--yellow) 50%,
-        var(--yellow) 75%,
-        var(--black) 75%,
-        var(--black) 100%
-    );
-    background-size: 57px 57px;
-}
-
 @layer base {
-    :root {
-        --shiki-color-text: var(--color-white);
-        --shiki-token-constant: var(--color-brand-300);
-        --shiki-token-string: var(--color-brand-300);
-        --shiki-token-comment: var(--color-zinc-500);
-        --shiki-token-keyword: var(--color-sky-300);
-        --shiki-token-parameter: var(--color-pink-300);
-        --shiki-token-function: var(--color-violet-300);
-        --shiki-token-string-expression: var(--color-brand-300);
-        --shiki-token-punctuation: var(--color-zinc-200);
-    }
-
     [inert] ::-webkit-scrollbar {
         display: none;
     }
 
-    .prose [class*="language-"] code .highlighted {
-        background-color: var(--vp-code-line-highlight-color);
-        transition: background-color 0.5s;
-        margin: 0 -24px;
-        padding: 0 24px;
-        width: calc(100% + 48px);
-        display: inline-block;
-    }
-
-    .prose [class*="language-"] code .highlighted.error {
-        background-color: var(--vp-code-line-error-color);
-    }
-
-    .prose [class*="language-"] code .highlighted.warning {
-        background-color: var(--vp-code-line-warning-color);
-    }
-
-    .prose [class*="language-"] code .diff {
-        transition: background-color 0.5s;
-        margin: 0 -24px;
-        padding: 0 24px;
-        width: calc(100% + 48px);
-        display: inline-block;
-    }
-
-    .prose [class*="language-"] code .diff:before {
-        position: absolute;
-        left: 10px;
-    }
-
     .prose [class*="language-"] .has-focused .line:not(.focused) {
         filter: blur(0.095rem);
-        opacity: 0.4;
-        transition:
-            filter 0.35s,
-            opacity 0.35s;
-    }
-
-    .prose [class*="language-"] .has-focused .line:not(.focused) {
         opacity: 0.7;
         transition:
             filter 0.35s,
@@ -158,24 +84,5 @@
     .prose [class*="language-"]:hover .has-focused .line:not(.focused) {
         filter: blur(0);
         opacity: 1;
-    }
-
-    .prose [class*="language-"] code .diff.remove {
-        background-color: var(--vp-code-line-diff-remove-color);
-        opacity: 0.7;
-    }
-
-    .prose [class*="language-"] code .diff.remove:before {
-        content: "-";
-        color: var(--vp-code-line-diff-remove-symbol-color);
-    }
-
-    .prose [class*="language-"] code .diff.add {
-        background-color: var(--vp-code-line-diff-add-color);
-    }
-
-    .prose [class*="language-"] code .diff.add:before {
-        content: "+";
-        color: var(--vp-code-line-diff-add-symbol-color);
     }
 }

@@ -19,11 +19,6 @@ const nextConfig = {
     pageExtensions: ["js", "jsx", "ts", "tsx", "mdx"],
     output: "export",
     agentRules: false,
-    images: {
-        remotePatterns: [
-            new URL("https://api.microlink.io/**"), // Microlink Image Preview
-        ],
-    },
     turbopack: {
         rules: {
             "*/mdx/search-data.mjs": {

@@ -16,8 +16,6 @@ jobs:
         steps:
             - name: Checkout code
               uses: actions/checkout@v7
-              with:
-                  submodules: recursive
 
             - name: Setup Deno
               uses: denoland/setup-deno@v2

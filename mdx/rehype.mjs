@@ -1,8 +1,4 @@
-import {
-    transformerMetaHighlight,
-    transformerNotationFocus,
-    transformerNotationHighlight,
-} from "@shikijs/transformers";
+import { transformerNotationFocus } from "@shikijs/transformers";
 import { slugifyWithCounter } from "@sindresorhus/slugify";
 import * as acorn from "acorn";
 import { toString as mdastToString } from "mdast-util-to-string";
@@ -22,20 +18,7 @@ function rehypeParseCodeBlocks() {
 }
 
 const highlighter = await createHighlighter({
-    langs: [
-        "typescript",
-        "javascript",
-        "json",
-        "css",
-        "html",
-        "json5",
-        "jsonc",
-        "markdown",
-        "bash",
-        "php",
-        "python",
-        "http",
-    ],
+    langs: ["typescript", "json", "html", "jsonc", "markdown", "bash", "http"],
     themes: [],
 });
 
@@ -59,12 +42,6 @@ function rehypeShiki() {
                         theme: "dark-plus",
                         transformers: [
                             transformerNotationFocus({
-                                matchAlgorithm: "v3",
-                            }),
-                            transformerNotationHighlight({
-                                matchAlgorithm: "v3",
-                            }),
-                            transformerMetaHighlight({
                                 matchAlgorithm: "v3",
                             }),
                         ],

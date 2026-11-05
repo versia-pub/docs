@@ -96,21 +96,6 @@
         "indentStyle": "space",
         "indentWidth": 4
     },
-    "overrides": [
-        {
-            "includes": ["**/*.vue"],
-            "linter": {
-                "rules": {
-                    "correctness": {
-                        "noUnusedImports": "off"
-                    },
-                    "style": {
-                        "useImportType": "off"
-                    }
-                }
-            }
-        }
-    ],
     "vcs": {
         "enabled": true,
         "clientKind": "git",
