@@ -29,9 +29,8 @@
 - [**`React`**](https://reactjs.org/): A JavaScript library for building user interfaces.
 - [**`Next.js`**](https://nextjs.org/): A React framework for building static and dynamic websites.
 - [**`MDX`**](https://mdxjs.com/): Markdown for the component era.
-- [**`Zustand`**](https://zustand.surge.sh/): A small, fast, and scalable state management library.
-- [**`Framer Motion`**](https://www.framer.com/motion/): A production-ready motion library for React.
-- [**`FlexSearch`**](https://flexsearch.net/): A full-text search library for JavaScript.
+- [**`Motion`**](https://motion.dev/): A production-ready motion library for React.
+- [**`Pagefind`**](https://pagefind.app/): A static search library, which indexes the built site.
 
 ## Installation
 
@@ -48,6 +47,10 @@ deno task dev
 ```
 
 [Node.js](https://nodejs.org) must also be available on your `PATH`, as Turbopack uses it to run the MDX and PostCSS loaders.
+
+Search only works in production builds, as its index is generated from the output of `deno task build`.
+
+Turbopack's cache doesn't track the plugins in `mdx/`, so delete `.next` after changing them.
 
 ## Contributing
 

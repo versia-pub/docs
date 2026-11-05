@@ -5,8 +5,6 @@
     "npm:@biomejs/biome@*": "2.6.5",
     "npm:@biomejs/biome@^2.6.5": "2.6.5",
     "npm:@headlessui/react@^2.2.10": "2.2.10_react@19.3.1_react-dom@19.3.1",
-    "npm:@headlessui/tailwindcss@~0.2.2": "0.2.2_tailwindcss@4.3.4",
-    "npm:@iconify-icon/react@^3.0.6": "3.0.6_react@19.3.1",
     "npm:@mdx-js/loader@^3.1.1": "3.1.1",
     "npm:@next/mdx@^16.4.5": "16.4.5_@mdx-js+loader@3.1.1_@mdx-js+react@3.1.1_@types+react@19.3.0_react@19.3.1",
     "npm:@shikijs/transformers@^4.6.0": "4.6.0",
@@ -17,31 +15,27 @@
     "npm:@types/mdx@^2.0.14": "2.0.14",
     "npm:@types/node@^26.6.6": "26.6.6",
     "npm:@types/react-dom@^19.3.0": "19.3.0_@types+react@19.3.0",
-    "npm:@types/react-highlight-words@~0.20.1": "0.20.1",
     "npm:@types/react@^19.3.0": "19.3.0",
     "npm:acorn@^8.19.0": "8.19.0",
     "npm:clsx@^2.1.1": "2.1.1",
     "npm:fast-glob@^3.3.3": "3.3.3",
-    "npm:flexsearch@~0.8.212": "0.8.212",
-    "npm:framer-motion@^14.9.1": "14.9.1_react@19.3.1_react-dom@19.3.1",
     "npm:knip@*": "6.44.1",
     "npm:knip@^6.44.1": "6.44.1",
     "npm:mdast-util-to-string@4": "4.0.0",
     "npm:mdx-annotations@~0.1.4": "0.1.4",
+    "npm:motion@^14.9.1": "14.9.1_react@19.3.1_react-dom@19.3.1",
     "npm:next-themes@~0.4.6": "0.4.6_react@19.3.1_react-dom@19.3.1",
     "npm:next@*": "16.4.5_react@19.3.1_react-dom@19.3.1",
     "npm:next@16.4.5": "16.4.5_react@19.3.1_react-dom@19.3.1",
+    "npm:pagefind@*": "1.6.0",
+    "npm:pagefind@^1.6.0": "1.6.0",
     "npm:react-dom@^19.3.1": "19.3.1_react@19.3.1",
-    "npm:react-highlight-words@1": "1.0.0_react@19.3.1",
     "npm:react@^19.3.1": "19.3.1",
     "npm:remark-gfm@^4.0.1": "4.0.1",
-    "npm:remark-mdx@^3.1.1": "3.1.1",
-    "npm:remark@^15.0.1": "15.0.1",
     "npm:shiki@^4.6.0": "4.6.0",
     "npm:tailwindcss@^4.3.4": "4.3.4",
     "npm:typescript@*": "7.0.2",
     "npm:typescript@^7.0.2": "7.0.2",
-    "npm:unist-util-filter@^5.0.1": "5.0.1",
     "npm:unist-util-visit@^5.2.0": "5.2.0",
     "npm:uwuifier@^4.2.2": "4.2.2"
   },
@@ -317,22 +311,6 @@
         "react-dom",
         "use-sync-external-store"
       ]
-    },
-    "@headlessui/tailwindcss@0.2.2_tailwindcss@4.3.4": {
-      "integrity": "sha512-xNe42KjdyA4kfUKLLPGzME9zkH7Q3rOZ5huFihWNWOQFxnItxPB3/67yBI8/qBfY8nwBRx5GHn4VprsoluVMGw==",
-      "dependencies": [
-        "tailwindcss"
-      ]
-    },
-    "@iconify-icon/react@3.0.6_react@19.3.1": {
-      "integrity": "sha512-T7GIDDVeIm5coLGvTVdOv4ox1HnIufvVT+Ho+vioAiR+dqtsPIJ2TUxj9U91xQVfImTaJF17oRyUxYxwbZDjaA==",
-      "dependencies": [
-        "iconify-icon",
-        "react"
-      ]
-    },
-    "@iconify/types@2.0.0": {
-      "integrity": "sha512-+wluvCrRhXrhyOmRDJ3q8mux9JkKy5SJ/v8ol2tu4FVjyYvtEzkc/3pK15ET6RKg4b4w4BmTk1+gsCUhf21Ykg=="
     },
     "@img/colour@1.1.0": {
       "integrity": "sha512-Td76q7j57o/tLVdgS746cYARfSyxk8iEfRxewL9h4OMzYhbW4TAcppl0mT4eyqXddh6L/jwoM75mo7ixa/pCeQ=="
@@ -869,6 +847,41 @@
       "os": ["win32"],
       "cpu": ["x64"]
     },
+    "@pagefind/darwin-arm64@1.6.0": {
+      "integrity": "sha512-611gl64aqN12UcMyKPtZ8+vRWBKlJFSh2JgO8uScxa1Eyjo1dXz9r4wZuRno0yCUE/KN0FauEoKZ3KEwUYHCCg==",
+      "os": ["darwin"],
+      "cpu": ["arm64"]
+    },
+    "@pagefind/darwin-x64@1.6.0": {
+      "integrity": "sha512-rd3ZbtuxyYqjASKZAPuIV7eeQQHJ7VYpoNKKG8CvglaD3g30eT5Nb7XGNLYwVReBsCccpkURwrGwWjSwr8nyQQ==",
+      "os": ["darwin"],
+      "cpu": ["x64"]
+    },
+    "@pagefind/freebsd-x64@1.6.0": {
+      "integrity": "sha512-d+sXqsaThszmPWGVDSRKqIz9GpZcj/bAksNZfg19asSxU0ogNPOMND4kV4giQvOjPFMsltUFf6hQJfoHQ6+hSQ==",
+      "os": ["freebsd"],
+      "cpu": ["x64"]
+    },
+    "@pagefind/linux-arm64@1.6.0": {
+      "integrity": "sha512-SLB2I+XqCZma8NvIGIH8nyKblgKIxw5PmqsVtofWOKxNHhEtOEsddbqU+hsrNcT3EV0faM6UmKDHVIxcPYq29w==",
+      "os": ["linux"],
+      "cpu": ["arm64"]
+    },
+    "@pagefind/linux-x64@1.6.0": {
+      "integrity": "sha512-IbMSx/+Vr/Xk0TTBlLkjgK+rvnbOXGmmb2/MKxQu99AR5DsqQoV3NKEA9PQz2tAhuCZjeD5xJBp4w5N5DHIC7Q==",
+      "os": ["linux"],
+      "cpu": ["x64"]
+    },
+    "@pagefind/windows-arm64@1.6.0": {
+      "integrity": "sha512-wUrniW3REr7VWJHz6xE6F/p/AQgHDFpGZiY9sbWT71KfEijDE5Jnc37V8zc7cilV9h/QkwJGXoEP2+ZLwDmhtw==",
+      "os": ["win32"],
+      "cpu": ["arm64"]
+    },
+    "@pagefind/windows-x64@1.6.0": {
+      "integrity": "sha512-cUA2+yXfbymdJllyMjY5YTBwuOgh0/H53Pn5fYKjDnDjk154Ft4U5RVj3TenWySPL/jG6zJfARUWSlyUyXHlZw==",
+      "os": ["win32"],
+      "cpu": ["x64"]
+    },
     "@react-aria/focus@3.22.1_react@19.3.1_react-dom@19.3.1": {
       "integrity": "sha512-CPxtkyrBi/HYY5P3lE/57sQ6qfa0lN8E55TOm89H0kNGv0lKt+/0zP7lWERzBjRr5IxBVrQX4gFEowBN52LPaA==",
       "dependencies": [
@@ -1134,12 +1147,6 @@
     },
     "@types/react-dom@19.3.0_@types+react@19.3.0": {
       "integrity": "sha512-ZI7bU42mZXXKHn/qNLEw2IrbiINU7X5+vfgdixBHkCNpYWXjKgfQ/P+uyGb5CjOLB9UcnTeg3rylQtV2hym44Q==",
-      "dependencies": [
-        "@types/react"
-      ]
-    },
-    "@types/react-highlight-words@0.20.1": {
-      "integrity": "sha512-EgF6RaoibBurIhxk3X3d5xL0uMqjD7KtShvZ8S+d7/o6xZ+mQ4rct1a2E49vWA9r63OzrHCIyghqvQHASb/ERw==",
       "dependencies": [
         "@types/react"
       ]
@@ -1493,9 +1500,6 @@
         "to-regex-range"
       ]
     },
-    "flexsearch@0.8.212": {
-      "integrity": "sha512-wSyJr1GUWoOOIISRu+X2IXiOcVfg9qqBRyCPRUdLMIGJqPzMo+jMRlvE83t14v1j0dRMEaBbER/adQjp6Du2pw=="
-    },
     "formatly@0.11.4": {
       "integrity": "sha512-TeCC10lP8KCgoX+Fe5lryILIT0/Dy+nP0OSVnsuB5CwXoLuOdqxCYlPFF1inR8S/zTy1ec7TjhS2TeRKWzzImA==",
       "dependencies": [
@@ -1596,17 +1600,8 @@
         "@types/hast"
       ]
     },
-    "highlight-words-core@2.0.0": {
-      "integrity": "sha512-dKFj8EZQ8yvU9b/88WGZGwsFC0wmKk5wEVOL4D4POzASma8Gct9LvWax6gPpIzBIF+z8N0si3t1mxyYxOHmjhw=="
-    },
     "html-void-elements@3.0.0": {
       "integrity": "sha512-bEqo66MRXsUGxWHV5IP0PUiAWwoEjba4VCzg0LjFJBpchPaTfyfCKTG6bc5F8ucKec3q5y6qOdGyYTSBEvhCrg=="
-    },
-    "iconify-icon@3.0.5": {
-      "integrity": "sha512-tApy9Ojh7ZGAuKRiPbUHpqd+hwNwM516al7vwX0dU6f7FoLI11DWGZwl85OYknGIwo4KnWeaqPJvCEMOrnKPWw==",
-      "dependencies": [
-        "@iconify/types"
-      ]
     },
     "inline-style-parser@0.2.7": {
       "integrity": "sha512-Nb2ctOyNR8DqQoR0OwRG95uNWIC0C1lCgf5Naz5H6Ji72KZ8OcFZLz2P5sNgwlyoJ8Yif11oMuYs5pBQa86csA=="
@@ -2298,6 +2293,19 @@
     "motion-utils@14.7.0": {
       "integrity": "sha512-woO0/Nb7ys75f94fjvQi/6leiHGvZUYkeHUPEZ3vxsV+9OpEVhkxp01x8MlRwX0zt31EqgXsKDAoBoJLC148Tw=="
     },
+    "motion@14.9.1_react@19.3.1_react-dom@19.3.1": {
+      "integrity": "sha512-u58zTNOs6vefAwvPncTJ8vkQm+P08V4+mhNgap8p/mFZjl8+gWp7SG4cMTamebVSgpX6PcDtqzWpZngqKcfd7A==",
+      "dependencies": [
+        "framer-motion",
+        "react",
+        "react-dom",
+        "tslib"
+      ],
+      "optionalPeers": [
+        "react",
+        "react-dom"
+      ]
+    },
     "ms@2.1.3": {
       "integrity": "sha512-6FlzubTLZG3J2a/NVCAleEhjzq5oxgHyaCU9yYXvcLsvoVaHJq/s5xXI6/XXP6tz7R9xAOtHnSO/tXtF3WRTlA=="
     },
@@ -2402,6 +2410,19 @@
     "package-manager-detector@1.9.0": {
       "integrity": "sha512-zAMfbta9nPA8AKkA4WdmNAT8R8s6Dk0/xwPsqNnRidMFcLo1YkLuPDTgs2f64XdzS8vbLNnoJ+uUIkgbz7oRHA=="
     },
+    "pagefind@1.6.0": {
+      "integrity": "sha512-yeOd9EA0TUE1PUfbQIluBxzPadBG5/0BV48FAxwMVLkhZcOvwCz6TX4/a/Ofz97pF9/FwwT7CVbTC97BfmI+LQ==",
+      "optionalDependencies": [
+        "@pagefind/darwin-arm64",
+        "@pagefind/darwin-x64",
+        "@pagefind/freebsd-x64",
+        "@pagefind/linux-arm64",
+        "@pagefind/linux-x64",
+        "@pagefind/windows-arm64",
+        "@pagefind/windows-x64"
+      ],
+      "bin": true
+    },
     "parse-entities@4.0.2": {
       "integrity": "sha512-GG2AQYWoLgL877gQIKeRPGO1xF9+eG1ujIb5soS5gPvLQ1y2o8FL90w2QWNdf9I361Mpp7726c+lj3U0qK1uGw==",
       "dependencies": [
@@ -2473,13 +2494,6 @@
       "dependencies": [
         "react",
         "scheduler"
-      ]
-    },
-    "react-highlight-words@1.0.0_react@19.3.1": {
-      "integrity": "sha512-783Dim5Q6X51x4yGlU2+XDr5L3r9P+3iI1zuRx4khbjqNOZObUoGOtZ5V7UdN8zrpz/IUo+cAdSoYJu4Y0Vo1w==",
-      "dependencies": [
-        "highlight-words-core",
-        "react"
       ]
     },
     "react-stately@3.51.0_react@19.3.1": {
@@ -2599,15 +2613,6 @@
       "dependencies": [
         "@types/mdast",
         "mdast-util-to-markdown",
-        "unified"
-      ]
-    },
-    "remark@15.0.1": {
-      "integrity": "sha512-Eht5w30ruCXgFmxVUSlNWQ9iiimq07URKeFS3hNc8cUWy1llX4KDWfyEDZRycMc+znsN9Ux5/tJ/BFdgdOwA3A==",
-      "dependencies": [
-        "@types/mdast",
-        "remark-parse",
-        "remark-stringify",
         "unified"
       ]
     },
@@ -2803,14 +2808,6 @@
         "vfile"
       ]
     },
-    "unist-util-filter@5.0.1": {
-      "integrity": "sha512-pHx7D4Zt6+TsfwylH9+lYhBhzyhEnCXs/lbq/Hstxno5z4gVdyc2WEW0asfjGKPyG4pEKrnBv5hdkO6+aRnQJw==",
-      "dependencies": [
-        "@types/unist@3.0.3",
-        "unist-util-is@6.0.1",
-        "unist-util-visit-parents@6.1.0"
-      ]
-    },
     "unist-util-is@5.2.1": {
       "integrity": "sha512-u9njyyfEh43npf1M+yGKDGVPbY/JWEemg5nH05ncKPfi+kBbKBJoTdsogMu33uhytuLlv9y0O7GH7fEdwLdLQw==",
       "dependencies": [
@@ -2917,8 +2914,6 @@
         "npm:@algolia/autocomplete-core@^1.19.12",
         "npm:@biomejs/biome@^2.6.5",
         "npm:@headlessui/react@^2.2.10",
-        "npm:@headlessui/tailwindcss@~0.2.2",
-        "npm:@iconify-icon/react@^3.0.6",
         "npm:@mdx-js/loader@^3.1.1",
         "npm:@next/mdx@^16.4.5",
         "npm:@shikijs/transformers@^4.6.0",
@@ -2929,28 +2924,23 @@
         "npm:@types/mdx@^2.0.14",
         "npm:@types/node@^26.6.6",
         "npm:@types/react-dom@^19.3.0",
-        "npm:@types/react-highlight-words@~0.20.1",
         "npm:@types/react@^19.3.0",
         "npm:acorn@^8.19.0",
         "npm:clsx@^2.1.1",
         "npm:fast-glob@^3.3.3",
-        "npm:flexsearch@~0.8.212",
-        "npm:framer-motion@^14.9.1",
         "npm:knip@^6.44.1",
         "npm:mdast-util-to-string@4",
         "npm:mdx-annotations@~0.1.4",
+        "npm:motion@^14.9.1",
         "npm:next-themes@~0.4.6",
         "npm:next@16.4.5",
+        "npm:pagefind@^1.6.0",
         "npm:react-dom@^19.3.1",
-        "npm:react-highlight-words@1",
         "npm:react@^19.3.1",
         "npm:remark-gfm@^4.0.1",
-        "npm:remark-mdx@^3.1.1",
-        "npm:remark@^15.0.1",
         "npm:shiki@^4.6.0",
         "npm:tailwindcss@^4.3.4",
         "npm:typescript@^7.0.2",
-        "npm:unist-util-filter@^5.0.1",
         "npm:unist-util-visit@^5.2.0",
         "npm:uwuifier@^4.2.2"
       ]

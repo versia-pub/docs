@@ -1,22 +1,22 @@
 "use client";
 
-import { Icon } from "@iconify-icon/react";
 import {
     type MotionValue,
     motion,
     useMotionTemplate,
     useMotionValue,
-} from "framer-motion";
+} from "motion/react";
 import Link from "next/link";
-import type { ComponentPropsWithoutRef, MouseEvent } from "react";
+import type { ComponentPropsWithoutRef, MouseEvent, ReactNode } from "react";
 import { GridPattern } from "./GridPattern";
 import { Heading } from "./Heading";
+import { BuildingBankIcon, CodeAsteriskIcon } from "./icons";
 
 export interface ResourceType {
     href?: string;
     name: string;
     description: string;
-    icon: string;
+    icon: ReactNode;
     pattern?: Omit<
         ComponentPropsWithoutRef<typeof GridPattern>,
         "width" | "height" | "x"
@@ -29,7 +29,7 @@ const resources: ResourceType[] = [
         name: "Entities",
         description:
             "Learn how Entities work and how to use them to transmit federated data.",
-        icon: "tabler:code-asterisk",
+        icon: <CodeAsteriskIcon />,
         pattern: {
             y: 16,
             squares: [
@@ -43,7 +43,7 @@ const resources: ResourceType[] = [
         name: "Federation",
         description:
             "Learn how to federate data across the Versia federation network.",
-        icon: "tabler:building-bank",
+        icon: <BuildingBankIcon />,
         pattern: {
             y: -6,
             squares: [
@@ -54,14 +54,10 @@ const resources: ResourceType[] = [
     },
 ];
 
-function ResourceIcon({ icon }: { icon: string }) {
+function ResourceIcon({ icon }: { icon: ReactNode }) {
     return (
         <div className="flex h-7 w-7 items-center justify-center rounded-md bg-zinc-900/5 ring-1 ring-zinc-900/25 backdrop-blur-[2px] transition duration-300 group-hover:bg-white/50 group-hover:ring-zinc-900/25 dark:bg-white/7.5 dark:ring-white/15 dark:group-hover:bg-brand-300/10 dark:group-hover:ring-brand-400">
-            <Icon
-                icon={icon}
-                width="unset"
-                className="h-5 w-5 fill-zinc-700/10 stroke-zinc-700 transition-colors duration-300 group-hover:stroke-zinc-900 dark:fill-white/10 dark:stroke-zinc-400 dark:group-hover:fill-brand-300/10 dark:group-hover:stroke-brand-400"
-            />
+            {icon}
         </div>
     );
 }

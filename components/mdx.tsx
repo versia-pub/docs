@@ -12,7 +12,10 @@ export { Properties, Property } from "./Property";
 
 export function wrapper({ children }: { children: ReactNode }) {
     return (
-        <article className="flex h-full flex-col pb-10 pt-16 overflow-hidden text-wrap">
+        <article
+            data-pagefind-body={true}
+            className="flex h-full flex-col pb-10 pt-16 overflow-hidden text-wrap"
+        >
             <Prose className="flex-auto">{children}</Prose>
         </article>
     );

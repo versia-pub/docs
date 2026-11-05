@@ -1,6 +1,6 @@
 "use client";
 
-import { useInView } from "framer-motion";
+import { useInView } from "motion/react";
 import Link from "next/link";
 import { type ComponentPropsWithoutRef, type ReactNode, useRef } from "react";
 

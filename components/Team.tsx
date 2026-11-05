@@ -1,5 +1,4 @@
-import { Icon } from "@iconify-icon/react/dist/iconify.mjs";
-import type { FC } from "react";
+import type { FC, ReactNode } from "react";
 
 export const TeamMember: FC<{
     name: string;
@@ -9,7 +8,7 @@ export const TeamMember: FC<{
     socials?: {
         name: string;
         url: string;
-        icon: string;
+        icon: ReactNode;
     }[];
 }> = ({ name, bio, socials, avatarUrl, username }) => {
     return (
@@ -41,12 +40,9 @@ export const TeamMember: FC<{
                             href={social.url}
                             target="_blank"
                             rel="noreferrer noopener"
+                            className="text-gray-300"
                         >
-                            <Icon
-                                icon={social.icon}
-                                className="size-5 text-gray-300"
-                                width="unset"
-                            />
+                            {social.icon}
                         </a>
                     </li>
                 ))}

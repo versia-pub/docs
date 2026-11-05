@@ -1,5 +1,5 @@
 import clsx from "clsx";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion, useScroll, useTransform } from "motion/react";
 import Link from "next/link";
 import type { CSSProperties, ReactNode, Ref } from "react";
 

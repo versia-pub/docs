@@ -1,4 +1,21 @@
 import type { ComponentProps } from "react";
+import {
+    CodeDotsIcon,
+    CodeIcon,
+    DatabaseIcon,
+    EnvelopeIcon,
+    GithubIcon,
+    LicenseIcon,
+    LinkIcon,
+    MastodonIcon,
+    MatrixIcon,
+    PlugIcon,
+    PuzzleIcon,
+    ServerIcon,
+    ShieldCheckIcon,
+    ShieldIcon,
+    SignalIcon,
+} from "@/components/icons";
 import type { ResourceType } from "@/components/Resources";
 import type { TeamMember } from "@/components/Team";
 
@@ -6,48 +23,48 @@ export const features: ResourceType[] = [
     {
         name: "JSON-based APIs",
         description: "Simple JSON objects are used to represent all data.",
-        icon: "tabler:code-dots",
+        icon: <CodeDotsIcon />,
     },
     {
         name: "MIT licensed",
         description:
             "Versia is licensed under the MIT License, which allows you to use it for any purpose.",
-        icon: "tabler:license",
+        icon: <LicenseIcon />,
     },
     {
         name: "Built-in namespaced extensions",
         description:
             "Extensions for common use cases are built-in, such as custom emojis and reactions",
-        icon: "tabler:puzzle",
+        icon: <PuzzleIcon />,
     },
     {
         name: "Easy to implement",
         description:
             "Versia is designed to be easy to implement in any language.",
-        icon: "tabler:code",
+        icon: <CodeIcon />,
     },
     {
         name: "Signed by default",
         description:
             "All requests are signed using advanced cryptographic algorithms.",
-        icon: "tabler:shield-check",
+        icon: <ShieldCheckIcon />,
     },
     {
         name: "No vendor lock-in",
         description:
             "Standardization is heavy and designed to break vendor lock-in.",
-        icon: "tabler:database",
+        icon: <DatabaseIcon />,
     },
     {
         name: "Tested in production :)",
         description:
             "We know it works well, because we use it in our own projects.",
-        icon: "tabler:shield",
+        icon: <ShieldIcon />,
     },
     {
         name: "Official SDKs",
         description: "Official SDKs are available for TypeScript",
-        icon: "tabler:plug",
+        icon: <PlugIcon />,
     },
 ];
 
@@ -60,37 +77,37 @@ export const team: ComponentProps<typeof TeamMember>[] = [
         socials: [
             {
                 name: "Website",
-                icon: "bx:link",
+                icon: <LinkIcon />,
                 url: "https://cpluspatch.com",
             },
             {
                 name: "GitHub",
-                icon: "bxl:github",
+                icon: <GithubIcon />,
                 url: "https://github.com/cpluspatch",
             },
             {
                 name: "Fediverse",
-                icon: "bxl:mastodon",
+                icon: <MastodonIcon />,
                 url: "https://mk.cpluspatch.com/@jessew",
             },
             {
                 name: "Versia",
-                icon: "bx:server",
+                icon: <ServerIcon />,
                 url: "https://beta.versia.social/@jessew",
             },
             {
                 name: "Matrix",
-                icon: "simple-icons:matrix",
+                icon: <MatrixIcon />,
                 url: "https://matrix.to/#/@jesse:cpluspatch.dev",
             },
             {
                 name: "Signal",
-                icon: "simple-icons:signal",
+                icon: <SignalIcon />,
                 url: "https://signal.me/#eu/Qw6gQXvEfcNrgEFgl-KjOBFiF6-3gWSSghgcpSj9dSedVFIPny5NYazioN5t7E24",
             },
             {
                 name: "Email",
-                icon: "bx:bxs-envelope",
+                icon: <EnvelopeIcon />,
                 url: "mailto:contact@cpluspatch.com",
             },
         ],
@@ -103,27 +120,27 @@ export const team: ComponentProps<typeof TeamMember>[] = [
         socials: [
             {
                 name: "GitHub",
-                icon: "bxl:github",
+                icon: <GithubIcon />,
                 url: "https://github.com/cutestnekoaqua",
             },
             {
                 name: "Fediverse",
-                icon: "bxl:mastodon",
+                icon: <MastodonIcon />,
                 url: "https://donotsta.re/april",
             },
             {
                 name: "Versia",
-                icon: "bx:server",
+                icon: <ServerIcon />,
                 url: "https://beta.versia.social/@aprl",
             },
             {
                 name: "Matrix",
-                icon: "simple-icons:matrix",
+                icon: <MatrixIcon />,
                 url: "https://matrix.to/#/@aprl:uwu.is",
             },
             {
                 name: "Email",
-                icon: "bx:bxs-envelope",
+                icon: <EnvelopeIcon />,
                 url: "mailto:aprl@acab.dev",
             },
         ],

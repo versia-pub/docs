@@ -7,7 +7,7 @@ import {
     Transition,
     TransitionChild,
 } from "@headlessui/react";
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 import { usePathname } from "next/navigation";
 import { type MouseEvent, useEffect, useRef } from "react";
 

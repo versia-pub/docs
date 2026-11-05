@@ -1,11 +1,11 @@
 "use client";
 
-import { Icon } from "@iconify-icon/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import type { ReactNode } from "react";
 import { navigation } from "../lib/navigation";
 import { Button } from "./Button";
+import { GithubRoundIcon } from "./icons";
 
 function PageLink({
     label,
@@ -82,7 +82,7 @@ function SocialLink({
     children,
 }: {
     href: string;
-    icon: string;
+    icon: ReactNode;
     children: ReactNode;
 }) {
     return (
@@ -93,10 +93,7 @@ function SocialLink({
             rel="noopener noreferrer"
         >
             <span className="sr-only">{children}</span>
-            <Icon
-                icon={icon}
-                className="h-5 w-5 fill-zinc-700 transition group-hover:fill-zinc-900 dark:group-hover:fill-zinc-500"
-            />
+            {icon}
         </Link>
     );
 }
@@ -118,7 +115,9 @@ function SmallPrint() {
             <div className="flex gap-4">
                 <SocialLink
                     href="https://github.com/versia-pub"
-                    icon="mdi:github"
+                    icon={
+                        <GithubRoundIcon className="mx-0.5 mb-1 inline-block size-4 align-baseline" />
+                    }
                 >
                     Find us on GitHub
                 </SocialLink>

@@ -20,14 +20,6 @@ const nextConfig = {
     pageExtensions: ["js", "jsx", "ts", "tsx", "mdx"],
     output: "export",
     agentRules: false,
-    turbopack: {
-        rules: {
-            "*/mdx/search-data.mjs": {
-                loaders: ["./mdx/search-loader.mjs"],
-                as: "*.js",
-            },
-        },
-    },
 };
 
 export default withMDX(nextConfig);

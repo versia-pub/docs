@@ -2,7 +2,7 @@
     "nodeModulesDir": "auto",
     "tasks": {
         "dev": "deno run -A npm:next dev",
-        "build": "deno run -A npm:next build",
+        "build": "deno run -A npm:next build && deno run -A npm:pagefind --site out",
         "start": "deno run -A npm:next start",
         "analyze": "deno run -A npm:next analyze",
         "typecheck": "deno run -A npm:next typegen && deno run -A npm:typescript/tsc -p .",
