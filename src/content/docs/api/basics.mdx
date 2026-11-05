@@ -65,7 +65,7 @@ API endpoints **MUST NOT** redirect to other endpoints, with the following excep
 This is forbidden:
 
 ```http
-GET /.versia/v0.6/entities/user/1234
+GET /.versia/v0.6/entities/User/1234
 Host: example.com
 Accept: application/vnd.versia+json
 
@@ -75,7 +75,7 @@ Location: https://example.com/users/1234
 
 This is allowed:
 ```http
-GET /.versia/v0.6/entities/user/1234
+GET /.versia/v0.6/entities/User/1234
 Host: example.com
 Accept: text/html
 

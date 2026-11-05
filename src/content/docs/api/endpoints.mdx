@@ -131,7 +131,7 @@ import Warning from "../../../components/Warning.astro";
     <Col sticky>
 
         ```http title="Example request"
-        GET /.versia/v0.6/entities/user/1234
+        GET /.versia/v0.6/entities/User/1234
         Host: b.social
         Accept: application/vnd.versia+json
         ```
@@ -175,7 +175,7 @@ import Warning from "../../../components/Warning.astro";
     <Col sticky>
 
         ```http title="Example request"
-        GET /.versia/v0.6/entities/user/1234/collections/followers
+        GET /.versia/v0.6/entities/User/1234/collections/followers
         Host: b.social
         Accept: application/vnd.versia+json
         ```
@@ -201,7 +201,7 @@ Collections MUST support pagination, using the following URI parameters:
 - `limit`: The maximum number of items to return. This is a one-based index. Implementations MUST support a minimum of `1` and a maximum of `40` items.
 
 ```http title="Example paginated collection request"
-GET /.versia/v0.6/entities/user/1234/collections/followers?offset=10&limit=20
+GET /.versia/v0.6/entities/User/1234/collections/followers?offset=10&limit=20
 Host: b.social
 Accept: application/vnd.versia+json
 ```

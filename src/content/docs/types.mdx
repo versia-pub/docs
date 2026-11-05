@@ -21,14 +21,14 @@ A **reference** is a way to refer to any entity within the Versia network. It is
 
 - The entity's instance's hostname. Optional if that same instance is the creator of the entity.
     - Punycode encoding is used for internationalized domain names (IDNs).
-    - Example: `example.com`, `example.com:3000`, `xn--ls8h.xn--ls8h`.
+    - Example: `example.com`, `xn--ls8h.xn--ls8h`.
 - A colon (`:`) separator, if the hostname is present.
 - The entity's unique identifier. This is the `id` property of the entity.
 
 <Warning>
     If the hostname is an IPv6 address, it must be enclosed in square brackets.
     
-    For example: `[2001:db8::1]:3000`.
+    For example: `[2001:db8::1]`.
 </Warning>
 
 ### Examples
