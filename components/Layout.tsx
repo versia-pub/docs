@@ -44,6 +44,14 @@ export function Layout({
                     </motion.header>
                     <MobileNavigationDialog />
                     <div className="relative flex h-full flex-col px-4 pt-14 sm:px-6 lg:px-8">
+                        <noscript>
+                            <details className="mt-4 lg:hidden">
+                                <summary className="cursor-pointer text-sm font-medium text-zinc-900 dark:text-white">
+                                    Navigation
+                                </summary>
+                                <Navigation className="mt-4" />
+                            </details>
+                        </noscript>
                         <main className="flex-auto">{children}</main>
                         <Footer />
                     </div>

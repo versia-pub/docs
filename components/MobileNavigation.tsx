@@ -81,7 +81,7 @@ export function MobileNavigationButton() {
     return (
         <button
             type="button"
-            className="flex h-6 w-6 items-center justify-center rounded-md transition hover:bg-zinc-900/5 dark:hover:bg-white/5"
+            className="no-js:hidden! flex h-6 w-6 items-center justify-center rounded-md transition hover:bg-zinc-900/5 dark:hover:bg-white/5"
             aria-label="Toggle navigation"
             onClick={toggle}
         >

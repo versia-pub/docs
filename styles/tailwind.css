@@ -3,6 +3,7 @@
 @config "../tailwind.config.ts";
 
 @custom-variant dark (&:where(.dark, .dark *));
+@custom-variant no-js (@media (scripting: none));
 
 @theme {
     --text-2xs: 0.75rem;
