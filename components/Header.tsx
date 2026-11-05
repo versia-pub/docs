@@ -3,6 +3,7 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import Link from "next/link";
 import type { CSSProperties, ReactNode, Ref } from "react";
 
+import { CURRENT_VERSION } from "../lib/navigation";
 import { Button } from "./Button";
 import { Logo } from "./Logo";
 import {
@@ -92,7 +93,7 @@ export function Header({
                     <ThemeToggle />
                 </div>
                 <div className="hidden min-[500px]:contents">
-                    <Button href="/changelog">Working Draft 6</Button>
+                    <Button href="/changelog">{CURRENT_VERSION}</Button>
                 </div>
             </div>
         </motion.div>

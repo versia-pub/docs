@@ -32,7 +32,7 @@ import {
 import Highlighter from "react-highlight-words";
 
 import type { Result } from "@/mdx/search.mjs";
-import { navigation } from "./Navigation";
+import { navigation } from "../lib/navigation";
 
 type EmptyObject = Record<string, never>;
 

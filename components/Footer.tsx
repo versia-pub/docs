@@ -4,8 +4,8 @@ import { Icon } from "@iconify-icon/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import type { ReactNode } from "react";
+import { navigation } from "../lib/navigation";
 import { Button } from "./Button";
-import { navigation } from "./Navigation";
 
 function PageLink({
     label,
