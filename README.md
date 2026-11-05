@@ -1,9 +1,6 @@
-
-
 <p align="center">
   <a href="https://versia.pub"><img src="https://cdn.versia.pub/branding/logo-dark.svg" alt="Versia Logo" height="110"></a>
 </p>
-
 
 <h2 align="center">
   <strong><code>Versia Documentation</code></strong>
@@ -14,7 +11,7 @@
     <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" height="42" width="52" alt="React logo">
     <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg" height="42" width="52" alt="NextJS logo">
     <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg" height="42" width="52" alt="Docker logo">
-    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/bun/bun-original.svg" height="42" width="52" alt="Bun logo">
+    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/denojs/denojs-original.svg" height="42" width="52" alt="Deno logo">
     <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" height="42" width="52" alt="CSS3 logo">
     <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" height="42" width="52" alt="HTML5 logo">
     <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linux/linux-original.svg" height="42" width="52" alt="Linux logo">
@@ -39,17 +36,19 @@
 
 ## Installation
 
-This project uses [Bun](https://bun.sh) as a package manager. To install the dependencies, run:
+This project uses [Deno](https://deno.com) to manage dependencies and run tasks. To install the dependencies, run:
 
 ```bash
-bun install
+deno install
 ```
 
 To start the development server, run:
 
 ```bash
-bun dev
+deno task dev
 ```
+
+[Node.js](https://nodejs.org) must also be available on your `PATH`, as Turbopack uses it to run the MDX and PostCSS loaders.
 
 ## Contributing
 
@@ -57,7 +56,6 @@ Contributions are welcome! Feel free to open an issue or submit a pull request.
 
 ### Licenses
 
-The code in this repository is licensed under the [MIT License](
-https://opensource.org/licenses/MIT).
+The code in this repository is licensed under the [MIT License](https://opensource.org/licenses/MIT).
 
-However, the *documentation text* (including the Markdown files in the `app` directory) is licensed under the [Creative Commons Attribution 4.0 International License](https://creativecommons.org/licenses/by/4.0/). You are free to share and adapt the text as long as you provide proper attribution.
+However, the _documentation text_ (including the Markdown files in the `app` directory) is licensed under the [Creative Commons Attribution 4.0 International License](https://creativecommons.org/licenses/by/4.0/). You are free to share and adapt the text as long as you provide proper attribution.

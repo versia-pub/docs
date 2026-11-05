@@ -372,7 +372,6 @@ export function Code({ children, ...props }: ComponentPropsWithoutRef<"code">) {
             );
         }
         return (
-            // biome-ignore lint/security/noDangerouslySetInnerHtml: HTML is trusted
             // biome-ignore lint/style/useNamingConvention: Biome incorrectly tags this as bad naming
             <code {...props} dangerouslySetInnerHTML={{ __html: children }} />
         );

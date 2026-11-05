@@ -138,15 +138,20 @@ function getSections(node) {
     return sections;
 }
 
-export const rehypePlugins = [
-    mdxAnnotations.rehype,
-    rehypeParseCodeBlocks,
-    rehypeShiki,
-    rehypeSlugify,
-    [
-        rehypeAddMDXExports,
-        (tree) => ({
+export default function rehypePlugin() {
+    const transformers = [
+        mdxAnnotations.rehype(),
+        rehypeParseCodeBlocks(),
+        rehypeShiki(),
+        rehypeSlugify(),
+        rehypeAddMDXExports((tree) => ({
             sections: `[${getSections(tree).join()}]`,
-        }),
-    ],
-];
+        })),
+    ];
+
+    return async (tree, file) => {
+        for (const transformer of transformers) {
+            await transformer(tree, file);
+        }
+    };
+}

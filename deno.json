@@ -1,0 +1,12 @@
+{
+    "nodeModulesDir": "auto",
+    "tasks": {
+        "dev": "deno run -A npm:next dev",
+        "build": "deno run -A npm:next build",
+        "start": "deno run -A npm:next start",
+        "analyze": "deno run -A npm:next analyze",
+        "typecheck": "deno run -A npm:next typegen && deno run -A npm:typescript/tsc -p .",
+        "lint": "deno run -A npm:@biomejs/biome check .",
+        "uuid": "deno eval \"console.log(crypto.randomUUID())\""
+    }
+}

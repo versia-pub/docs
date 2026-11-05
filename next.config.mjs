@@ -1,29 +1,37 @@
-import bundleAnalyzer from "@next/bundle-analyzer";
+import { fileURLToPath } from "node:url";
 import nextMDX from "@next/mdx";
-import { recmaPlugins } from "./mdx/recma.mjs";
-import { rehypePlugins } from "./mdx/rehype.mjs";
-import { remarkPlugins } from "./mdx/remark.mjs";
-import withSearch from "./mdx/search.mjs";
+
+// Turbopack needs serializable loader options, so plugins are passed as paths.
+// They must be absolute: the MDX loader resolves them from each page's folder.
+const plugin = (file) =>
+    fileURLToPath(new URL(`./mdx/${file}`, import.meta.url));
 
 const withMDX = nextMDX({
     options: {
-        remarkPlugins,
-        rehypePlugins,
-        recmaPlugins,
+        remarkPlugins: [plugin("remark.mjs"), "remark-gfm"],
+        rehypePlugins: [plugin("rehype.mjs")],
+        recmaPlugins: [plugin("recma.mjs")],
     },
 });
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     pageExtensions: ["js", "jsx", "ts", "tsx", "mdx"],
     output: "export",
+    agentRules: false,
     images: {
-        domains: [
-            "api.microlink.io", // Microlink Image Preview
+        remotePatterns: [
+            new URL("https://api.microlink.io/**"), // Microlink Image Preview
         ],
+    },
+    turbopack: {
+        rules: {
+            "*/mdx/search-data.mjs": {
+                loaders: ["./mdx/search-loader.mjs"],
+                as: "*.js",
+            },
+        },
     },
 };
 
-const withBundleAnalyzer = bundleAnalyzer({
-    enabled: process.env.ANALYZE === "true",
-});
-export default withBundleAnalyzer(withSearch(withMDX(nextConfig)));
+export default withMDX(nextConfig);
