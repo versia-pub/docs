@@ -2,7 +2,6 @@
 
 import { ThemeProvider, useTheme } from "next-themes";
 import { type ReactNode, useEffect } from "react";
-import { uwuifyDocument } from "@/lib/uwuify";
 
 function ThemeWatcher() {
     const { resolvedTheme, setTheme } = useTheme();
@@ -34,7 +33,9 @@ function UwuWatcher() {
         function onKeyDown(event: KeyboardEvent) {
             if (event.key === "u" && (event.metaKey || event.ctrlKey)) {
                 event.preventDefault();
-                uwuifyDocument();
+                import("@/lib/uwuify").then(({ uwuifyDocument }) =>
+                    uwuifyDocument(),
+                );
             }
         }
 

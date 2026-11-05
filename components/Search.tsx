@@ -19,9 +19,9 @@ import {
     type ComponentPropsWithoutRef,
     type ComponentRef,
     Fragment,
-    forwardRef,
     type MouseEvent,
     type KeyboardEvent as ReactKeyboardEvent,
+    type Ref,
     type SyntheticEvent,
     useCallback,
     useEffect,
@@ -272,21 +272,24 @@ function SearchResults({
     );
 }
 
-const SearchInput = forwardRef<
-    ComponentRef<"input">,
-    {
-        autocomplete: Autocomplete;
-        autocompleteState: AutocompleteState<Result> | EmptyObject;
-        onClose: () => void;
-    }
->(function SearchInput({ autocomplete, autocompleteState, onClose }, inputRef) {
+function SearchInput({
+    ref,
+    autocomplete,
+    autocompleteState,
+    onClose,
+}: {
+    ref: Ref<HTMLInputElement>;
+    autocomplete: Autocomplete;
+    autocompleteState: AutocompleteState<Result> | EmptyObject;
+    onClose: () => void;
+}) {
     const inputProps = autocomplete.getInputProps({ inputElement: null });
 
     return (
         <div className="group relative flex h-12">
             <SearchIcon className="pointer-events-none absolute left-3 top-0 h-full w-5 stroke-zinc-500" />
             <input
-                ref={inputRef}
+                ref={ref}
                 data-autofocus={true}
                 className={clsx(
                     "flex-auto appearance-none bg-transparent pl-10 text-zinc-900 outline-hidden placeholder:text-zinc-500 focus:w-full focus:flex-none sm:text-sm dark:text-white [&::-webkit-search-cancel-button]:hidden [&::-webkit-search-decoration]:hidden [&::-webkit-search-results-button]:hidden [&::-webkit-search-results-decoration]:hidden",
@@ -333,7 +336,7 @@ const SearchInput = forwardRef<
             )}
         </div>
     );
-});
+}
 
 function SearchDialog({
     open,
@@ -346,7 +349,7 @@ function SearchDialog({
 }) {
     const formRef = useRef<ComponentRef<"form">>(null);
     const panelRef = useRef<ComponentRef<"div">>(null);
-    const inputRef = useRef<ComponentRef<typeof SearchInput>>(null);
+    const inputRef = useRef<HTMLInputElement>(null);
     const { autocomplete, autocompleteState } = useAutocomplete({
         close() {
             setOpen(false);
