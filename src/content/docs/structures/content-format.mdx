@@ -4,11 +4,10 @@ description: "Definition of the ContentFormat structure"
 kind: Structure
 ---
 
-import Col from "../../../components/spec/Col.astro";
+import Entity from "../../../components/spec/Entity.astro";
+import Example from "../../../components/spec/Example.astro";
+import Field from "../../../components/spec/Field.astro";
 import Note from "../../../components/Note.astro";
-import Properties from "../../../components/spec/Properties.astro";
-import Property from "../../../components/spec/Property.astro";
-import Row from "../../../components/spec/Row.astro";
 
 The `ContentFormat` structure is used to represent content with metadata. It supports multiple content types for the same file, such as a PNG image and a WebP image.
 
@@ -73,45 +72,39 @@ It is a good idea to provide at least two versions of an image (if possible): on
 
 ## Entity Definition
 
-<Row>
-  <Col>
+<Entity name="ContentFormat">
+    <Field name="content" type="string | URI" required>
+        Structure data. If `Content-Type` is a binary format, this field should be a URI to the binary data. Otherwise, it should be the content itself. Refer to the `remote` property for more information.
+    </Field>
+    <Field name="remote" type="boolean" required>
+        If `true`, the content is hosted remotely and should be fetched by the client. If `false`, the content is embedded in the entity.
+    </Field>
+    <Field name="description" type="string">
+        A human-readable description of the content. Also known as `alt` text.
+    </Field>
+    <Field name="size" type="number" numberType="u64">
+        Size of the content in bytes.
+    </Field>
+    <Field name="hash" type="Hash">
+        SHA-256 hash of the content. Encoded in hexadecimal.
+    </Field>
+    <Field name="thumbhash" type="string">
+        Image in [ThumbHash](https://evanw.github.io/thumbhash/) format.
+    </Field>
+    <Field name="width" type="number" numberType="u64">
+        Width of the content in pixels. Only applicable to content types that have a width.
+    </Field>
+    <Field name="height" type="number" numberType="u64">
+        Height of the content in pixels. Only applicable to content types that have a height.
+    </Field>
+    <Field name="fps" type="number" numberType="u64">
+        Frames per second. Only applicable to video content.
+    </Field>
+    <Field name="duration" type="number" numberType="f64">
+        Duration of the content in seconds. Only applicable to content types that have a duration.
+    </Field>
 
-    <Properties name="ContentFormat">
-        <Property name="content" type="string | URI" required={true}>
-            Structure data. If `Content-Type` is a binary format, this field should be a URI to the binary data. Otherwise, it should be the content itself. Refer to the `remote` property for more information.
-        </Property>
-        <Property name="remote" type="boolean" required={true}>
-            If `true`, the content is hosted remotely and should be fetched by the client. If `false`, the content is embedded in the entity.
-        </Property>
-        <Property name="description" type="string" required={false}>
-            A human-readable description of the content. Also known as `alt` text.
-        </Property>
-        <Property name="size" type="number" required={false} numberType="u64">
-            Size of the content in bytes.
-        </Property>
-        <Property name="hash" type="Hash" required={false}>
-            SHA-256 hash of the content. Encoded in hexadecimal.
-        </Property>
-        <Property name="thumbhash" type="string" required={false}>
-            Image in [ThumbHash](https://evanw.github.io/thumbhash/) format.
-        </Property>
-        <Property name="width" type="number" required={false} numberType="u64">
-            Width of the content in pixels. Only applicable to content types that have a width.
-        </Property>
-        <Property name="height" type="number" required={false} numberType="u64">
-            Height of the content in pixels. Only applicable to content types that have a height.
-        </Property>
-        <Property name="fps" type="number" required={false} numberType="u64">
-            Frames per second. Only applicable to video content.
-        </Property>
-        <Property name="duration" type="number" required={false} numberType="f64">
-            Duration of the content in seconds. Only applicable to content types that have a duration.
-        </Property>
-    </Properties>
-
-  </Col>
-  <Col sticky>
-
+    <Example slot="example" unchecked>
     ```jsonc title="Images"
     {
         "image/png": {
@@ -143,6 +136,5 @@ It is a good idea to provide at least two versions of an image (if possible): on
         }
     }
     ```
-
-  </Col>
-</Row>
+    </Example>
+</Entity>

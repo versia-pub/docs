@@ -4,11 +4,10 @@ description: "The Follow entity allows users to subscribe to each other"
 kind: Entity · Core
 ---
 
-import Col from "../../../components/spec/Col.astro";
-import Properties from "../../../components/spec/Properties.astro";
-import Property from "../../../components/spec/Property.astro";
-import Row from "../../../components/spec/Row.astro";
-import Warning from "../../../components/Warning.astro";
+import Entity from "../../../components/spec/Entity.astro";
+import Example from "../../../components/spec/Example.astro";
+import Field from "../../../components/spec/Field.astro";
+import Inherits from "../../../components/spec/Inherits.astro";
 
 Sometimes, [Users](/entities/user) want to subscribe to each other to see each other's content. The `Follow` entity facilitates this, by defining a subscription relationship between two users.
 
@@ -58,24 +57,17 @@ Once a follow relationship is established, the **followee**'s instance should se
 
 ## Entity Definition
 
-<Warning>
-    This entity is a [**Transient Entity**](/entities#transient-entities).
-</Warning>
+<Entity name="Follow" type="Follow" transient>
+    <Field name="author" type="Reference" required>
+        [Reference](/types#reference) to the `User` considered the 'follower'.
+    </Field>
+    <Field name="followee" type="Reference" required>
+        [Reference](/types#reference) to the `User` that is being followed.
+    </Field>
 
-<Row>
-    <Col>
-        <Properties name="Follow">
-            <Property name="author" type="Reference" required={true} typeLink="/types#reference">
-                [Reference](/types#reference) to the `User` considered the 'follower'.
-            </Property>
-            <Property name="followee" type="Reference" required={true} typeLink="/types#reference">
-                [Reference](/types#reference) to the `User` that is being followed.
-            </Property>
-        </Properties>
-    </Col>
+    <Inherits />
 
-    <Col sticky>
-    
+    <Example slot="example">
     ```jsonc title="Example Follow"
     {
         "type": "Follow",
@@ -84,9 +76,8 @@ Once a follow relationship is established, the **followee**'s instance should se
         "followee": "example.com:02e1e3b2-cb1f-4e4a-b82e-98866bee5de7"
     }
     ```
-    
-    </Col>
-</Row>
+    </Example>
+</Entity>
 
 ## Graph
 

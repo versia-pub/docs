@@ -4,49 +4,32 @@ description: "Explains all endpoints in Versia's federation API."
 kind: API
 ---
 
-import Col from "../../../components/spec/Col.astro";
-import Properties from "../../../components/spec/Properties.astro";
-import Property from "../../../components/spec/Property.astro";
-import Row from "../../../components/spec/Row.astro";
-import Warning from "../../../components/Warning.astro";
+import Endpoint from "../../../components/spec/Endpoint.astro";
+import Example from "../../../components/spec/Example.astro";
 
 ## Well-known
 
-<Warning>
-    This endpoint is exempt from the signature requirement. No signatures are required for requests or responses to it.
+<Endpoint
+    name="Well-known"
+    method="GET"
+    path="/.well-known/versia"
+    exempt
+    accept={["application/jrd+json", "application/json"]}
+>
+    <div slot="response">
+        A small JSON object with a single attribute:
 
-    The following `Accept` headers are also allowed for requests to this endpoint:
-    - `application/jrd+json`
-    - `application/json`
-</Warning>
+        - `versions`: Supported Versia Protocol versions.
+              - Versions marked as "Working Draft X" are represented as `0.X`.
+    </div>
 
-<Row>
-  <Col>
-
-    <Properties name="Well-known">
-        <Property name="endpoint">
-            Must be `/.well-known/versia`.
-        </Property>
-        <Property name="method">
-            Must be `GET`.
-        </Property>
-        <Property name="response">
-            A small JSON object with a single attribute:
-
-            - `versions`: Supported Versia Protocol versions.
-                  - Versions marked as "Working Draft X" are represented as `0.X`.
-        </Property>
-    </Properties>
-
-  </Col>
-  <Col sticky>
-
+    <Example slot="example">
     ```http title="Example request"
     GET /.well-known/versia
     Host: b.social
     Accept: application/jrd+json
     ```
-    
+
     ```http title="Example response"
     HTTP/1.1 200 OK
     Content-Type: application/jrd+json
@@ -58,40 +41,23 @@ import Warning from "../../../components/Warning.astro";
         ]
     }
     ```
-
-  </Col>
-</Row>
+    </Example>
+</Endpoint>
 
 ## Instance metadata
 
-<Warning>
-    This endpoint is exempt from the signature requirement. No signatures are required for requests or responses to it.
-</Warning>
+<Endpoint name="InstanceMetadata" method="GET" path="/.versia/v0.6/instance" exempt>
+    <div slot="response">
+        Instance's metadata, as defined in the [Instance Metadata](/entities/instance-metadata) document.
+    </div>
 
-<Row>
-  <Col>
-
-    <Properties name="InstanceMetadata">
-        <Property name="endpoint">
-            Must be `/.versia/v0.6/instance`.
-        </Property>
-        <Property name="method">
-            Must be `GET`.
-        </Property>
-        <Property name="response">
-            Instance's metadata, as defined in the [Instance Metadata](/entities/instance-metadata) document.
-        </Property>
-    </Properties>
-
-  </Col>
-  <Col sticky>
-
+    <Example slot="example">
     ```http title="Example request"
     GET /.versia/v0.6/instance
     Host: b.social
     Accept: application/vnd.versia+json
     ```
-    
+
     ```http title="Example response"
     HTTP/1.1 200 OK
     Content-Type: application/vnd.versia+json; charset=utf-8
@@ -102,96 +68,75 @@ import Warning from "../../../components/Warning.astro";
         // ...
     }
     ```
-
-  </Col>
-</Row>
+    </Example>
+</Endpoint>
 
 ## Entity data
 
-<Row>
-    <Col>
-        <Properties name="EntityData">
-            <Property name="endpoint">
-                Must be `/.versia/v0.6/entities/{entity_type}/{id}`.
+<Endpoint name="EntityData" method="GET" path="/.versia/v0.6/entities/{entity_type}/{id}">
+    <div slot="parameters">
+        - `{entity_type}`: The type of the entity to fetch, URL-encoded.
+        - `{id}`: The ID of the entity to fetch, URL-encoded.
 
-                - `{entity_type}`: The type of the entity to fetch, URL-encoded.
-                - `{id}`: The ID of the entity to fetch, URL-encoded.
+        Example: `GET /.versia/v0.6/entities/pub.versia%3Agroups%2FGroup/1234` fetches the [Group](/extensions/groups) entity with ID `1234`.
+    </div>
+    <div slot="response">
+        Entity data as JSON, as defined in its [Entity](/entities) definition document.
+    </div>
 
-                Example: `GET /.versia/v0.6/entities/pub.versia%3Agroups%2FGroup/1234` fetches the [Group](/extensions/groups) entity with ID `1234`.
-            </Property>
-            <Property name="method">
-                Must be `GET`.
-            </Property>
-            <Property name="response">
-                Entity data as JSON, as defined in its [Entity](/entities) definition document.
-            </Property>
-        </Properties>
-    </Col>
+    <Example slot="example">
+    ```http title="Example request"
+    GET /.versia/v0.6/entities/User/1234
+    Host: b.social
+    Accept: application/vnd.versia+json
+    ```
 
-    <Col sticky>
+    ```http title="Example response"
+    HTTP/1.1 200 OK
+    Content-Type: application/vnd.versia+json; charset=utf-8
 
-        ```http title="Example request"
-        GET /.versia/v0.6/entities/User/1234
-        Host: b.social
-        Accept: application/vnd.versia+json
-        ```
-
-        ```http title="Example response"
-        HTTP/1.1 200 OK
-        Content-Type: application/vnd.versia+json; charset=utf-8
-
-        {
-            "type": "User",
-            "id": "1234",
-            // ...
-        }
-        ```
-    </Col>
-</Row>
+    {
+        "type": "User",
+        "id": "1234",
+        // ...
+    }
+    ```
+    </Example>
+</Endpoint>
 
 ## Entity collections
 
-<Row>
-    <Col>
-        <Properties name="EntityCollection">
-            <Property name="endpoint">
-                Must be `/.versia/v0.6/entities/{entity_type}/{id}/collections/{collection_type}`.
+<Endpoint name="EntityCollection" method="GET" path="/.versia/v0.6/entities/{entity_type}/{id}/collections/{collection_type}">
+    <div slot="parameters">
+        - `{entity_type}`: The type of the entity to fetch, URL-encoded.
+        - `{id}`: The ID of the entity to fetch, URL-encoded.
+        - `{collection_type}`: The type of the collection to fetch, URL-encoded.
 
-                - `{entity_type}`: The type of the entity to fetch, URL-encoded.
-                - `{id}`: The ID of the entity to fetch, URL-encoded.
-                - `{collection_type}`: The type of the collection to fetch, URL-encoded.
+        Example: `GET /.versia/v0.6/entities/User/1234/collections/followers` fetches the followers of the user with ID `1234`.
+    </div>
+    <div slot="response">
+        Must be either a [Collection](/structures/collection) or a [URICollection](/structures/collection#uri-collection) as JSON.
+    </div>
 
-                Example: `GET /.versia/v0.6/entities/User/1234/collections/followers` fetches the followers of the user with ID `1234`.
-            </Property>
-            <Property name="method">
-                Must be `GET`.
-            </Property>
-            <Property name="response">
-                Must be either a [Collection](/structures/collection) or a [URICollection](/structures/collection#uri-collection) as JSON.
-            </Property>
-        </Properties>
-    </Col>
+    <Example slot="example">
+    ```http title="Example request"
+    GET /.versia/v0.6/entities/User/1234/collections/followers
+    Host: b.social
+    Accept: application/vnd.versia+json
+    ```
 
-    <Col sticky>
+    ```http title="Example response"
+    HTTP/1.1 200 OK
+    Content-Type: application/vnd.versia+json; charset=utf-8
 
-        ```http title="Example request"
-        GET /.versia/v0.6/entities/User/1234/collections/followers
-        Host: b.social
-        Accept: application/vnd.versia+json
-        ```
-
-        ```http title="Example response"
-        HTTP/1.1 200 OK
-        Content-Type: application/vnd.versia+json; charset=utf-8
-
-        {
-            "type": "Followers",
-            "id": "1234",
-            // ...
-        }
-        ```
-    </Col>
-</Row>
+    {
+        "type": "Followers",
+        "id": "1234",
+        // ...
+    }
+    ```
+    </Example>
+</Endpoint>
 
 ### Pagination
 
@@ -212,32 +157,19 @@ The inbox endpoint is used for instances to send entities to each other. It is a
 
 The delivery mechanism is described further in the [Federation](/federation#inboxes) document.
 
-<Row>
-    <Col>
-        <Properties name="Inbox">
-            <Property name="endpoint">
-                Must be `/.versia/v0.6/inbox`.
-            </Property>
-            <Property name="method">
-                Must be `POST`.
-            </Property>
-        </Properties>
-    </Col>
+<Endpoint name="Inbox" method="POST" path="/.versia/v0.6/inbox">
+    <Example slot="example">
+    ```http title="Example request"
+    POST /.versia/v0.6/inbox
+    Host: b.social
+    Accept: application/vnd.versia+json
+    Content-Type: application/vnd.versia+json; charset=utf-8
 
-    <Col sticky>
-
-        ```http title="Example request"
-        POST /.versia/v0.6/inbox
-        Host: b.social
-        Accept: application/vnd.versia+json
-        Content-Type: application/vnd.versia+json; charset=utf-8
-
-        {
-            "type": "Note",
-            "id": "1234",
-            ...
-        }
-        ```
-
-    </Col>
-</Row>
+    {
+        "type": "Note",
+        "id": "1234",
+        ...
+    }
+    ```
+    </Example>
+</Endpoint>
