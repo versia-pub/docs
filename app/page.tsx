@@ -67,9 +67,9 @@ const Page: FC = () => {
         children: (
             <>
                 <div className="relative z-10 max-w-2xl lg:pt-6">
-                    <h1 className="text-5xl font-semibold tracking-tight leading-3 text-brand-600 dark:text-brand-400">
+                    <p className="mt-0 mb-6 text-5xl font-semibold tracking-tight leading-3 text-brand-600 dark:text-brand-400">
                         Versia
-                    </h1>
+                    </p>
                     <h1 className="text-4xl sm:text-5xl font-semibold tracking-tight">
                         Federation, simpler
                     </h1>
@@ -227,7 +227,7 @@ const Page: FC = () => {
                     />
                 </div>
 
-                <h2 id="team">Thanks</h2>
+                <h2 id="thanks">Thanks</h2>
 
                 <p className="lead">
                     Thanks to{" "}

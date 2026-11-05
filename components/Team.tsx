@@ -27,7 +27,7 @@ export const TeamMember: FC<{
                 </div>
 
                 <div className="font-bold text-xl flex flex-col mt-4">
-                    <h1 className="text-white">{name}</h1>
+                    <h3 className="text-white">{name}</h3>
                     <span className="text-gray-400">@{username}</span>
                 </div>
             </div>

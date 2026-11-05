@@ -22,7 +22,6 @@ import {
     forwardRef,
     type MouseEvent,
     type KeyboardEvent as ReactKeyboardEvent,
-    Suspense,
     type SyntheticEvent,
     useCallback,
     useEffect,
@@ -57,15 +56,7 @@ function useAutocomplete({ close }: { close: () => void }) {
         }
 
         router.push(itemUrl);
-
-        if (
-            itemUrl ===
-            window.location.pathname +
-                window.location.search +
-                window.location.hash
-        ) {
-            close();
-        }
+        close();
     }
 
     const [autocomplete] = useState<Autocomplete>(() =>
@@ -363,10 +354,6 @@ function SearchDialog({
     });
 
     useEffect(() => {
-        setOpen(false);
-    }, [setOpen]);
-
-    useEffect(() => {
         if (open) {
             return;
         }
@@ -502,9 +489,7 @@ export function Search() {
                     <kbd className="font-sans">K</kbd>
                 </kbd>
             </button>
-            <Suspense fallback={null}>
-                <SearchDialog className="hidden lg:block" {...dialogProps} />
-            </Suspense>
+            <SearchDialog className="hidden lg:block" {...dialogProps} />
         </div>
     );
 }
@@ -522,9 +507,7 @@ export function MobileSearch() {
             >
                 <SearchIcon className="h-5 w-5 stroke-zinc-900 dark:stroke-white" />
             </button>
-            <Suspense fallback={null}>
-                <SearchDialog className="lg:hidden" {...dialogProps} />
-            </Suspense>
+            <SearchDialog className="lg:hidden" {...dialogProps} />
         </div>
     );
 }
