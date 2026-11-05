@@ -3,6 +3,7 @@ import nextMDX from "@next/mdx";
 
 // Turbopack needs serializable loader options, so plugins are passed as paths.
 // They must be absolute: the MDX loader resolves them from each page's folder.
+/** @param {string} file */
 const plugin = (file) =>
     fileURLToPath(new URL(`./mdx/${file}`, import.meta.url));
 

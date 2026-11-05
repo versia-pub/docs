@@ -423,16 +423,20 @@ function SearchDialog({
                                         className="border-t border-zinc-200 bg-white empty:hidden dark:border-zinc-100/5 dark:bg-white/2.5"
                                         {...autocomplete.getPanelProps({})}
                                     >
-                                        {autocompleteState.isOpen && (
-                                            <SearchResults
-                                                autocomplete={autocomplete}
-                                                query={autocompleteState.query}
-                                                collection={
-                                                    autocompleteState
-                                                        .collections[0]
-                                                }
-                                            />
-                                        )}
+                                        {autocompleteState.isOpen &&
+                                            autocompleteState
+                                                .collections[0] && (
+                                                <SearchResults
+                                                    autocomplete={autocomplete}
+                                                    query={
+                                                        autocompleteState.query
+                                                    }
+                                                    collection={
+                                                        autocompleteState
+                                                            .collections[0]
+                                                    }
+                                                />
+                                            )}
                                     </div>
                                 </form>
                             </div>

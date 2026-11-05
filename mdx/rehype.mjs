@@ -1,3 +1,4 @@
+/** @import { Element, Root } from "hast" */
 import { transformerNotationFocus } from "@shikijs/transformers";
 import { slugifyWithCounter } from "@sindresorhus/slugify";
 import * as acorn from "acorn";
@@ -16,21 +17,27 @@ await highlighter.loadTheme("dark-plus");
 // Replaces each code block's children with an `html` prop for the `pre`
 // component to render, so that MDX doesn't turn every token into a React element.
 function rehypeShiki() {
+    /** @param {Root} tree */
     return (tree) => {
         visit(tree, "element", (node) => {
             const code = node.children[0];
-            if (node.tagName !== "pre" || code?.tagName !== "code") {
+            if (
+                node.tagName !== "pre" ||
+                code?.type !== "element" ||
+                code.tagName !== "code" ||
+                code.children[0]?.type !== "text"
+            ) {
                 return;
             }
+
+            const [language] = /** @type {string[]} */ (
+                code.properties.className ?? []
+            );
 
             node.properties.html = highlighter.codeToHtml(
                 code.children[0].value,
                 {
-                    lang:
-                        code.properties.className?.[0]?.replace(
-                            /^language-/,
-                            "",
-                        ) ?? "text",
+                    lang: language?.replace(/^language-/, "") ?? "text",
                     theme: "dark-plus",
                     transformers: [
                         transformerNotationFocus({ matchAlgorithm: "v3" }),
@@ -43,6 +50,7 @@ function rehypeShiki() {
 }
 
 function rehypeSlugify() {
+    /** @param {Root} tree */
     return (tree) => {
         const slugify = slugifyWithCounter();
         visit(tree, "element", (node) => {
@@ -53,25 +61,28 @@ function rehypeSlugify() {
     };
 }
 
+/**
+ * @param {Root | Element} node
+ * @returns {{ title: string; id: string }[]}
+ */
 function getSections(node) {
-    const sections = [];
-
-    for (const child of node.children ?? []) {
+    return node.children.flatMap((child) => {
         if (child.type === "element" && child.tagName === "h2") {
-            sections.push({
-                title: mdastToString(child),
-                id: child.properties.id,
-            });
-        } else if (child.children) {
-            sections.push(...getSections(child));
+            return [
+                {
+                    title: mdastToString(child),
+                    id: String(child.properties.id),
+                },
+            ];
         }
-    }
 
-    return sections;
+        return "children" in child ? getSections(child) : [];
+    });
 }
 
 // Exports `sections` for the sidebar, unless the page already exports its own.
 function rehypeExportSections() {
+    /** @param {Root} tree */
     return (tree) => {
         const hasOwnExport = tree.children.some(
             (node) =>
@@ -104,9 +115,10 @@ export default function rehypePlugin() {
         rehypeExportSections(),
     ];
 
-    return async (tree, file) => {
+    /** @param {Root} tree */
+    return (tree) => {
         for (const transformer of transformers) {
-            await transformer(tree, file);
+            transformer(tree);
         }
     };
 }

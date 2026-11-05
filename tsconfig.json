@@ -1,10 +1,12 @@
 {
     "compilerOptions": {
-        "target": "es6",
+        "target": "es2022",
         "lib": ["dom", "dom.iterable", "esnext"],
         "allowJs": true,
+        "checkJs": true,
         "skipLibCheck": true,
         "strict": true,
+        "noUncheckedIndexedAccess": true,
         "forceConsistentCasingInFileNames": true,
         "noEmit": true,
         "esModuleInterop": true,
@@ -27,6 +29,9 @@
         "next-env.d.ts",
         "**/*.ts",
         "**/*.tsx",
+        "mdx/{rehype,remark,recma}.mjs",
+        "scripts/*.mjs",
+        "next.config.mjs",
         ".next/types/**/*.ts",
         ".next/dev/types/**/*.ts"
     ],

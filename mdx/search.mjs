@@ -1,3 +1,4 @@
+// @ts-nocheck
 import FlexSearch from "flexsearch";
 import data from "./search-data.mjs";
 

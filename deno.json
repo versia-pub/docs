@@ -7,6 +7,8 @@
         "analyze": "deno run -A npm:next analyze",
         "typecheck": "deno run -A npm:next typegen && deno run -A npm:typescript/tsc -p .",
         "lint": "deno run -A npm:@biomejs/biome check .",
+        "check-links": "deno run -A scripts/check-links.mjs",
+        "knip": "deno run -A npm:knip",
         "uuid": "deno eval \"console.log(crypto.randomUUID())\""
     }
 }

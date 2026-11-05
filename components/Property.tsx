@@ -4,7 +4,7 @@ import Link from "next/link";
 import { createContext, type ReactNode, useContext } from "react";
 import { AnchorIcon } from "./Heading";
 
-export const PropertyContext = createContext<{
+const PropertyContext = createContext<{
     name: string;
 }>({
     name: "",

@@ -1,0 +1,10 @@
+{
+    "$schema": "https://unpkg.com/knip@6/schema.json",
+    "entry": [
+        "components/mdx.tsx",
+        "mdx/{rehype,remark,recma,search-loader}.mjs",
+        "scripts/*.mjs"
+    ],
+    "project": ["**/*.{ts,tsx,mjs,mdx,css}"],
+    "ignoreDependencies": ["@biomejs/biome", "@types/react-highlight-words"]
+}

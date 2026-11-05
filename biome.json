@@ -10,8 +10,8 @@
         "enabled": true,
         "rules": {
             "suspicious": {
+                "noExplicitAny": "error",
                 "noConsole": "off",
-                "noExplicitAny": "off",
                 "noDuplicateElseIf": "error",
                 "noDocumentCookie": "off",
                 "noReactSpecificProps": "off",
@@ -24,11 +24,11 @@
                 "noImgElement": "off"
             },
             "correctness": {
+                "noUnusedVariables": "error",
+                "noUnusedImports": "error",
                 "noUnknownFunction": "off",
                 "noUndeclaredVariables": "off",
                 "useHookAtTopLevel": "off",
-                "noUnusedVariables": "off",
-                "noUnusedImports": "off",
                 "noUndeclaredDependencies": "off",
                 "useImportExtensions": "off",
                 "useJsxKeyInIterable": "off",
