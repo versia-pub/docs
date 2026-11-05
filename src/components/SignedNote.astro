@@ -1,0 +1,163 @@
+---
+// A hand-written mock-up of one delivery. The values follow `/federation/example`,
+// `/signatures` and `/entities/note`. The rows are fragments, so Shiki cannot tokenize them.
+type Token = { text: string; kind?: "key" | "value" };
+
+// Colours a line the way the code theme does: pink for keys, the companion colour for values.
+const tokenize = (line: string): Token[] => {
+    const header = line.match(/^[A-Z][\w-]*: /)?.[0];
+    if (header) {
+        return [
+            { text: header.slice(0, -2), kind: "key" },
+            { text: ": " },
+            { text: line.slice(header.length), kind: "value" },
+        ];
+    }
+    // The request line has no values to colour, only a path with digits in it.
+    if (/^[A-Z]+ /.test(line)) {
+        return [{ text: line }];
+    }
+    const tokens: Token[] = [];
+    let last = 0;
+    for (const match of line.matchAll(/("[^"]*")(\s*:)?|\b(?:true|false|null|\d+)\b/g)) {
+        tokens.push({ text: line.slice(last, match.index) });
+        tokens.push({ text: match[1] ?? match[0], kind: match[2] ? "key" : "value" });
+        last = match.index + (match[1] ?? match[0]).length;
+    }
+    tokens.push({ text: line.slice(last) });
+    return tokens;
+};
+
+const rows = [
+    {
+        code: `POST /.versia/v0.6/inbox
+Host: b.social
+Content-Type: application/vnd.versia+json; charset=utf-8`,
+        title: "One inbox.",
+        href: "/api/endpoints#inbox",
+        text: "A single endpoint receives messages for every user on the instance.",
+    },
+    {
+        code: `Versia-Signed-By: a.social
+Versia-Signed-At: 1729241687
+Versia-Signature: /CjB2L9bcvRg+uP19B4/rqy7Ji9/cqMFPlL3GVCIndnQjYyOpBzJEAl9weDnXm7Jrqa3y6sBC+EYWKThO2r9Bw==`,
+        title: "Signed.",
+        href: "/signatures",
+        text: "Requests are signed with the instance's Ed25519 key, and rejected if the timestamp is more than 5 minutes off.",
+    },
+    {
+        code: `{
+    "id": "782addd9-c051-4eea-8ba4-23d561d0c5bb",
+    "type": "Note",
+    "created_at": "2024-10-18T08:54:40Z",
+    "author": "018eb863-753f-76ff-83d6-fd590de7740a",`,
+        title: "Self-description.",
+        href: "/philosophy/principles#self-description",
+        text: "Headers and transport stay out of the data. One plain JSON object holds everything needed to process the entity, with no JSON-LD.",
+    },
+    {
+        code: `    "content": {
+        "text/plain": {
+            "content": "Hello, @joe@b.social! How are you doing today?",
+            "remote": false
+        }
+    },
+    "attachments": [],`,
+        title: "Determinism.",
+        href: "/philosophy/principles#determinism",
+        text: "Text and media use the same structure, ContentFormat: one way to represent any single piece of data.",
+    },
+    {
+        code: `    "mentions": ["b.social:bde22zi3ca8762"],
+    "group": "public",
+    "is_sensitive": false,
+    "previews": [],
+    "category": "microblog",
+    "device": null,
+    "quotes": null,
+    "replies_to": null,
+    "subject": null,`,
+    },
+    {
+        code: `    "extensions": {
+        "pub.versia:custom_emojis": { "emojis": [] }
+    }
+}`,
+        title: "Extensions.",
+        href: "/extensions",
+        text: "Anything beyond the core sits under a namespaced key. Implementations that do not support it can ignore it.",
+    },
+];
+---
+
+<figure class="message wide">
+    {rows.map((row) => (
+        <div class="row">
+            <pre><code>{row.code.split("\n").map((line) => (
+                <span class="line" style={`--indent:${line.match(/^ */)?.[0].length ?? 0}ch`}>{tokenize(line).map((token) => <span class={token.kind}>{token.text}</span>)}</span>
+            ))}</code></pre>
+            {row.title && <p><a href={row.href}>{row.title}</a> {row.text}</p>}
+        </div>
+    ))}
+    <figcaption>What <code>a.social</code> sends <code>b.social</code> when someone posts. Domains, IDs and the signature are fictional, and some details are simplified. <a href="/federation/example">See the whole exchange</a>.</figcaption>
+</figure>
+
+<style>
+    .message {
+        margin: 1rem 0 1.5rem;
+        border-top: 3px solid var(--accent);
+    }
+
+    .row {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr);
+        gap: 0.5rem;
+        padding-block: 0.9rem;
+        border-bottom: 1px solid var(--hair);
+    }
+
+    pre {
+        margin: 0;
+        font-size: 0.8rem;
+        line-height: 1.6;
+        white-space: pre-wrap;
+        overflow-wrap: anywhere;
+    }
+
+    .row p {
+        margin: 0;
+        color: var(--ink-soft);
+        font-size: 0.9rem;
+        line-height: 1.5;
+    }
+
+    .key {
+        color: var(--accent);
+    }
+
+    .value {
+        color: var(--value);
+    }
+
+    /* Wrapped lines stay at their own indent. */
+    .line {
+        display: block;
+        padding-left: var(--indent);
+        text-indent: calc(-1 * var(--indent));
+    }
+
+    figcaption {
+        margin-top: 0.75rem;
+        color: var(--ink-soft);
+        font-size: 0.875rem;
+        font-style: italic;
+    }
+
+    /* The same columns as the reading text and its margin. */
+    @media (min-width: 78rem) {
+        .row {
+            grid-template-columns: minmax(0, var(--prose-width)) var(--margin-width);
+            gap: 3rem;
+        }
+    }
+</style>

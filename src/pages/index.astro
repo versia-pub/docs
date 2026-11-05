@@ -1,0 +1,155 @@
+---
+import StarlightPage from "@astrojs/starlight/components/StarlightPage.astro";
+import SignedNote from "../components/SignedNote.astro";
+import { team } from "../lib/home";
+
+const accountEmail = `mailto:aprl@versia.pub?subject=${encodeURIComponent("beta.versia.social Account Request")}&body=${encodeURIComponent("Hello, I would like to request an account on beta.versia.social.")}`;
+
+const extensions = [
+    { name: "Custom Emojis", id: "pub.versia:custom_emojis", href: "/extensions/custom-emojis" },
+    { name: "Delegation", id: "pub.versia:delegation", href: "/extensions/delegation" },
+    { name: "Groups", id: "pub.versia:groups", href: "/extensions/groups" },
+    { name: "Instance Messaging", href: "/extensions/instance-messaging" },
+    { name: "Interaction Controls", id: "pub.versia:interaction_controls", href: "/extensions/interaction-controls" },
+    { name: "Likes", id: "pub.versia:likes", href: "/extensions/likes" },
+    { name: "Migration", id: "pub.versia:migration", href: "/extensions/migration" },
+    { name: "Polls", id: "pub.versia:polls", href: "/extensions/polls" },
+    { name: "Reactions", id: "pub.versia:reactions", href: "/extensions/reactions" },
+    { name: "Reports", id: "pub.versia:reports", href: "/extensions/reports" },
+    { name: "Share", id: "pub.versia:share", href: "/extensions/share" },
+    { name: "Vanity", id: "pub.versia:vanity", href: "/extensions/vanity" },
+];
+---
+
+<StarlightPage
+    frontmatter={{
+        title: "Federation, simpler",
+        description:
+            "Introduction to the Versia Protocol, a communication medium for federated applications, using the HTTP stack.",
+    }}
+>
+    <p class="intro">
+        A simple, extensible federated protocol for building useful applications.{" "}
+        <a href="/introduction">Read the introduction</a>, or start with <a href="/entities/note">a Note</a>.
+        Formerly known as Lysand.
+    </p>
+
+    <SignedNote />
+
+    <h2>Made by developers</h2>
+    <p>
+        Versia is designed and maintained by the developers of the Versia Server, which uses Versia for federation.
+        It is MIT licensed, designed to be easy to implement in any language, and has an{" "}
+        <a href="/sdks">official TypeScript SDK</a>. We know it works well, because we use it in our own projects :)
+    </p>
+    <p>This community could include you! Check out our <a href="https://github.com/versia-pub/server">Git repository</a> to see how you can contribute.</p>
+
+    <h2>Extensions</h2>
+    <p>The core stays small. Everything else is a namespaced <a href="/extensions">extension</a>, implemented in any combination.</p>
+    <ul class="extensions">
+        {extensions.map((extension) => (
+            <li><a href={extension.href}>{extension.name}</a>{extension.id && <code>{extension.id}</code>}</li>
+        ))}
+    </ul>
+
+    <h2>Try it out</h2>
+    <p>
+        Use the reference implementation, <a href="https://github.com/versia-pub/server">Versia Server</a>. It's a
+        microblogging server with a focus on feeling like current Fediverse platforms, like Sharkey and Mastodon.
+    </p>
+    <p>
+        To try Versia without setting up your own instance, use{" "}
+        <a href="https://beta.versia.social"><code>beta.versia.social</code></a>. Send an email to{" "}
+        <a href={accountEmail}><code>aprl@versia.pub</code></a> for an account.
+    </p>
+
+    <h2 id="team">People</h2>
+    <p>You can ask Jesse for help with anything Versia-related, or if you just want to chat!</p>
+    <div class="team">
+        {team.map((member) => (
+            <section>
+                <img src={member.avatarUrl} width="56" height="56" alt="" loading="lazy" />
+                <div>
+                    <h3>{member.name} <code>@{member.username}</code></h3>
+                    <p>{member.bio}</p>
+                    <ul>
+                        {member.socials.map((social) => <li><a href={social.url}>{social.name}</a></li>)}
+                    </ul>
+                </div>
+            </section>
+        ))}
+    </div>
+
+    <h2 id="thanks">Thanks</h2>
+    <p>Thanks to <a href="https://fastly.com">Fastly</a> for supporting us with their resources!</p>
+    <p><img src="/logos/fastly.svg" alt="Fastly logo" height="48" /></p>
+</StarlightPage>
+
+<style>
+    /* The front door gets a much larger title than the documents behind it. */
+    :global(h1#_top) {
+        max-width: none;
+        font-size: clamp(3rem, 8vw, 6.5rem);
+        line-height: 0.98;
+    }
+
+    .intro {
+        font-size: 1.25rem;
+        line-height: 1.5;
+    }
+
+    .extensions {
+        padding: 0;
+        list-style: none;
+    }
+
+    .extensions li {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        gap: 0 1rem;
+        margin: 0;
+        padding-block: 0.3rem;
+        border-top: 1px solid var(--hair);
+    }
+
+    /* The longest IDs do not fit beside their names, so phones stack every row alike. */
+    @media (max-width: 30rem) {
+        .extensions li {
+            flex-direction: column;
+        }
+    }
+
+    .team section {
+        display: flex;
+        gap: 1rem;
+        padding-block: 1rem;
+    }
+
+    .team img {
+        width: 3.5rem;
+        height: 3.5rem;
+    }
+
+    .team h3 {
+        margin: 0;
+    }
+
+    .team p {
+        margin: 0.15rem 0 0.4rem;
+    }
+
+    .team ul {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.25rem 0.75rem;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        font-size: 0.9rem;
+    }
+
+    .team li {
+        margin: 0;
+    }
+</style>
