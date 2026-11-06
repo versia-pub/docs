@@ -10,6 +10,11 @@ export const collections = {
             extend: z.object({
                 // Status line above the title, such as "Entity · Core".
                 kind: z.string().optional(),
+                // Name of the extension this page defines, such as "pub.versia:likes".
+                extension: z
+                    .string()
+                    .regex(/^[a-z0-9.-]+:[a-z0-9_]+$/)
+                    .optional(),
             }),
         }),
     }),
