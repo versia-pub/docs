@@ -4,114 +4,36 @@ description: "Guidelines on JSON handling and serialization"
 kind: Core concept
 ---
 
-Identical data structures can be represented in many different ways in JSON. This document describes the rules that must be followed when using JSON in the Versia protocol.
+All JSON in the Versia protocol **must** be an [I-JSON message](https://datatracker.ietf.org/doc/html/rfc7493), a restricted profile of JSON. Messages are [signed](/signatures) as raw bytes, so there is no canonical form to follow.
 
 ## Encoding
 
-All JSON data **must** be encoded in UTF-8. This is the only encoding supported by the Versia protocol.
+All JSON data **must** be encoded in UTF-8. This is the only encoding supported by the Versia protocol. As I-JSON requires, keys and string values **must not** contain surrogate or noncharacter code points.
 
-Line endings **must** be in Unix-style `\n` (LF) format. The use of Windows-style `\r\n` (CRLF) line endings is not allowed.
+Line breaks inside string values **should** be Unix-style `\n` (LF), not Windows-style `\r\n` (CRLF). There is no rule on whitespace between JSON tokens.
 
 ## Keys
 
-Keys in JSON **must** be strings, cannot be empty, and may only contain the following characters:
-- `a-z`
-- `A-Z`
-- `0-9`
-- `-`, `_`, `.`, `#`, `/`, `:`
+Keys **must not** be empty. Senders **must not** send an object with duplicate keys.
 
-Duplicate keys are **not** allowed.
+Which keys an object can have depends on the object:
 
-```json title="Valid Keys"
-{
-    "valid-key": "value",
-    "valid_key": "value",
-    "valid.key": "value",
-    "valid#key": "value",
-    "valid/key": "value",
-    "valid:key": "value"
-}
-```
-
-```json title="Invalid Keys"
-{
-    "invalid key": "value", // ❌️ Invalid: space is not allowed
-    "invalid@key": "value", // ❌️ Invalid: @ is not allowed
-    "": "value", // ❌️ Invalid: empty key is not allowed
-    9: "value", // ❌️ How did you even serialize this??
-}
-```
+- Entity and structure fields use the names listed in this specification.
+- Extension keys follow [Extension Naming](/extensions#naming).
+- [ContentFormat](/structures/content-format) keys are media types.
+- Any other map documents its own keys where it is defined.
 
 ## Values
 
 ### Numbers
 
-Numbers in JSON **must** be represented as decimal numbers. They can be integers or floating-point numbers, but **must** follow the following rules:
+Numbers **should not** have greater magnitude or precision than an IEEE 754 double-precision number. Any form that JSON allows is valid, including `1.0` and `1e3`.
 
-```json title="Must not use scientific notation"
-{
-    "value": 1e3, // ❌️ Invalid
-    "value2": 1000 // ✅ Valid
-}
-```
+Numeric fields state their type:
 
-```json title="Must not have leading zeros"
-{
-    "value": 01, // ❌️ Invalid
-    "value2": 1 // ✅ Valid
-}
-```
-
-```json title="Must not have trailing decimal points"
-{
-    "value": 1., // ❌️ Invalid
-    "value2": 1 // ✅ Valid
-}
-```
-
-```json title="Must not have trailing zeros after the decimal point"
-{
-    "value": 1.00, // ❌️ Invalid
-    "value2": 1.0, // ❌️ Invalid
-    "value3": 1 // ✅ Valid
-}
-```
-
-```json title="Must not have leading decimal points"
-{
-    "value": .1, // ❌️ Invalid
-    "value2": 0.1 // ✅ Valid
-}
-```
-
-```json title="Must not use numbers outside the range -2⁵³ to 2⁵³ (included)."
-{
-    "value": 18014398509481984, // ❌️ Invalid
-    "value2": -20873930 // ✅ Valid
-}
-```
-
-```json title="Must not use the negative zero"
-{
-    "value": -0, // ❌️ Invalid
-    "value2": 0 // ✅ Valid
-}
-```
-
-```json title="Must not use Infinity or NaN"
-{
-    "value": Infinity, // ❌️ Invalid
-    "value2": NaN // ❌️ Invalid
-}
-```
-
-```json title="Must not use hexadecimal or octal notation"
-{
-    "value": 0x1A, // ❌️ Invalid
-    "value2": 0o17 // ❌️ Invalid
-}
-```
+- `u64`: a whole number from 0 to 2⁵³-1 (`9007199254740991`), in any form, so `1000`, `1000.0` and `1e3` are all valid. Values above that **must not** be sent.
+- `f64`: an IEEE 754 double-precision number.
 
 ### Optional Fields
 
-Fields that are not marked as **required** may be set to `null`, or simply omitted.
+Fields that are not marked as **required** are optional. Omitting a field and setting it to `null` mean the same thing. Senders **should** omit the field, and receivers **must** accept both.

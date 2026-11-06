@@ -7,15 +7,14 @@ interface Props {
     name: string;
     type?: string;
     required?: boolean;
-    numberType?: "f64" | "i64" | "u64";
+    numberType?: "f64" | "u64";
     /** Added by `remark-spec`, in the form `note-is-sensitive`. */
     anchor?: string;
 }
 
 const numberTitles = {
-    f64: "64-bit floating-point number",
-    i64: "64-bit signed integer",
-    u64: "64-bit unsigned integer",
+    f64: "IEEE 754 double-precision number",
+    u64: "Integer from 0 to 2⁵³-1",
 };
 
 const { name, type, required = false, numberType, anchor } = Astro.props;

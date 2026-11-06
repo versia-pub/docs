@@ -13,7 +13,7 @@ For example, if your implementation disallows using HTML in posts, you should no
 
 Things that should be validated include, but are not limited to:
 
-- The presence of **all required fields**, and the presence of `null` on optional fields.
+- The presence of **all required fields**. [Optional fields](/json#optional-fields) may be omitted or `null`.
 - The **format** of all fields (integers should not be strings, timestamps should be in RFC 3339 format, etc.).
 - The presence of **all required headers**.
 - The presence of a **valid signature**, where [one is required](/signatures#where-signatures-are-required).
@@ -21,12 +21,10 @@ Things that should be validated include, but are not limited to:
 - The **length** of all fields (for example, the `username` field on a `User` entity) should be at least 1 character long.
   - Do not set arbitrary limits on the length of fields that other instances may send you. For example, a `bio` field should not be limited to 160 characters, even if your own implementation has such a limit.
   - If you do set limits, they should be reasonable, well-documented and should allow Users to easily view the remote original, by, for example, linking to it. A limit of `100 000` characters for a `bio` field is acceptable, but a limit of `160` characters is not.
-- The **type**, **precision** and **scale** of all numeric fields.
-  - For example, a `size` field on a `ContentFormat` structure should be a positive integer, not a negative number or a floating-point number.
+- The **type** and **range** of all numeric fields.
+  - For example, a `size` field on a `ContentFormat` structure should be a non-negative integer, not a negative number or a fractional one.
 
-  All numeric fields in these docs have the appropriate precision (`u64`, `i64`, `f32`, etc.) specified. As a rule of thumb, do not use a different type in memory than the one specified in the docs.
-
-  Using the same type with a higher bit count, for example using a u128 instead of a u64, is acceptable. Beware of performance impacts this may cause.
+  All numeric fields in these docs state their [type](/json#numbers) (`u64` or `f64`). As a rule of thumb, do not use a smaller type in memory than the one specified in the docs.
 
 - The **validity** of all URLs and URIs (run them through your favorite URL parser).
 - The **time** of all dates and times (people should not be born in the future, or in the year 0).

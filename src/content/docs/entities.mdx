@@ -18,7 +18,7 @@ Entities are the foundation of the Versia protocol. They are similar to:
 
 An entity is a simple JSON object that represents a core data structure in Versia. Entities are used to represent various types of data, such as users, notes, and more. Each entity has a unique `id` property that is used to identify it within the instance.
 
-Any field in an entity not marked as `required` may be set to `null`. These fields **must not** be omitted: they must be present with a `null` value if not set.
+Fields not marked as `required` are [optional](/json#optional-fields).
 
 <Fields name="Entity">
     <Field name="id" type="string" required>
