@@ -1,5 +1,5 @@
 import { slugifyWithCounter } from "@sindresorhus/slugify";
-import type { Element, Nodes, Root } from "hast";
+import type { Element, ElementContent, Nodes, Root, RootContent } from "hast";
 import { visit } from "unist-util-visit";
 
 const text = (node: Nodes): string => {
@@ -62,5 +62,48 @@ export function rehypeNormative() {
                 node.properties.className = ["normative"];
             }
         });
+    };
+}
+
+// MDX components reach rehype as their own node type, which `hast` does not list.
+const isNote = (node: RootContent): node is ElementContent =>
+    (node.type as string) === "mdxJsxFlowElement" &&
+    (node as unknown as { name: string }).name === "Note";
+
+const isBlank = (node: RootContent): boolean =>
+    node.type === "text" && node.value.trim() === "";
+
+const NOTE_TARGETS = new Set(["p", "ul", "ol", "pre"]);
+
+/**
+ * A note floats into the margin from where it is in the source, so one written after its text
+ * would start below that text. This moves it to before the text, in a wrapper that lets
+ * `MarkdownContent` restore the reading order on screens with no margin.
+ */
+export function rehypeNotesBesideText() {
+    return (tree: Root) => {
+        const children: RootContent[] = [];
+
+        for (const node of tree.children) {
+            const previous = children.findLast((child) => !isBlank(child));
+
+            if (
+                isNote(node) &&
+                previous?.type === "element" &&
+                NOTE_TARGETS.has(previous.tagName)
+            ) {
+                const wrapper: Element = {
+                    type: "element",
+                    tagName: "div",
+                    properties: { className: ["noted"] },
+                    children: [node, previous],
+                };
+                children.splice(children.lastIndexOf(previous), 1, wrapper);
+            } else {
+                children.push(node);
+            }
+        }
+
+        tree.children = children;
     };
 }

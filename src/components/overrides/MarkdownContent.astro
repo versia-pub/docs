@@ -12,7 +12,8 @@
         line-height: 1.5;
     }
 
-    .prose > * {
+    .prose > *,
+    .noted > * {
         min-width: 0;
         max-width: var(--prose-width);
     }
@@ -23,23 +24,39 @@
         max-width: none;
     }
 
-    /* A note can push a sheet down, and its heading has to go with it. */
+    /* A note that pushes a sheet down pushes the heading above it too. */
     .prose > :is(h2, h3):has(+ .sheet, + .wide) {
         clear: right;
+    }
+
+    /* `rehypeNotesBesideText` puts a note before the text it follows, in this wrapper. A float
+       cannot rise above its place in the source, so that is what lets it start level with the text.
+       Narrow screens have no margin for it, so they restore the reading order. */
+    .noted {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .noted > .note {
+        order: 1;
     }
 
     /* On wide screens, short notes float beside the reading column. Floating leaves the height of
        the column to its own text, however long a note gets. */
     @media (min-width: 78rem) {
-        .prose {
-            --margin-gap: 3rem;
+        .noted {
+            display: contents;
         }
 
-        .prose > :not(.sheet, .wide, .note) {
+        .prose > :not(.sheet, .wide, .note, .noted),
+        .noted > :not(.note) {
             max-width: min(var(--prose-width), 100% - var(--margin-width) - var(--margin-gap));
         }
 
-        .prose > .note {
+        /* With no text to sit beside, a note opening the page stays in the column. Floated, it
+           would leave a blank space where the text should be. */
+        .prose > .note:not(:first-child),
+        .noted > .note {
             float: right;
             width: var(--margin-width);
             max-width: none;

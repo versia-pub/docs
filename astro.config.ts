@@ -3,7 +3,11 @@ import starlight from "@astrojs/starlight";
 import { transformerNotationFocus } from "@shikijs/transformers";
 import { defineConfig } from "astro/config";
 import { codeThemeDark, codeThemeLight } from "./src/lib/code-themes";
-import { rehypeHeadingSlugs, rehypeNormative } from "./src/lib/rehype-spec";
+import {
+    rehypeHeadingSlugs,
+    rehypeNormative,
+    rehypeNotesBesideText,
+} from "./src/lib/rehype-spec";
 import { remarkSpec } from "./src/lib/remark-spec";
 import { transformerFieldLinks } from "./src/lib/shiki-field-links";
 
@@ -23,7 +27,11 @@ export default defineConfig({
     markdown: {
         processor: unified({
             remarkPlugins: [remarkSpec],
-            rehypePlugins: [rehypeHeadingSlugs, rehypeNormative],
+            rehypePlugins: [
+                rehypeHeadingSlugs,
+                rehypeNormative,
+                rehypeNotesBesideText,
+            ],
         }),
         shikiConfig: {
             themes: { light: codeThemeLight, dark: codeThemeDark },
