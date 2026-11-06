@@ -40,7 +40,7 @@ Fields not marked as `required` are [optional](/json#optional-fields).
         Date and time when the entity was created. **Must** be an [RFC 3339](https://datatracker.ietf.org/doc/html/rfc3339) timestamp.
 
         <Note>
-        Handling of dates that are valid but obviously incorrect (e.g. in the future) is left to the Implementation's discretion. Sending a [Note](/entities/note) created on `13-12-1337` is very funny, but don't be surprised if it is rejected.
+        How to handle a well-formed date that is obviously incorrect (e.g. in the future) is left to the Implementation's discretion. Sending a [Note](/entities/note) created on `1337-12-13T00:00:00Z` is very funny, but don't be surprised if it is rejected.
         </Note>
     </Field>
     <Field name="$schema" type="string">
