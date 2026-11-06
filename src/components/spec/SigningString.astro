@@ -44,14 +44,14 @@ const { parts } = Astro.props;
     dt,
     span {
         color: var(--ink-soft);
-        font-size: 0.875rem;
+        font-size: var(--text-sm);
         line-height: 1.4;
     }
 
     dt code {
         color: var(--accent);
-        font-size: 0.8rem;
-        font-weight: 650;
+        font-size: var(--code-size);
+        font-weight: var(--weight-bold);
     }
 
     dd {
@@ -62,7 +62,7 @@ const { parts } = Astro.props;
     dd code,
     p code {
         color: var(--value);
-        font-size: 0.8rem;
+        font-size: var(--code-size);
         overflow-wrap: anywhere;
     }
 

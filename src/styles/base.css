@@ -14,6 +14,7 @@ body {
     font-family: var(--font-prose);
     /* JetBrains Mono otherwise draws `://` as `: //`, and code should show the characters it contains. */
     font-variant-ligatures: no-contextual;
+    font-kerning: normal;
     -webkit-font-smoothing: antialiased;
 }
 

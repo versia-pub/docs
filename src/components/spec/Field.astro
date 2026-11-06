@@ -50,13 +50,13 @@ const { name, type, required = false, numberType, anchor } = Astro.props;
     .field-number {
         color: var(--ink-faint);
         font-family: var(--font-mono);
-        font-size: 0.72rem;
+        font-size: var(--text-xs);
         text-decoration: none;
     }
 
     .field-body {
-        font-size: 0.975rem;
-        line-height: 1.55;
+        font-size: var(--text-sm);
+        line-height: 1.45;
     }
 
     .field-body > :global(:last-child) {

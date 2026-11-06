@@ -64,7 +64,7 @@ const pathParts = path.split(/(\{[^}]+\})/);
     .request code {
         padding: 0;
         background: none;
-        font-size: inherit;
+        font-size: calc(var(--mono-ratio) * 1em);
         overflow-wrap: anywhere;
     }
 
@@ -74,7 +74,7 @@ const pathParts = path.split(/(\{[^}]+\})/);
 
     .request .method {
         color: var(--accent);
-        font-weight: 650;
+        font-weight: var(--weight-bold);
     }
 
     .parameter {

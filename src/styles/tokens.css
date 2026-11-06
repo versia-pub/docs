@@ -4,6 +4,16 @@
     --font-prose: "Source Serif 4 Variable", Georgia, serif;
     --font-mono: "JetBrains Mono Variable", ui-monospace, monospace;
 
+    /* The type scale. Nothing else should set a font size or a bold weight, apart from the titles. */
+    --text-body: 1.0625rem;
+    --text-sm: 0.9375rem;
+    --text-xs: 0.8125rem;
+    --weight-bold: 600;
+    /* JetBrains Mono has a taller x-height than Source Serif (0.55 and 0.475), so this ratio makes
+       them look the same size side by side. */
+    --mono-ratio: 0.86;
+    --code-size: calc(var(--text-sm) * var(--mono-ratio));
+
     --sl-font: var(--font-prose);
     --sl-font-mono: var(--font-mono);
 

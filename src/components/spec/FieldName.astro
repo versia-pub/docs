@@ -12,15 +12,15 @@ const { name, href } = Astro.props;
 <style>
     .field-name {
         color: var(--accent);
-        font-weight: 600;
+        font-weight: var(--weight-bold);
         text-decoration: none;
     }
 
     .field-name code {
         padding: 0;
         background: none;
-        font-size: 0.9rem;
-        font-weight: 600;
+        font-size: calc(var(--text-body) * var(--mono-ratio));
+        font-weight: var(--weight-bold);
     }
 
     .field-name:hover {

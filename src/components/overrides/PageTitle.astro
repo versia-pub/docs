@@ -7,11 +7,12 @@ const { title } = Astro.locals.starlightRoute.entry.data;
 <style>
     h1 {
         max-width: var(--prose-width);
-        margin: 0 0 1.25rem;
+        margin: 0 0 1rem;
         color: var(--ink);
         font-family: var(--font-prose);
         font-size: clamp(2.5rem, 5vw, 3.5rem);
         font-weight: 600;
-        line-height: 1.05;
+        line-height: 1.1;
+        text-wrap: balance;
     }
 </style>

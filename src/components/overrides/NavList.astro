@@ -56,8 +56,8 @@ const hasCurrent = (entry: Entry): boolean =>
     .nav-label {
         margin: 1.5rem 0 0.4rem;
         color: var(--ink);
-        font-size: 0.92rem;
-        font-weight: 700;
+        font-size: var(--text-sm);
+        font-weight: var(--weight-bold);
     }
 
     .nav-list > li:first-child > .nav-label {
@@ -75,7 +75,7 @@ const hasCurrent = (entry: Entry): boolean =>
         display: block;
         padding: 0.2rem 0;
         color: var(--ink-soft);
-        font-size: 0.92rem;
+        font-size: var(--text-sm);
         line-height: 1.45;
         text-decoration: none;
         cursor: pointer;
@@ -96,7 +96,7 @@ const hasCurrent = (entry: Entry): boolean =>
     /* `ident` is set in the sidebar config, on entries named after identifiers. */
     .nav-link.ident {
         font-family: var(--font-mono);
-        font-size: 0.82rem;
+        font-size: var(--code-size);
     }
 
     .nav-depth-2 {
@@ -115,7 +115,7 @@ const hasCurrent = (entry: Entry): boolean =>
         display: block;
         padding: 0.15rem 0;
         color: var(--ink-soft);
-        font-size: 0.875rem;
+        font-size: var(--text-sm);
         line-height: 1.35;
         text-decoration: none;
     }

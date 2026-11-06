@@ -9,7 +9,7 @@
     background: none !important;
     border-block: 1px solid var(--hair);
     font-family: var(--font-mono);
-    font-size: 0.8rem;
+    font-size: var(--code-size);
     line-height: 1.6;
 }
 
@@ -36,7 +36,7 @@
     margin-bottom: 0.75rem;
     color: var(--ink-soft);
     font-family: var(--font-prose);
-    font-size: 0.875rem;
+    font-size: var(--text-sm);
     font-style: italic;
 }
 
