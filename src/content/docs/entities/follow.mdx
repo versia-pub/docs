@@ -8,6 +8,8 @@ import Entity from "../../../components/spec/Entity.astro";
 import Example from "../../../components/spec/Example.astro";
 import Field from "../../../components/spec/Field.astro";
 import Inherits from "../../../components/spec/Inherits.astro";
+import Message from "../../../components/spec/Message.astro";
+import WireTrace from "../../../components/spec/WireTrace.astro";
 
 Sometimes, [Users](/entities/user) want to subscribe to each other to see each other's content. The `Follow` entity facilitates this, by defining a subscription relationship between two users.
 
@@ -79,12 +81,40 @@ Once a follow relationship is established, the **followee**'s instance should se
     </Example>
 </Entity>
 
-## Graph
+## Flows
 
-<p>
-    <a href="/graphs/how-follows-work.svg" target="_blank">View the full-size graph</a>
-</p>
+Every message here is sent to the other user's inbox. A follow request is either accepted:
 
-<div class="graph">
-    <img src="/graphs/how-follows-work.svg" alt="How Follows Work" />
-</div>
+<WireTrace a="social.joe.org" b="alice.dev">
+    <Message from="a" label="Follow">`Joe` asks to follow `Alice`.</Message>
+    <Message from="a" local>Marks the relationship as "processing".</Message>
+    <Message from="b" request label="FollowAccept">`Alice` accepts.</Message>
+    <Message from="b" local>Marks the relationship as "accepted".</Message>
+    <Message from="a" local>Marks the relationship as "accepted".</Message>
+</WireTrace>
+
+Or rejected:
+
+<WireTrace a="social.joe.org" b="alice.dev">
+    <Message from="a" label="Follow">`Joe` asks to follow `Alice`.</Message>
+    <Message from="a" local>Marks the relationship as "processing".</Message>
+    <Message from="b" request label="FollowReject">`Alice` rejects.</Message>
+    <Message from="b" local>Optionally, logs the rejection.</Message>
+    <Message from="a" local>Removes the relationship.</Message>
+</WireTrace>
+
+Once accepted, the relationship ends when `Joe` [unfollows](/entities/unfollow):
+
+<WireTrace a="social.joe.org" b="alice.dev">
+    <Message from="a" label="Unfollow">`Joe` stops following `Alice`.</Message>
+    <Message from="a" local>Removes the relationship.</Message>
+    <Message from="b" local>Removes the relationship.</Message>
+</WireTrace>
+
+Or when `Alice` removes `Joe` as a follower:
+
+<WireTrace a="social.joe.org" b="alice.dev">
+    <Message from="b" request label="FollowReject">`Alice` removes `Joe` as a follower.</Message>
+    <Message from="b" local>Removes the relationship.</Message>
+    <Message from="a" local>Removes the relationship.</Message>
+</WireTrace>

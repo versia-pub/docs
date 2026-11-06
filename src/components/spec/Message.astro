@@ -1,18 +1,20 @@
 ---
 interface Props {
-    /** The lane this starts from: `a` on the left sends requests, `b` on the right answers. */
+    /** The lane this starts from. */
     from: "a" | "b";
+    /** A new request from `b`, which otherwise answers `a`. */
+    request?: boolean;
     /** Something an instance does by itself, with no arrow. */
     local?: boolean;
-    /** The request line or status code, when the message has one worth showing. */
+    /** What crosses over, such as a request line, status code or entity, when worth showing. */
     label?: string;
 }
 
-const { from, local = false, label } = Astro.props;
+const { from, request = from === "a", local = false, label } = Astro.props;
 ---
 
 <li class:list={["step", `from-${from}`, { local }]}>
-    {!local && <span class="visually-hidden">{from === "a" ? "Request:" : "Response:"}</span>}
+    {!local && <span class="visually-hidden">{request ? "Request:" : "Response:"}</span>}
     {label && <code class="label">{label}</code>}
     {!local && <span class="arrow" aria-hidden="true"></span>}
     {Astro.slots.has("default") && <div class="text"><slot /></div>}
@@ -26,7 +28,7 @@ const { from, local = false, label } = Astro.props;
         line-height: 1.45;
     }
 
-    /* Requests read from the left and responses from the right, like the arrows under them. */
+    /* Each message reads from the side it leaves, like the arrow under it. */
     .from-b {
         text-align: right;
     }
