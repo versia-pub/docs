@@ -7,7 +7,6 @@ kind: Structure
 import Fields from "../../../components/spec/Fields.astro";
 import Example from "../../../components/spec/Example.astro";
 import Field from "../../../components/spec/Field.astro";
-import Note from "../../../components/Note.astro";
 
 The `ContentFormat` structure is used to represent content with metadata. It supports multiple content types for the same file, such as a PNG image and a WebP image.
 
@@ -23,7 +22,6 @@ type ContentFormat = {
 }
 ```
 
-<Note>
 Each piece of data in the `ContentFormat` structure is meant to be a different representation of the same content. For example, a PNG image and its WebP version are different representations of the same image. Do not mix unrelated files or data in the same `ContentFormat` structure.
 
 **Good:**
@@ -49,7 +47,6 @@ Each piece of data in the `ContentFormat` structure is meant to be a different r
     }
 }
 ```
-</Note>
 
 ## Implementation Guidelines
 

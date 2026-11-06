@@ -4,16 +4,15 @@ description: Learn how signatures work, and how to implement them in your Versia
 kind: Core concept
 ---
 
-import Note from "../../components/Note.astro";
 import Warning from "../../components/Warning.astro";
 
 Versia uses cryptographic signatures to ensure the integrity and authenticity of data. Signatures are used to verify that the data has not been tampered with and that it was created by the expected user.
 
-<Note>
+<Warning>
     This part is very important! If signatures are implemented incorrectly in your instance, **you will not be able to federate**.
 
     Mistakes made in this section can lead to **security vulnerabilities** and **impersonation attacks**.
-</Note>
+</Warning>
 
 ## Signature Definition
 
@@ -163,11 +162,11 @@ if (!isVerified) {
 
 Public keys are always encoded using `base64` and must be in [SPKI](https://en.wikipedia.org/wiki/Simple_public-key_infrastructure) format. You will need to look up the appropriate method for your cryptographic library to convert the key to this format.
 
-<Note>
+<Warning>
     This is **not** merely the key's raw bytes encoded as base64. You must export the key in [SPKI](https://en.wikipedia.org/wiki/Simple_public-key_infrastructure) format, *then* encode it as base64.
 
     This is also not the commonly used "PEM" format.
-</Note>
+</Warning>
 
 ```typescript title="Example using TypeScript and the WebCrypto API"
 /**

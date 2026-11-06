@@ -4,7 +4,6 @@ description: "Defines the server-to-server API for Versia's federation."
 kind: API
 ---
 
-import Note from "../../../components/Note.astro";
 import Warning from "../../../components/Warning.astro";
 
 Versia defines a very simple API for server-to-server communication, mainly fetching and sending entities. It is clearly namespaced and versioned, to avoid confusion with implementations' existing HTTP APIs.
@@ -15,9 +14,7 @@ Every Versia API endpoint is prefixed with `/.versia/vX/`, where `X` is the vers
 
 Requests not encrypted with TLS (aka HTTPS) **must not** be sent or responded to. All implementations are required to use TLS 1.2 or higher, and to support HTTP/2.
 
-<Note>
-    Implementations have no obligation to support more than one Versia version. It is recommended to always support the latest version, as it helps avoid bogging down the network with old versions.
-</Note>
+Implementations have no obligation to support more than one Versia version. It is recommended to always support the latest version, as it helps avoid bogging down the network with old versions.
 
 ## Signatures
 

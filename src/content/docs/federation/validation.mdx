@@ -4,15 +4,12 @@ description: "Validation rules for Versia implementations."
 kind: Federation
 ---
 
-import Note from "../../../components/Note.astro";
 
 Implementations **MUST** strictly validate all incoming data to ensure that it is well-formed and adheres to the Versia Protocol. If a request is invalid, the instance **MUST** return a `422 Unprocessable Entity` HTTP status code.
 
-<Note>
-    Remember that while *your* implementation may disallow or restrict some user input, other implementations may not. You **should not** apply those restrictions to data coming from other instances.
+Remember that while *your* implementation may disallow or restrict some user input, other implementations may not. You **should not** apply those restrictions to data coming from other instances.
 
-    For example, if your implementation disallows using HTML in posts, you should not strip HTML from posts coming from other instances. You *may* choose to display them differently, but you should not modify the data itself.
-</Note>
+For example, if your implementation disallows using HTML in posts, you should not strip HTML from posts coming from other instances. You *may* choose to display them differently, but you should not modify the data itself.
 
 Things that should be validated include, but are not limited to:
 
@@ -25,11 +22,11 @@ Things that should be validated include, but are not limited to:
   - If you do set limits, they should be reasonable, well-documented and should allow Users to easily view the remote original, by, for example, linking to it. A limit of `100 000` characters for a `bio` field is acceptable, but a limit of `160` characters is not.
 - The **type**, **precision** and **scale** of all numeric fields.
   - For example, a `size` field on a `ContentFormat` structure should be a positive integer, not a negative number or a floating-point number.
-<Note>
-    All numeric fields in these docs have the appropriate precision (`u64`, `i64`, `f32`, etc.) specified. As a rule of thumb, do not use a different type in memory than the one specified in the docs.
-    
-    Using the same type with a higher bit count, for example using a u128 instead of a u64, is acceptable. Beware of performance impacts this may cause.
-</Note>
+
+  All numeric fields in these docs have the appropriate precision (`u64`, `i64`, `f32`, etc.) specified. As a rule of thumb, do not use a different type in memory than the one specified in the docs.
+
+  Using the same type with a higher bit count, for example using a u128 instead of a u64, is acceptable. Beware of performance impacts this may cause.
+
 - The **validity** of all URLs and URIs (run them through your favorite URL parser).
 - The **time** of all dates and times (people should not be born in the future, or in the year 0).
 

@@ -8,7 +8,6 @@ import Entity from "../../../components/spec/Entity.astro";
 import Example from "../../../components/spec/Example.astro";
 import Field from "../../../components/spec/Field.astro";
 import Inherits from "../../../components/spec/Inherits.astro";
-import Note from "../../../components/Note.astro";
 
 The `User` entity represents an account on a Versia instance. Users can post [Notes](/entities/note), follow other users, and interact with content. Users are identified by their `id` property, which is unique within the instance.
 
@@ -34,9 +33,7 @@ This is similar to an email address or an ActivityPub address. Usernames are cas
 
 Identifier **must** be either a valid `username` or a valid `id`. It should have the same username/id as the user's profile.
 
-<Note>
 Usernames can be changed by the user, so it is recommended to use `id` for long-term references.
-</Note>
 
 ### Instance
 

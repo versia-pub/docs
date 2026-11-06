@@ -4,36 +4,45 @@
     /* Global because elements from Markdown are outside any component's scope. `:where` keeps
        the element rules at the lowest specificity, so any class in a component outranks them. */
 
-    /* One column for reading, with a margin column for short notes on wide screens. */
+    /* One column for reading. `flow-root` keeps a note that runs past the last paragraph inside. */
     .prose {
-        display: grid;
-        grid-template-columns: minmax(0, 1fr);
+        display: flow-root;
         font-size: 1.0625rem;
         line-height: 1.65;
     }
 
     .prose > * {
-        grid-column: 1;
         min-width: 0;
         max-width: var(--prose-width);
     }
 
     .prose > .sheet,
     .prose > .wide {
-        grid-column: 1 / -1;
+        clear: right;
         max-width: none;
     }
 
+    /* A note can push a sheet down, and its heading has to go with it. */
+    .prose > :is(h2, h3):has(+ .sheet, + .wide) {
+        clear: right;
+    }
+
+    /* On wide screens, short notes float beside the reading column. Floating leaves the height of
+       the column to its own text, however long a note gets. */
     @media (min-width: 78rem) {
         .prose {
-            grid-template-columns: minmax(0, var(--prose-width)) var(--margin-width);
-            column-gap: 3rem;
+            --margin-gap: 3rem;
+        }
+
+        .prose > :not(.sheet, .wide, .note) {
+            max-width: min(var(--prose-width), 100% - var(--margin-width) - var(--margin-gap));
         }
 
         .prose > .note {
-            grid-column: 2;
-            grid-row-end: span 4;
-            align-self: start;
+            float: right;
+            width: var(--margin-width);
+            max-width: none;
+            margin: 0.3em max(0px, 100% - var(--prose-width) - var(--margin-gap) - var(--margin-width)) 1rem var(--margin-gap);
         }
     }
 
@@ -53,7 +62,7 @@
     }
 
     :where(.prose) h2 {
-        margin: 3rem 0 0.75rem;
+        margin: 4rem 0 0.75rem;
         padding-top: 0.6rem;
         border-top: 2px solid var(--ink);
         color: var(--ink);
@@ -70,7 +79,7 @@
     }
 
     :where(.prose) h3 {
-        margin: 2rem 0 0.5rem;
+        margin: 3rem 0 0.5rem;
         color: var(--ink);
         font-family: var(--font-prose);
         font-size: 1.125rem;
