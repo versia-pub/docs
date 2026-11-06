@@ -41,10 +41,10 @@ HTTP requests and responses between instances **MUST** include a [Signature](/si
 
     <Example slot="example">
     ```http title="Example Request"
-    POST https://bob.com/.versia/v0.6/inbox HTTP/1.1
+    POST https://bob.com/.versia/v0.7/inbox HTTP/1.1
     Content-Type: application/vnd.versia+json
     User-Agent: CoolServer/1.0 (https://coolserver.com)
-    Versia-Signature: fNL6ahaIp875nssChgKbowDYphTPC+aArjRMOr8AdIalREv2D5mzznkx2ApPZ8YcV0V2OSE5Tel1dmyTe+LhBA==
+    Versia-Signature: zyNVCEnWvdklMqwEQ+iBS2MrcgThI5NY5iMOTTrHFIk2dCdAh0Q7HAYNeIju1UCIWKLLttrTDvma3MZGLqm4AQ==
     Versia-Signed-By: example.com
     Versia-Signed-At: 1729241687
     ```
@@ -83,10 +83,10 @@ How long to keep trying is up to the implementation. 48 hours is a reasonable de
 
     <Example slot="example">
     ```http title="Example Response"
-    # Answers GET /.versia/v0.6/instance/collections/admins, sent to bob.com
+    # Answers GET /.versia/v0.7/instance/collections/admins, sent to bob.com
     HTTP/1.1 200 OK
     Content-Type: application/vnd.versia+json
-    Versia-Signature: Z7jS2clgNsfHTAJQ00teQRZ/ssvim+Y5zA/fOR9USG9Yr/v8A1fvPZGpjjf3bfDuGMi7eY35Cq0qGwsdy784DA==
+    Versia-Signature: Agu7sfHZd+qDkyYrrROm8fKgb7tMrG1vdWRCKH5Kw9VS0HtLbt4f6Tf8eEpKZKiyQyZDe8lGihtICjSs/p4sBg==
     Versia-Signed-By: bob.com
     Versia-Signed-At: 1729241717
 

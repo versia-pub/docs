@@ -24,10 +24,10 @@ The whole exchange looks like this, and the sections below go through each step.
     <Message from="a" local>`@alice` posts a note that mentions `@joe@b.social`.</Message>
     <Message from="a" label="GET /.well-known/webfinger?resource=acct:joe@b.social">[Resolve the mention](#resolving-the-mention) using WebFinger.</Message>
     <Message from="b">Responds with the URL of `joe`'s profile.</Message>
-    <Message from="a" label="GET /.versia/v0.6/entities/User/bde22zi3ca8762">[Fetch the user](#fetching-the-user) from that URL.</Message>
+    <Message from="a" label="GET /.versia/v0.7/entities/User/bde22zi3ca8762">[Fetch the user](#fetching-the-user) from that URL.</Message>
     <Message from="b">Responds with the `User` entity.</Message>
     <Message from="a" local>[Serialize the note](#serializing-the-note).</Message>
-    <Message from="a" label="POST /.versia/v0.6/inbox">[Send the note](#sending-the-note) to the inbox.</Message>
+    <Message from="a" label="POST /.versia/v0.7/inbox">[Send the note](#sending-the-note) to the inbox.</Message>
     <Message from="b" label="202 Accepted" />
     <Message from="b" local>[Display the note](#displaying-the-note) to `joe`.</Message>
 </WireTrace>
@@ -57,7 +57,7 @@ curl "https://b.social/.well-known/webfinger?resource=acct:joe@b.social" -H "Acc
         { // [!code focus:5]
             "rel": "self",
             "type": "application/vnd.versia+json",
-            "href": "https://b.social/.versia/v0.6/entities/User/bde22zi3ca8762"
+            "href": "https://b.social/.versia/v0.7/entities/User/bde22zi3ca8762"
         }
     ]
 }
@@ -69,10 +69,10 @@ curl "https://b.social/.well-known/webfinger?resource=acct:joe@b.social" -H "Acc
 
 ```bash
 # The request is signed by a.social's instance private key
-curl https://b.social/.versia/v0.6/entities/User/bde22zi3ca8762 \
+curl https://b.social/.versia/v0.7/entities/User/bde22zi3ca8762 \
     -H "Accept: application/vnd.versia+json" \
     -H "User-Agent: CoolServer/1.0 (https://coolserver.com)" \
-    -H "Versia-Signature: 2id5eqPdj0SdpX0owDaXs1sOh1DE4SUx+h197nqQfN34+x/EHZcnhiRYzweiysBIkfWgycWpxBRFy3XA27GbCw==" \
+    -H "Versia-Signature: 79Dce+bCF59bZ8eE7OqE9hslBYhwmhSjKFYBGmPRDGQjOBUaGdX5WKY1iTbOgCTMp50xE+8sSQjuDNaOmBz3Bw==" \
     -H "Versia-Signed-By: a.social" \
     -H "Versia-Signed-At: 1733051945"
 ```
@@ -150,11 +150,11 @@ It is now time for `a.social` to send the note to `joe`.
 
 ```bash
 # The request is signed by a.social's instance private key
-curl -X POST https://b.social/.versia/v0.6/inbox \
+curl -X POST https://b.social/.versia/v0.7/inbox \
     --data-binary @note.json \
     -H "Content-Type: application/vnd.versia+json" \
     -H "User-Agent: CoolServer/1.0 (https://coolserver.com)" \
-    -H "Versia-Signature: 0vmNrZ2923qKM59Gv7WtvJUqSeH4XBDfr89ea9gPklU9xmX+xk2xNiJDoXCJPj2KbcRC5J8NDYWJj/nO7iQTCg==" \
+    -H "Versia-Signature: 5PBu/nKzWBTZcApNTKtPPwayMqe5hu0d2KuN9VafWb0HUUF5DSTJC47hjawOboDtlXeRdIOD/mGtCMhZHEseCA==" \
     -H "Versia-Signed-By: a.social" \
     -H "Versia-Signed-At: 1733051946"
 ```

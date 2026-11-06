@@ -36,8 +36,8 @@ import Example from "../../../components/spec/Example.astro";
 
     {
         "versions": [
-            "0.6.1",
-            "0.5.0"
+            "0.7.0",
+            "0.6.0"
         ]
     }
     ```
@@ -46,14 +46,14 @@ import Example from "../../../components/spec/Example.astro";
 
 ## Instance Metadata
 
-<Endpoint name="InstanceMetadata" method="GET" path="/.versia/v0.6/instance" signature="exempt">
+<Endpoint name="InstanceMetadata" method="GET" path="/.versia/v0.7/instance" signature="exempt">
     <div slot="response">
         Instance's metadata, as defined in the [Instance Metadata](/entities/instance-metadata) document.
     </div>
 
     <Example slot="example">
     ```http title="Example request"
-    GET /.versia/v0.6/instance
+    GET /.versia/v0.7/instance
     Host: b.social
     Accept: application/vnd.versia+json
     ```
@@ -73,12 +73,12 @@ import Example from "../../../components/spec/Example.astro";
 
 ## Entity Data
 
-<Endpoint name="EntityData" method="GET" path="/.versia/v0.6/entities/{entity_type}/{id}">
+<Endpoint name="EntityData" method="GET" path="/.versia/v0.7/entities/{entity_type}/{id}">
     <div slot="parameters">
         - `{entity_type}`: The type of the entity to fetch, URL-encoded.
         - `{id}`: The ID of the entity to fetch, URL-encoded.
 
-        Example: `GET /.versia/v0.6/entities/pub.versia%3Agroups%2FGroup/1234` fetches the [Group](/extensions/groups) entity with ID `1234`.
+        Example: `GET /.versia/v0.7/entities/pub.versia%3Agroups%2FGroup/1234` fetches the [Group](/extensions/groups) entity with ID `1234`.
     </div>
     <div slot="response">
         Entity data as JSON, as defined in its [Entity](/entities) definition document.
@@ -88,7 +88,7 @@ import Example from "../../../components/spec/Example.astro";
 
     <Example slot="example">
     ```http title="Example request"
-    GET /.versia/v0.6/entities/User/1234
+    GET /.versia/v0.7/entities/User/1234
     Host: b.social
     Accept: application/vnd.versia+json
     ```
@@ -108,13 +108,13 @@ import Example from "../../../components/spec/Example.astro";
 
 ## Entity Collections
 
-<Endpoint name="EntityCollection" method="GET" path="/.versia/v0.6/entities/{entity_type}/{id}/collections/{collection_type}">
+<Endpoint name="EntityCollection" method="GET" path="/.versia/v0.7/entities/{entity_type}/{id}/collections/{collection_type}">
     <div slot="parameters">
         - `{entity_type}`: The type of the entity to fetch, URL-encoded.
         - `{id}`: The ID of the entity to fetch, URL-encoded.
         - `{collection_type}`: The type of the collection to fetch, URL-encoded.
 
-        Example: `GET /.versia/v0.6/entities/User/1234/collections/followers` fetches the followers of the user with ID `1234`.
+        Example: `GET /.versia/v0.7/entities/User/1234/collections/followers` fetches the followers of the user with ID `1234`.
     </div>
     <div slot="response">
         **MUST** be either a [Collection](/structures/collection) or a [ReferenceCollection](/structures/collection#reference-collection) as JSON.
@@ -122,7 +122,7 @@ import Example from "../../../components/spec/Example.astro";
 
     <Example slot="example">
     ```http title="Example request"
-    GET /.versia/v0.6/entities/User/1234/collections/followers
+    GET /.versia/v0.7/entities/User/1234/collections/followers
     Host: b.social
     Accept: application/vnd.versia+json
     ```
@@ -156,7 +156,7 @@ Items **MUST** be in a stable order, oldest first, so that new items do not shif
 A collection lists only the items the requesting instance [may fetch](/federation#access).
 
 ```http title="Example paginated collection request"
-GET /.versia/v0.6/entities/User/1234/collections/followers?offset=10&limit=20
+GET /.versia/v0.7/entities/User/1234/collections/followers?offset=10&limit=20
 Host: b.social
 Accept: application/vnd.versia+json
 ```
@@ -165,11 +165,11 @@ Accept: application/vnd.versia+json
 
 [Instance Metadata](/entities/instance-metadata) has no ID, so its collections have their own path. They paginate like any other [collection](#pagination).
 
-<Endpoint name="InstanceCollection" method="GET" path="/.versia/v0.6/instance/collections/{collection_type}">
+<Endpoint name="InstanceCollection" method="GET" path="/.versia/v0.7/instance/collections/{collection_type}">
     <div slot="parameters">
         - `{collection_type}`: The type of the collection to fetch, URL-encoded: `moderators` or `admins`.
 
-        Example: `GET /.versia/v0.6/instance/collections/admins` fetches the administrators of the instance.
+        Example: `GET /.versia/v0.7/instance/collections/admins` fetches the administrators of the instance.
     </div>
     <div slot="response">
         **MUST** be either a [Collection](/structures/collection) or a [ReferenceCollection](/structures/collection#reference-collection) as JSON.
@@ -177,7 +177,7 @@ Accept: application/vnd.versia+json
 
     <Example slot="example">
     ```http title="Example request"
-    GET /.versia/v0.6/instance/collections/admins
+    GET /.versia/v0.7/instance/collections/admins
     Host: b.social
     Accept: application/vnd.versia+json
     ```
@@ -202,14 +202,14 @@ The inbox endpoint is used for instances to send entities to each other. It is a
 
 The delivery mechanism is described further in the [Federation](/federation#inboxes) document.
 
-<Endpoint name="Inbox" method="POST" path="/.versia/v0.6/inbox">
+<Endpoint name="Inbox" method="POST" path="/.versia/v0.7/inbox">
     <div slot="response">
         **SHOULD** be `202 Accepted` with no body. See [Status Codes](/federation/http#status-codes) for all possible answers.
     </div>
 
     <Example slot="example">
     ```http title="Example request"
-    POST /.versia/v0.6/inbox
+    POST /.versia/v0.7/inbox
     Host: b.social
     Content-Type: application/vnd.versia+json
 

@@ -15,7 +15,7 @@ Versia Protocol versions are written as `0.X.Y`:
 - `X` changes when a release breaks compatibility with earlier versions. Adding a core entity type is a breaking change.
 - `Y` changes when a release stays compatible with other `0.X` versions, for example by adding an optional field.
 
-Every Versia API endpoint is prefixed with `/.versia/v0.X/`, so all `0.X.Y` versions share one prefix. The current prefix is `/.versia/v0.6/`. Instances list the versions they support at the [well-known endpoint](/api/endpoints#well-known).
+Every Versia API endpoint is prefixed with `/.versia/v0.X/`, so all `0.X.Y` versions share one prefix. The current prefix is `/.versia/v0.7/`. Instances list the versions they support at the [well-known endpoint](/api/endpoints#well-known).
 
 Requests not encrypted with TLS (aka HTTPS) **MUST NOT** be sent or responded to. All implementations are required to use TLS 1.2 or higher, and to support HTTP/2.
 
@@ -76,7 +76,7 @@ API endpoints **MUST NOT** redirect to other endpoints, with the following excep
 This is forbidden:
 
 ```http
-GET /.versia/v0.6/entities/User/1234
+GET /.versia/v0.7/entities/User/1234
 Host: example.com
 Accept: application/vnd.versia+json
 
@@ -86,7 +86,7 @@ Location: https://example.com/users/1234
 
 This is allowed:
 ```http
-GET /.versia/v0.6/entities/User/1234
+GET /.versia/v0.7/entities/User/1234
 Host: example.com
 Accept: text/html
 

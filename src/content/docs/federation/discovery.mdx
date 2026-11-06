@@ -23,7 +23,7 @@ Accept: application/jrd+json
 {
     "subject": "acct:george@versia.social", // [!code focus:6]
     "aliases": [
-        "https://versia.social/.versia/v0.6/entities/User/018ec082-0ae1-761c-b2c5-22275a611771",
+        "https://versia.social/.versia/v0.7/entities/User/018ec082-0ae1-761c-b2c5-22275a611771",
         "https://versia.social/@george"
     ],
     "links": [
@@ -35,7 +35,7 @@ Accept: application/jrd+json
         { // [!code focus:5]
             "rel": "self",
             "type": "application/vnd.versia+json",
-            "href": "https://versia.social/.versia/v0.6/entities/User/018ec082-0ae1-761c-b2c5-22275a611771"
+            "href": "https://versia.social/.versia/v0.7/entities/User/018ec082-0ae1-761c-b2c5-22275a611771"
         },
         {
             "rel": "http://webfinger.net/rel/avatar",
@@ -65,20 +65,20 @@ Accept: application/json
 ```jsonc title="Example Response"
 {
     "versions": [
-        "0.6.1",
-        "0.5.0"
+        "0.7.0",
+        "0.6.0"
     ]
 }
 ```
 
 Then, we
-- Pick `0.6`, the highest `0.X` that both instances support
-- Make a `GET` request to `https://versia.social/.versia/v0.6/instance`.
+- Pick `0.7`, the highest `0.X` that both instances support
+- Make a `GET` request to `https://versia.social/.versia/v0.7/instance`.
 
 This endpoint will return an [InstanceMetadata](/entities/instance-metadata) entity.
 
 ```http title="Example Request"
-GET /.versia/v0.6/instance HTTP/1.1
+GET /.versia/v0.7/instance HTTP/1.1
 Accept: application/vnd.versia+json
 ```
     

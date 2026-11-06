@@ -1,5 +1,5 @@
-export const CURRENT_VERSION = "Working Draft 6";
-export const API_PREFIX = "/.versia/v0.6";
+export const CURRENT_VERSION = "Working Draft 7";
+export const API_PREFIX = "/.versia/v0.7";
 
 /** Where each named type is defined, so that type strings can link themselves. */
 export const typeLinks: Record<string, string> = {
