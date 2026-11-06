@@ -57,11 +57,7 @@ HTTP requests/responses between instances **must** include a [Signature](/signat
 
 Implementations **must** respect the rate limits of remote instances.
 
-IETF draft [draft-polli-ratelimit-headers-02](https://www.ietf.org/archive/id/draft-polli-ratelimit-headers-02.html) **must** be used to communicate rate limits. Other rate limit headers/formats are not allowed.
-
-<Note>
-    This IETF draft is, well, a draft. However, there are no standards for rate limiting in HTTP, so this is the best we have.
-</Note>
+An instance that rate limits a request **must** respond with a [`429 Too Many Requests`](https://datatracker.ietf.org/doc/html/rfc6585#section-4) status code and a [`Retry-After`](https://datatracker.ietf.org/doc/html/rfc9110#section-10.2.3) header. The sender **must not** retry the request before that time.
 
 ## Responses
 
