@@ -1,13 +1,13 @@
 /* Shiki's output, which no component renders. */
 .astro-code {
-    margin: 0 0 1.25rem;
-    padding: 0.75rem 0;
+    margin: 0.25rem 0 1.25rem;
+    padding: 0.75rem 1rem;
+    border-radius: var(--radius);
     /* Wrapping keeps long hashes and URLs readable without sideways scrolling. */
     white-space: pre-wrap;
     overflow-wrap: anywhere;
     /* Beats the inline background Shiki adds. */
-    background: none !important;
-    border-block: 1px solid var(--hair);
+    background: var(--paper-raised) !important;
     font-family: var(--font-mono);
     font-size: var(--code-size);
     line-height: 1.6;
@@ -16,17 +16,20 @@
 :root[data-theme="light"] .astro-code,
 :root[data-theme="light"] .astro-code span {
     color: var(--shiki-light);
+    font-weight: var(--shiki-light-font-weight);
 }
 
 :root[data-theme="dark"] .astro-code,
 :root[data-theme="dark"] .astro-code span {
     color: var(--shiki-dark);
+    font-weight: var(--shiki-dark-font-weight);
 }
 
 @media (scripting: none) and (prefers-color-scheme: light) {
     :root[data-theme] .astro-code,
     :root[data-theme] .astro-code span {
         color: var(--shiki-light);
+        font-weight: var(--shiki-light-font-weight);
     }
 }
 

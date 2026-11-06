@@ -1,6 +1,7 @@
 // Keys are pink and values use the companion colour, the same as field names and enum values
-// on the sheets. Everything else stays in the text colour. `key` and `value` match `--accent`
-// and `--value` in `tokens.css`, since Shiki needs literal colours.
+// on the sheets. In code, keywords share the pink, and the names of functions and types are bold
+// rather than a third colour. `key` and `value` match `--accent` and `--value` in `tokens.css`,
+// since Shiki needs literal colours.
 interface Palette {
     text: string;
     comment: string;
@@ -29,11 +30,29 @@ const theme = (name: string, type: "light" | "dark", c: Palette) => ({
             settings: { foreground: c.value },
         },
         {
-            scope: ["support.type.property-name", "meta.object-literal.key"],
+            scope: [
+                "support.type.property-name",
+                "meta.object-literal.key",
+                "keyword",
+                "storage",
+                "variable.language",
+                "keyword.operator.new",
+                "keyword.operator.expression",
+            ],
             settings: { foreground: c.key },
         },
         {
-            scope: ["punctuation", "meta.brace"],
+            scope: [
+                "entity.name.function",
+                "support.function",
+                "entity.name.type",
+                "entity.name.class",
+                "support.class",
+            ],
+            settings: { foreground: c.text, fontStyle: "bold" },
+        },
+        {
+            scope: ["punctuation", "meta.brace", "keyword.operator"],
             settings: { foreground: c.punctuation },
         },
     ],
