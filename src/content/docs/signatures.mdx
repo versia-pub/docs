@@ -97,7 +97,7 @@ const privateKey = await crypto.subtle.importKey(
     ["sign"],
 );
 
-const timestamp = Date.now();
+const timestamp = Math.floor(Date.now() / 1000);
 const digest = await crypto.subtle.digest(
     "SHA-256",
     new TextEncoder().encode(content)
@@ -138,10 +138,10 @@ On Alice's side, she would verify the signature using Bob's instance's public ke
 const method = request.method.toLowerCase();
 const path = new URL(request.url).pathname;
 const signature = request.headers.get("Versia-Signature");
-const timestamp = Number(request.headers.get("Versia-Signed-At")) * 1000; // Convert to milliseconds
+const timestamp = Number(request.headers.get("Versia-Signed-At"));
 
 // Check if timestamp is within 5 minutes of the current time
-if (Math.abs(Date.now() - timestamp) > 300_000) {
+if (Math.abs(Date.now() - timestamp * 1000) > 300_000) {
     return new Response("Timestamp is too old or too new", { status: 422 });
 }
 
@@ -186,5 +186,5 @@ const spkiEncodedPublicKey = await crypto.subtle.exportKey(
     publicKey,
 );
 
-const base64PublicKey = Buffer.from(publicKey).toString("base64");
+const base64PublicKey = Buffer.from(spkiEncodedPublicKey).toString("base64");
 ```
