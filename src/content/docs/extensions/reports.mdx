@@ -17,7 +17,7 @@ When an instance receives a report, it *should* be reviewed by a moderator or ad
 
 <Entity name="Report" type="pub.versia:reports/Report" transient>
     <Field name="type" type="string" required>
-        Must be `pub.versia:reports/Report`.
+        **Must** be `pub.versia:reports/Report`.
     </Field>
     <Field name="author" type="Reference">
         [Reference](/types#reference) to the reporting [User](/entities/user). Optional if the report is anonymous.

@@ -19,9 +19,9 @@ Versia uses cryptographic signatures to ensure the integrity and authenticity of
 A signature consists of a series of headers in an HTTP request. The following headers are used:
 - **`Versia-Signature`**: The signature itself, encoded in base64.
 - **`Versia-Signed-By`**: [Domain](/api/basics#domain) of the instance authoring the request.
-- **`Versia-Signed-At`**: The current Unix timestamp, in seconds (integer), when the request was signed. Timezone must be UTC, like all Unix timestamps.
+- **`Versia-Signed-At`**: The current Unix timestamp, in seconds (integer), when the request was signed. Timezone **must** be UTC, like all Unix timestamps.
 
-Signatures must be put on:
+Signatures **must** be put on:
 - **All `POST` requests**.
 - **All `GET` requests**.
 - **All responses to `GET` requests** (for example, when fetching a user's profile).
@@ -50,7 +50,7 @@ post /notes 1729243417 n4bQgYhMfWWaL+qgxVrQFaO/TxsrC4Is0V1sFbDwCgg=
 
 ### Verifying the Signature
 
-To verify a signature, the verifying instance must:
+To verify a signature, the verifying instance **must**:
 - Recreate the string as described above.
 - Extract the signature provided in the `Versia-Signature` header.
 - Check that the `Versia-Signed-At` timestamp is within 5 minutes of the current time.
@@ -160,10 +160,10 @@ if (!isVerified) {
 
 ## Exporting the Public Key
 
-Public keys are always encoded using `base64` and must be in [SPKI](https://en.wikipedia.org/wiki/Simple_public-key_infrastructure) format. You will need to look up the appropriate method for your cryptographic library to convert the key to this format.
+Public keys are always encoded using `base64` and **must** be in [SPKI](https://en.wikipedia.org/wiki/Simple_public-key_infrastructure) format. You will need to look up the appropriate method for your cryptographic library to convert the key to this format.
 
 <Warning>
-    This is **not** merely the key's raw bytes encoded as base64. You must export the key in [SPKI](https://en.wikipedia.org/wiki/Simple_public-key_infrastructure) format, *then* encode it as base64.
+    This is **not** merely the key's raw bytes encoded as base64. You **must** export the key in [SPKI](https://en.wikipedia.org/wiki/Simple_public-key_infrastructure) format, *then* encode it as base64.
 
     This is also not the commonly used "PEM" format.
 </Warning>

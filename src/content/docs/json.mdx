@@ -10,11 +10,11 @@ Identical data structures can be represented in many different ways in JSON. Thi
 
 All JSON data **must** be encoded in UTF-8. This is the only encoding supported by the Versia protocol.
 
-Line endings must be in Unix-style `\n` (LF) format. The use of Windows-style `\r\n` (CRLF) line endings is not allowed.
+Line endings **must** be in Unix-style `\n` (LF) format. The use of Windows-style `\r\n` (CRLF) line endings is not allowed.
 
 ## Keys
 
-Keys in JSON must be strings, cannot be empty, and may only contain the following characters:
+Keys in JSON **must** be strings, cannot be empty, and may only contain the following characters:
 - `a-z`
 - `A-Z`
 - `0-9`
@@ -46,7 +46,7 @@ Duplicate keys are **not** allowed.
 
 ### Numbers
 
-Numbers in JSON must be represented as decimal numbers. They can be integers or floating-point numbers, but must follow the following rules:
+Numbers in JSON **must** be represented as decimal numbers. They can be integers or floating-point numbers, but **must** follow the following rules:
 
 ```json title="Must not use scientific notation"
 {

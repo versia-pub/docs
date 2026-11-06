@@ -17,10 +17,10 @@ HTTP requests/responses between instances **must** include a [Signature](/signat
 
 <Fields name="HTTP Request" label="Headers">
     <Field name="Accept" type="string" required>
-        Must be `application/vnd.versia+json`, unless specified otherwise. Basic `application/json` is **not** allowed.
+        **Must** be `application/vnd.versia+json`, unless specified otherwise. Basic `application/json` is **not** allowed.
     </Field>
     <Field name="Content-Type" type="string" required>
-        Must be `application/vnd.versia+json; charset=utf-8` if the request has a body.
+        **Must** be `application/vnd.versia+json; charset=utf-8` if the request has a body.
     </Field>
     <Field name="Versia-Signature" type="string" required>
         See [Signatures](/signatures) for more information.
@@ -66,7 +66,7 @@ IETF draft [draft-polli-ratelimit-headers-02](https://www.ietf.org/archive/id/dr
 
 <Fields name="HTTP Response" label="Headers">
     <Field name="Content-Type" type="string" required>
-        Must include `application/vnd.versia+json; charset=utf-8`, unless specified otherwise.
+        **Must** include `application/vnd.versia+json; charset=utf-8`, unless specified otherwise.
     </Field>
     <Field name="Versia-Signature" type="string" required>
         See [Signatures](/signatures) for more information.

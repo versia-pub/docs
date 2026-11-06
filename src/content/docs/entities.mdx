@@ -22,7 +22,7 @@ Any field in an entity not marked as `required` may be set to `null`. These fiel
 
 <Fields name="Entity">
     <Field name="id" type="string" required>
-        Unique identifier for the entity. Must be unique within the instance. Can be any string with the following character sets:
+        Unique identifier for the entity. **Must** be unique within the instance. Can be any string with the following character sets:
 
         - `a-z`
         - `A-Z`
@@ -32,10 +32,10 @@ Any field in an entity not marked as `required` may be set to `null`. These fiel
         Not present on [Transient Entities](#transient-entities).
     </Field>
     <Field name="type" type="string" required>
-        Type of the entity. Custom types must follow [Extension Naming](/extensions#naming).
+        Type of the entity. Custom types **must** follow [Extension Naming](/extensions#naming).
     </Field>
     <Field name="created_at" type="RFC3339" required>
-        Date and time when the entity was created. Must be an [RFC 3339](https://datatracker.ietf.org/doc/html/rfc3339) timestamp.
+        Date and time when the entity was created. **Must** be an [RFC 3339](https://datatracker.ietf.org/doc/html/rfc3339) timestamp.
 
         <Note>
         Handling of dates that are valid but obviously incorrect (e.g. in the future) is left to the Implementation's discretion. Sending a [Note](/entities/note) created on `13-12-1337` is very funny, but don't be surprised if it is rejected.
@@ -51,7 +51,7 @@ Any field in an entity not marked as `required` may be set to `null`. These fiel
     <Field name="extensions" type="Extensions">
         Extensions to the entity. Use this to add custom properties to the entity.
 
-        Each custom property must be namespaced with the organization's reversed domain name, followed by the property name. Extensions should be used sparingly and only when necessary.
+        Each custom property **must** be namespaced with the organization's reversed domain name, followed by the property name. Extensions should be used sparingly and only when necessary.
     </Field>
 
     <Example slot="example" unchecked>
