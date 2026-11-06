@@ -20,7 +20,13 @@
     --rail-width: 17.5rem;
     --prose-width: 41rem;
     --margin-width: 16rem;
-    --sheet-width: 80rem;
+    --margin-gap: 3rem;
+    /* Every page shares this width: the reading column and its margin, or a sheet. */
+    --page-width: calc(
+        var(--prose-width) +
+        var(--margin-gap) +
+        var(--margin-width)
+    );
 }
 
 /* Starlight always renders data-theme="dark", and only its script corrects it,

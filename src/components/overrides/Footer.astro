@@ -15,7 +15,7 @@ const { prev, next } = Astro.locals.starlightRoute.pagination;
 
 <style>
     .page-foot {
-        max-width: calc(var(--prose-width) + var(--margin-width) + 3rem);
+        max-width: var(--page-width);
         margin-top: 4rem;
         padding-top: 1.5rem;
         border-top: 1px solid var(--hair);
