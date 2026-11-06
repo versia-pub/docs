@@ -12,7 +12,7 @@ This page lists changes since Working Draft 3.
 - The [inbox](/api/endpoints#inbox) now also allows `Accept: application/json`.
 - [References](/entities#reference) now use a [Domain](/api/basics#domain) as their prefix, so they cannot contain port numbers or IP addresses. Their definition moved to [Entities](/entities#reference).
 - [Domains](/api/basics#domain) in examples no longer have port numbers, and entity types in URLs are always capitalized.
-- Protocol versions are now written as `0.X.0`, matching the examples.
+- Protocol versions are now written as `0.X.Y`, such as `0.6.0` or `0.6.1`.
 - Named the [Instance Messaging](/extensions/instance-messaging) extension `pub.versia:instance_messaging`, so that instances can list it in `compatibility.extensions`.
 - [Migration](/extensions/migration)'s `previous` field is now optional, and `new` is described as a Reference to the user, not to the user's URI.
 - [Note](/entities/note)'s `group` field now has one rule: if not provided, the note is visible to the author and those mentioned in it.
