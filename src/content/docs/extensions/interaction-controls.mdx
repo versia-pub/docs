@@ -42,22 +42,19 @@ The structure defined in this document **must** be inserted in the `pub.versia:i
 
 <Fields name="InteractionControls" extension="pub.versia:interaction_controls" on="Note">
     <Field name="interaction_type">
-        Describes permissions for a specific interaction.
+        Not a literal key: each key is an [interaction type](#interaction-types), and its value says who may perform that interaction.
 
-        <Field name="allowed" type="InteractionGroup[]" />
-        <Field name="disallowed" type="InteractionGroup[]" />
+        <Field name="allowed" type="InteractionGroup[]" required />
 
-        Permissions can either be whitelist (`allowed` property) or blacklist (`disallowed` property). Both options are mutually exclusive.
+        A user may perform the interaction if they are in any of the listed groups. The Note's author always may. An interaction type that is left out allows everyone, and an empty list allows only the author.
 
-        Values of `InteractionGroup`, in order of priority:
+        Values of `InteractionGroup`:
         - `everyone`: Includes every single User in the federation.
         - `mentioned`: Includes every mentioned User.
         - `followers`: Includes every follower of the author.
         - `following`: Includes every User that the author follows.
         - `mutuals`: Includes every mutual of the author (that is, every User that is both a follower and followed by the author).
         - `group`: Includes every User in the [Group](/extensions/groups) that this Note was posted to, if any. If Note is not posted to a [Group](/extensions/groups), this value has no effect.
-
-        Permission groups are evaluated from highest to lowest priority: if two groups conflict each other, the group with the highest priority **must** be used.
     </Field>
 
     <Example slot="example" unchecked>
@@ -68,10 +65,8 @@ The structure defined in this document **must** be inserted in the `pub.versia:i
                 "group"
             ]
         },
-        "pub.versia:likes#Like": {
-            "disallowed": [
-                "everyone"
-            ]
+        "pub.versia:likes/Like": {
+            "allowed": []
         }
     }
     ```
@@ -82,18 +77,20 @@ The structure defined in this document **must** be inserted in the `pub.versia:i
 
 ### Interaction Types
 
-The following interaction types are defined as part of the core Versia spec:
+The following interaction types apply to every Note:
 
 - `reply`: Sending a Note with `replies_to` including this Note.
 - `quote`: Sending a Note with `quoting` including this Note.
 
-Extensions **may** choose to register their own interaction types (such as `pub.versia:likes#Like` for the [Like Extension](/extensions/likes)). The naming scheme for interaction types is identical to [Extensions](/extensions)'s `type` property, but with a hashtag (`#`) in place of a forward slash (`/`).
+Extensions **may** register their own interaction types. The name of an interaction type is the `type` of the entity that performs it, such as `pub.versia:likes/Like` for the [Likes Extension](/extensions/likes).
 
 ### Handling Permission Errors
 
-Implementations that find a user attempting to create an interaction they are not allowed to **MAY** return a `403 Forbidden` HTTP status code when processing the Note during federation, or use the [Instance Messaging](/extensions/instance-messaging) extension. The Note **must** be discarded.
+The instance hosting the Note's author **must not** apply an interaction the user is not allowed to perform. Other instances **should** do the same when they have the data to check it.
 
-It is important for implementations to backfill any related [Collections](/structures/collection)/[Reference Collections](/structures/collection#reference-collection) (e.g. user followers) in order to not incorrectly reject Notes based off of outdated data.
+A refused interaction is answered with `422 Unprocessable Entity` if it is checked before the [inbox answers](/federation/http#status-codes), and is otherwise dropped silently. The instance **may** also tell the sender through the [Instance Messaging](/extensions/instance-messaging) extension.
+
+Implementations **should** keep related [Collections](/structures/collection) and [Reference Collections](/structures/collection#reference-collection), such as a user's followers, up to date, so as not to refuse an interaction based on outdated data.
 
 <Note>
     To avoid server load from constant Collection refreshing, implementations **may** only refetch associated Collections when forbidden interactions are detected, then recalculate permissions again.

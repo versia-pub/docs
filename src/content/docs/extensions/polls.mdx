@@ -16,20 +16,24 @@ Polls (also known as surveys) are a useful tool for gathering feedback from foll
 
 ## Privacy
 
-Individual user votes on polls should **not** be visible in clients. Instead, clients should display the total number of votes for each option, and the total number of votes cast.
+Individual votes are private. Clients **should not** display who voted, only the number of votes for each option and the total number of votes cast.
 
-This is reflected in the presence of total votes as numbers and not as an array of URIs in polls.
+A poll's `options` hold numbers of votes, not voters, and a Vote can only be fetched by the instance of the poll's author.
 
 ## Extensions to Note
 
 Note that there is no `question` field: the question should be included in the `content` of the Note itself.
 
 <Fields name="Polls" extension="pub.versia:polls" on="Note">
-    <Field name="options" type="ContentFormat[]" required>
-        Array of options for the poll. Each option is a [ContentFormat](/structures/content-format) that can contain the same properties as a Note's `content` (e.g. [Custom Emojis](/extensions/custom-emojis) or HTML hyperlinks).
-    </Field>
-    <Field name="votes" type="number[]" required numberType="u64">
-        Array of the number of votes for each option. The length of this array should match the length of the `options` array.
+    <Field name="options" type="PollOption[]" required>
+        Array of options for the poll. Each `PollOption` has:
+
+        <Field name="content" type="ContentFormat" required>
+            Text of the option. It can contain the same properties as a Note's `content` (e.g. [Custom Emojis](/extensions/custom-emojis) or HTML hyperlinks).
+        </Field>
+        <Field name="votes" type="number" required numberType="u64">
+            Number of votes for this option.
+        </Field>
     </Field>
     <Field name="multiple_choice" type="boolean" required>
         Whether the poll allows multiple votes to be cast for different options.
@@ -56,25 +60,29 @@ Note that there is no `question` field: the question should be included in the `
             "pub.versia:polls": {
                 "options": [
                     {
-                        "text/plain": {
-                            "content": "Red"
-                        }
+                        "content": {
+                            "text/plain": {
+                                "content": "Red"
+                            }
+                        },
+                        "votes": 9
                     },
                     {
-                        "text/plain": {
-                            "content": "Blue"
-                        }
+                        "content": {
+                            "text/plain": {
+                                "content": "Blue"
+                            }
+                        },
+                        "votes": 5
                     },
                     {
-                        "text/plain": {
-                            "content": "Green"
-                        }
+                        "content": {
+                            "text/plain": {
+                                "content": "Green"
+                            }
+                        },
+                        "votes": 0
                     }
-                ],
-                "votes": [
-                    9,
-                    5,
-                    0
                 ],
                 "multiple_choice": false,
                 "expires_at": "2021-01-04T00:00:00.000Z"
@@ -91,7 +99,11 @@ Note that there is no `question` field: the question should be included in the `
 
 ## Vote Entity Definition
 
-If a vote is cast to a poll that is closed, the vote should be rejected with a `422 Unprocessable Entity` error.
+A Vote is one user's vote for one option. On a poll with `multiple_choice`, a user sends one Vote for each option.
+
+The instance of the poll's author **must not** count a Vote for a poll that has closed, for an `option` that does not exist, or for a second option on a poll without `multiple_choice`. Such a Vote is answered with `422 Unprocessable Entity` if it is checked before the [inbox answers](/federation/http#status-codes), and is otherwise dropped silently. A user's votes for the same option count once, whatever their `id`.
+
+A user changes a vote by [sending the Vote again](/entities#changing-an-entity) with the same `id` and a new `option`, and withdraws it with a [Delete](/entities/delete). A change or Delete that arrives after the poll has closed leaves the numbers as they are.
 
 <Entity name="Vote" type="pub.versia:polls/Vote">
     <Field name="type" type="string" required>
@@ -104,7 +116,7 @@ If a vote is cast to a poll that is closed, the vote should be rejected with a `
         [Reference](/entities#reference) to the note with poll that the user voted on.
     </Field>
     <Field name="option" type="number" required numberType="u64">
-        Index of the option that the user voted for. This should be a valid index into the `options` array of the poll.
+        Index of the option that the user voted for, in the `options` array of the poll.
     </Field>
 
     <Inherits />
@@ -127,7 +139,7 @@ If a vote is cast to a poll that is closed, the vote should be rejected with a `
 
 A sender **must** [deliver](/federation#delivery) Votes to the author of the [Note](/entities/note).
 
-Any instance that [may fetch](/federation#access) the Note, and the instance of the Note's author, may fetch a Vote.
+Only the instance of the Note's author may [fetch](/federation#access) a Vote.
 
 When a poll's votes change, its Note is [sent again](/entities#changing-an-entity), and **must** also be delivered to the users who voted.
 
@@ -138,4 +150,4 @@ When a poll's votes change, its Note is [sent again](/entities#changing-an-entit
 </Note>
 
 This extension registers the following interaction types:
-- `pub.versia:polls#Vote`, for voting on a Poll attached to a Note.
+- `pub.versia:polls/Vote`, for voting on a Poll attached to a Note.
