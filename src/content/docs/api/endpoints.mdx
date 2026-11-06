@@ -44,7 +44,7 @@ import Example from "../../../components/spec/Example.astro";
     </Example>
 </Endpoint>
 
-## Instance metadata
+## Instance Metadata
 
 <Endpoint name="InstanceMetadata" method="GET" path="/.versia/v0.6/instance" signature="exempt">
     <div slot="response">
@@ -71,7 +71,7 @@ import Example from "../../../components/spec/Example.astro";
     </Example>
 </Endpoint>
 
-## Entity data
+## Entity Data
 
 <Endpoint name="EntityData" method="GET" path="/.versia/v0.6/entities/{entity_type}/{id}">
     <div slot="parameters">
@@ -104,7 +104,7 @@ import Example from "../../../components/spec/Example.astro";
     </Example>
 </Endpoint>
 
-## Entity collections
+## Entity Collections
 
 <Endpoint name="EntityCollection" method="GET" path="/.versia/v0.6/entities/{entity_type}/{id}/collections/{collection_type}">
     <div slot="parameters">
@@ -151,7 +151,7 @@ Host: b.social
 Accept: application/vnd.versia+json
 ```
 
-## Instance collections
+## Instance Collections
 
 [Instance Metadata](/entities/instance-metadata) has no ID, so its collections have their own path. They paginate like any other [collection](#pagination).
 
