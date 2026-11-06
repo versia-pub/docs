@@ -38,7 +38,11 @@ All base64 on this page is the standard alphabet with padding, as defined in [RF
 
 Instance metadata needs no signature because it holds the public key used to verify signatures.
 
-An instance receiving a request with a missing or invalid signature on a route that requires one **must** return a `401 Unauthorized` HTTP status code. If the timestamp is too old or too new (more than 5 minutes from the current time), it **must** return a `422 Unprocessable Entity` status code. An instance receiving a response with a missing, invalid, too old or too new signature on these routes **must** discard the response.
+An instance receiving a request on a route that requires a signature **must** return a `401 Unauthorized` HTTP status code if the signature is missing or invalid, or if its timestamp is too old or too new (more than 5 minutes from the current time).
+
+An instance receiving a `2xx` response on these routes **must** discard it if its signature is missing, invalid, too old or too new, and treat the attempt as failed.
+
+A response with a `4xx` or `5xx` status code may come from a proxy that cannot sign it, so its signature is not required to act on it. The instance acts on the status code, and ignores the body unless the signature verifies. Instances **should** still sign the errors they generate themselves.
 
 ### Calculating the Signature
 
@@ -164,7 +168,7 @@ const timestamp = Number(request.headers.get("Versia-Signed-At"));
 
 // Check if timestamp is within 5 minutes of the current time
 if (Math.abs(Date.now() - timestamp * 1000) > 300_000) {
-    return new Response("Timestamp is too old or too new", { status: 422 });
+    return new Response("Timestamp is too old or too new", { status: 401 });
 }
 
 const digest = await crypto.subtle.digest(
@@ -186,6 +190,17 @@ if (!isVerified) {
     return new Response("Signature verification failed", { status: 401 });
 }
 ```
+
+## Key Rotation
+
+An instance has one current key, published in its [metadata](/entities/instance-metadata). Rotating the key replaces it at once, and anything signed with the old key stops verifying.
+
+Instance metadata is not signed, so [TLS](/api/basics#api-versioning) is what makes a published key trustworthy.
+
+A verifying instance:
+
+- **must** fetch the signer's metadata again, once, before rejecting a signature that fails to verify. It **should** limit how often it does this for each instance, so that bad signatures cannot make it send requests. Once every 5 minutes is a reasonable limit.
+- **should** fetch the metadata of the instances it stores keys for at least every 24 hours, so that a replaced key stops being accepted even if nothing fails to verify.
 
 ## Exporting the Public Key
 
