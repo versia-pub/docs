@@ -14,6 +14,8 @@
     --mono-ratio: 0.86;
     --code-size: calc(var(--text-sm) * var(--mono-ratio));
 
+    --radius: 3px;
+
     --sl-font: var(--font-prose);
     --sl-font-mono: var(--font-mono);
 
@@ -40,6 +42,7 @@
     --ink-soft: #bdbdbd;
     --ink-faint: #949494;
     --hair: #ffffff2b;
+    --control-border: #ffffff4d;
     --accent: #ff5fa8;
     --accent-tint: #ff5fa824;
     --value: #4fd1c0;
@@ -55,6 +58,7 @@
     --ink-soft: #4d4d4d;
     --ink-faint: #6e6e6e;
     --hair: #00000024;
+    --control-border: #0000004d;
     --accent: #b5175a;
     --accent-tint: #b5175a14;
     --value: #0b6f66;
@@ -71,6 +75,7 @@
         --ink-soft: #4d4d4d;
         --ink-faint: #6e6e6e;
         --hair: #00000024;
+        --control-border: #0000004d;
         --accent: #b5175a;
         --accent-tint: #b5175a14;
         --value: #0b6f66;

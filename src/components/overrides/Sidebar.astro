@@ -13,6 +13,17 @@ const { sidebar } = Astro.locals.starlightRoute;
 
 <script>
     // Enhancement only: the links work without it.
+
+    // The rail is taller than most screens, so a page far down the list would start out of sight.
+    const rail = document.querySelector(".rail-nav");
+    const currentPage = rail?.querySelector<HTMLElement>('[aria-current="page"]');
+    if (rail && currentPage) {
+        const offset = currentPage.getBoundingClientRect().top - rail.getBoundingClientRect().top;
+        if (offset > rail.clientHeight - currentPage.offsetHeight * 2) {
+            rail.scrollTop = offset - rail.clientHeight / 3;
+        }
+    }
+
     const links = [...document.querySelectorAll<HTMLAnchorElement>(".sublinks a")];
     const targets = links.flatMap((link) => {
         const target = document.getElementById(link.hash.slice(1));

@@ -16,15 +16,22 @@
 <style>
     .theme-toggle {
         display: inline-flex;
-        padding: 0.4rem;
+        align-items: center;
+        justify-content: center;
+        flex: none;
+        width: 2.25rem;
+        height: 2.25rem;
+        padding: 0;
         color: var(--ink-soft);
-        background: none;
-        border: 0;
+        background: var(--paper);
+        border: 1px solid var(--control-border);
+        border-radius: var(--radius);
         cursor: pointer;
     }
 
     .theme-toggle:hover {
-        color: var(--accent);
+        color: var(--ink);
+        border-color: var(--ink-faint);
     }
 
     /* The toggle needs JavaScript, so it is hidden rather than shown as a dead control. */
