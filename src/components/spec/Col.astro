@@ -7,7 +7,7 @@ interface Props {
 const { sticky = false } = Astro.props;
 ---
 
-{sticky ? <aside class="sheet-example"><slot /></aside> : <div class="sheet-fields"><slot /></div>}
+{sticky ? <div class="sheet-example"><slot /></div> : <div class="sheet-fields"><slot /></div>}
 
 <style>
     @media (min-width: 78rem) {
