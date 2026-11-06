@@ -9,7 +9,7 @@ const extensions = [
     { name: "Custom Emojis", id: "pub.versia:custom_emojis", href: "/extensions/custom-emojis" },
     { name: "Delegation", id: "pub.versia:delegation", href: "/extensions/delegation" },
     { name: "Groups", id: "pub.versia:groups", href: "/extensions/groups" },
-    { name: "Instance Messaging", href: "/extensions/instance-messaging" },
+    { name: "Instance Messaging", id: "pub.versia:instance_messaging", href: "/extensions/instance-messaging" },
     { name: "Interaction Controls", id: "pub.versia:interaction_controls", href: "/extensions/interaction-controls" },
     { name: "Likes", id: "pub.versia:likes", href: "/extensions/likes" },
     { name: "Migration", id: "pub.versia:migration", href: "/extensions/migration" },
@@ -48,7 +48,7 @@ const extensions = [
     <p>The core stays small. Everything else is a namespaced <a href="/extensions">extension</a>, implemented in any combination.</p>
     <ul class="extensions">
         {extensions.map((extension) => (
-            <li><a href={extension.href}>{extension.name}</a>{extension.id && <code>{extension.id}</code>}</li>
+            <li><a href={extension.href}>{extension.name}</a><code>{extension.id}</code></li>
         ))}
     </ul>
 
