@@ -1,0 +1,64 @@
+<script>
+    // Added here rather than in the markup, because the buttons cannot work without JavaScript.
+    for (const block of document.querySelectorAll("pre.astro-code")) {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = "copy-code";
+        button.textContent = "Copy";
+        button.setAttribute("aria-live", "polite");
+
+        let timer: ReturnType<typeof setTimeout>;
+        button.addEventListener("click", async () => {
+            clearTimeout(timer);
+            try {
+                await navigator.clipboard.writeText(block.querySelector("code")?.textContent ?? "");
+                button.textContent = "Copied";
+            } catch {
+                button.textContent = "Could not copy";
+            }
+            timer = setTimeout(() => {
+                button.textContent = "Copy";
+            }, 2000);
+        });
+
+        block.append(button);
+    }
+</script>
+
+<style is:global>
+    .astro-code {
+        position: relative;
+    }
+
+    /* Its background hides the end of a long first line while it is showing. */
+    .copy-code {
+        position: absolute;
+        top: 0.45rem;
+        right: 0.5rem;
+        padding: 0.15rem 0.5rem;
+        border: 0;
+        background: var(--paper-raised);
+        color: var(--ink-soft);
+        cursor: pointer;
+        font-family: var(--font-prose);
+        font-size: var(--text-xs);
+        font-weight: 400;
+        white-space: normal;
+    }
+
+    .copy-code:hover {
+        color: var(--accent);
+    }
+
+    /* Touch screens have no hover to reveal it, so there it always shows. */
+    @media (hover: hover) {
+        .copy-code {
+            opacity: 0;
+        }
+
+        .astro-code:hover .copy-code,
+        .copy-code:focus-visible {
+            opacity: 1;
+        }
+    }
+</style>
