@@ -23,6 +23,7 @@
     "npm:shiki@^4.6.0": "4.6.0",
     "npm:typescript@6": "6.0.3",
     "npm:unist-util-visit@^5.2.0": "5.2.0",
+    "npm:uwuifier@^4.2.2": "4.2.2",
     "npm:vfile@^6.0.3": "6.0.3",
     "npm:yaml@^2.9.1": "2.9.1"
   },
@@ -3577,6 +3578,9 @@
     "util-deprecate@1.0.2": {
       "integrity": "sha512-EPD5q1uXyFxJpCrLnCc1nHnq3gOa6DZBocAIiI2TaSCA7VCJ1UJDMagCzIkXNsUYfD1daK//LTEQ8xiIbrHtcw=="
     },
+    "uwuifier@4.2.2": {
+      "integrity": "sha512-Fhtj3Yg3rrDTEs+L1fqkgM3VYGJrP4U9GY+4fPdw08T5kzOB8NSosZnZfa5Zhv1Hh7NCpH5G6t1DIZyM1wPK1w=="
+    },
     "verkit@0.5.0": {
       "integrity": "sha512-u4J1hr6Y+C/hit34GwL3eIcUf3wngT8TlYUjK7tk0jxydKLAq3sYvifjdTDA6U3KCKRcQCQDGf/srjxfZF3l7g=="
     },
@@ -3860,6 +3864,7 @@
         "npm:shiki@^4.6.0",
         "npm:typescript@6",
         "npm:unist-util-visit@^5.2.0",
+        "npm:uwuifier@^4.2.2",
         "npm:vfile@^6.0.3",
         "npm:yaml@^2.9.1"
       ]

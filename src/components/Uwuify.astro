@@ -1,0 +1,9 @@
+<script>
+    // Ctrl+U or Cmd+U uwuifies the page. The library loads only when asked for.
+    window.addEventListener("keydown", (event) => {
+        if (event.key === "u" && (event.metaKey || event.ctrlKey)) {
+            event.preventDefault();
+            import("../lib/uwuify").then(({ uwuifyDocument }) => uwuifyDocument());
+        }
+    });
+</script>
