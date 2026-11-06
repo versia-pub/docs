@@ -28,3 +28,16 @@ summary:focus-visible {
 ::selection {
     background: color-mix(in srgb, var(--accent) 35%, transparent);
 }
+
+.prose table {
+    width: 100%;
+    margin-block: 1rem;
+    border-collapse: collapse;
+}
+
+.prose :is(th, td) {
+    padding: 0.4rem 1rem 0.4rem 0;
+    border-bottom: 1px solid color-mix(in srgb, var(--ink) 18%, transparent);
+    text-align: start;
+    vertical-align: top;
+}
