@@ -11,24 +11,32 @@ interface Props {
 }
 
 const { from, request = from === "a", local = false, label } = Astro.props;
+// Long request lines wrap at their separators rather than inside a word.
+const labelParts = label?.split(/(?<=[/?&])/);
 ---
 
 <li class:list={["step", `from-${from}`, { local }]}>
-    {!local && <span class="visually-hidden">{request ? "Request:" : "Response:"}</span>}
-    {label && <code class="label">{label}</code>}
-    {!local && <span class="arrow" aria-hidden="true"></span>}
+    {!local && <span class="visually-hidden">{request ? "Request:" : "Response:"}</span>}{" "}
+    {labelParts && <code class="label">{labelParts.map((part) => <>{part}<wbr /></>)}</code>}{" "}
     {Astro.slots.has("default") && <div class="text"><slot /></div>}
+    {!local && <span class="arrow" aria-hidden="true"></span>}
 </li>
 
 <style>
+    /* Everything that describes a message sits above its arrow, so each arrow ends its step. */
     .step {
+        position: relative;
         margin: 0;
-        padding: 0.75rem 1rem;
+        padding: 0.65rem 1rem;
         font-size: var(--text-sm);
         line-height: 1.45;
     }
 
-    /* Each message reads from the side it leaves, like the arrow under it. */
+    .step:not(.local) {
+        padding-bottom: 0.5rem;
+    }
+
+    /* Each message reads from the side it leaves. */
     .from-b {
         text-align: right;
     }
@@ -36,6 +44,25 @@ const { from, request = from === "a", local = false, label } = Astro.props;
     .local .text {
         color: var(--ink-soft);
         font-style: italic;
+    }
+
+    /* A hollow stop on the rail: this instance acts, and nothing crosses. */
+    .local::before {
+        content: "";
+        position: absolute;
+        top: calc(0.65rem + (1lh - 0.5rem) / 2);
+        left: calc(-0.25rem - 0.5px);
+        box-sizing: border-box;
+        width: 0.5rem;
+        height: 0.5rem;
+        border: 1px solid var(--ink-faint);
+        border-radius: 50%;
+        background: var(--paper);
+    }
+
+    .local.from-b::before {
+        right: calc(-0.25rem - 0.5px);
+        left: auto;
     }
 
     .label {
@@ -50,7 +77,7 @@ const { from, request = from === "a", local = false, label } = Astro.props;
         position: relative;
         display: block;
         height: 2px;
-        margin: 0.35rem -1rem 0.4rem;
+        margin: 0.4rem -1rem 0;
         background: var(--accent);
     }
 
@@ -58,13 +85,30 @@ const { from, request = from === "a", local = false, label } = Astro.props;
         background: var(--value);
     }
 
+    /* The filled stop it leaves from. */
+    .arrow::before {
+        content: "";
+        position: absolute;
+        top: -0.2rem;
+        left: calc(-0.25rem - 0.5px);
+        width: calc(0.4rem + 2px);
+        height: calc(0.4rem + 2px);
+        border-radius: 50%;
+        background: inherit;
+    }
+
+    .from-b .arrow::before {
+        right: calc(-0.25rem - 0.5px);
+        left: auto;
+    }
+
     .arrow::after {
         content: "";
         position: absolute;
-        top: -0.3rem;
+        top: -0.35rem;
         right: 0;
-        width: 0.6rem;
-        height: calc(0.6rem + 2px);
+        width: 0.7rem;
+        height: calc(0.7rem + 2px);
         background: inherit;
         clip-path: polygon(0 0, 100% 50%, 0 100%);
     }

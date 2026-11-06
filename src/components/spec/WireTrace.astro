@@ -8,8 +8,8 @@ interface Props {
 const { a, b } = Astro.props;
 ---
 
-<figure class="trace wide">
-    <div class="lanes" aria-hidden="true">
+<figure class="trace">
+    <div class="lanes" aria-hidden="true" data-pagefind-ignore>
         <span>{a}</span>
         <span>{b}</span>
     </div>
@@ -18,14 +18,14 @@ const { a, b } = Astro.props;
 
 <style>
     .trace {
-        margin: 0.5rem 0 2rem;
+        margin: 1rem 0 2rem;
     }
 
     .lanes {
         display: flex;
         justify-content: space-between;
         gap: 1rem;
-        padding-bottom: 0.5rem;
+        padding-bottom: 0.35rem;
         font-family: var(--font-mono);
         font-size: var(--code-size);
         font-weight: var(--weight-bold);
@@ -34,7 +34,7 @@ const { a, b } = Astro.props;
     /* The two instances, as rails running down each side. */
     ol {
         margin: 0;
-        padding: 0;
+        padding: 0.35rem 0 0.5rem;
         border-inline: 1px solid var(--ink-faint);
         list-style: none;
     }
