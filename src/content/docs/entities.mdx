@@ -43,6 +43,11 @@ Fields not marked as `required` are [optional](/json#optional-fields).
         How to handle a well-formed date that is obviously incorrect (e.g. in the future) is left to the Implementation's discretion. Sending a [Note](/entities/note) created on `1337-12-13T00:00:00Z` is very funny, but don't be surprised if it is rejected.
         </Note>
     </Field>
+    <Field name="updated_at" type="RFC3339">
+        Date and time when the entity last changed. **Must** be an [RFC 3339](https://datatracker.ietf.org/doc/html/rfc3339) timestamp. See [Changing an Entity](#changing-an-entity).
+
+        Not present on entities without an `id`.
+    </Field>
     <Field name="$schema" type="string">
         URL of any JSON Schema that the entity adheres to.
 
@@ -104,6 +109,10 @@ A **reference** is a way to refer to any entity within the Versia network. It is
 
 The domain is always present, even when a reference points to an entity on the instance sending it. A string without a domain is not a valid reference. Like every domain, it has no port number.
 
+### Reference Types
+
+A reference does not say what type of entity it points to, but [fetching an entity](/api/endpoints#entity-data) needs its type. So every field holding a reference **must** state the entity type it points to. A field that can point to several types **must** carry the type next to the reference, as [Delete](/entities/delete) and [Report](/extensions/reports) do.
+
 ### Example
 
 ```jsonc
@@ -114,6 +123,14 @@ The domain is always present, even when a reference points to an entity on the i
     "followee": "test.org:02e1e3b2-cb1f-4e4a-b82e-98866bee5de7" // [!code focus]
 }
 ```
+
+## Changing an Entity
+
+To change an entity, its instance sends the whole entity again, with the same `id`, to the [same audience](/federation#delivery). The receiver replaces the copy it holds. An optional field that is left out is cleared.
+
+`id`, `type`, `author` and `created_at` **must not** change. A receiver **must** discard a version that changes any of them.
+
+Senders **should** set `updated_at` when sending a change. A receiver **must** discard a version whose `updated_at` is older than that of the copy it holds. Without an `updated_at` to compare, the last version received wins. The same applies to a version it fetched.
 
 ## Transient Entities
 
