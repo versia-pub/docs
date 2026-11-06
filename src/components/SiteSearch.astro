@@ -1,0 +1,356 @@
+---
+import Search from "@astrojs/starlight/components/Search.astro";
+---
+
+<Search />
+
+<script>
+    const search = document.querySelector("#starlight__search");
+
+    // Typing "barrel roll" closes the search and spins the page.
+    search?.addEventListener("input", (event) => {
+        const input = event.target;
+        if (!(input instanceof HTMLInputElement) || !input.value.toLowerCase().includes("barrel roll")) {
+            return;
+        }
+
+        input.value = "";
+        input.dispatchEvent(new Event("input", { bubbles: true }));
+        input.closest("dialog")?.close();
+
+        if (matchMedia("(prefers-reduced-motion: reduce)").matches) {
+            return;
+        }
+
+        // The body is as tall as the page, so spin around the middle of what is on screen.
+        const { style } = document.documentElement;
+        const overflow = style.overflow;
+        style.overflow = "clip";
+        document.body.style.transformOrigin = `50% ${scrollY + innerHeight / 2}px`;
+        document.body
+            .animate([{ transform: "rotate(0)" }, { transform: "rotate(360deg)" }], {
+                duration: 2000,
+                easing: "ease-in-out",
+            })
+            .finished.finally(() => {
+                style.overflow = overflow;
+                document.body.style.transformOrigin = "";
+            });
+    });
+
+    // The arrow keys move through the results, and Enter in the box opens the first one.
+    search?.addEventListener("keydown", (event) => {
+        if (!(event instanceof KeyboardEvent) || !["ArrowDown", "ArrowUp", "Enter"].includes(event.key)) {
+            return;
+        }
+
+        const input = search.querySelector("input");
+        // A result that repeats its page's title has its link hidden, so it is not a stop.
+        const links = [...search.querySelectorAll<HTMLAnchorElement>(".pagefind-ui__result-link")].filter(
+            (link) => link.offsetParent !== null,
+        );
+        const onInput = event.target === input;
+
+        if (event.key === "Enter") {
+            if (onInput) {
+                links[0]?.click();
+            }
+            return;
+        }
+
+        event.preventDefault();
+        const index = onInput ? -1 : links.indexOf(event.target as HTMLAnchorElement);
+        const next = index + (event.key === "ArrowDown" ? 1 : -1);
+        if (next < 0) {
+            input?.focus();
+        } else {
+            links[next]?.focus();
+        }
+    });
+
+    // Starlight's dialog has no slot, so this line is added here.
+    const footer = document.createElement("p");
+    footer.className = "search-footer";
+    footer.innerHTML =
+        '<span class="search-hint">Pages, field names and extension IDs.</span>' +
+        '<span class="search-keys">Arrow keys to move, Enter to open, Esc to close</span>';
+    document.querySelector("site-search .dialog-frame")?.append(footer);
+</script>
+
+<style is:global>
+    /* Starlight draws a form above a stack of cards. Here the box is the top of the dialog and the
+       results are a plain list that scrolls under it. These rules are outside its cascade layer,
+       so they beat its rules at any specificity. The `#starlight__search` prefix is for Pagefind's
+       own unlayered rules. */
+    site-search dialog {
+        --search-box-height: 3.5rem;
+        --search-gutter: 1.5rem;
+        overflow: hidden;
+        border-color: var(--hair);
+        background-color: var(--paper);
+        box-shadow: none;
+    }
+
+    site-search dialog::backdrop {
+        -webkit-backdrop-filter: none;
+        backdrop-filter: none;
+        background-color: #0006;
+    }
+
+    @media (max-width: 50rem) {
+        site-search dialog {
+            --search-gutter: 1rem;
+        }
+    }
+
+    @media (min-width: 50rem) {
+        site-search dialog {
+            min-height: 0;
+            border-radius: var(--radius);
+        }
+    }
+
+    site-search .dialog-frame {
+        gap: 0;
+        min-height: 0;
+        padding: 0;
+        overflow: hidden;
+    }
+
+    /* Every level down to the results shrinks, so only the results scroll. */
+    site-search .search-container,
+    #starlight__search,
+    #starlight__search .pagefind-ui,
+    #starlight__search .pagefind-ui__form {
+        display: flex;
+        flex: 1 1 auto;
+        flex-direction: column;
+        min-height: 0;
+    }
+
+    #starlight__search {
+        --pagefind-ui-border-radius: var(--radius);
+        --pagefind-ui-font: var(--font-prose);
+    }
+
+    #starlight__search .pagefind-ui__search-input {
+        flex: none;
+        width: 100%;
+        height: var(--search-box-height);
+        padding-block: 0;
+        padding-inline: calc(var(--search-gutter) + 1.75rem) calc(var(--sl-search-cancel-space) + 3rem);
+        border: 0;
+        border-block-end: 1px solid var(--hair);
+        border-radius: 0;
+        background: none;
+        color: var(--ink);
+        font-size: var(--text-body);
+        outline: none;
+    }
+
+    #starlight__search .pagefind-ui__search-input::placeholder {
+        color: var(--ink-faint);
+        opacity: 1;
+    }
+
+    #starlight__search .pagefind-ui__search-input:focus {
+        border-block-end-color: var(--ink-faint);
+    }
+
+    #starlight__search .pagefind-ui__form::before {
+        top: calc((var(--search-box-height) - 1rem) / 2);
+        left: var(--search-gutter);
+        width: 1rem;
+        height: 1rem;
+        background-color: var(--ink-faint);
+    }
+
+    #starlight__search .pagefind-ui__search-clear {
+        top: 0;
+        width: 3rem;
+        height: var(--search-box-height);
+    }
+
+    #starlight__search .pagefind-ui__search-clear::before {
+        background-color: var(--ink-faint);
+    }
+
+    #starlight__search .pagefind-ui__search-clear:hover::before {
+        background-color: var(--ink);
+    }
+
+    site-search button[data-close-modal] {
+        height: var(--search-box-height);
+        padding-inline: 0.5rem var(--search-gutter);
+        color: var(--ink-soft);
+    }
+
+    #starlight__search .pagefind-ui__drawer {
+        display: block;
+        min-height: 0;
+        padding: 0.75rem var(--search-gutter) 1.5rem;
+        overflow-y: auto;
+    }
+
+    #starlight__search .pagefind-ui__results-area {
+        margin: 0;
+    }
+
+    #starlight__search .pagefind-ui__message {
+        height: auto;
+        padding: 0;
+        color: var(--ink-faint);
+        font-size: var(--text-xs);
+        font-weight: 400;
+    }
+
+    #starlight__search .pagefind-ui__results {
+        margin-top: 1rem;
+    }
+
+    #starlight__search .pagefind-ui__results > * + * {
+        margin-top: 1.5rem;
+    }
+
+    #starlight__search .pagefind-ui__result-inner {
+        gap: 0;
+    }
+
+    #starlight__search .pagefind-ui__result-inner > .pagefind-ui__result-title {
+        padding: 0 0 0.35rem;
+        font-size: var(--text-body);
+    }
+
+    #starlight__search .pagefind-ui__result-title:not(:where(.pagefind-ui__result-nested *)),
+    #starlight__search .pagefind-ui__result-nested {
+        background: none;
+        outline: none;
+    }
+
+    /* The link inside already shows the site's focus ring. */
+    #starlight__search .pagefind-ui__result-title:not(:where(.pagefind-ui__result-nested *)):focus-within,
+    #starlight__search .pagefind-ui__result-nested:focus-within {
+        background: none;
+        outline: none;
+    }
+
+    #starlight__search .pagefind-ui__result-inner > .pagefind-ui__result-title::before,
+    #starlight__search .pagefind-ui__result-nested::before {
+        display: none;
+    }
+
+    #starlight__search .pagefind-ui__result-link {
+        color: var(--ink);
+        font-weight: var(--weight-bold);
+    }
+
+    #starlight__search .pagefind-ui__result-link:hover {
+        text-decoration: underline;
+    }
+
+    /* The page's address, because names like "Example" repeat across the protocol. Inline-block
+       keeps the link's underline off it. */
+    #starlight__search .pagefind-ui__result-inner > .pagefind-ui__result-title .pagefind-ui__result-link::after {
+        content: attr(href);
+        position: static;
+        display: inline-block;
+        margin-inline-start: 0.6rem;
+        color: var(--ink-faint);
+        font-family: var(--font-mono);
+        font-size: var(--text-xs);
+        font-weight: 400;
+    }
+
+    /* A page's sections hang off one line, like nested fields do on a sheet. */
+    #starlight__search .pagefind-ui__result-nested {
+        padding: 0.3rem 0 0.3rem 0.85rem;
+        border-inline-start: 1px solid var(--hair);
+    }
+
+    #starlight__search .pagefind-ui__result-nested .pagefind-ui__result-title {
+        font-size: var(--text-sm);
+    }
+
+    #starlight__search .pagefind-ui__result-nested .pagefind-ui__result-link {
+        color: var(--accent);
+        font-weight: 400;
+    }
+
+    #starlight__search .pagefind-ui__result-nested:hover .pagefind-ui__result-link {
+        text-decoration: underline;
+    }
+
+    /* This one is the page's own title again, directly under the page's link. */
+    #starlight__search .pagefind-ui__result-nested:has(a[href$="#_top"]) .pagefind-ui__result-link {
+        display: none;
+    }
+
+    #starlight__search .pagefind-ui__result-excerpt {
+        margin-top: 0.1rem;
+        color: var(--ink-soft);
+        font-size: var(--text-sm);
+        line-height: 1.45;
+    }
+
+    #starlight__search .pagefind-ui__result-excerpt::after {
+        content: "…";
+    }
+
+    #starlight__search mark {
+        color: var(--ink);
+    }
+
+    #starlight__search .pagefind-ui__button {
+        width: auto;
+        height: auto;
+        margin-top: 1.5rem;
+        padding: 0.35rem 0.75rem;
+        border: 1px solid var(--control-border);
+        background: none;
+        color: var(--ink);
+        font-size: var(--text-sm);
+    }
+
+    #starlight__search .pagefind-ui__button:hover {
+        border-color: var(--ink-faint);
+    }
+
+    .search-footer {
+        flex: none;
+        display: flex;
+        justify-content: space-between;
+        gap: 1rem;
+        margin: 0;
+        padding: 0.6rem var(--search-gutter);
+        color: var(--ink-faint);
+        font-size: var(--text-xs);
+    }
+
+    .search-hint {
+        display: none;
+    }
+
+    .search-keys {
+        margin-inline-start: auto;
+    }
+
+    /* With results above it the line needs a rule. Under the box alone it would make two. */
+    .dialog-frame:has(.pagefind-ui__search-input:not(:placeholder-shown)) .search-footer {
+        border-block-start: 1px solid var(--hair);
+    }
+
+    .dialog-frame:has(.pagefind-ui__search-input:placeholder-shown) .search-hint {
+        display: inline;
+    }
+
+    /* Touch screens have none of these keys. */
+    @media (hover: none) {
+        .search-keys {
+            display: none;
+        }
+
+        .dialog-frame:has(.pagefind-ui__search-input:not(:placeholder-shown)) .search-footer {
+            display: none;
+        }
+    }
+</style>

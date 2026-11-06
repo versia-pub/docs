@@ -1,6 +1,6 @@
 ---
-import Search from "@astrojs/starlight/components/Search.astro";
 import { CURRENT_VERSION } from "../../lib/spec";
+import SiteSearch from "../SiteSearch.astro";
 import ThemeSelect from "./ThemeSelect.astro";
 ---
 
@@ -12,7 +12,7 @@ import ThemeSelect from "./ThemeSelect.astro";
     <a class="version" href="/changelog">{CURRENT_VERSION}</a>
 </div>
 <div class="rail-tools">
-    <Search />
+    <SiteSearch />
     <ThemeSelect />
 </div>
 
