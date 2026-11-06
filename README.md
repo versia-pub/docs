@@ -46,4 +46,4 @@ Contributions are welcome! Feel free to open an issue or submit a pull request.
 
 The code in this repository is licensed under the [MIT License](https://opensource.org/licenses/MIT).
 
-However, the _documentation text_ (including the MDX files in the `src/content/docs` directory) is licensed under the [Creative Commons Attribution 4.0 International License](https://creativecommons.org/licenses/by/4.0/). You are free to share and adapt the text as long as you provide proper attribution.
+However, the _documentation text_ (including the MDX files in the `src/content/docs` directory) is licensed under the [Creative Commons Attribution-ShareAlike 4.0 International License](https://creativecommons.org/licenses/by-sa/4.0/). You are free to share and adapt the text as long as you provide proper attribution and distribute your adaptations under the same license.
