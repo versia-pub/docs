@@ -110,6 +110,7 @@ export default defineConfig({
                         link("JSON", "/json"),
                         link("Signatures", "/signatures"),
                         link("Security", "/security"),
+                        link("Links", "/links"),
                     ],
                 },
                 {
@@ -175,10 +176,6 @@ export default defineConfig({
                         link("Share", "/extensions/share"),
                         link("Vanity", "/extensions/vanity"),
                     ],
-                },
-                {
-                    label: "Reference",
-                    items: [link("Types", "/types"), link("Links", "/links")],
                 },
                 {
                     label: "Project",

@@ -31,10 +31,10 @@ For the latter, use [FollowReject](/entities/follow-reject).
 
 <Entity name="Unfollow" type="Unfollow" transient>
     <Field name="author" type="Reference" required>
-        [Reference](/types#reference) to the `User` considered the 'follower', i.e. the user who is unsubscribing from the followee.
+        [Reference](/entities#reference) to the `User` considered the 'follower', i.e. the user who is unsubscribing from the followee.
     </Field>
     <Field name="followee" type="Reference" required>
-        [Reference](/types#reference) to the `User` considered the 'followee', i.e. the user who is being unsubscribed from.
+        [Reference](/entities#reference) to the `User` considered the 'followee', i.e. the user who is being unsubscribed from.
     </Field>
 
     <Inherits />

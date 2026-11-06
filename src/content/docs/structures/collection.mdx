@@ -16,7 +16,7 @@ As Collections are independent and not part of a larger entity (like [ContentFor
 
 <Fields name="Collection">
     <Field name="author" type="Reference">
-        [Reference](/types#reference) to the author of the collection. Usually the user who "owns" the collection.
+        [Reference](/entities#reference) to the author of the collection. Usually the user who "owns" the collection.
     </Field>
     <Field name="total" type="number" required numberType="u64">
         Total number of entities in the collection, across all pages.
@@ -54,13 +54,13 @@ URI Collections are identical to regular collections, but they contain only URIs
 
 <Fields name="URICollection">
     <Field name="author" type="Reference">
-        [Reference](/types#reference) to the author of the collection. Usually the user who owns the collection.
+        [Reference](/entities#reference) to the author of the collection. Usually the user who owns the collection.
     </Field>
     <Field name="total" type="number" required numberType="u64">
         Total number of entities in the collection, across all pages.
     </Field>
     <Field name="items" type="Reference[]" required>
-        Collection contents. **Must** be an array of [References](/types#reference).
+        Collection contents. **Must** be an array of [References](/entities#reference).
     </Field>
 
     <Example slot="example">

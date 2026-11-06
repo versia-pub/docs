@@ -23,13 +23,13 @@ Having the authorization is defined as:
 
 <Entity name="Delete" type="Delete" transient>
     <Field name="author" type="Reference" required>
-        [Reference](/types#reference) to the `User` who is deleting the entity.
+        [Reference](/entities#reference) to the `User` who is deleting the entity.
     </Field>
     <Field name="deleted_type" type="string" required>
         Type of the entity being deleted.
     </Field>
     <Field name="deleted" type="Reference" required>
-        [Reference](/types#reference) to the entity being deleted.
+        [Reference](/entities#reference) to the entity being deleted.
     </Field>
 
     <Inherits />

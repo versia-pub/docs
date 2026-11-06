@@ -20,10 +20,10 @@ When an instance receives a report, it *should* be reviewed by a moderator or ad
         **Must** be `pub.versia:reports/Report`.
     </Field>
     <Field name="author" type="Reference">
-        [Reference](/types#reference) to the reporting [User](/entities/user). Optional if the report is anonymous.
+        [Reference](/entities#reference) to the reporting [User](/entities/user). Optional if the report is anonymous.
     </Field>
     <Field name="reported" type="Reference[]" required>
-        [References](/types#reference) to the content being reported.
+        [References](/entities#reference) to the content being reported.
     </Field>
     <Field name="tags" type="string[]" required>
         Report tags. Should be concise and clear, such as `spam`, `harassment`, `misinformation`, etc. Used for categorization.

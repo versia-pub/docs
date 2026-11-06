@@ -29,7 +29,7 @@ Notes represent a piece of content on a Versia instance. They can be posted by [
         Media attachments to the note. May be any format. **Must** be remote.
     </Field>
     <Field name="author" type="Reference" required>
-        [Reference](/types#reference) to the `User` considered the author of the note.
+        [Reference](/entities#reference) to the `User` considered the author of the note.
     </Field>
     <Field name="category" type="Category">
         Category of the note. Useful for clients to render notes differently depending on their intended purpose.
@@ -55,7 +55,7 @@ Notes represent a piece of content on a Versia instance. They can be posted by [
         <Field name="url" type="string" />
     </Field>
     <Field name="group" type={'Reference | "public" | "followers"'}>
-        [Reference](/types#reference) to a [Group](/extensions/groups) that the note is only visible in, or one of the following strings:
+        [Reference](/entities#reference) to a [Group](/extensions/groups) that the note is only visible in, or one of the following strings:
 
         - `public`: The note is visible to anyone.
         - `followers`: The note is visible only to the author's followers.
@@ -70,7 +70,7 @@ Notes represent a piece of content on a Versia instance. They can be posted by [
         Whether the note contains "sensitive content". This can be used with `subject` as a "content warning" feature.
     </Field>
     <Field name="mentions" type="Reference[]" required>
-        [References](/types#reference) to [Users](/entities/user) that should be notified of the note. Similar to Twitter's `@` mentions. The note may also contain mentions in the content, however only the mentions in this field should trigger notifications.
+        [References](/entities#reference) to [Users](/entities/user) that should be notified of the note. Similar to Twitter's `@` mentions. The note may also contain mentions in the content, however only the mentions in this field should trigger notifications.
     </Field>
     <Field name="previews" type="LinkPreview[]" required>
         Previews for any links in the publication. This is to avoid the [stampeding mastodon problem](https://github.com/mastodon/mastodon/issues/23662) where a link preview is fetched by every instance that sees the publication, creating an accidental DDOS attack.
@@ -86,10 +86,10 @@ Notes represent a piece of content on a Versia instance. They can be posted by [
         </Note>
     </Field>
     <Field name="quotes" type="Reference">
-        [Reference](/types#reference) to the note that this note is quoting, if any. Quoting is similar to replying, but does not notify the author of the quoted note. Inspired by Twitter's "quote tweet" feature.
+        [Reference](/entities#reference) to the note that this note is quoting, if any. Quoting is similar to replying, but does not notify the author of the quoted note. Inspired by Twitter's "quote tweet" feature.
     </Field>
     <Field name="replies_to" type="Reference">
-        [Reference](/types#reference) to the note that this note is a reply to, if any.
+        [Reference](/entities#reference) to the note that this note is a reply to, if any.
     </Field>
     <Field name="subject" type="string">
         A subject for the note. Useful for clients to display a "content warning" or "spoiler" feature, such as on Mastodon. **Must** be a plaintext string (`text/plain`).

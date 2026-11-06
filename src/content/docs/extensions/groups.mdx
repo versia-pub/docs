@@ -86,10 +86,10 @@ Indicates that a [User](/entities/user) wishes to subscribe to a group.
         **Must** be `pub.versia:groups/Subscribe`.
     </Field>
     <Field name="subscriber" type="Reference" required>
-        [Reference](/types#reference) to the [User](/entities/user) subscribing to the group.
+        [Reference](/entities#reference) to the [User](/entities/user) subscribing to the group.
     </Field>
     <Field name="group" type="Reference" required>
-        [Reference](/types#reference) to the group to subscribe to.
+        [Reference](/entities#reference) to the group to subscribe to.
     </Field>
 
     <Inherits />
@@ -115,10 +115,10 @@ Indicates that a [User](/entities/user) wishes to unsubscribe from a group.
         **Must** be `pub.versia:groups/Unsubscribe`.
     </Field>
     <Field name="subscriber" type="Reference" required>
-        [Reference](/types#reference) to the [User](/entities/user) unsubscribing from the group.
+        [Reference](/entities#reference) to the [User](/entities/user) unsubscribing from the group.
     </Field>
     <Field name="group" type="Reference" required>
-        [Reference](/types#reference) to the group to unsubscribe from.
+        [Reference](/entities#reference) to the group to unsubscribe from.
     </Field>
 
     <Inherits />
@@ -144,10 +144,10 @@ Indicates that a [Group](#entity-definition) has accepted a [User](/entities/use
         **Must** be `pub.versia:groups/SubscribeAccept`.
     </Field>
     <Field name="subscriber" type="Reference" required>
-        [Reference](/types#reference) to the [User](/entities/user) subscribing to the group.
+        [Reference](/entities#reference) to the [User](/entities/user) subscribing to the group.
     </Field>
     <Field name="group" type="Reference" required>
-        [Reference](/types#reference) to the group that accepted the subscription.
+        [Reference](/entities#reference) to the group that accepted the subscription.
     </Field>
 
     <Inherits />
@@ -173,10 +173,10 @@ Indicates that a [Group](#entity-definition) has rejected a [User](/entities/use
         **Must** be `pub.versia:groups/SubscribeReject`.
     </Field>
     <Field name="subscriber" type="Reference" required>
-        [Reference](/types#reference) to the [User](/entities/user) subscribing to the group.
+        [Reference](/entities#reference) to the [User](/entities/user) subscribing to the group.
     </Field>
     <Field name="group" type="Reference" required>
-        [Reference](/types#reference) to the group that rejected the subscription.
+        [Reference](/entities#reference) to the group that rejected the subscription.
     </Field>
 
     <Inherits />
@@ -210,10 +210,10 @@ The `GroupFederate` entity allows a group to federate a note to all of its membe
         **Must** be `pub.versia:groups/Federate`.
     </Field>
     <Field name="note" type="Reference" required>
-        [Reference](/types#reference) to the note to federate.
+        [Reference](/entities#reference) to the note to federate.
     </Field>
     <Field name="group" type="Reference" required>
-        [Reference](/types#reference) to the group federating the note.
+        [Reference](/entities#reference) to the group federating the note.
     </Field>
 
     <Inherits />

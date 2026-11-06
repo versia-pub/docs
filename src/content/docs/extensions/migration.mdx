@@ -39,10 +39,10 @@ Migration happens in three steps:
         **Must** be `pub.versia:migration/Migration`.
     </Field>
     <Field name="author" type="Reference" required>
-        [Reference](/types#reference) to the [User](/entities/user) who is migrating.
+        [Reference](/entities#reference) to the [User](/entities/user) who is migrating.
     </Field>
     <Field name="destination" type="Reference" required>
-        [Reference](/types#reference) to the destination [User](/entities/user) on the new instance.
+        [Reference](/entities#reference) to the destination [User](/entities/user) on the new instance.
     </Field>
 
     <Inherits />
@@ -65,10 +65,10 @@ The following extensions to [User](/entities/user) are used by the migration ext
 
 <Fields name="MigrationExtension" extension="pub.versia:migration" on="User">
     <Field name="previous" type="Reference">
-        If this user has migrated from another instance, this property **MUST** be a [Reference](/types#reference) to the user on the previous instance.
+        If this user has migrated from another instance, this property **MUST** be a [Reference](/entities#reference) to the user on the previous instance.
     </Field>
     <Field name="new" type="Reference">
-        If this user has migrated to another instance, this property **MUST** be a [Reference](/types#reference) to the user on the new instance.
+        If this user has migrated to another instance, this property **MUST** be a [Reference](/entities#reference) to the user on the new instance.
     </Field>
 
     <Example slot="example" unchecked>

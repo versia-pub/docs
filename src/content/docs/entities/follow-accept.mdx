@@ -18,10 +18,10 @@ import Note from "../../../components/Note.astro";
 
 <Entity name="FollowAccept" type="FollowAccept" transient>
     <Field name="author" type="Reference" required>
-        [Reference](/types#reference) to the `User` considered the 'followee', i.e. the user who is being followed.
+        [Reference](/entities#reference) to the `User` considered the 'followee', i.e. the user who is being followed.
     </Field>
     <Field name="follower" type="Reference" required>
-        [Reference](/types#reference) to the `User` considered the 'follower', i.e. the user who is trying to follow the author.
+        [Reference](/entities#reference) to the `User` considered the 'follower', i.e. the user who is trying to follow the author.
     </Field>
 
     <Inherits />

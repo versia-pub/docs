@@ -23,10 +23,10 @@ User reactions are (like every other entity) federated to all followers, and can
         **Must** be `pub.versia:reactions/Reaction`.
     </Field>
     <Field name="author" type="Reference" required>
-        [Reference](/types#reference) to the [User](/entities/user) that is reacting.
+        [Reference](/entities#reference) to the [User](/entities/user) that is reacting.
     </Field>
     <Field name="object" type="Reference" required>
-        [Reference](/types#reference) to the [Note](/entities/note) attached to the reaction.
+        [Reference](/entities#reference) to the [Note](/entities/note) attached to the reaction.
     </Field>
     <Field name="content" type="string" required>
         Emoji content of reaction. May also be arbitrary text, or [Custom Emoji](/extensions/custom-emojis) if supported.
