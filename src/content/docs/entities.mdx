@@ -16,7 +16,9 @@ Entities are the foundation of the Versia protocol. They are similar to:
 
 ## Definition
 
-An entity is a simple JSON object that represents a core data structure in Versia. Entities are used to represent various types of data, such as users, notes, and more. Each entity has a unique `id` property that is used to identify it within the instance.
+An entity is a simple JSON object that represents a core data structure in Versia, such as a user or a note. Every entity has a `type` and a `created_at`. Every entity also has an `id` that identifies it within its instance, except for [Transient Entities](#transient-entities) and [InstanceMetadata](/entities/instance-metadata).
+
+Objects that do not meet this definition, such as [ContentFormat](/structures/content-format) and [Collection](/structures/collection), are **structures**.
 
 Fields not marked as `required` are [optional](/json#optional-fields).
 
@@ -29,7 +31,7 @@ Fields not marked as `required` are [optional](/json#optional-fields).
         - `0-9`
         - `-`, `_`
 
-        Not present on [Transient Entities](#transient-entities).
+        Not present on [Transient Entities](#transient-entities) or [InstanceMetadata](/entities/instance-metadata).
     </Field>
     <Field name="type" type="string" required>
         Type of the entity. Custom types **must** follow [Extension Naming](/extensions#naming).
@@ -115,6 +117,6 @@ The domain is always present, even when a reference points to an entity on the i
 
 ## Transient Entities
 
-Some entities are **transient**, meaning they cannot be fetched using the [Federation API](/api/endpoints). These entities are used for actions that do not require a permanent record, such as deletions or migrations. Transient Entities do not have an `id` field.
+Some entities are **transient**. A Transient Entity has no `id` field, so it cannot be fetched using the [Federation API](/api/endpoints) or referenced by other entities. These entities are used for actions that do not require a permanent record, such as deletions or migrations.
 
-Implementations **must not** rely on other implementations to store transient entities in their database.
+Implementations do not need to store Transient Entities, and **must not** rely on other implementations to store them.

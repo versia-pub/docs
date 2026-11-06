@@ -11,6 +11,8 @@ interface Props {
     /** Value of the `type` field, such as "Note" or "pub.versia:groups/Group". */
     type: string;
     transient?: boolean;
+    /** For a non-transient entity with no `id`. Read by `remark-spec`. */
+    idless?: boolean;
     /** For an entity with its own endpoint instead of the usual entity data one. */
     fetch?: { path: string; href: string };
     /** For an entity whose collections have their own endpoint. */

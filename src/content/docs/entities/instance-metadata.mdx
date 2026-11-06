@@ -9,19 +9,16 @@ import Example from "../../../components/spec/Example.astro";
 import Field from "../../../components/spec/Field.astro";
 import Inherits from "../../../components/spec/Inherits.astro";
 
-Contains metadata about a Versia instance, such as capabilities and endpoints. It is served by the instance it describes, and needs no [signature](/signatures), so that other instances can read the public key from it.
+Contains metadata about a Versia instance, such as capabilities and endpoints. It is served by the instance it describes, has no `id`, and needs no [signature](/signatures), so that other instances can read the public key from it.
 
 ## Entity Definition
 
-<Entity name="InstanceMetadata" type="InstanceMetadata" fetch={{ path: "/.versia/v0.6/instance", href: "/api/endpoints#instance-metadata" }} collectionsHref="/api/endpoints#instance-collections">
+<Entity name="InstanceMetadata" type="InstanceMetadata" fetch={{ path: "/.versia/v0.6/instance", href: "/api/endpoints#instance-metadata" }} collectionsHref="/api/endpoints#instance-collections" idless>
     <div slot="collections">
         - `moderators`: [Collection](/structures/collection) of instance moderators ([Users](/entities/user)).
         - `admins`: [Collection](/structures/collection) of instance administrators ([Users](/entities/user)).
     </div>
 
-    <Field name="id" type="null">
-        This entity does not have an ID.
-    </Field>
     <Field name="name" type="string" required>
         Friendly name of the instance, for humans.
     </Field>

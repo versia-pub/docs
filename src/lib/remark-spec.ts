@@ -131,10 +131,10 @@ const linkEntity = (entity: JsxElement, file: VFile) => {
     walk((entity as JsxElement).children, prefix, true);
 
     // A field the entity lists itself, such as an extension's `type`, wins over the inherited one.
-    // Transient entities have no `id`, as /entities says.
+    // Transient entities and InstanceMetadata have no `id`, as /entities says.
     const listed = new Set(fields.map((f) => f.name));
     const skipped = [...listed];
-    if (attribute(entity, "transient")) {
+    if (attribute(entity, "transient") || attribute(entity, "idless")) {
         skipped.push("id");
     }
     const inherited = hasInherited
