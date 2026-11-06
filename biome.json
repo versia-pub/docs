@@ -9,24 +9,20 @@
                 "noConsole": "off",
                 "noDuplicateElseIf": "error",
                 "noDocumentCookie": "off",
-                "noReactSpecificProps": "off",
                 "noUnknownAtRules": "off"
             },
             "performance": {
                 "noBarrelFile": "off",
                 "noNamespaceImport": "off",
-                "useTopLevelRegex": "off",
-                "noImgElement": "off"
+                "useTopLevelRegex": "off"
             },
             "correctness": {
                 "noUnusedVariables": "error",
                 "noUnusedImports": "error",
                 "noUnknownFunction": "off",
                 "noUndeclaredVariables": "off",
-                "useHookAtTopLevel": "off",
                 "noUndeclaredDependencies": "off",
                 "useImportExtensions": "off",
-                "useJsxKeyInIterable": "off",
                 "useUniqueElementIds": "off"
             },
             "a11y": {

@@ -35,7 +35,7 @@ for (const [route, html] of pages) {
         const [path = "", fragment] = href.split("#");
         const target = path === "" ? route : path.replace(/(.)\/$/, "$1");
 
-        if (target.startsWith("/_next") || target.includes(".")) {
+        if (target.includes(".")) {
             continue;
         }
 

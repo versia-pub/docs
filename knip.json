@@ -9,8 +9,6 @@
     "ignoreDependencies": [
         "@astrojs/check",
         "@biomejs/biome",
-        "@fontsource-variable/.+",
-        "clsx",
-        "yaml"
+        "@fontsource-variable/.+"
     ]
 }
