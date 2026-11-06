@@ -61,18 +61,13 @@ A sender **must** deliver each entity to the instances hosting the users below. 
 | [Note](/entities/note), `group` is `public` | The author's followers, the users it mentions, and the authors of the Notes it replies to and quotes |
 | Note, `group` is `followers` | The author's followers and the users it mentions |
 | Note, no `group` | The users it mentions |
-| Note, after its [poll](/extensions/polls) changes | As above, and the users who voted |
 | [User](/entities/user), after a change | The user's followers |
 | [Follow](/entities/follow), [Unfollow](/entities/unfollow) | The followee |
 | [FollowAccept](/entities/follow-accept), [FollowReject](/entities/follow-reject) | The follower |
-| [Like, Dislike](/extensions/likes), [Reaction](/extensions/reactions) | The Note's author and, if the Note is public, the followers of the entity's author |
-| [Share](/extensions/share) | The Note's author and the followers of the entity's author |
-| [Vote](/extensions/polls) | The Note's author |
-| [Report](/extensions/reports) | The instances the reporter chooses |
 
 [Changing an entity](/entities#changing-an-entity) or sending a [Delete](/entities/delete) for it goes to the same audience, as it stands at that moment.
 
-Other extensions state their own delivery rules.
+Extensions state the delivery rules for their own entities on their own pages.
 
 ## Access
 

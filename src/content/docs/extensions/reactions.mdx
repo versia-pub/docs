@@ -13,9 +13,11 @@ import Note from "../../../components/Note.astro";
 
 The Reactions Extension allows users to express their reactions ("react") to posts with emojis.
 
-## Federation
+## Delivery
 
-Reactions are [delivered](/federation#delivery) to the author of the [Note](/entities/note) and, if the Note is public, to the followers of the reacting user. They can be displayed to clients depending on the privacy settings of the associated Note.
+A sender **must** [deliver](/federation#delivery) Reactions to the author of the [Note](/entities/note) and, if the Note is public, to the followers of the reacting user.
+
+Reactions can be displayed to clients depending on the privacy settings of the associated Note.
 
 ## Entity Definition
 

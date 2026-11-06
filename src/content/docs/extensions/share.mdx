@@ -15,9 +15,13 @@ The Share Extension lets users share notes they like with others. This is the sa
 
 ## Behaviour
 
-When a user shares a note, the note's original author **must** [receive the entity](/federation#delivery) alongside the user's followers. In clients, `Shares` should be rendered in a way that makes it clear that the shared note was originally authored by someone else than the user who shared it.
+In clients, `Shares` should be rendered in a way that makes it clear that the shared note was originally authored by someone else than the user who shared it.
 
 `Shares` can be undone ("unboosting") with a [Delete](/entities/delete) entity.
+
+## Delivery
+
+A sender **must** [deliver](/federation#delivery) Shares to the author of the [Note](/entities/note) and to the followers of the user who shared it.
 
 ## Entity Definition
 

@@ -123,6 +123,12 @@ If a vote is cast to a poll that is closed, the vote should be rejected with a `
     </Example>
 </Entity>
 
+## Delivery
+
+A sender **must** [deliver](/federation#delivery) Votes to the author of the [Note](/entities/note).
+
+When a poll's votes change, its Note is [sent again](/entities#changing-an-entity), and **must** also be delivered to the users who voted.
+
 ## Interaction Types
 
 <Note>
