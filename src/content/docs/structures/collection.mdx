@@ -18,10 +18,10 @@ A Collection can only hold entities [authored on the instance serving it](/feder
 
 <Fields name="Collection">
     <Field name="author" type="Reference">
-        [Reference](/entities#reference) to the author of the collection. Usually the user who "owns" the collection.
+        [Reference](/entities#reference) to the [User](/entities/user) who owns the collection, if a user does.
     </Field>
     <Field name="total" type="number" required numberType="u64">
-        Total number of entities in the collection, across all pages.
+        Total number of entities in the collection that the requesting instance [may fetch](/federation#access), across all pages.
     </Field>
     <Field name="items" type="Entity[]" required>
         Collection contents. **Must** be an array of entities.
@@ -54,14 +54,14 @@ A Collection can only hold entities [authored on the instance serving it](/feder
 
 Reference Collections are identical to regular Collections, but their `items` are [References](/entities#reference) instead of full entities. Use them when a collection can include entities from other instances.
 
-Neither kind of collection carries a field saying which kind it is. The page that names a collection states its kind, and that is how to read its `items`.
+Neither kind of collection carries a field saying which kind it is. The page that names a collection states its kind and the type of its items, and that is how to read its `items`.
 
 <Fields name="ReferenceCollection">
     <Field name="author" type="Reference">
-        [Reference](/entities#reference) to the author of the collection. Usually the user who owns the collection.
+        [Reference](/entities#reference) to the [User](/entities/user) who owns the collection, if a user does.
     </Field>
     <Field name="total" type="number" required numberType="u64">
-        Total number of entities in the collection, across all pages.
+        Total number of entities in the collection that the requesting instance [may fetch](/federation#access), across all pages.
     </Field>
     <Field name="items" type="Reference[]" required>
         Collection contents. **Must** be an array of [References](/entities#reference).

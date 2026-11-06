@@ -17,7 +17,7 @@ HTTP requests and responses between instances **must** include a [Signature](/si
 
 <Fields name="HTTP Request" label="Headers">
     <Field name="Accept" type="string" required>
-        **Must** be `application/vnd.versia+json`, unless specified otherwise. Basic `application/json` is **not** allowed.
+        **Must** be `application/vnd.versia+json` on every `/.versia/` route. Basic `application/json` is **not** allowed on them. The [well-known](/api/endpoints#well-known) and [WebFinger](/federation/discovery) routes state their own.
     </Field>
     <Field name="Content-Type" type="string" required>
         **Must** be `application/vnd.versia+json; charset=utf-8` if the request has a body.
@@ -42,8 +42,7 @@ HTTP requests and responses between instances **must** include a [Signature](/si
     <Example slot="example">
     ```http title="Example Request"
     POST https://bob.com/.versia/v0.6/inbox HTTP/1.1
-    # This specific endpoint returns plain JSON
-    Accept: application/json
+    Accept: application/vnd.versia+json
     Content-Type: application/vnd.versia+json; charset=utf-8
     User-Agent: CoolServer/1.0 (https://coolserver.com)
     Versia-Signature: fNL6ahaIp875nssChgKbowDYphTPC+aArjRMOr8AdIalREv2D5mzznkx2ApPZ8YcV0V2OSE5Tel1dmyTe+LhBA==
@@ -59,11 +58,19 @@ Implementations **must** respect the rate limits of remote instances.
 
 An instance that rate limits a request **must** respond with a [`429 Too Many Requests`](https://datatracker.ietf.org/doc/html/rfc6585#section-4) status code and a [`Retry-After`](https://datatracker.ietf.org/doc/html/rfc9110#section-10.2.3) header. The sender **must not** retry the request before that time.
 
+## Retries
+
+A sender delivering to an [inbox](/api/endpoints#inbox) **should** retry with increasing delays after a network failure, a `5xx` status code, a `408 Request Timeout`, a `429 Too Many Requests`, or a `2xx` response [it had to discard](/signatures#where-signatures-are-required). It **must** honor any `Retry-After` header. It **must not** retry after any other `4xx` status code.
+
+Each retry **must** be [signed](/signatures) again, as the signature's timestamp will no longer be valid.
+
+How long to keep trying is up to the implementation. 48 hours is a reasonable default.
+
 ## Responses
 
 <Fields name="HTTP Response" label="Headers">
     <Field name="Content-Type" type="string" required>
-        **Must** include `application/vnd.versia+json; charset=utf-8`, unless specified otherwise.
+        **Must** include `application/vnd.versia+json; charset=utf-8` if the response has a body, unless specified otherwise.
     </Field>
     <Field name="Versia-Signature" type="string" required>
         See [Signatures](/signatures) for more information.
@@ -85,6 +92,53 @@ An instance that rate limits a request **must** respond with a [`429 Too Many Re
     Versia-Signed-At: 1729241717
 
     {"total":0,"items":[]}
+    ```
+    </Example>
+</Fields>
+
+## Status Codes
+
+Every federation route uses these status codes. A check that runs after a `2xx` status code has been sent can no longer report a problem, so the entity is dropped.
+
+| Status code | Meaning |
+| --- | --- |
+| `200 OK` | The requested entity or collection is in the body. |
+| `202 Accepted` | The [inbox](/api/endpoints#inbox) took the entity. It is also the answer to a [repeated signature](/signatures#repeated-signatures) and to an [unknown extension type](/federation/validation#unknown-fields-and-types). |
+| `400 Bad Request` | The body is not valid JSON. |
+| `401 Unauthorized` | The [signature](/signatures) is missing or invalid, or its timestamp is more than 5 minutes from the current time. |
+| `403 Forbidden` | The receiver refuses to federate with the sender's instance. |
+| `404 Not Found` | There is no such entity, or the requesting instance [may not fetch it](/federation#access). |
+| `410 Gone` | The entity [was deleted](/entities/delete#fetching-deleted-entities). |
+| `415 Unsupported Media Type` | The `Content-Type` is wrong. |
+| `422 Unprocessable Entity` | The entity is [invalid](/federation/validation), its [author does not belong to the signer](/federation/validation#authors-and-signers), or its [core type is unknown](/federation/validation#unknown-fields-and-types). Also used for invalid [pagination parameters](/api/endpoints#pagination). |
+| `429 Too Many Requests` | The sender is [rate limited](#rate-limits). |
+
+The inbox **should** answer with `202 Accepted` and no body. Senders **must** treat any `2xx` status code from the inbox as delivered, as long as [its signature verifies](/signatures#where-signatures-are-required).
+
+## Error Bodies
+
+A response with a `4xx` or `5xx` status code **may** have a body in the format below. The status code is what counts: an instance **must not** change its behavior based on an error body.
+
+<Fields name="Error">
+    <Field name="error" type="string" required>
+        Short description of the problem.
+    </Field>
+    <Field name="error_description" type="string">
+        Longer description of the problem, for humans.
+    </Field>
+    <Field name="details" type="object">
+        Problems by field. Keys are paths to the field, and values are arrays of strings describing what is wrong with it.
+    </Field>
+
+    <Example slot="example">
+    ```jsonc title="Example Error"
+    {
+        "error": "Validation failed",
+        "error_description": "The entity does not match its definition.",
+        "details": {
+            "created_at": ["Must be an RFC 3339 timestamp"]
+        }
+    }
     ```
     </Example>
 </Fields>

@@ -12,8 +12,8 @@ interface Props {
     path: string;
     /** Whether the request and the response must be signed. */
     signature?: "required" | "exempt";
-    /** `Accept` headers allowed in addition to the Versia one. */
-    accept?: string[];
+    /** The `Accept` header, if it is not the Versia one. */
+    accept?: string;
 }
 
 const signatureText = {
@@ -21,7 +21,7 @@ const signatureText = {
     exempt: "Not required for requests or responses.",
 };
 
-const { name, method, path, signature = "required", accept = [] } = Astro.props;
+const { name, method, path, signature = "required", accept } = Astro.props;
 const prefix = anchorPart(name);
 // The capture group keeps the parameters in the result, at the odd indexes.
 const pathParts = path.split(/(\{[^}]+\})/);
@@ -37,11 +37,7 @@ const pathParts = path.split(/(\{[^}]+\})/);
     <Col>
         <Facts>
             <Fact label="Signature" href="/signatures">{signatureText[signature]}</Fact>
-            {accept.length > 0 && (
-                <Fact label="Accept">
-                    Also allowed: {accept.map((value, index) => <>{index > 0 && ", "}<code>{value}</code></>)}.
-                </Fact>
-            )}
+            {accept && <Fact label="Accept"><code>{accept}</code></Fact>}
             {Astro.slots.has("parameters") && <Fact label="Parameters"><slot name="parameters" /></Fact>}
             {Astro.slots.has("response") && <Fact label="Response" id={`${prefix}-response`}><slot name="response" /></Fact>}
         </Facts>

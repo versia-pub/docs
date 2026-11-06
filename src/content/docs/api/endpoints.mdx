@@ -14,7 +14,7 @@ import Example from "../../../components/spec/Example.astro";
     method="GET"
     path="/.well-known/versia"
     signature="exempt"
-    accept={["application/jrd+json", "application/json"]}
+    accept="application/json"
 >
     <div slot="response">
         A small JSON object with a single attribute:
@@ -27,12 +27,12 @@ import Example from "../../../components/spec/Example.astro";
     ```http title="Example request"
     GET /.well-known/versia
     Host: b.social
-    Accept: application/jrd+json
+    Accept: application/json
     ```
 
     ```http title="Example response"
     HTTP/1.1 200 OK
-    Content-Type: application/jrd+json
+    Content-Type: application/json
 
     {
         "versions": [
@@ -82,6 +82,8 @@ import Example from "../../../components/spec/Example.astro";
     </div>
     <div slot="response">
         Entity data as JSON, as defined in its [Entity](/entities) definition document.
+
+        `404` if there is no such entity, or if the requesting instance [may not fetch it](/federation#access). A deleted entity answers [`410` or `404`](/entities/delete#fetching-deleted-entities).
     </div>
 
     <Example slot="example">
@@ -143,10 +145,16 @@ import Example from "../../../components/spec/Example.astro";
 
 ### Pagination
 
-Collections MUST support pagination, using the following URI parameters:
+Collections **must** support pagination, using the following URI parameters:
 
-- `offset`: The number of items to skip before returning the first item. This is a zero-based index.
-- `limit`: The maximum number of items to return. This is a one-based index. Implementations MUST support a minimum of `1` and a maximum of `40` items.
+- `offset`: The number of items to skip before returning the first item. Defaults to `0`.
+- `limit`: The maximum number of items to return, from `1` to `40`. Defaults to `40`. Any other whole number **must** be clamped to that range.
+
+A value that is not a whole number, or a negative `offset`, **must** be rejected with a `422 Unprocessable Entity` status code. An `offset` past the end returns empty `items` and the true `total`.
+
+Items **must** be in a stable order, oldest first, so that new items do not shift earlier pages. Removing an item can still shift later ones, so a request walking through a collection may see an item twice or miss one.
+
+A collection lists only the items the requesting instance [may fetch](/federation#access).
 
 ```http title="Example paginated collection request"
 GET /.versia/v0.6/entities/User/1234/collections/followers?offset=10&limit=20
@@ -195,7 +203,11 @@ The inbox endpoint is used for instances to send entities to each other. It is a
 
 The delivery mechanism is described further in the [Federation](/federation#inboxes) document.
 
-<Endpoint name="Inbox" method="POST" path="/.versia/v0.6/inbox" accept={["application/json"]}>
+<Endpoint name="Inbox" method="POST" path="/.versia/v0.6/inbox">
+    <div slot="response">
+        **Should** be `202 Accepted` with no body. See [Status Codes](/federation/http#status-codes) for all possible answers.
+    </div>
+
     <Example slot="example">
     ```http title="Example request"
     POST /.versia/v0.6/inbox

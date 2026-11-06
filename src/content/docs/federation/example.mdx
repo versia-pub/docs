@@ -45,7 +45,7 @@ Hello, @joe@b.social! How are you doing today?
 `a.social` resolves the mention by querying `b.social` for the user `joe` using WebFinger.
 
 ```bash title="cURL example"
-curl "https://b.social/.well-known/webfinger?resource=acct:joe@b.social" -H "Accept: application/json"
+curl "https://b.social/.well-known/webfinger?resource=acct:joe@b.social" -H "Accept: application/jrd+json"
 ```
 
 `b.social` responds with the following JSON:
@@ -153,7 +153,7 @@ It is now time for `a.social` to send the note to `joe`.
 curl -X POST https://b.social/.versia/v0.6/inbox \
     --data-binary @note.json \
     -H "Content-Type: application/vnd.versia+json; charset=utf-8" \
-    -H "Accept: application/json" \
+    -H "Accept: application/vnd.versia+json" \
     -H "User-Agent: CoolServer/1.0 (https://coolserver.com)" \
     -H "Versia-Signature: khmas9nMKjoB1PmOYa0kFnlyRTWngbl6mHNTZmnqPoNaTeOtlTW49BacCDEZDG/89MoyE8AvXmu3sRHH2RaQAw==" \
     -H "Versia-Signed-By: a.social" \
