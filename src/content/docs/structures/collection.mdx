@@ -12,7 +12,7 @@ Collections are a way to represent paginated groups of entities. They are used e
 
 As Collections are independent and not part of a larger entity (like [ContentFormat](/structures/content-format)), responses carrying them **must** have a valid [Signature](/signatures).
 
-A Collection can only hold entities [authored on the instance serving it](/federation/validation#authors-and-signers). To list entities from other instances, use a [URI Collection](#uri-collection).
+A Collection can only hold entities [authored on the instance serving it](/federation/validation#authors-and-signers). To list entities from other instances, use a [Reference Collection](#reference-collection).
 
 ## Definition
 
@@ -50,11 +50,13 @@ A Collection can only hold entities [authored on the instance serving it](/feder
     </Example>
 </Fields>
 
-## URI Collection
+## Reference Collection
 
-URI Collections are identical to regular collections, but they contain only URIs instead of full entities. They are useful for cases when remote entities need to be included in a collection, as those are typically not stored in implementation databases.
+Reference Collections are identical to regular Collections, but their `items` are [References](/entities#reference) instead of full entities. Use them when a collection can include entities from other instances.
 
-<Fields name="URICollection">
+Neither kind of collection carries a field saying which kind it is. The page that names a collection states its kind, and that is how to read its `items`.
+
+<Fields name="ReferenceCollection">
     <Field name="author" type="Reference">
         [Reference](/entities#reference) to the author of the collection. Usually the user who owns the collection.
     </Field>
@@ -66,7 +68,7 @@ URI Collections are identical to regular collections, but they contain only URIs
     </Field>
 
     <Example slot="example">
-    ```jsonc title="Example URI Collection"
+    ```jsonc title="Example Reference Collection"
     {
         "author": "versia.social:018ec082-0ae1-761c-b2c5-22275a611771",
         "total": 46,

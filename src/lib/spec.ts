@@ -10,7 +10,7 @@ export const typeLinks: Record<string, string> = {
     Entity: "/entities",
     Extensions: "/extensions#entity-extension",
     Reference: "/entities#reference",
+    ReferenceCollection: "/structures/collection#reference-collection",
     RFC3339: "https://datatracker.ietf.org/doc/html/rfc3339",
     URI: "https://datatracker.ietf.org/doc/html/rfc3986",
-    URICollection: "/structures/collection#uri-collection",
 };

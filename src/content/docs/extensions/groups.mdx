@@ -21,8 +21,8 @@ Only the instance hosting a group may send or serve that Group.
 
 <Entity name="Group" type="pub.versia:groups/Group">
     <div slot="collections">
-        - `members`: [URI Collection](/structures/collection#uri-collection) of [Users](/entities/user) that are members of the group.
-        - `notes`: [URI Collection](/structures/collection#uri-collection) of [Notes](/entities/note) that are associated with the group.
+        - `members`: [Reference Collection](/structures/collection#reference-collection) of [Users](/entities/user) that are members of the group.
+        - `notes`: [Reference Collection](/structures/collection#reference-collection) of [Notes](/entities/note) that are associated with the group.
     </div>
 
     <Field name="type" type="string" required>

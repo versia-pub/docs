@@ -42,9 +42,9 @@ Instance **must** be the [Domain](/api/basics#domain) that the user is on.
 <Entity name="User" type="User">
     <div slot="collections">
         - `outbox`: [Collection](/structures/collection) of notes authored by the user.
-        - `followers`: [URI Collection](/structures/collection#uri-collection) of users that follow the user.
-        - `following`: [URI Collection](/structures/collection#uri-collection) of users that the user follows.
-        - `featured`: [URI Collection](/structures/collection#uri-collection) of notes that the user wants to feature on their profile ("pinned" notes).
+        - `followers`: [Reference Collection](/structures/collection#reference-collection) of users that follow the user.
+        - `following`: [Reference Collection](/structures/collection#reference-collection) of users that the user follows.
+        - `featured`: [Reference Collection](/structures/collection#reference-collection) of notes that the user wants to feature on their profile ("pinned" notes).
     </div>
 
     <Field name="avatar" type="ContentFormat">

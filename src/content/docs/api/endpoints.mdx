@@ -115,7 +115,7 @@ import Example from "../../../components/spec/Example.astro";
         Example: `GET /.versia/v0.6/entities/User/1234/collections/followers` fetches the followers of the user with ID `1234`.
     </div>
     <div slot="response">
-        **Must** be either a [Collection](/structures/collection) or a [URICollection](/structures/collection#uri-collection) as JSON.
+        **Must** be either a [Collection](/structures/collection) or a [ReferenceCollection](/structures/collection#reference-collection) as JSON.
     </div>
 
     <Example slot="example">
@@ -165,7 +165,7 @@ Accept: application/vnd.versia+json
         Example: `GET /.versia/v0.6/instance/collections/admins` fetches the administrators of the instance.
     </div>
     <div slot="response">
-        **Must** be either a [Collection](/structures/collection) or a [URICollection](/structures/collection#uri-collection) as JSON.
+        **Must** be either a [Collection](/structures/collection) or a [ReferenceCollection](/structures/collection#reference-collection) as JSON.
     </div>
 
     <Example slot="example">
