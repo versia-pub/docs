@@ -85,7 +85,7 @@ Notes represent a piece of content on a Versia instance. They can be posted by [
             Implementations should make sure not to trust the previews, as they could be faked by malicious remote instances. This is not a very good attack vector, but it is still possible to redirect users to malicious links.
         </Note>
     </Field>
-    <Field name="quotes" type="Reference">
+    <Field name="quoting" type="Reference">
         [Reference](/entities#reference) to the note that this note is quoting, if any. Quoting is similar to replying, but does not notify the author of the quoted note. Inspired by Twitter's "quote tweet" feature.
     </Field>
     <Field name="replies_to" type="Reference">
