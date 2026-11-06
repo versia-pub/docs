@@ -21,7 +21,7 @@ When an instance receives a report, it *should* be reviewed by a moderator or ad
         **Must** be `pub.versia:reports/Report`.
     </Field>
     <Field name="author" type="Reference">
-        [Reference](/entities#reference) to the reporting [User](/entities/user). Optional if the report is anonymous.
+        [Reference](/entities#reference) to the reporting [User](/entities/user). Optional if the report is anonymous. A report without an `author` can only be attributed to the instance that signed it.
     </Field>
     <Field name="reported" type="Reference[]" required>
         [References](/entities#reference) to the content being reported.

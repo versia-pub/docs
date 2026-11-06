@@ -9,7 +9,7 @@ import Example from "../../../components/spec/Example.astro";
 import Field from "../../../components/spec/Field.astro";
 import Inherits from "../../../components/spec/Inherits.astro";
 
-The `User` entity represents an account on a Versia instance. Users can post [Notes](/entities/note), follow other users, and interact with content. Users are identified by their `id` property, which is unique within the instance.
+The `User` entity represents an account on a Versia instance. Users can post [Notes](/entities/note), follow other users, and interact with content. Users are identified by their `id` property, which is unique within the instance. Only the instance a User is on may send or serve that User.
 
 ## Addresses
 
@@ -44,7 +44,7 @@ Instance **must** be the [Domain](/api/basics#domain) that the user is on.
         - `outbox`: [Collection](/structures/collection) of notes authored by the user.
         - `followers`: [URI Collection](/structures/collection#uri-collection) of users that follow the user.
         - `following`: [URI Collection](/structures/collection#uri-collection) of users that the user follows.
-        - `featured`: [Collection](/structures/collection) of notes that the user wants to feature on their profile ("pinned" notes).
+        - `featured`: [URI Collection](/structures/collection#uri-collection) of notes that the user wants to feature on their profile ("pinned" notes).
     </div>
 
     <Field name="avatar" type="ContentFormat">

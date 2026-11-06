@@ -12,6 +12,8 @@ Collections are a way to represent paginated groups of entities. They are used e
 
 As Collections are independent and not part of a larger entity (like [ContentFormat](/structures/content-format)), responses carrying them **must** have a valid [Signature](/signatures).
 
+A Collection can only hold entities [authored on the instance serving it](/federation/validation#authors-and-signers). To list entities from other instances, use a [URI Collection](#uri-collection).
+
 ## Entity Definition
 
 <Fields name="Collection">

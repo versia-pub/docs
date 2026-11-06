@@ -17,6 +17,8 @@ Refer to [Note](/entities/note#entity-definition)'s `group` property for how not
 
 ## Entity Definition
 
+Only the instance hosting a group may send or serve that Group.
+
 <Entity name="Group" type="pub.versia:groups/Group">
     <div slot="collections">
         - `members`: [URI Collection](/structures/collection#uri-collection) of [Users](/entities/user) that are members of the group.
@@ -80,7 +82,7 @@ If the group accepts the subscription, the user will receive all notes posted to
 
 ### GroupSubscribe
 
-Indicates that a [User](/entities/user) wishes to subscribe to a group.
+Indicates that a [User](/entities/user) wishes to subscribe to a group. **Must** be sent by the subscriber's instance.
 
 <Entity name="GroupSubscribe" type="pub.versia:groups/Subscribe" transient>
     <Field name="type" type="string" required>
@@ -109,7 +111,7 @@ Indicates that a [User](/entities/user) wishes to subscribe to a group.
 
 ### GroupUnsubscribe
 
-Indicates that a [User](/entities/user) wishes to unsubscribe from a group.
+Indicates that a [User](/entities/user) wishes to unsubscribe from a group. **Must** be sent by the subscriber's instance.
 
 <Entity name="GroupUnsubscribe" type="pub.versia:groups/Unsubscribe" transient>
     <Field name="type" type="string" required>
@@ -138,7 +140,7 @@ Indicates that a [User](/entities/user) wishes to unsubscribe from a group.
 
 ### GroupSubscribeAccept
 
-Indicates that a [Group](#entity-definition) has accepted a [User](/entities/user)'s subscription request. Should be sent by the instance hosting the group.
+Indicates that a [Group](#entity-definition) has accepted a [User](/entities/user)'s subscription request. **Must** be sent by the instance hosting the group.
 
 <Entity name="GroupSubscribeAccept" type="pub.versia:groups/SubscribeAccept" transient>
     <Field name="type" type="string" required>
@@ -167,7 +169,7 @@ Indicates that a [Group](#entity-definition) has accepted a [User](/entities/use
 
 ### GroupSubscribeReject
 
-Indicates that a [Group](#entity-definition) has rejected a [User](/entities/user)'s subscription request. Should be sent by the instance hosting the group.
+Indicates that a [Group](#entity-definition) has rejected a [User](/entities/user)'s subscription request. **Must** be sent by the instance hosting the group.
 
 <Entity name="GroupSubscribeReject" type="pub.versia:groups/SubscribeReject" transient>
     <Field name="type" type="string" required>
@@ -204,7 +206,7 @@ Once this is done, the group's instance **must** then federate this [Note](/enti
 
 ### GroupFederate
 
-The `GroupFederate` entity allows a group to federate a note to all of its members, without needing to sign the note itself. It contains a URI to the note being federated, which **must** be fetched by the receiving instances. This entity is sent by the group's instance.
+The `GroupFederate` entity allows a group to federate a note to all of its members, without needing to sign the note itself. **Must** be sent by the instance hosting the group. It contains a URI to the note being federated, which **must** be fetched by the receiving instances. This entity is sent by the group's instance.
 
 <Entity name="GroupFederate" type="pub.versia:groups/Federate" transient>
     <Field name="type" type="string" required>
