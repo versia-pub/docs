@@ -13,9 +13,11 @@ interface Props {
     transient?: boolean;
     /** For an entity with its own endpoint instead of the usual entity data one. */
     fetch?: { path: string; href: string };
+    /** For an entity whose collections have their own endpoint. */
+    collectionsHref?: string;
 }
 
-const { name, type, transient = false, fetch } = Astro.props;
+const { name, type, transient = false, fetch, collectionsHref = "/api/endpoints#entity-collections" } = Astro.props;
 const fetchPath = fetch?.path ?? `${API_PREFIX}/entities/${encodeURIComponent(type)}/{id}`;
 const fetchHref = fetch?.href ?? "/api/endpoints#entity-data";
 ---
@@ -29,7 +31,7 @@ const fetchHref = fetch?.href ?? "/api/endpoints#entity-data";
             <Fact label="Fetch" href={fetchHref}><code>GET {fetchPath}</code></Fact>
         )}
         {Astro.slots.has("collections") && (
-            <Fact label="Collections" href="/api/endpoints#entity-collections" id="collections">
+            <Fact label="Collections" href={collectionsHref} id="collections">
                 <div class="collections"><slot name="collections" /></div>
             </Fact>
         )}

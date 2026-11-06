@@ -151,6 +151,41 @@ Host: b.social
 Accept: application/vnd.versia+json
 ```
 
+## Instance collections
+
+[Instance Metadata](/entities/instance-metadata) has no ID, so its collections have their own path. They paginate like any other [collection](#pagination).
+
+<Endpoint name="InstanceCollection" method="GET" path="/.versia/v0.6/instance/collections/{collection_type}">
+    <div slot="parameters">
+        - `{collection_type}`: The type of the collection to fetch, URL-encoded: `moderators` or `admins`.
+
+        Example: `GET /.versia/v0.6/instance/collections/admins` fetches the administrators of the instance.
+    </div>
+    <div slot="response">
+        **Must** be either a [Collection](/structures/collection) or a [URICollection](/structures/collection#uri-collection) as JSON.
+    </div>
+
+    <Example slot="example">
+    ```http title="Example request"
+    GET /.versia/v0.6/instance/collections/admins
+    Host: b.social
+    Accept: application/vnd.versia+json
+    ```
+
+    ```http title="Example response"
+    HTTP/1.1 200 OK
+    Content-Type: application/vnd.versia+json; charset=utf-8
+
+    {
+        "total": 2,
+        "items": [
+            // ...
+        ]
+    }
+    ```
+    </Example>
+</Endpoint>
+
 ## Inbox
 
 The inbox endpoint is used for instances to send entities to each other. It is a single endpoint that can receive messages for every user (also known as a shared inbox).
