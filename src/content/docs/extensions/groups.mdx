@@ -18,7 +18,7 @@ Groups are a way to organize users and notes into communities. They can be used 
 
 A [Note](/entities/note) is posted to a group through the `pub.versia:groups` key of its `extensions` field.
 
-Members of the group can see the Note, on top of the audience its `visibility` gives it, and their instances [may fetch it](/federation#access). To post a Note that only members and mentioned users can see, use a `visibility` of `mentions`: an instance that does not support this extension will then show it only to the mentioned users.
+Members of the group can see the Note, on top of the audience its `visibility` gives it, and their instances [may fetch it](/federation#access). To post a Note that only members and the rest of the `mentions` audience can see, use a `visibility` of `mentions`: an instance that does not support this extension will then show it only to the mentioned users.
 
 <Fields name="GroupNote" extension="pub.versia:groups" on="Note">
     <Field name="group" type="Reference" required>
@@ -49,6 +49,7 @@ Only the instance hosting a group may send or serve that Group.
     <div slot="collections">
         - `members`: [Reference Collection](/structures/collection#reference-collection) of [Users](/entities/user) that are members of the group.
         - `notes`: [Reference Collection](/structures/collection#reference-collection) of [Notes](/entities/note) that are associated with the group.
+        - `moderators`: [Reference Collection](/structures/collection#reference-collection) of [Users](/entities/user) that moderate the group. It may be empty. This is for display and contact only: the instance hosting the group enforces its rules.
     </div>
 
     <Field name="type" type="string" required>
@@ -102,9 +103,14 @@ Only the instance hosting a group may send or serve that Group.
 
 [Users](/entities/user) may "subscribe" to a Group in order to receive all [Notes](/entities/note) posted to it. The mechanism by which federation is handled is described at [the end of this document](#federation).
 
-First, a [User](/entities/user) **must** send a `GroupSubscribe` activity to the group. The group will then respond with either a `GroupSubscribeAccept` or a `GroupSubscribeReject` activity.
+A subscription works like a [Follow](/entities/follow):
 
-If the group accepts the subscription, the user will receive all notes posted to the group. If the group rejects the subscription, the user will not receive any notes posted to the group.
+- A [User](/entities/user)'s instance sends a `GroupSubscribe`, and the subscription is pending until the group's instance answers.
+- The group's instance **must** answer with a `GroupSubscribeAccept` or a `GroupSubscribeReject`, including when the group is `open`. It **must** send the `GroupSubscribeAccept` again if it receives a `GroupSubscribe` from a user who is already a member.
+- A `GroupUnsubscribe` ends a subscription and cancels a pending one.
+- A `GroupSubscribeReject` also removes a user who is already a member.
+
+Once accepted, the user is a member of the group and receives the Notes posted to it.
 
 ### GroupSubscribe
 
@@ -224,22 +230,39 @@ Indicates that a [Group](#entity-definition) has rejected a [User](/entities/use
 
 ## Federation
 
-Group federation represents a particularly challenging problem, as it requires a way to make sure every single [Note](/entities/note) posted to it is delivered to every single member of the group.
+The instance hosting a group cannot send the Notes posted to it, as an entity's author [must belong to the instance that signs it](/federation/validation#authors-and-signers). A Note therefore reaches the group's members in three steps:
 
-All [Notes](/entities/note) [posted to a group](#notes-in-a-group) **must** be sent to its instance's [inbox](/api/endpoints#inbox).
+1. The instance of the Note's author **must** send the [Note](/entities/note) to the [inbox](/api/endpoints#inbox) of the group's instance, on top of its usual [delivery](/federation#delivery). It **must** do the same with any change to the Note, and with a [Delete](/entities/delete) for it.
+2. The group's instance decides which Notes to federate. A Note it refuses is dropped silently. For the others, it **must** send a `GroupFederate` to every instance hosting a member of the group.
+3. Each of those instances fetches the Note from the instance of its author.
 
-Once this is done, the group's instance **must** then federate this [Note](/entities/note) to every member of the group. However, this cannot be done the "normal way", as the group's instance does not have the private key to [sign](/signatures) the [Note](/entities/note).
+The instance of the author allows that fetch if the requesting instance hosts a user in the group's `members` collection. It **may** cache that collection, and **should** fetch it again before refusing an instance it does not find there.
+
+When a Note posted to a group changes or is deleted, the group's instance **must** send a `GroupFederate` for it again, and receivers fetch it again. The instance of the author **must** answer with `410 Gone` for a deleted Note that was posted to a group.
+
+### Delivery and Access
+
+| Entity | Delivered to |
+| --- | --- |
+| `GroupSubscribe`, `GroupUnsubscribe` | The group's instance |
+| `GroupSubscribeAccept`, `GroupSubscribeReject` | The subscriber's instance |
+| `GroupFederate` | Instances hosting a member of the group |
+| [Group](#entity-definition), after a change or [Delete](/entities/delete) | Instances hosting a member of the group |
+
+Any instance may fetch a Group and its `members` and `moderators` collections.
 
 ### GroupFederate
 
-The `GroupFederate` entity allows a group to federate a note to all of its members, without needing to sign the note itself. **Must** be sent by the instance hosting the group. It contains a URI to the note being federated, which **must** be fetched by the receiving instances. This entity is sent by the group's instance.
+The `GroupFederate` entity tells an instance to fetch a Note posted to a group. **Must** be sent by the instance hosting the group.
+
+A receiver **must** ignore a `GroupFederate` that does not come from the instance hosting `group`, or whose fetched Note does not name that `group` in its `pub.versia:groups` extension.
 
 <Entity name="GroupFederate" type="pub.versia:groups/Federate" transient>
     <Field name="type" type="string" required>
         **Must** be `pub.versia:groups/Federate`.
     </Field>
-    <Field name="note" type="Reference" required>
-        [Reference](/entities#reference) to the note to federate.
+    <Field name="target" type="Reference" required>
+        [Reference](/entities#reference) to the [Note](/entities/note) to fetch.
     </Field>
     <Field name="group" type="Reference" required>
         [Reference](/entities#reference) to the group federating the note.
@@ -251,7 +274,7 @@ The `GroupFederate` entity allows a group to federate a note to all of its membe
     ```jsonc title="Example GroupFederate"
     {
         "type": "pub.versia:groups/Federate",
-        "note": "versia.social:c5aa65fa-0356-4029-b61c-6b237e5d1393",
+        "target": "versia.social:c5aa65fa-0356-4029-b61c-6b237e5d1393",
         "group": "example.com:ed480922-b095-4f09-9da5-c995be8f5960",
         "created_at": "2021-01-01T00:00:00Z"
     }
