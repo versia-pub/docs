@@ -72,7 +72,7 @@ curl "https://b.social/.well-known/webfinger?resource=acct:joe@b.social" -H "Acc
 curl https://b.social/.versia/v0.6/entities/User/bde22zi3ca8762 \
     -H "Accept: application/vnd.versia+json" \
     -H "User-Agent: CoolServer/1.0 (https://coolserver.com)" \
-    -H "Versia-Signature: /CjB2L9bcvRg+uP19B4/rqy7Ji9/cqMFPlL3GVCIndnQjYyOpBzJEAl9weDnXm7Jrqa3y6sBC+EYWKThO2r9Bw==" \
+    -H "Versia-Signature: 2id5eqPdj0SdpX0owDaXs1sOh1DE4SUx+h197nqQfN34+x/EHZcnhiRYzweiysBIkfWgycWpxBRFy3XA27GbCw==" \
     -H "Versia-Signed-By: a.social" \
     -H "Versia-Signed-At: 1733051945"
 ```
@@ -188,16 +188,16 @@ It is now time for `a.social` to send the note to `joe`.
 
 ### Sending the Note
 
-`a.social` sends the note to `joe`'s inbox at `b.social`.
+`a.social` sends the note to `joe`'s inbox at `b.social`. `note.json` holds the note above, with no trailing newline.
 
 ```bash
 # The request is signed by a.social's instance private key
 curl -X POST https://b.social/.versia/v0.6/inbox \
-    -d @note.json \
+    --data-binary @note.json \
     -H "Content-Type: application/vnd.versia+json; charset=utf-8" \
     -H "Accept: application/json" \
     -H "User-Agent: CoolServer/1.0 (https://coolserver.com)" \
-    -H "Versia-Signature: 9BrfplAPVH6OEqlV5eX7MazaZAInSCPODZcBEvMliBi/OwfbCAsezlb0O9jUX9ZcbBA68ThA4WUgS9V+42rfAQ==" \
+    -H "Versia-Signature: h93N5vhs1g3//lO1Xm9TUmrT7bc4P9OHDiGZ5UNe++2NqA7qz2m79I33vMjJS++4C6xUtDuGODFFwvoPIfJ0Cw==" \
     -H "Versia-Signed-By: a.social" \
     -H "Versia-Signed-At: 1733051946"
 ```

@@ -11,7 +11,7 @@ import Note from "../../../components/Note.astro";
 
 Versia uses the HTTP protocol for all communications between instances. HTTP requests must conform to certain standards to ensure compatibility between different implementations, as well as to ensure the security and integrity of the data being exchanged.
 
-HTTP requests/responses between instances **must** include a [Signature](/signatures), signed with the [instance's private key](/entities/instance-metadata), as defined in [Signatures](/signatures).
+HTTP requests and responses between instances **must** include a [Signature](/signatures), signed with the [instance's private key](/entities/instance-metadata), except on the routes listed in [Signatures](/signatures#where-signatures-are-required).
 
 ## Requests
 
@@ -46,7 +46,7 @@ HTTP requests/responses between instances **must** include a [Signature](/signat
     Accept: application/json
     Content-Type: application/vnd.versia+json; charset=utf-8
     User-Agent: CoolServer/1.0 (https://coolserver.com)
-    Versia-Signature: /CjB2L9bcvRg+uP19B4/rqy7Ji9/cqMFPlL3GVCIndnQjYyOpBzJEAl9weDnXm7Jrqa3y6sBC+EYWKThO2r9Bw==
+    Versia-Signature: fNL6ahaIp875nssChgKbowDYphTPC+aArjRMOr8AdIalREv2D5mzznkx2ApPZ8YcV0V2OSE5Tel1dmyTe+LhBA==
     Versia-Signed-By: example.com
     Versia-Signed-At: 1729241687
     ```
@@ -77,11 +77,14 @@ An instance that rate limits a request **must** respond with a [`429 Too Many Re
 
     <Example slot="example">
     ```http title="Example Response"
+    # Answers GET /.versia/v0.6/instance/collections/admins, sent to bob.com
     HTTP/1.1 200 OK
     Content-Type: application/vnd.versia+json; charset=utf-8
-    Versia-Signature: RePftClnwvrLJK1ns1FanE43XVlPqvpBVKO17r9PlU/YIcveAWKz++3F+3Cm3v244EFYyLhnkht7cJStwzJUCg==
-    Versia-Signed-By: example.com
+    Versia-Signature: Z7jS2clgNsfHTAJQ00teQRZ/ssvim+Y5zA/fOR9USG9Yr/v8A1fvPZGpjjf3bfDuGMi7eY35Cq0qGwsdy784DA==
+    Versia-Signed-By: bob.com
     Versia-Signed-At: 1729241717
+
+    {"total":0,"items":[]}
     ```
     </Example>
 </Fields>

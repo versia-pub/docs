@@ -10,15 +10,14 @@ interface Props {
     name: string;
     method: "GET" | "POST";
     path: string;
-    /** Who must sign. The spec only settles responses for `GET`, so the inbox says "request". */
-    signature?: "required" | "request" | "exempt";
+    /** Whether the request and the response must be signed. */
+    signature?: "required" | "exempt";
     /** `Accept` headers allowed in addition to the Versia one. */
     accept?: string[];
 }
 
 const signatureText = {
-    required: "Required.",
-    request: "Required on the request.",
+    required: "Required for requests and responses.",
     exempt: "Not required for requests or responses.",
 };
 

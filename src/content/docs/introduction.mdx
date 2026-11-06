@@ -32,5 +32,5 @@ The Versia Protocol is heavily inspired by the [ActivityPub](https://www.w3.org/
     - As structures are kept simple, they are easy to parse with strongly-typed languages like Rust.
 - **Modularity**: The protocol is divided into a **core protocol** and **extensions**. Implementations can choose to support only the core protocol or add extensions as needed.
 - **Namespacing**: To avoid extension conflicts, all extensions are namespaced.
-- **Signatures**: Most types of interactions **must** be signed with a private key. Unlike other protocols, signatures are **mandatory**, not optional.
+- **Signatures**: Requests and responses between instances **must** be signed with the instance's private key, apart from [a few routes](/signatures#where-signatures-are-required). Unlike other protocols, signatures are **mandatory**, not optional.
 - **Developer-Friendliness**: Understanding and implementing your own Versia server should be easy. Documentation is aimed at developers first.

@@ -10,7 +10,7 @@ import Fields from "../../../components/spec/Fields.astro";
 
 Collections are a way to represent paginated groups of entities. They are used everywhere lists of entities can be found, such as a user's outbox.
 
-As Collections are independent and not part of a larger entity (like [ContentFormat](/structures/content-format)), they should have a valid [Signature](/signatures).
+As Collections are independent and not part of a larger entity (like [ContentFormat](/structures/content-format)), responses carrying them **must** have a valid [Signature](/signatures).
 
 ## Entity Definition
 

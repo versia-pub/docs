@@ -7,7 +7,7 @@ kind: Core concept
 import SigningString from "../../components/spec/SigningString.astro";
 import Warning from "../../components/Warning.astro";
 
-Versia uses cryptographic signatures to ensure the integrity and authenticity of data. Signatures are used to verify that the data has not been tampered with and that it was created by the expected user.
+Versia uses cryptographic signatures to ensure the integrity and authenticity of data. A signature proves that a message was sent by the instance named in `Versia-Signed-By`, and that it has not been tampered with.
 
 <Warning>
     This part is very important! If signatures are implemented incorrectly in your instance, **you will not be able to federate**.
@@ -17,30 +17,42 @@ Versia uses cryptographic signatures to ensure the integrity and authenticity of
 
 ## Signature Definition
 
-A signature consists of a series of headers in an HTTP request. The following headers are used:
+A signature consists of three headers on an HTTP request or response:
 - **`Versia-Signature`**: The signature itself, encoded in base64.
-- **`Versia-Signed-By`**: [Domain](/api/basics#domain) of the instance authoring the request.
-- **`Versia-Signed-At`**: The current Unix timestamp, in seconds (integer), when the request was signed. Timezone **must** be UTC, like all Unix timestamps.
+- **`Versia-Signed-By`**: [Domain](/api/basics#domain) of the instance signing the message.
+- **`Versia-Signed-At`**: The current Unix timestamp, in seconds (integer), when the message was signed. Timezone **must** be UTC, like all Unix timestamps.
 
-Signatures **must** be put on:
-- **All `POST` requests**.
-- **All `GET` requests**.
-- **All responses to `GET` requests** (for example, when fetching a user's profile).
+All base64 on this page is the standard alphabet with padding, as defined in [RFC 4648, section 4](https://datatracker.ietf.org/doc/html/rfc4648#section-4).
 
-If a signature fails, is missing or is invalid, the instance **must** return a `401 Unauthorized` HTTP status code. If the signature is too old or too new (more than 5 minutes from the current time), the instance **must** return a `422 Unprocessable Entity` status code.
+### Where Signatures Are Required
+
+| Route | Requests and responses |
+| --- | --- |
+| [Inbox](/api/endpoints#inbox) | **Must** be signed |
+| [Entities](/api/endpoints#entity-data) | **Must** be signed |
+| [Entity collections](/api/endpoints#entity-collections) and [instance collections](/api/endpoints#instance-collections) | **Must** be signed |
+| [Well-known](/api/endpoints#well-known) | Not required |
+| [Instance metadata](/api/endpoints#instance-metadata) | Not required |
+| [WebFinger](/federation/discovery) | Not required |
+| [Instance messaging](/extensions/instance-messaging) | Not required |
+
+Instance metadata needs no signature because it holds the public key used to verify signatures.
+
+An instance receiving a request with a missing or invalid signature on a route that requires one **must** return a `401 Unauthorized` HTTP status code. If the timestamp is too old or too new (more than 5 minutes from the current time), it **must** return a `422 Unprocessable Entity` status code. An instance receiving a response with a missing, invalid, too old or too new signature on these routes **must** discard the response.
 
 ### Calculating the Signature
 
 Create a string containing the following:
 ```
-$0 $1 $2 $3
+$0 $1 $2 $3 $4
 ```
 
 Where:
-- `$0` is the HTTP method (e.g. `GET`, `POST`) in lowercase. If signing a *response*, use the method of the original request.
-- `$1` is the request pathname, URL-encoded.
-- `$2` is the Unix timestamp when the request was signed, in UTC seconds (integer).
-- `$3` is the SHA-256 hash of the request body, encoded in base64. (if it's a `GET` request, this should be the hash of an empty string)
+- `$0` is the HTTP method of the request in lowercase (e.g. `get`, `post`). If signing a *response*, use the method of the request it answers.
+- `$1` is the [Domain](/api/basics#domain) of the instance the request is sent to, in lowercase. If signing a *response*, this is the responding instance's own domain.
+- `$2` is the path and query string of the request, exactly as they appear in the HTTP request line, with no re-encoding. If there is no query string, this is the path alone, with no `?`. If signing a *response*, use the path and query string of the request it answers.
+- `$3` is the Unix timestamp when this message was signed, in UTC seconds (integer).
+- `$4` is the SHA-256 hash of the raw bytes of this message's body, exactly as sent, encoded in base64. If signing a *response*, hash the response's body, not the request's. If the message has no body, this is the hash of an empty string.
 
 Sign this string using the instance's private key with the [Ed25519](https://en.wikipedia.org/wiki/EdDSA#Ed25519) algorithm. The resulting bytes **must** be encoded in base64.
 
@@ -49,24 +61,34 @@ Example:
 <SigningString
     parts={[
         ["$0", "method", "post"],
-        ["$1", "pathname", "/.versia/v0.6/inbox"],
-        ["$2", "timestamp", "1729243417"],
-        ["$3", "body hash", "n4bQgYhMfWWaL+qgxVrQFaO/TxsrC4Is0V1sFbDwCgg="],
+        ["$1", "host", "alice.com"],
+        ["$2", "path and query", "/.versia/v0.6/inbox"],
+        ["$3", "timestamp", "1729243417"],
+        ["$4", "body hash", "4+e2vswDyKEalby/akgnvZl4yJTXIbN1u42bC6inlOo="],
     ]}
 />
+
+A signed response is not tied to one particular request. Its freshness relies on TLS and the 5-minute window.
 
 ### Verifying the Signature
 
 To verify a signature, the verifying instance **must**:
-- Recreate the string as described above.
+- Recreate the string as described above. For `$1`, use its own domain when verifying a request, and the domain it sent the request to when verifying a response. Do not read `$1` from the `Host` header.
 - Extract the signature provided in the `Versia-Signature` header.
 - Check that the `Versia-Signed-At` timestamp is within 5 minutes of the current time.
 - Decode the signature from base64 to the raw bytes.
-- Perform a signature verification using the sender instance's public key.
+- Perform a signature verification using the public key of the instance named in `Versia-Signed-By`.
+- When verifying a response, check that `Versia-Signed-By` names the instance the request was sent to.
+
+### Repeated Signatures
+
+A signed request stays valid for 5 minutes either side of its timestamp, so a captured request could be sent again.
+
+An instance **must not** process an [inbox](/api/endpoints#inbox) request whose `Versia-Signature` it has already accepted from the same instance in the last 10 minutes, and **must** answer it with a `2xx` status code so that the sender does not retry. Processing in the inbox **must** also be idempotent: receiving the same entity twice **must** have the same effect as receiving it once.
 
 ### Example
 
-The following example is written in TypeScript using the WebCrypto API.
+The following example is written in TypeScript using the WebCrypto API and the ES2026 `Uint8Array` base64 methods.
 
 `@bob`, from `bob.com`, wants to sign a request to `alice.com`. The request is a `POST` to `/.versia/v0.6/inbox`, with the following body:
 ```json
@@ -79,11 +101,6 @@ Bob can be found at `https://bob.com/.versia/v0.6/entities/User/bf44e6ad-7c0a-45
 
 Here's how Bob would sign the request:
 ```typescript
-/**
- * Using Node.js's Buffer API for brevity
- * If using another runtime, you may need to use a different method to convert to/from Base64
- */
-
 const content = JSON.stringify({
     content: "Hello, world!",
 });
@@ -91,7 +108,7 @@ const content = JSON.stringify({
 const base64PrivateKey = "MC4CAQAwBQYDK2VwBCIEILrNXhbWxC/MhKQDsJOAAF1FH/R+Am5G/eZKnqNum5ro";
 const privateKey = await crypto.subtle.importKey(
     "pkcs8",
-    Buffer.from(base64PrivateKey, "base64"),
+    Uint8Array.fromBase64(base64PrivateKey),
     "Ed25519",
     false,
     ["sign"],
@@ -104,7 +121,7 @@ const digest = await crypto.subtle.digest(
 );
 
 const stringToSign =
-    `post /.versia/v0.6/inbox ${timestamp} ${Buffer.from(digest).toString("base64")}`;
+    `post alice.com /.versia/v0.6/inbox ${timestamp} ${new Uint8Array(digest).toBase64()}`;
 
 const signature = await crypto.subtle.sign(
     "Ed25519",
@@ -112,7 +129,7 @@ const signature = await crypto.subtle.sign(
     new TextEncoder().encode(stringToSign)
 );
 
-const base64Signature = Buffer.from(signature).toString("base64");
+const base64Signature = new Uint8Array(signature).toBase64();
 ```
 
 To send the request, Bob would use the following code:
@@ -137,7 +154,11 @@ On Alice's side, she would verify the signature using Bob's instance's public ke
 
 ```typescript
 const method = request.method.toLowerCase();
-const path = new URL(request.url).pathname;
+// Alice's own domain, not the Host header
+const host = "alice.com";
+// Must match the request line. If your URL parser normalizes it, use the raw request target
+const url = new URL(request.url);
+const path = url.pathname + url.search;
 const signature = request.headers.get("Versia-Signature");
 const timestamp = Number(request.headers.get("Versia-Signed-At"));
 
@@ -148,16 +169,16 @@ if (Math.abs(Date.now() - timestamp * 1000) > 300_000) {
 
 const digest = await crypto.subtle.digest(
     "SHA-256",
-    new TextEncoder().encode(await request.text())
+    await request.arrayBuffer()
 );
 
 const stringToVerify =
-    `${method} ${path} ${timestamp} ${Buffer.from(digest).toString("base64")}`;
+    `${method} ${host} ${path} ${timestamp} ${new Uint8Array(digest).toBase64()}`;
 
 const isVerified = await crypto.subtle.verify(
     "Ed25519",
     publicKey,
-    Buffer.from(signature, "base64"),
+    Uint8Array.fromBase64(signature),
     new TextEncoder().encode(stringToVerify)
 );
 
@@ -177,15 +198,11 @@ Public keys are always encoded using `base64` and **must** be in [SubjectPublicK
 </Warning>
 
 ```typescript title="Example using TypeScript and the WebCrypto API"
-/**
- * Using Node.js's Buffer API for brevity
- * If using another runtime, you may need to use a different method to convert to/from Base64
- */
 const spkiEncodedPublicKey = await crypto.subtle.exportKey(
     "spki",
     /* Your public key */
     publicKey,
 );
 
-const base64PublicKey = Buffer.from(spkiEncodedPublicKey).toString("base64");
+const base64PublicKey = new Uint8Array(spkiEncodedPublicKey).toBase64();
 ```
