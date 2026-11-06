@@ -121,7 +121,7 @@ A reference does not say what type of entity it points to, but [fetching an enti
 
 To change an entity, its instance sends the whole entity again, with the same `id`, to the [same audience](/federation#delivery). The receiver replaces the copy it holds. An optional field that is left out is cleared.
 
-`id`, `type`, `author` and `created_at` **must not** change. A receiver **must** discard a version that changes any of them.
+`id`, `type`, `author` and `created_at` **MUST NOT** change. A receiver **MUST** discard a version that changes any of them. An extension **MAY** lock further fields of its own entities, and states which on its page.
 
 Senders **should** set `updated_at` when sending a change. A receiver **must** discard a version whose `updated_at` is older than that of the copy it holds. Without an `updated_at` to compare, the last version received wins. The same applies to a version it fetched.
 

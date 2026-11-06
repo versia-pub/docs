@@ -105,6 +105,8 @@ The instance of the poll's author **must not** count a Vote for a poll that has 
 
 A user changes a vote by [sending the Vote again](/entities#changing-an-entity) with the same `id` and a new `option`, and withdraws it with a [Delete](/entities/delete). A change or Delete that arrives after the poll has closed leaves the numbers as they are.
 
+A Vote's `target` **MUST NOT** change, and a receiver **MUST** discard a version that changes it. Voting in another poll takes a new Vote.
+
 <Entity name="Vote" type="pub.versia:polls/Vote">
     <Field name="type" type="string" required>
         **Must** be `pub.versia:polls/Vote`.

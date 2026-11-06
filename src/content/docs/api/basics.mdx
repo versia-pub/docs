@@ -39,9 +39,9 @@ API requests and responses between instances **must** include a [Signature](/sig
 
 ## Domain
 
-Versia defines a **domain** as the hostname of an instance, which is used to identify the instance in the network. It **must** be a valid hostname, and cannot include a port number (the HTTPS port is always 443).
+Versia defines a **domain** as the hostname of an instance, which is used to identify the instance in the network. It **MUST** be a valid hostname as defined by [RFC 1123](https://datatracker.ietf.org/doc/html/rfc1123#section-2), and **MUST NOT** include a port number (the HTTPS port is always 443). An internationalized domain name **MUST** be written in its ASCII `xn--` form, as defined by [IDNA](https://datatracker.ietf.org/doc/html/rfc5891).
 
-Defining a domain is very complicated, so please refer to the following examples:
+A domain **MUST** be lowercase wherever it appears in the protocol, including [References](/entities#reference), `Versia-Signed-By` and the [signed string](/signatures).
 
 ```text title="Valid Domains"
 example.com
@@ -58,16 +58,17 @@ example.com.       # ❌️ Invalid: trailing dot is not allowed
 test.org/          # ❌️ Invalid: trailing slash is not allowed
 test.org/sus       # ❌️ Invalid: path is not allowed
 💩.la              # ❌️ Invalid: IDNs must be Punycode encoded
+Example.com        # ❌️ Invalid: uppercase is not allowed
 https://bob.org    # ❌️ Invalid: protocol is not allowed
 ```
 
 ## Redirects
 
 API endpoints **MUST NOT** redirect to other endpoints, with the following exceptions:
-- When the request does not have an `Accept: application/vnd.versia+json` header, the server **MAY** redirect to an HTML representation of the resource.
+- When a `GET` request does not have an `Accept: application/vnd.versia+json` header, the server **MAY** redirect to an HTML representation of the resource.
 
 <Warning>
-    HTTP to HTTPS redirects are **NOT** allowed for API endpoints.
+    API endpoints **MUST NOT** redirect from HTTP to HTTPS.
 
     This is to force all API communication to be encrypted, and to avoid accidentally leaking sensitive data over unencrypted connections.
 </Warning>
