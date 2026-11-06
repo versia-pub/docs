@@ -121,7 +121,7 @@ To send the request, Bob would use the following code:
 const headers = new Headers();
 
 headers.set("Versia-Signed-By", "bob.com");
-headers.set("Versia-Signed-At", timestamp);
+headers.set("Versia-Signed-At", String(timestamp));
 headers.set("Versia-Signature", base64Signature);
 headers.set("Content-Type", "application/vnd.versia+json; charset=utf-8");
 

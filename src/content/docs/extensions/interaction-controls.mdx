@@ -76,7 +76,7 @@ The entity defined in this document **must** be inserted in the `pub.versia:inte
     </Example>
 </Fields>
 
-## Usage
+## Interactions
 
 ### Interaction Types
 
@@ -94,5 +94,5 @@ Implementations that find a user attempting to create an interaction they are no
 It is important for implementations to backfill any related [Collections](/structures/collection)/[URI Collections](/structures/collection#uri-collection) (e.g. user followers) in order to not incorrectly reject Notes based off of outdated data.
 
 <Note>
-    To avoid server load from constant Collection refreshing, implementations **could** only refetch associated Collections when forbidden interactions are detected, then recalculate permissions again.
+    To avoid server load from constant Collection refreshing, implementations **may** only refetch associated Collections when forbidden interactions are detected, then recalculate permissions again.
 </Note>
