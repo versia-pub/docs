@@ -11,7 +11,7 @@ Remember that while *your* implementation may disallow or restrict some user inp
 
 For example, if your implementation disallows using HTML in posts, you should not strip HTML from posts coming from other instances. You *may* choose to display them differently, but you should not modify the data itself. [Sanitizing HTML before rendering it](/security#remote-content) does not change this: it applies to what you display, not to what you store.
 
-Things that should be validated include, but are not limited to:
+Things to validate include, but are not limited to:
 
 - The presence of **all required fields**. [Optional fields](/json#optional-fields) may be omitted or `null`.
 - The **format** of all fields (integers should not be strings, timestamps should be in RFC 3339 format, etc.). Whether a well-formed date is plausible is up to your implementation.
@@ -19,8 +19,8 @@ Things that should be validated include, but are not limited to:
 - The presence of a **valid signature**, where [one is required](/signatures#where-signatures-are-required).
 - The **author** of each entity, as described [below](#authors-and-signers).
 - The **length** of all fields (for example, the `username` field on a `User` entity) should be at least 1 character long.
-  - Do not set arbitrary limits on the length of fields that other instances may send you. For example, a `bio` field should not be limited to 160 characters, even if your own implementation has such a limit.
-  - If you do set limits, they should be reasonable, well-documented and should allow Users to easily view the remote original, by, for example, linking to it. A limit of `100 000` characters for a `bio` field is acceptable, but a limit of `160` characters is not.
+  - Limits on fields that other instances send you should not copy the limits you set for your own users. For example, a `bio` field should not be limited to 160 characters, even if your own implementation has such a limit.
+  - Any limit you do set should be generous and documented, and should let Users view the remote original, for example through a link. A limit of `100 000` characters for a `bio` field is acceptable, but a limit of `160` characters is not.
 - The **type** and **range** of all numeric fields.
   - For example, a `size` field on a `ContentFormat` structure should be a non-negative integer, not a negative number or a fractional one.
 
@@ -28,7 +28,7 @@ Things that should be validated include, but are not limited to:
 
 - The **validity** of all URLs and URIs (run them through your favorite URL parser).
 
-It is your implementation's duty to reject data from other instances that does not adhere to the strict spec. **This is crucial to ensure the integrity of your instance and the network as a whole**. Allowing data that is technically valid but semantically incorrect can lead to the degradation of the entire Versia ecosystem.
+It is your implementation's duty to reject data from other instances that does not adhere to the strict spec. **This is crucial to ensure the integrity of your instance and the network as a whole**. Accepting invalid data can lead to the degradation of the entire Versia ecosystem.
 
 ## Authors and Signers
 

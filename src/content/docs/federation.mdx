@@ -28,7 +28,7 @@ Federation is built on the [HyperText Transfer Protocol (HTTP)](https://datatrac
     See the [Inbox Endpoint](/api/endpoints#inbox) for more information on the inbox endpoint.
 </Note>
 
-Every [Instance](/entities/instance-metadata) has a personal HTTP endpoint called an inbox (`/.versia/v0.6/inbox`). This endpoint is used to send and receive messages between users and instances. Messages are sent as JSON payloads over HTTP `POST` requests.
+Every [Instance](/entities/instance-metadata) has one HTTP endpoint called an inbox (`/.versia/v0.6/inbox`), which receives messages for all of its users. Messages are sent to it as JSON payloads over HTTP `POST` requests.
 
 Let's consider the following example:
 

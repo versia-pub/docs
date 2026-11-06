@@ -30,7 +30,7 @@ Consider the following example:
 To establish a follow relationship, `social.joe.org` **must** do the following:
 
 1. Create a `Follow` entity with `Joe` as the author and `Alice` as the followee.
-2. Send the `Follow` entity to `Alice`'s inbox.
+2. Send the `Follow` entity to `alice.dev`'s inbox.
 3. Treat the relationship as "processing" until a `FollowAccept` arrives.
 
 ### Accepting the Follow Request
@@ -40,7 +40,7 @@ To establish a follow relationship, `social.joe.org` **must** do the following:
 To accept the follow request, `alice.dev` **must** do the following:
 
 1. Create a [FollowAccept](/entities/follow-accept) entity with `Alice` as the author and `Joe` as the follower.
-2. Send the `FollowAccept` entity to `Joe`'s inbox.
+2. Send the `FollowAccept` entity to `social.joe.org`'s inbox.
 
 It then treats `Joe` as a follower of `Alice`.
 
@@ -49,7 +49,7 @@ It then treats `Joe` as a follower of `Alice`.
 To reject the follow request, `alice.dev` **must** do the following:
 
 1. Create a [FollowReject](/entities/follow-reject) entity with `Alice` as the author and `Joe` as the follower.
-2. Send the `FollowReject` entity to `Joe`'s inbox.
+2. Send the `FollowReject` entity to `social.joe.org`'s inbox.
 
 ### Cancelling the Follow Request
 
@@ -61,7 +61,7 @@ To cancel a follow request that has not been answered, `social.joe.org` sends an
 
 ## Behaviour
 
-Once a follow relationship is established, the **followee**'s instance **must** send new notes from the **followee** to the **follower**'s inbox, as described in [Delivery](/federation#delivery).
+Once a follow relationship is established, the **followee**'s instance **must** send new notes from the **followee** to the inbox of the **follower**'s instance, as described in [Delivery](/federation#delivery).
 
 ## Entity Definition
 
@@ -89,7 +89,7 @@ Once a follow relationship is established, the **followee**'s instance **must** 
 
 ## Flows
 
-Every message here is sent to the other user's inbox. A follow request is either accepted:
+Every message here is sent to the inbox of the other user's instance. A follow request is either accepted:
 
 <WireTrace a="social.joe.org" b="alice.dev">
     <Message from="a" label="Follow">`Joe` asks to follow `Alice`.</Message>

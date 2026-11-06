@@ -23,7 +23,7 @@ The Custom Emojis extension adds support for adding personalized emojis to feder
         - `0-9`
         - `_`, `-`
 
-        Identification characters **must not** match the name regex (**must not** be alphanumeric/underscore/hyphen). There may only be two identification characters, one at the beginning and one at the end.
+        Identification characters **MUST NOT** be any of the characters allowed above. There may only be two identification characters, one at the beginning and one at the end.
     </Field>
     <Field name="content" type="ContentFormat" required>
         Emoji content. **Must** be an image format (`image/*`).
@@ -73,7 +73,7 @@ Custom Emojis can be added to any entity with text content. The extension ID is 
 
 <Fields name="CustomEmojisExtension" extension="pub.versia:custom_emojis">
     <Field name="emojis" type="CustomEmoji[]" required>
-        [Custom emojis](/extensions/custom-emojis#structure-definition) to be added to the note.
+        [Custom emojis](/extensions/custom-emojis#structure-definition) used in the entity.
     </Field>
 
     <Example slot="example" unchecked>
