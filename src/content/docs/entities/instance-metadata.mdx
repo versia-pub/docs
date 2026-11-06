@@ -36,11 +36,8 @@ Contains metadata about a Versia instance, such as capabilities and endpoints.
         </Field>
     </Field>
     <Field name="compatibility" type="Compatibility" required>
-        Information about the compatibility of the instance.
+        Information about the compatibility of the instance. Supported Versia Protocol versions are listed at the [well-known endpoint](/api/endpoints#well-known).
 
-        <Field name="versions" type="string[]" required>
-            Supported Versia Protocol versions. Versions marked as "Working Draft X" are represented as `0.X.Y`.
-        </Field>
         <Field name="extensions" type="string[]" required>
             Supported extensions.
         </Field>
@@ -80,11 +77,6 @@ Contains metadata about a Versia instance, such as capabilities and endpoints.
             "version": "1.2.0-beta.3"
         },
         "compatibility": {
-            "versions": [
-                "0.3.0",
-                "0.4.0",
-                "0.5.0"
-            ],
             "extensions": [
                 "pub.versia:reactions",
                 "pub.versia:polls",

@@ -10,7 +10,12 @@ Versia defines a very simple API for server-to-server communication, mainly fetc
 
 ## API Versioning
 
-Every Versia API endpoint is prefixed with `/.versia/vX/`, where `X` is the version of the API. The current version is `0.6`, so the current API prefix is `/.versia/v0.6/`. This versioning is used to avoid breaking changes in the future, and to allow for backwards compatibility.
+Versia Protocol versions are written as `0.X.Y`:
+
+- `X` changes when a release breaks compatibility with earlier versions.
+- `Y` changes when a release stays compatible with other `0.X` versions, for example by adding an optional field.
+
+Every Versia API endpoint is prefixed with `/.versia/v0.X/`, so all `0.X.Y` versions share one prefix. The current prefix is `/.versia/v0.6/`. Instances list the versions they support at the [well-known endpoint](/api/endpoints#well-known).
 
 Requests not encrypted with TLS (aka HTTPS) **must not** be sent or responded to. All implementations are required to use TLS 1.2 or higher, and to support HTTP/2.
 
