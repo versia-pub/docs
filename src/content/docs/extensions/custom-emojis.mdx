@@ -35,8 +35,7 @@ The Custom Emojis extension adds support for adding personalized emojis to feder
         "name": ":happy_face:",
         "content": {
             "image/webp": {
-                "content": "https://cdn.example.com/emojis/happy_face.webp",
-                "remote": true,
+                "url": "https://cdn.example.com/emojis/happy_face.webp",
                 "description": "A happy emoji smiling."
             }
         }
@@ -89,15 +88,14 @@ Custom Emojis can be added to any entity with text content. The extension ID is 
             }
         },
         ...
-        "extensions": { // [!code focus:23]
+        "extensions": { // [!code focus:15]
             "pub.versia:custom_emojis": {
                 "emojis": [
                     {
                         "name": ":happy_face:",
                         "content": {
                             "image/webp": {
-                                "content": "https://cdn.example.com/emojis/happy_face.webp",
-                                "remote": true,
+                                "url": "https://cdn.example.com/emojis/happy_face.webp",
                                 "description": "A happy emoji smiling."
                             }
                         }

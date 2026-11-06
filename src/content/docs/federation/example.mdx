@@ -86,22 +86,11 @@ curl https://b.social/.versia/v0.6/entities/User/bde22zi3ca8762 \
     "created_at": "2024-10-13T18:48:19Z",
     "avatar": {
         "image/webp": {
-            "content": "https://cdn.b.social/avatars/joe.webp",
-            "remote": true,
-            "description": null,
-            "size": null,
-            "hash": null,
-            "thumbhash": null,
-            "width": null,
-            "height": null,
-            "fps": null,
-            "duration": null
+            "url": "https://cdn.b.social/avatars/joe.webp"
         }
     }, // [!code focus:3]
     "display_name": "Joe Swanson (Winter Arc :gigachad:)",
     "username": "joe",
-    "bio": null,
-    "header": null,
     "fields": [],
     "manually_approves_followers": false,
     "indexable": true,
@@ -112,16 +101,7 @@ curl https://b.social/.versia/v0.6/entities/User/bde22zi3ca8762 \
                     "name": ":gigachad:",
                     "content": {
                         "image/png": {
-                            "content": "https://cdn.b.social/emojis/gigachad.png",
-                            "remote": true,
-                            "description": null,
-                            "size": null,
-                            "hash": null,
-                            "thumbhash": null,
-                            "width": null,
-                            "height": null,
-                            "fps": null,
-                            "duration": null
+                            "url": "https://cdn.b.social/emojis/gigachad.png"
                         }
                     }
                 }
@@ -145,29 +125,11 @@ Finally, `a.social` serializes the note to send it to `joe`.
     "author": "a.social:ac41xk9dfe7302",
     "category": "microblog",
     "content": {
-        "text/html": { // [!code focus:12]
-            "content": "Hello, <a class=\"u-url mention\" href=\"https://b.social/users/bde22zi3ca8762\">@joe@b.social</a>! How are you doing today?",
-            "remote": false,
-            "description": null,
-            "size": null,
-            "hash": null,
-            "thumbhash": null,
-            "width": null,
-            "height": null,
-            "fps": null,
-            "duration": null
+        "text/html": { // [!code focus:3]
+            "content": "Hello, <a class=\"u-url mention\" href=\"https://b.social/users/bde22zi3ca8762\">@joe@b.social</a>! How are you doing today?"
         },
         "text/plain": {
-            "content": "Hello, @joe@b.social! How are you doing today?",
-            "remote": false,
-            "description": null,
-            "size": null,
-            "hash": null,
-            "thumbhash": null,
-            "width": null,
-            "height": null,
-            "fps": null,
-            "duration": null
+            "content": "Hello, @joe@b.social! How are you doing today?"
         }
     },
     "group": "public",
@@ -176,11 +138,7 @@ Finally, `a.social` serializes the note to send it to `joe`.
     ],
     "attachments": [],
     "is_sensitive": false,
-    "previews": [],
-    "replies_to": null,
-    "quotes": null,
-    "subject": null,
-    "device": null
+    "previews": []
 }
 ```
 
@@ -197,7 +155,7 @@ curl -X POST https://b.social/.versia/v0.6/inbox \
     -H "Content-Type: application/vnd.versia+json; charset=utf-8" \
     -H "Accept: application/json" \
     -H "User-Agent: CoolServer/1.0 (https://coolserver.com)" \
-    -H "Versia-Signature: h93N5vhs1g3//lO1Xm9TUmrT7bc4P9OHDiGZ5UNe++2NqA7qz2m79I33vMjJS++4C6xUtDuGODFFwvoPIfJ0Cw==" \
+    -H "Versia-Signature: khmas9nMKjoB1PmOYa0kFnlyRTWngbl6mHNTZmnqPoNaTeOtlTW49BacCDEZDG/89MoyE8AvXmu3sRHH2RaQAw==" \
     -H "Versia-Signed-By: a.social" \
     -H "Versia-Signed-At: 1733051946"
 ```

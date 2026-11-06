@@ -102,6 +102,85 @@ const checkExample = (
     }
 };
 
+const ELIDED = "...";
+const MEDIA_TYPE = /^[\w.+-]+\/[\w.+-]+$/;
+const FORMAT_FIELDS = new Set([
+    "content",
+    "url",
+    "description",
+    "size",
+    "hash",
+    "thumbhash",
+    "width",
+    "height",
+    "fps",
+    "duration",
+]);
+
+/** Samples can write `...` on its own line to skip keys. */
+const parseSample = (code: Code, file: VFile): unknown => {
+    const source = code.value
+        .replace(/^(\s*)\.\.\.,?\s*$/gm, `$1"${ELIDED}": true,`)
+        .replace(new RegExp(`("${ELIDED}": true),(\\s*})`, "g"), "$1$2");
+    const errors: { error: number; offset: number; length: number }[] = [];
+    const data = parse(source, errors, { allowTrailingComma: false });
+    const [first] = errors;
+    if (first) {
+        const line = source.slice(0, first.offset).split("\n").length;
+        file.fail(
+            `JSON sample is not valid: ${printParseErrorCode(first.error)} at line ${line} of the block`,
+            code,
+        );
+    }
+    return data;
+};
+
+const checkFormat = (
+    mediaType: string,
+    value: unknown,
+    code: Code,
+    file: VFile,
+) => {
+    const fail = (problem: string) =>
+        file.fail(`ContentFormat "${mediaType}" ${problem}`, code);
+
+    if (typeof value !== "object" || value === null) {
+        return fail("is not an object");
+    }
+    const format = value as Record<string, unknown>;
+    if (ELIDED in format) {
+        return;
+    }
+    const unlisted = Object.keys(format).filter((k) => !FORMAT_FIELDS.has(k));
+    if (unlisted.length > 0) {
+        fail(`has unlisted keys: ${unlisted.join(", ")}`);
+    }
+    if ("content" in format === "url" in format) {
+        fail("needs exactly one of content or url");
+    }
+    if (/^https?:\/\//.test(String(format.content))) {
+        fail("has a URL in content, which belongs in url");
+    }
+};
+
+const checkFormats = (value: unknown, code: Code, file: VFile) => {
+    if (typeof value !== "object" || value === null) {
+        return;
+    }
+    const entries = Object.entries(value).filter(([key]) => key !== ELIDED);
+    const isFormat =
+        !Array.isArray(value) &&
+        entries.length > 0 &&
+        entries.every(([key]) => MEDIA_TYPE.test(key));
+    for (const [key, child] of entries) {
+        if (isFormat) {
+            checkFormat(key, child, code, file);
+        } else {
+            checkFormats(child, code, file);
+        }
+    }
+};
+
 const linkEntity = (entity: JsxElement, file: VFile) => {
     const prefix = anchorPart(nameOf(entity));
     const fields: { name: string; required: boolean }[] = [];
@@ -168,10 +247,16 @@ const linkEntity = (entity: JsxElement, file: VFile) => {
 /**
  * Gives each `Field` in an `Entity` or `Fields` sheet its anchor, tells the
  * example's JSON blocks which keys can link to a field, and fails the build
- * when an example and its field list disagree.
+ * when an example and its field list disagree, or when any JSON block on the
+ * page is invalid or holds an invalid ContentFormat.
  */
 export function remarkSpec() {
     return (tree: Root, file: VFile) => {
+        for (const code of codeIn(tree)) {
+            if (code.lang === "json" || code.lang === "jsonc") {
+                checkFormats(parseSample(code, file), code, file);
+            }
+        }
         for (const sheet of [
             ...elementsIn(tree, "Entity"),
             ...elementsIn(tree, "Fields"),
