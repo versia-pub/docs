@@ -1,0 +1,79 @@
+---
+interface Props {
+    /** Each part of the string: its placeholder, what it holds, and the value. */
+    parts: [string, string, string][];
+}
+
+const { parts } = Astro.props;
+---
+
+<div class="signing-string">
+    <dl>
+        {parts.map(([placeholder, label, value]) => (
+            <div>
+                <dt><code>{placeholder}</code> {label}</dt>
+                <dd><code>{value}</code></dd>
+            </div>
+        ))}
+    </dl>
+    <p>
+        <span>Full string</span>
+        <code>{parts.map(([, , value]) => value).join(" ")}</code>
+    </p>
+</div>
+
+<style>
+    .signing-string {
+        margin: 0 0 1.25rem;
+        padding-block: 0.75rem;
+        border-block: 1px solid var(--hair);
+    }
+
+    dl {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.6rem 1.25rem;
+        margin: 0 0 0.75rem;
+    }
+
+    /* The value decides the width, so a long hash wraps onto its own line first. */
+    dl > div {
+        min-width: 0;
+    }
+
+    dt,
+    span {
+        color: var(--ink-soft);
+        font-size: 0.875rem;
+        line-height: 1.4;
+    }
+
+    dt code {
+        color: var(--accent);
+        font-size: 0.8rem;
+        font-weight: 650;
+    }
+
+    dd {
+        margin: 0;
+        line-height: 1.5;
+    }
+
+    dd code,
+    p code {
+        color: var(--value);
+        font-size: 0.8rem;
+        overflow-wrap: anywhere;
+    }
+
+    p {
+        margin: 0;
+        padding-top: 0.6rem;
+        border-top: 1px solid var(--hair);
+        line-height: 1.5;
+    }
+
+    span {
+        display: block;
+    }
+</style>

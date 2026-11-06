@@ -4,6 +4,7 @@ description: Learn how signatures work, and how to implement them in your Versia
 kind: Core concept
 ---
 
+import SigningString from "../../components/spec/SigningString.astro";
 import Warning from "../../components/Warning.astro";
 
 Versia uses cryptographic signatures to ensure the integrity and authenticity of data. Signatures are used to verify that the data has not been tampered with and that it was created by the expected user.
@@ -30,7 +31,7 @@ If a signature fails, is missing or is invalid, the instance **must** return a `
 
 ### Calculating the Signature
 
-Create a string containing the following (including newlines):
+Create a string containing the following:
 ```
 $0 $1 $2 $3
 ```
@@ -44,9 +45,15 @@ Where:
 Sign this string using the instance's private key with the [Ed25519](https://en.wikipedia.org/wiki/EdDSA#Ed25519) algorithm. The resulting bytes **must** be encoded in base64.
 
 Example:
-```
-post /notes 1729243417 n4bQgYhMfWWaL+qgxVrQFaO/TxsrC4Is0V1sFbDwCgg=
-```
+
+<SigningString
+    parts={[
+        ["$0", "method", "post"],
+        ["$1", "pathname", "/notes"],
+        ["$2", "timestamp", "1729243417"],
+        ["$3", "body hash", "n4bQgYhMfWWaL+qgxVrQFaO/TxsrC4Is0V1sFbDwCgg="],
+    ]}
+/>
 
 ### Verifying the Signature
 
