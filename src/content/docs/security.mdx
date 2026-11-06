@@ -69,7 +69,7 @@ Everything in an entity is written by another instance, and should be treated as
 
 Remote entities contain URLs and domains that an instance then fetches. A hostile entity could point them at the instance's own network.
 
-When fetching anything named by remote data, instances **SHOULD NOT** connect to loopback, link-local or private addresses. This should be checked after DNS resolution and on every redirect. Development setups may be exempted by local configuration.
+When fetching anything named by remote data, instances **SHOULD NOT** connect to loopback, link-local or private addresses. This **SHOULD** be checked after DNS resolution and on every redirect. Development setups may be exempted by local configuration.
 
 ## Conclusion
 

@@ -74,7 +74,7 @@ Instance **MUST** be the [Domain](/api/basics#domain) that the user is on.
         If `true`, the user must approve any new followers manually. If `false`, followers are automatically approved. This does not affect federation, and is meant to be used for clients to display correct UI: [every `Follow` is still answered](/entities/follow#accepting-the-follow-request).
     </Field>
     <Field name="indexable" type="boolean" required>
-        User consent to be indexed by search engines. If `false`, the user's profile should not be indexed.
+        User consent to be indexed by search engines. If `false`, the user's profile **SHOULD NOT** be indexed.
     </Field>
 
     <Inherits />

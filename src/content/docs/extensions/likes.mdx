@@ -13,7 +13,7 @@ import Note from "../../../components/Note.astro";
 
 The Likes extension adds support for users to like and dislike notes.
 
-Implementations should make sure that users cannot like and dislike the same note at the same time. If a user dislikes a note they have already liked, the like should be removed, and vice versa.
+Implementations **SHOULD** make sure that users cannot like and dislike the same note at the same time. If a user dislikes a note they have already liked, the like **SHOULD** be removed, and vice versa.
 
 ## Likes
 
@@ -81,7 +81,7 @@ Dislikes are a way for users to show disapproval for a note, like YouTube's "dis
 
 ## Undoing Likes and Dislikes
 
-To undo a like or dislike, a [Delete](/entities/delete) entity should be used. The `deleted` property of the Delete entity should link to the Like or Dislike entity to be removed.
+To undo a like or dislike, a [Delete](/entities/delete) entity **MUST** be used. The `deleted` property of the Delete entity **MUST** link to the Like or Dislike entity to be removed.
 
 ## Delivery and Access
 

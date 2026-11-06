@@ -65,7 +65,7 @@ Notes represent a piece of content on a Versia instance. They can be posted by [
         Whether the note contains "sensitive content". This can be used with `subject` as a "content warning" feature.
     </Field>
     <Field name="mentions" type="Reference[]" required>
-        [References](/entities#reference) to [Users](/entities/user) that should be notified of the note. Similar to Twitter's `@` mentions. The note may also contain mentions in the content, however only the mentions in this field should trigger notifications.
+        [References](/entities#reference) to [Users](/entities/user) that should be notified of the note. Similar to Twitter's `@` mentions. The note may also contain mentions in the content, however only the mentions in this field **SHOULD** trigger notifications.
     </Field>
     <Field name="previews" type="LinkPreview[]" required>
         Previews for any links in the publication. This is to avoid the [stampeding mastodon problem](https://github.com/mastodon/mastodon/issues/23662) where a link preview is fetched by every instance that sees the publication, creating an accidental DDOS attack.
