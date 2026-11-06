@@ -29,7 +29,7 @@ In this scenario, `jane.org` has no way of knowing what went wrong, as `joe.soci
 
 ## Sending Messages
 
-To send a federation debug message, instances **should** make a `POST` request to the `/.versia/v0.6/messaging` endpoint with a simple text body containing a helpful message.
+To send a federation debug message, instances **should** make a `POST` request to the `/.versia/v0.6/extensions/pub.versia:instance_messaging/messaging` endpoint with a simple text body containing a helpful message.
 
 No signatures are required (either on the request or response), and no response body is expected.
 

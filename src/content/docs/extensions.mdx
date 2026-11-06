@@ -48,7 +48,13 @@ pub.versia:likes/Like
 
 ## Extension Definition
 
-Extensions can be found in two places: an [Entity](/entities#definition)'s `extensions` property, or as custom entities themselves. The former is used to add custom functionality to an existing entity, while the latter is used to define a new entity type.
+Extensions can add any of the following:
+
+- Custom functionality on an existing entity, through its [`extensions` property](#entity-extension).
+- New entity types, as [custom entities](#custom-entity).
+- [Collections](#collections) on an entity.
+- [Endpoints](#endpoints).
+- [Interaction types](/extensions/interaction-controls).
 
 ### Entity Extension
 
@@ -111,3 +117,15 @@ Extensions can be found in two places: an [Entity](/entities#definition)'s `exte
     ```
     </Example>
 </Fields>
+
+### Collections
+
+An extension's [collections](/structures/collection) are named like its custom entities, for example `pub.versia:likes/Likes`.
+
+### Endpoints
+
+An extension's endpoints **must** be under `/.versia/v0.X/extensions/<extension name>/`. This keeps them from colliding with core endpoints or with other extensions. The colon in the extension name **must not** be percent-encoded, so that each endpoint has one spelling for [signatures](/signatures) to cover.
+
+```text title="Example Extension Endpoint"
+/.versia/v0.6/extensions/pub.versia:instance_messaging/messaging
+```
