@@ -29,9 +29,12 @@ const fields = inheritedFields.filter((field) => !omitted.includes(field.name));
 <style>
     .inherits {
         padding-block: 0.8rem;
-        border-block: 1px solid var(--hair);
         color: var(--ink-soft);
         font-size: var(--text-sm);
+    }
+
+    :global(.field) + .inherits {
+        border-top: 1px solid var(--hair);
     }
 
     .inherits summary {

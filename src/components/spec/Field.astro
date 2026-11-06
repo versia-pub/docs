@@ -34,9 +34,12 @@ const { name, type, required = false, numberType, anchor } = Astro.props;
 <style>
     .field {
         padding-block: 0.9rem;
-        border-top: 1px solid var(--hair);
         scroll-margin-top: 1.5rem;
         transition: background-color 0.15s;
+    }
+
+    .field + .field {
+        border-top: 1px solid var(--hair);
     }
 
     .field-head {

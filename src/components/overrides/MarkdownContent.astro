@@ -64,21 +64,14 @@
     }
 
     :where(.prose) h2 {
-        margin: 4rem 0 0.75rem;
-        padding-top: 0.6rem;
-        border-top: 2px solid var(--ink);
+        /* Space alone sets a section apart, and more of it above ties the heading to its text. */
+        margin: 3.25rem 0 0.5rem;
         color: var(--ink);
         font-family: var(--font-prose);
         font-size: 1.375rem;
         font-weight: var(--weight-bold);
         line-height: 1.25;
         text-wrap: balance;
-    }
-
-    /* A sheet brings its own rule, right under the heading. */
-    :where(.prose) h2:has(+ .sheet) {
-        padding-top: 0;
-        border-top: 0;
     }
 
     :where(.prose) h3 {

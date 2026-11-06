@@ -19,17 +19,13 @@ const { label, href, id } = Astro.props;
         display: grid;
         grid-template-columns: 7rem minmax(0, 1fr);
         gap: 0 1rem;
-        padding-block: 0.55rem;
+        padding-block: 0.3rem;
     }
 
     @media (max-width: 30rem) {
         .fact {
             grid-template-columns: minmax(0, 1fr);
         }
-    }
-
-    .fact + .fact {
-        border-top: 1px solid var(--hair);
     }
 
     .fact:target {
