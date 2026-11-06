@@ -21,7 +21,7 @@ Often, federation "fails silently" with no indication of what went wrong, as ins
 
 For example, let's consider the following scenario:
 1. `joe.social` and `jane.org` are two instances.
-2. `joe.social` tries to fetch a user profile from `jane.org`, at `jane.org/users/nkGEd8eI98` for example.
+2. `joe.social` tries to fetch a user profile from `jane.org`, at `https://jane.org/.versia/v0.6/entities/User/nkGEd8eI98` for example.
 3. `jane.org` responds with a [User](/entities/user) object with a missing or incorrect field, such as an improperly validated `username`.
 4. `joe.social` is incapable of processing the response and silently fails to fetch the user profile.
 
@@ -34,7 +34,7 @@ To send a federation debug message, instances **should** make a `POST` request t
 No signatures are required (either on the request or response), and no response body is expected.
 
 ```text title="Helpful Message"
-Validation failed for https://jane.org/users/nkGEd8eI98.
+Validation failed for https://jane.org/.versia/v0.6/entities/User/nkGEd8eI98.
 Reasons:
     - `username` must be alphanumeric. Found invalid character `@`.
 ```

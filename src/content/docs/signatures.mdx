@@ -49,7 +49,7 @@ Example:
 <SigningString
     parts={[
         ["$0", "method", "post"],
-        ["$1", "pathname", "/notes"],
+        ["$1", "pathname", "/.versia/v0.6/inbox"],
         ["$2", "timestamp", "1729243417"],
         ["$3", "body hash", "n4bQgYhMfWWaL+qgxVrQFaO/TxsrC4Is0V1sFbDwCgg="],
     ]}
@@ -120,6 +120,7 @@ To send the request, Bob would use the following code:
 ```typescript
 const headers = new Headers();
 
+headers.set("Accept", "application/vnd.versia+json");
 headers.set("Versia-Signed-By", "bob.com");
 headers.set("Versia-Signed-At", String(timestamp));
 headers.set("Versia-Signature", base64Signature);
@@ -167,10 +168,10 @@ if (!isVerified) {
 
 ## Exporting the Public Key
 
-Public keys are always encoded using `base64` and **must** be in [SPKI](https://en.wikipedia.org/wiki/Simple_public-key_infrastructure) format. You will need to look up the appropriate method for your cryptographic library to convert the key to this format.
+Public keys are always encoded using `base64` and **must** be in [SubjectPublicKeyInfo (SPKI)](https://datatracker.ietf.org/doc/html/rfc8410#section-4) format. You will need to look up the appropriate method for your cryptographic library to convert the key to this format.
 
 <Warning>
-    This is **not** merely the key's raw bytes encoded as base64. You **must** export the key in [SPKI](https://en.wikipedia.org/wiki/Simple_public-key_infrastructure) format, *then* encode it as base64.
+    This is **not** merely the key's raw bytes encoded as base64. You **must** export the key in [SPKI](https://datatracker.ietf.org/doc/html/rfc8410#section-4) format, *then* encode it as base64.
 
     This is also not the commonly used "PEM" format.
 </Warning>
