@@ -1,24 +1,10 @@
 ---
 import StarlightPage from "@astrojs/starlight/components/StarlightPage.astro";
+import ExtensionList from "../components/ExtensionList.astro";
 import SignedNote from "../components/SignedNote.astro";
 import { team } from "../lib/home";
 
 const accountEmail = `mailto:aprl@versia.pub?subject=${encodeURIComponent("beta.versia.social Account Request")}&body=${encodeURIComponent("Hello, I would like to request an account on beta.versia.social.")}`;
-
-const extensions = [
-    { name: "Custom Emojis", id: "pub.versia:custom_emojis", href: "/extensions/custom-emojis" },
-    { name: "Delegation", id: "pub.versia:delegation", href: "/extensions/delegation" },
-    { name: "Groups", id: "pub.versia:groups", href: "/extensions/groups" },
-    { name: "Instance Messaging", id: "pub.versia:instance_messaging", href: "/extensions/instance-messaging" },
-    { name: "Interaction Controls", id: "pub.versia:interaction_controls", href: "/extensions/interaction-controls" },
-    { name: "Likes", id: "pub.versia:likes", href: "/extensions/likes" },
-    { name: "Migration", id: "pub.versia:migration", href: "/extensions/migration" },
-    { name: "Polls", id: "pub.versia:polls", href: "/extensions/polls" },
-    { name: "Reactions", id: "pub.versia:reactions", href: "/extensions/reactions" },
-    { name: "Reports", id: "pub.versia:reports", href: "/extensions/reports" },
-    { name: "Share", id: "pub.versia:share", href: "/extensions/share" },
-    { name: "Vanity", id: "pub.versia:vanity", href: "/extensions/vanity" },
-];
 ---
 
 <StarlightPage
@@ -46,11 +32,7 @@ const extensions = [
 
     <h2>Extensions</h2>
     <p>The core stays small. Everything else is a namespaced <a href="/extensions">extension</a>, implemented in any combination.</p>
-    <ul class="extensions">
-        {extensions.map((extension) => (
-            <li><a href={extension.href}>{extension.name}</a><code>{extension.id}</code></li>
-        ))}
-    </ul>
+    <ExtensionList />
 
     <h2>Try it out</h2>
     <p>
@@ -96,31 +78,6 @@ const extensions = [
     .intro {
         font-size: 1.25rem;
         line-height: 1.5;
-    }
-
-    .extensions {
-        padding: 0;
-        list-style: none;
-    }
-
-    .extensions li {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: space-between;
-        gap: 0 1rem;
-        margin: 0;
-        padding-block: 0.3rem;
-    }
-
-    .extensions li + li {
-        border-top: 1px solid var(--hair);
-    }
-
-    /* The longest IDs do not fit beside their names, so phones stack every row alike. */
-    @media (max-width: 30rem) {
-        .extensions li {
-            flex-direction: column;
-        }
     }
 
     .team section {

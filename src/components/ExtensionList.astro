@@ -1,0 +1,69 @@
+---
+import { getCollection } from "astro:content";
+
+interface Props {
+    /** Show each extension's description under its name. */
+    descriptions?: boolean;
+}
+
+const { descriptions = false } = Astro.props;
+
+// Each extension page's frontmatter holds its ID, so a new page joins this list by itself.
+const extensions = (await getCollection("docs"))
+    .flatMap(({ id, data }) =>
+        data.extension
+            ? [{
+                  name: data.title.replace(/ Extension$/, ""),
+                  extension: data.extension,
+                  description: data.description,
+                  href: `/${id}`,
+              }]
+            : [],
+    )
+    .sort((a, b) => a.name.localeCompare(b.name));
+---
+
+<ul class="extensions">
+    {extensions.map(({ name, extension, description, href }) => (
+        <li>
+            <a href={href}>{name}</a>
+            <code>{extension}</code>
+            {descriptions && <p>{description}</p>}
+        </li>
+    ))}
+</ul>
+
+<style>
+    .extensions {
+        padding: 0;
+        list-style: none;
+    }
+
+    .extensions li {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: baseline;
+        justify-content: space-between;
+        gap: 0 1rem;
+        margin: 0;
+        padding-block: 0.3rem;
+    }
+
+    .extensions li + li {
+        border-top: 1px solid var(--hair);
+    }
+
+    .extensions p {
+        width: 100%;
+        margin: 0;
+        color: var(--ink-soft);
+        font-size: var(--text-sm);
+    }
+
+    /* The longest IDs do not fit beside their names, so phones stack every row alike. */
+    @media (max-width: 30rem) {
+        .extensions li {
+            flex-direction: column;
+        }
+    }
+</style>

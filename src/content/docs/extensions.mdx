@@ -4,6 +4,7 @@ description: "Extensions are a way to add custom functionality to Versia."
 kind: Core concept
 ---
 
+import ExtensionList from "../../components/ExtensionList.astro";
 import Example from "../../components/spec/Example.astro";
 import Field from "../../components/spec/Field.astro";
 import Fields from "../../components/spec/Fields.astro";
@@ -13,6 +14,12 @@ Versia provides a set of core entities and structures to build a barebones socia
 By design, extensions can be implemented in any combination, without requiring any changes to the core system. This allows for a high degree of customization and flexibility. Implementations that do not support a particular extension can simply ignore it without any issues.
 
 Extensions **should** be standardized and publicly documented.
+
+## Documented Extensions
+
+These extensions are documented on this site, and all use the `pub.versia` namespace. See [Naming](#naming) for how their names are formed.
+
+<ExtensionList descriptions />
 
 ## Handling Unsupported Extensions
 
