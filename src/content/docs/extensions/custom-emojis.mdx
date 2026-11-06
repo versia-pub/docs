@@ -26,7 +26,7 @@ The Custom Emojis extension adds support for adding personalized emojis to feder
         Identification characters **MUST NOT** be any of the characters allowed above. There may only be two identification characters, one at the beginning and one at the end.
     </Field>
     <Field name="content" type="ContentFormat" required>
-        Emoji content. **Must** be an image format (`image/*`).
+        Emoji content. **MUST** be an image format (`image/*`).
     </Field>
 
     <Example slot="example">
@@ -46,11 +46,11 @@ The Custom Emojis extension adds support for adding personalized emojis to feder
 
 ## Rendering
 
-To render custom emojis, clients **should** perform the following steps:
+To render custom emojis, clients **SHOULD** perform the following steps:
 1. Find all instances of custom emoji names in the text content.
 2. Replace the custom emoji names with the corresponding emoji images in text.
 
-If custom emojis are not supported, clients **should** leave the custom emoji names as-is. Images **should** have any associated `alt` text for accessibility.
+If custom emojis are not supported, clients **SHOULD** leave the custom emoji names as-is. Images **SHOULD** have any associated `alt` text for accessibility.
 
 ```html title="Example HTML/CSS"
 <style>
@@ -65,7 +65,7 @@ img.emoji {
 </p>
 ```
 
-Emojis **should** be displayed at a fixed height (such as `1em`), but their width **should** be allowed to be flexible.
+Emojis **SHOULD** be displayed at a fixed height (such as `1em`), but their width **SHOULD** be allowed to be flexible.
 
 ## Extension Definition
 

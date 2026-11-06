@@ -53,7 +53,7 @@ Only the instance hosting a group may send or serve that Group.
     </div>
 
     <Field name="type" type="string" required>
-        **Must** be `pub.versia:groups/Group`.
+        **MUST** be `pub.versia:groups/Group`.
     </Field>
     <Field name="name" type="ContentFormat">
        Group name/title.
@@ -106,7 +106,7 @@ Only the instance hosting a group may send or serve that Group.
 A subscription works like a [Follow](/entities/follow):
 
 - A [User](/entities/user)'s instance sends a `GroupSubscribe`, and the subscription is pending until the group's instance answers.
-- The group's instance **must** answer with a `GroupSubscribeAccept` or a `GroupSubscribeReject`, including when the group is `open`. It **must** send the `GroupSubscribeAccept` again if it receives a `GroupSubscribe` from a user who is already a member.
+- The group's instance **MUST** answer with a `GroupSubscribeAccept` or a `GroupSubscribeReject`, including when the group is `open`. It **MUST** send the `GroupSubscribeAccept` again if it receives a `GroupSubscribe` from a user who is already a member.
 - A `GroupUnsubscribe` ends a subscription and cancels a pending one.
 - A `GroupSubscribeReject` also removes a user who is already a member.
 
@@ -114,11 +114,11 @@ Once accepted, the user is a member of the group and receives the Notes posted t
 
 ### GroupSubscribe
 
-Indicates that a [User](/entities/user) wishes to subscribe to a group. **Must** be sent by the subscriber's instance.
+Indicates that a [User](/entities/user) wishes to subscribe to a group. **MUST** be sent by the subscriber's instance.
 
 <Entity name="GroupSubscribe" type="pub.versia:groups/Subscribe" transient>
     <Field name="type" type="string" required>
-        **Must** be `pub.versia:groups/Subscribe`.
+        **MUST** be `pub.versia:groups/Subscribe`.
     </Field>
     <Field name="subscriber" type="Reference" required>
         [Reference](/entities#reference) to the [User](/entities/user) subscribing to the group.
@@ -143,11 +143,11 @@ Indicates that a [User](/entities/user) wishes to subscribe to a group. **Must**
 
 ### GroupUnsubscribe
 
-Indicates that a [User](/entities/user) wishes to unsubscribe from a group. **Must** be sent by the subscriber's instance.
+Indicates that a [User](/entities/user) wishes to unsubscribe from a group. **MUST** be sent by the subscriber's instance.
 
 <Entity name="GroupUnsubscribe" type="pub.versia:groups/Unsubscribe" transient>
     <Field name="type" type="string" required>
-        **Must** be `pub.versia:groups/Unsubscribe`.
+        **MUST** be `pub.versia:groups/Unsubscribe`.
     </Field>
     <Field name="subscriber" type="Reference" required>
         [Reference](/entities#reference) to the [User](/entities/user) unsubscribing from the group.
@@ -172,11 +172,11 @@ Indicates that a [User](/entities/user) wishes to unsubscribe from a group. **Mu
 
 ### GroupSubscribeAccept
 
-Indicates that a [Group](#entity-definition) has accepted a [User](/entities/user)'s subscription request. **Must** be sent by the instance hosting the group.
+Indicates that a [Group](#entity-definition) has accepted a [User](/entities/user)'s subscription request. **MUST** be sent by the instance hosting the group.
 
 <Entity name="GroupSubscribeAccept" type="pub.versia:groups/SubscribeAccept" transient>
     <Field name="type" type="string" required>
-        **Must** be `pub.versia:groups/SubscribeAccept`.
+        **MUST** be `pub.versia:groups/SubscribeAccept`.
     </Field>
     <Field name="subscriber" type="Reference" required>
         [Reference](/entities#reference) to the [User](/entities/user) subscribing to the group.
@@ -201,11 +201,11 @@ Indicates that a [Group](#entity-definition) has accepted a [User](/entities/use
 
 ### GroupSubscribeReject
 
-Indicates that a [Group](#entity-definition) has rejected a [User](/entities/user)'s subscription request. **Must** be sent by the instance hosting the group.
+Indicates that a [Group](#entity-definition) has rejected a [User](/entities/user)'s subscription request. **MUST** be sent by the instance hosting the group.
 
 <Entity name="GroupSubscribeReject" type="pub.versia:groups/SubscribeReject" transient>
     <Field name="type" type="string" required>
-        **Must** be `pub.versia:groups/SubscribeReject`.
+        **MUST** be `pub.versia:groups/SubscribeReject`.
     </Field>
     <Field name="subscriber" type="Reference" required>
         [Reference](/entities#reference) to the [User](/entities/user) subscribing to the group.
@@ -232,13 +232,13 @@ Indicates that a [Group](#entity-definition) has rejected a [User](/entities/use
 
 The instance hosting a group cannot send the Notes posted to it, as an entity's author [must belong to the instance that signs it](/federation/validation#authors-and-signers). A Note therefore reaches the group's members in three steps:
 
-1. The instance of the Note's author **must** send the [Note](/entities/note) to the [inbox](/api/endpoints#inbox) of the group's instance, on top of its usual [delivery](/federation#delivery). It **must** do the same with any change to the Note, and with a [Delete](/entities/delete) for it.
-2. The group's instance decides which Notes to federate. A Note it refuses is dropped silently. For the others, it **must** send a `GroupFederate` to every instance hosting a member of the group.
+1. The instance of the Note's author **MUST** send the [Note](/entities/note) to the [inbox](/api/endpoints#inbox) of the group's instance, on top of its usual [delivery](/federation#delivery). It **MUST** do the same with any change to the Note, and with a [Delete](/entities/delete) for it.
+2. The group's instance decides which Notes to federate. A Note it refuses is dropped silently. For the others, it **MUST** send a `GroupFederate` to every instance hosting a member of the group.
 3. Each of those instances fetches the Note from the instance of its author.
 
-The instance of the author **MUST** allow that fetch if the requesting instance hosts a user in the group's `members` collection, unless it [refuses to federate](/federation/http#status-codes) with that instance. It **MAY** cache that collection, and **should** fetch it again before refusing an instance it does not find there.
+The instance of the author **MUST** allow that fetch if the requesting instance hosts a user in the group's `members` collection, unless it [refuses to federate](/federation/http#status-codes) with that instance. It **MAY** cache that collection, and **SHOULD** fetch it again before refusing an instance it does not find there.
 
-When a Note posted to a group changes or is deleted, the group's instance **must** send a `GroupFederate` for it again, and receivers fetch it again. The instance of the author **must** answer with `410 Gone` for a deleted Note that was posted to a group.
+When a Note posted to a group changes or is deleted, the group's instance **MUST** send a `GroupFederate` for it again, and receivers fetch it again. The instance of the author **MUST** answer with `410 Gone` for a deleted Note that was posted to a group.
 
 ### Delivery and Access
 
@@ -253,13 +253,13 @@ Any instance may fetch a Group and its `members` and `moderators` collections.
 
 ### GroupFederate
 
-The `GroupFederate` entity tells an instance to fetch a Note posted to a group. **Must** be sent by the instance hosting the group.
+The `GroupFederate` entity tells an instance to fetch a Note posted to a group. **MUST** be sent by the instance hosting the group.
 
-A receiver **must** ignore a `GroupFederate` that does not come from the instance hosting `group`, or whose fetched Note does not name that `group` in its `pub.versia:groups` extension.
+A receiver **MUST** ignore a `GroupFederate` that does not come from the instance hosting `group`, or whose fetched Note does not name that `group` in its `pub.versia:groups` extension.
 
 <Entity name="GroupFederate" type="pub.versia:groups/Federate" transient>
     <Field name="type" type="string" required>
-        **Must** be `pub.versia:groups/Federate`.
+        **MUST** be `pub.versia:groups/Federate`.
     </Field>
     <Field name="target" type="Reference" required>
         [Reference](/entities#reference) to the [Note](/entities/note) to fetch.

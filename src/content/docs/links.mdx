@@ -14,7 +14,7 @@ Versia Links are a way to reference entities in the Versia Protocol, in a way th
 
 <Fields name="Versia Link" label="Parts">
     <Field name="scheme" type="string" required>
-        **Must** be `web+versia://` so that browsers and applications can recognize it.
+        **MUST** be `web+versia://` so that browsers and applications can recognize it.
 
         An IANA registration for the `versia://` scheme will be requested in the future.
     </Field>
@@ -33,10 +33,10 @@ Versia Links are a way to reference entities in the Versia Protocol, in a way th
         - `compose/:text`: Compose a new note. Text passed at the end will be added in the note compose field. Used for "Share with Versia" buttons on websites.
     </Field>
     <Field name="instance" type="Domain">
-        Instance hosting the referenced content. **Must** be present on every action except `compose`.
+        Instance hosting the referenced content. **MUST** be present on every action except `compose`.
     </Field>
 
-    A `:id` is the entity's `id`. `:id` and `:text` **must** be percent-encoded as URI path segments, and an `@` in a `:id` **must** be written as `%40`, so a raw `@` always marks a username.
+    A `:id` is the entity's `id`. `:id` and `:text` **MUST** be percent-encoded as URI path segments, and an `@` in a `:id` **MUST** be written as `%40`, so a raw `@` always marks a username.
 
     <Example slot="example">
     ```text title="Viewing a user profile"
@@ -59,13 +59,13 @@ Versia Links are a way to reference entities in the Versia Protocol, in a way th
 
 ## Handling
 
-Versia clients **should** register themselves as handlers for the `web+versia://` scheme in the user's operating system. When a Versia Link is clicked, the client should open the entity in the client's interface.
+Versia clients **SHOULD** register themselves as handlers for the `web+versia://` scheme in the user's operating system. When a Versia Link is clicked, the client should open the entity in the client's interface.
 
-The default web client ("frontend") on a Versia instance **should** also display Versia links for logged-out users on:
+The default web client ("frontend") on a Versia instance **SHOULD** also display Versia links for logged-out users on:
 - Profiles
 - Notes
 - Groups
 
-This **could** be used for easier following of users from remote instances.
+This could be used for easier following of users from remote instances.
 
-Clients **should** ask users to confirm any action that is not a simple view action, such as replying to a note or sharing a note.
+Clients **SHOULD** ask users to confirm any action that is not a simple view action, such as replying to a note or sharing a note.

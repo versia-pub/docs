@@ -48,10 +48,10 @@ export function rehypeHeadingSlugs() {
     };
 }
 
-// The keywords the spec defines through RFC 2119 on /introduction.
-const NORMATIVE = /^(must|must not|should|should not|may)$/i;
+// The keywords the spec defines through BCP 14 on /introduction.
+const NORMATIVE = /^(MUST|MUST NOT|SHOULD|SHOULD NOT|MAY)$/;
 
-/** Marks bold RFC 2119 keywords, so that they share one consistent style. */
+/** Marks bold BCP 14 keywords, so that they share one consistent style. */
 export function rehypeNormative() {
     return (tree: Root) => {
         visit(tree, "element", (node) => {

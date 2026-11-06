@@ -12,7 +12,7 @@ import Inherits from "../../../components/spec/Inherits.astro";
 
 Reporting can be used to report content to moderators or administrators of a remote instance for review.
 
-When an instance receives a report, it *should* be reviewed by a moderator or administrator.
+When an instance receives a report, it **SHOULD** be reviewed by a moderator or administrator.
 
 ## Delivery
 
@@ -22,7 +22,7 @@ A Report is [delivered](/federation#delivery) to the instances the reporter's in
 
 <Entity name="Report" type="pub.versia:reports/Report" transient>
     <Field name="type" type="string" required>
-        **Must** be `pub.versia:reports/Report`.
+        **MUST** be `pub.versia:reports/Report`.
     </Field>
     <Field name="author" type="Reference">
         [Reference](/entities#reference) to the reporting [User](/entities/user). Optional if the report is anonymous. A report without an `author` can only be attributed to the instance that signed it.

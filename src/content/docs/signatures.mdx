@@ -20,7 +20,7 @@ Versia uses cryptographic signatures to ensure the integrity and authenticity of
 A signature consists of three headers on an HTTP request or response:
 - **`Versia-Signature`**: The signature itself, encoded in base64.
 - **`Versia-Signed-By`**: [Domain](/api/basics#domain) of the instance signing the message.
-- **`Versia-Signed-At`**: The current Unix timestamp, in seconds (integer), when the message was signed. Timezone **must** be UTC, like all Unix timestamps.
+- **`Versia-Signed-At`**: The current Unix timestamp, in seconds (integer), when the message was signed. Timezone **MUST** be UTC, like all Unix timestamps.
 
 All base64 on this page is the standard alphabet with padding, as defined in [RFC 4648, section 4](https://datatracker.ietf.org/doc/html/rfc4648#section-4).
 
@@ -28,9 +28,9 @@ All base64 on this page is the standard alphabet with padding, as defined in [RF
 
 | Route | Requests and responses |
 | --- | --- |
-| [Inbox](/api/endpoints#inbox) | **Must** be signed |
-| [Entities](/api/endpoints#entity-data) | **Must** be signed |
-| [Entity collections](/api/endpoints#entity-collections) and [instance collections](/api/endpoints#instance-collections) | **Must** be signed |
+| [Inbox](/api/endpoints#inbox) | **MUST** be signed |
+| [Entities](/api/endpoints#entity-data) | **MUST** be signed |
+| [Entity collections](/api/endpoints#entity-collections) and [instance collections](/api/endpoints#instance-collections) | **MUST** be signed |
 | [Well-known](/api/endpoints#well-known) | Not required |
 | [Instance metadata](/api/endpoints#instance-metadata) | Not required |
 | [WebFinger](/federation/discovery) | Not required |
@@ -38,11 +38,11 @@ All base64 on this page is the standard alphabet with padding, as defined in [RF
 
 Instance metadata needs no signature because it holds the public key used to verify signatures.
 
-An instance receiving a request on a route that requires a signature **must** return a `401 Unauthorized` HTTP status code if the signature is missing or invalid, or if its timestamp is too old or too new (more than 5 minutes from the current time).
+An instance receiving a request on a route that requires a signature **MUST** return a `401 Unauthorized` HTTP status code if the signature is missing or invalid, or if its timestamp is too old or too new (more than 5 minutes from the current time).
 
-An instance receiving a `2xx` response on these routes **must** discard it if its signature is missing, invalid, too old or too new, and treat the attempt as failed.
+An instance receiving a `2xx` response on these routes **MUST** discard it if its signature is missing, invalid, too old or too new, and treat the attempt as failed.
 
-A response with a `4xx` or `5xx` status code may come from a proxy that cannot sign it, so its signature is not required to act on it. The instance acts on the status code, and ignores the body unless the signature verifies. Instances **should** still sign the errors they generate themselves.
+A response with a `4xx` or `5xx` status code may come from a proxy that cannot sign it, so its signature is not required to act on it. The instance acts on the status code, and ignores the body unless the signature verifies. Instances **SHOULD** still sign the errors they generate themselves.
 
 ### Calculating the Signature
 
@@ -58,7 +58,7 @@ Where:
 - `$3` is the Unix timestamp when this message was signed, in UTC seconds (integer).
 - `$4` is the SHA-256 hash of the raw bytes of this message's body, exactly as sent, encoded in base64. If signing a *response*, hash the response's body, not the request's. If the message has no body, this is the hash of an empty string.
 
-Sign this string using the instance's private key with the [Ed25519](https://en.wikipedia.org/wiki/EdDSA#Ed25519) algorithm. The resulting bytes **must** be encoded in base64.
+Sign this string using the instance's private key with the [Ed25519](https://en.wikipedia.org/wiki/EdDSA#Ed25519) algorithm. The resulting bytes **MUST** be encoded in base64.
 
 Example:
 
@@ -76,7 +76,7 @@ A signed response is not tied to one particular request. Its freshness relies on
 
 ### Verifying the Signature
 
-To verify a signature, the verifying instance **must**:
+To verify a signature, the verifying instance **MUST**:
 - Recreate the string as described above. For `$1`, use its own domain when verifying a request, and the domain it sent the request to when verifying a response. Do not read `$1` from the `Host` header.
 - Extract the signature provided in the `Versia-Signature` header.
 - Check that the `Versia-Signed-At` timestamp is within 5 minutes of the current time.
@@ -88,7 +88,7 @@ To verify a signature, the verifying instance **must**:
 
 A signed request stays valid for 5 minutes either side of its timestamp, so a captured request could be sent again.
 
-An instance **must not** process an [inbox](/api/endpoints#inbox) request whose `Versia-Signature` it has already accepted from the same instance in the last 10 minutes, and **must** answer it with a `2xx` status code so that the sender does not retry. Processing in the inbox **must** also be idempotent: receiving the same entity twice **must** have the same effect as receiving it once.
+An instance **MUST NOT** process an [inbox](/api/endpoints#inbox) request whose `Versia-Signature` it has already accepted from the same instance in the last 10 minutes, and **MUST** answer it with a `2xx` status code so that the sender does not retry. Processing in the inbox **MUST** also be idempotent: receiving the same entity twice **MUST** have the same effect as receiving it once.
 
 ### Example
 
@@ -198,15 +198,15 @@ Instance metadata is not signed, so [TLS](/api/basics#api-versioning) is what ma
 
 A verifying instance:
 
-- **must** fetch the signer's metadata again, once, before rejecting a signature that fails to verify. It **should** limit how often it does this for each instance, so that bad signatures cannot make it send requests. Once every 5 minutes is a reasonable limit.
-- **should** fetch the metadata of the instances it stores keys for at least every 24 hours, so that a replaced key stops being accepted even if nothing fails to verify.
+- **MUST** fetch the signer's metadata again, once, before rejecting a signature that fails to verify. It **SHOULD** limit how often it does this for each instance, so that bad signatures cannot make it send requests. Once every 5 minutes is a reasonable limit.
+- **SHOULD** fetch the metadata of the instances it stores keys for at least every 24 hours, so that a replaced key stops being accepted even if nothing fails to verify.
 
 ## Exporting the Public Key
 
-Public keys are always encoded using `base64` and **must** be in [SubjectPublicKeyInfo (SPKI)](https://datatracker.ietf.org/doc/html/rfc8410#section-4) format. You will need to look up the appropriate method for your cryptographic library to convert the key to this format.
+Public keys are always encoded using `base64` and **MUST** be in [SubjectPublicKeyInfo (SPKI)](https://datatracker.ietf.org/doc/html/rfc8410#section-4) format. You will need to look up the appropriate method for your cryptographic library to convert the key to this format.
 
 <Warning>
-    This is **not** merely the key's raw bytes encoded as base64. You **must** export the key in [SPKI](https://datatracker.ietf.org/doc/html/rfc8410#section-4) format, *then* encode it as base64.
+    This is **not** merely the key's raw bytes encoded as base64. You **MUST** export the key in [SPKI](https://datatracker.ietf.org/doc/html/rfc8410#section-4) format, *then* encode it as base64.
 
     This is also not the commonly used "PEM" format.
 </Warning>

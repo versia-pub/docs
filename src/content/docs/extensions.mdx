@@ -13,7 +13,7 @@ Versia provides a set of core entities and structures to build a barebones socia
 
 By design, extensions can be implemented in any combination, without requiring any changes to the core system. This allows for a high degree of customization and flexibility. Implementations that do not support a particular extension can simply ignore it without any issues.
 
-Extensions **should** be standardized and publicly documented.
+Extensions **SHOULD** be standardized and publicly documented.
 
 ## Documented Extensions
 
@@ -23,9 +23,9 @@ These extensions are documented on this site, and all use the `pub.versia` names
 
 ## Handling Unsupported Extensions
 
-When an extension is not supported by an Implementation, it **can** be ignored. This means that the extension is not processed, and its data is not used. Implementations **must not** throw an error when encountering an unsupported extension, as long as the rest of the entity is valid. An entity whose type comes from an unsupported extension is [answered with a `2xx` status code and dropped](/federation/validation#unknown-fields-and-types).
+When an extension is not supported by an Implementation, it can be ignored. This means that the extension is not processed, and its data is not used. Implementations **MUST NOT** throw an error when encountering an unsupported extension, as long as the rest of the entity is valid. An entity whose type comes from an unsupported extension is [answered with a `2xx` status code and dropped](/federation/validation#unknown-fields-and-types).
 
-Extensions **must not** be designed in a way that makes them required to understand or process other non-extension entities.
+Extensions **MUST NOT** be designed in a way that makes them required to understand or process other non-extension entities.
 
 ## Naming
 
@@ -124,7 +124,7 @@ An extension's [collections](/structures/collection) are named like its custom e
 
 ### Endpoints
 
-An extension's endpoints **must** be under `/.versia/v0.X/extensions/<extension name>/`. This keeps them from colliding with core endpoints or with other extensions. The colon in the extension name **must not** be percent-encoded, so that each endpoint has one spelling for [signatures](/signatures) to cover.
+An extension's endpoints **MUST** be under `/.versia/v0.X/extensions/<extension name>/`. This keeps them from colliding with core endpoints or with other extensions. The colon in the extension name **MUST NOT** be percent-encoded, so that each endpoint has one spelling for [signatures](/signatures) to cover.
 
 ```text title="Example Extension Endpoint"
 /.versia/v0.6/extensions/pub.versia:instance_messaging/messaging

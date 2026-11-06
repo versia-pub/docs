@@ -14,7 +14,7 @@ Often, it is desirable to post a Note, but control who is allowed to interact wi
 
 ## Usage
 
-The structure defined in this document **must** be inserted in the `pub.versia:interaction_controls` key of a [Note](/entities/note)'s extensions field.
+The structure defined in this document **MUST** be inserted in the `pub.versia:interaction_controls` key of a [Note](/entities/note)'s extensions field.
 
 ```jsonc title="Example Usage"
 {
@@ -82,16 +82,16 @@ The following interaction types apply to every Note:
 - `reply`: Sending a Note with `replies_to` including this Note.
 - `quote`: Sending a Note with `quoting` including this Note.
 
-Extensions **may** register their own interaction types. The name of an interaction type is the `type` of the entity that performs it, such as `pub.versia:likes/Like` for the [Likes Extension](/extensions/likes).
+Extensions **MAY** register their own interaction types. The name of an interaction type is the `type` of the entity that performs it, such as `pub.versia:likes/Like` for the [Likes Extension](/extensions/likes).
 
 ### Handling Permission Errors
 
-The instance hosting the Note's author **must not** apply an interaction the user is not allowed to perform. Other instances **should** do the same when they have the data to check it.
+The instance hosting the Note's author **MUST NOT** apply an interaction the user is not allowed to perform. Other instances **SHOULD** do the same when they have the data to check it.
 
-A refused interaction is answered with `422 Unprocessable Entity` if it is checked before the [inbox answers](/federation/http#status-codes), and is otherwise dropped silently. The instance **may** also tell the sender through the [Instance Messaging](/extensions/instance-messaging) extension.
+A refused interaction is answered with `422 Unprocessable Entity` if it is checked before the [inbox answers](/federation/http#status-codes), and is otherwise dropped silently. The instance **MAY** also tell the sender through the [Instance Messaging](/extensions/instance-messaging) extension.
 
-Implementations **should** keep related [Collections](/structures/collection) and [Reference Collections](/structures/collection#reference-collection), such as a user's followers, up to date, so as not to refuse an interaction based on outdated data.
+Implementations **SHOULD** keep related [Collections](/structures/collection) and [Reference Collections](/structures/collection#reference-collection), such as a user's followers, up to date, so as not to refuse an interaction based on outdated data.
 
 <Note>
-    To avoid server load from constant Collection refreshing, implementations **may** only refetch associated Collections when forbidden interactions are detected, then recalculate permissions again.
+    To avoid server load from constant Collection refreshing, implementations **MAY** only refetch associated Collections when forbidden interactions are detected, then recalculate permissions again.
 </Note>

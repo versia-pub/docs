@@ -15,7 +15,7 @@ The Reactions Extension allows users to express their reactions ("react") to pos
 
 ## Delivery and Access
 
-A sender **must** [deliver](/federation#delivery) Reactions to the author of the [Note](/entities/note) and, if the Note is public, to the followers of the reacting user.
+A sender **MUST** [deliver](/federation#delivery) Reactions to the author of the [Note](/entities/note) and, if the Note is public, to the followers of the reacting user.
 
 Any instance that [may fetch](/federation#access) the Note, and the instance of the Note's author, may fetch a Reaction.
 
@@ -25,7 +25,7 @@ Reactions can be displayed to clients depending on the privacy settings of the a
 
 <Entity name="Reaction" type="pub.versia:reactions/Reaction">
     <Field name="type" type="string" required>
-        **Must** be `pub.versia:reactions/Reaction`.
+        **MUST** be `pub.versia:reactions/Reaction`.
     </Field>
     <Field name="author" type="Reference" required>
         [Reference](/entities#reference) to the [User](/entities/user) that is reacting.

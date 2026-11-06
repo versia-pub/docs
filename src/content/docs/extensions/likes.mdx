@@ -23,7 +23,7 @@ Likes are a way for users to show appreciation for a note, like Twitter's "heart
 
 <Entity name="Like" type="pub.versia:likes/Like">
     <Field name="type" type="string" required>
-        **Must** be `pub.versia:likes/Like`.
+        **MUST** be `pub.versia:likes/Like`.
     </Field>
     <Field name="author" type="Reference" required>
         [Reference](/entities#reference) to the [User](/entities/user) who created the Like.
@@ -55,7 +55,7 @@ Dislikes are a way for users to show disapproval for a note, like YouTube's "dis
 
 <Entity name="Dislike" type="pub.versia:likes/Dislike">
     <Field name="type" type="string" required>
-        **Must** be `pub.versia:likes/Dislike`.
+        **MUST** be `pub.versia:likes/Dislike`.
     </Field>
     <Field name="author" type="Reference" required>
         [Reference](/entities#reference) to the [User](/entities/user) who created the Dislike.
@@ -85,7 +85,7 @@ To undo a like or dislike, a [Delete](/entities/delete) entity should be used. T
 
 ## Delivery and Access
 
-A sender **must** [deliver](/federation#delivery) Likes and Dislikes to the author of the [Note](/entities/note) and, if the Note is public, to the followers of the user who sent them.
+A sender **MUST** [deliver](/federation#delivery) Likes and Dislikes to the author of the [Note](/entities/note) and, if the Note is public, to the followers of the user who sent them.
 
 Any instance that [may fetch](/federation#access) the Note, and the instance of the Note's author, may fetch a Like or Dislike.
 

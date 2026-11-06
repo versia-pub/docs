@@ -24,7 +24,7 @@ Fields not marked as `required` are [optional](/json#optional-fields).
 
 <Fields name="Entity">
     <Field name="id" type="string" required>
-        Unique identifier for the entity. **Must** be unique within the instance. Can be any string with the following character sets:
+        Unique identifier for the entity. **MUST** be unique within the instance. Can be any string with the following character sets:
 
         - `a-z`
         - `A-Z`
@@ -34,24 +34,24 @@ Fields not marked as `required` are [optional](/json#optional-fields).
         Not present on [Transient Entities](#transient-entities) or [InstanceMetadata](/entities/instance-metadata).
     </Field>
     <Field name="type" type="string" required>
-        Type of the entity. Custom types **must** follow [Extension Naming](/extensions#naming).
+        Type of the entity. Custom types **MUST** follow [Extension Naming](/extensions#naming).
     </Field>
     <Field name="created_at" type="RFC3339" required>
-        Date and time when the entity was created. **Must** be an [RFC 3339](https://datatracker.ietf.org/doc/html/rfc3339) timestamp.
+        Date and time when the entity was created. **MUST** be an [RFC 3339](https://datatracker.ietf.org/doc/html/rfc3339) timestamp.
 
         <Note>
         How to handle a well-formed date that is obviously incorrect (e.g. in the future) is left to the Implementation's discretion. Sending a [Note](/entities/note) created on `1337-12-13T00:00:00Z` is very funny, but don't be surprised if it is rejected.
         </Note>
     </Field>
     <Field name="updated_at" type="RFC3339">
-        Date and time when the entity last changed. **Must** be an [RFC 3339](https://datatracker.ietf.org/doc/html/rfc3339) timestamp. See [Changing an Entity](#changing-an-entity).
+        Date and time when the entity last changed. **MUST** be an [RFC 3339](https://datatracker.ietf.org/doc/html/rfc3339) timestamp. See [Changing an Entity](#changing-an-entity).
 
         Not present on entities without an `id`.
     </Field>
     <Field name="extensions" type="Extensions">
         Extensions to the entity. Use this to add custom properties to the entity.
 
-        Each custom property **must** be namespaced with the organization's reversed domain name, followed by the property name. Extensions should be used sparingly and only when necessary.
+        Each custom property **MUST** be namespaced with the organization's reversed domain name, followed by the property name. Extensions should be used sparingly and only when necessary.
     </Field>
 
     <Example slot="example" unchecked>
@@ -104,7 +104,7 @@ The domain is always present, even when a reference points to an entity on the i
 
 ### Reference Types
 
-A reference does not say what type of entity it points to, but [fetching an entity](/api/endpoints#entity-data) needs its type. So every field holding a reference **must** state the entity type it points to. A field that can point to several types **must** carry the type next to the reference, as [Delete](/entities/delete) and [Report](/extensions/reports) do.
+A reference does not say what type of entity it points to, but [fetching an entity](/api/endpoints#entity-data) needs its type. So every field holding a reference **MUST** state the entity type it points to. A field that can point to several types **MUST** carry the type next to the reference, as [Delete](/entities/delete) and [Report](/extensions/reports) do.
 
 ### Example
 
@@ -123,10 +123,10 @@ To change an entity, its instance sends the whole entity again, with the same `i
 
 `id`, `type`, `author` and `created_at` **MUST NOT** change. A receiver **MUST** discard a version that changes any of them. An extension **MAY** lock further fields of its own entities, and states which on its page.
 
-Senders **should** set `updated_at` when sending a change. A receiver **must** discard a version whose `updated_at` is older than that of the copy it holds. Without an `updated_at` to compare, the last version received wins. The same applies to a version it fetched.
+Senders **SHOULD** set `updated_at` when sending a change. A receiver **MUST** discard a version whose `updated_at` is older than that of the copy it holds. Without an `updated_at` to compare, the last version received wins. The same applies to a version it fetched.
 
 ## Transient Entities
 
 Some entities are **transient**. A Transient Entity has no `id` field, so it cannot be fetched using the [Federation API](/api/endpoints) or referenced by other entities. These entities are used for actions that do not require a permanent record, such as deletions or migrations.
 
-Implementations do not need to store Transient Entities, and **must not** rely on other implementations to store them.
+Implementations do not need to store Transient Entities, and **MUST NOT** rely on other implementations to store them.

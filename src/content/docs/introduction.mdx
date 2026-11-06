@@ -15,7 +15,7 @@ The Versia Protocol is designed as a communication medium for federated applicat
 
 ## Vocabulary
 
-The words **MUST**, **MUST NOT**, **SHOULD**, **SHOULD NOT**, and **MAY** are used in this document as defined in [RFC 2119](https://tools.ietf.org/html/rfc2119).
+The key words **MUST**, **MUST NOT**, **SHOULD**, **SHOULD NOT** and **MAY** in this specification are to be interpreted as described in BCP 14 ([RFC 2119](https://datatracker.ietf.org/doc/html/rfc2119), [RFC 8174](https://datatracker.ietf.org/doc/html/rfc8174)) when, and only when, they appear in bold capitals, as shown here. In any other form, these words have their everyday meaning and set no requirement.
 
 The Versia Protocol uses the following terms:
 - **Entity**: A JSON object with a `type` and a `created_at`, such as a [User](./entities/user), a [Note](./entities/note), or a [Like](./extensions/likes). Most entities are uniquely identified by their `id` property.
@@ -32,5 +32,5 @@ The Versia Protocol is heavily inspired by the [ActivityPub](https://www.w3.org/
     - As structures are kept simple, they are easy to parse with strongly-typed languages like Rust.
 - **Modularity**: The protocol is divided into a **core protocol** and **extensions**. Implementations can choose to support only the core protocol or add extensions as needed.
 - **Namespacing**: To avoid extension conflicts, all extensions are namespaced.
-- **Signatures**: Requests and responses between instances **must** be signed with the instance's private key, apart from [a few routes](/signatures#where-signatures-are-required). Unlike other protocols, signatures are **mandatory**, not optional.
+- **Signatures**: Requests and responses between instances **MUST** be signed with the instance's private key, apart from [a few routes](/signatures#where-signatures-are-required). Unlike other protocols, signatures are **mandatory**, not optional.
 - **Developer-Friendliness**: Understanding and implementing your own Versia server should be easy. Documentation is aimed at developers first.

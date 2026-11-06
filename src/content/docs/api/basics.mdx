@@ -17,7 +17,7 @@ Versia Protocol versions are written as `0.X.Y`:
 
 Every Versia API endpoint is prefixed with `/.versia/v0.X/`, so all `0.X.Y` versions share one prefix. The current prefix is `/.versia/v0.6/`. Instances list the versions they support at the [well-known endpoint](/api/endpoints#well-known).
 
-Requests not encrypted with TLS (aka HTTPS) **must not** be sent or responded to. All implementations are required to use TLS 1.2 or higher, and to support HTTP/2.
+Requests not encrypted with TLS (aka HTTPS) **MUST NOT** be sent or responded to. All implementations are required to use TLS 1.2 or higher, and to support HTTP/2.
 
 Implementations have no obligation to support more than one Versia version. It is recommended to always support the latest version, as it helps avoid bogging down the network with old versions.
 
@@ -25,13 +25,13 @@ Implementations have no obligation to support more than one Versia version. It i
 
 To talk to another instance, a sender reads its [well-known endpoint](/api/endpoints#well-known) and uses the highest `0.X` that both instances support, at that version's prefix.
 
-Instances that share `X` but differ in `Y` **must** interoperate. Instances with no `X` in common **must not** federate.
+Instances that share `X` but differ in `Y` **MUST** interoperate. Instances with no `X` in common **MUST NOT** federate.
 
 Entities do not state a version: the prefix they are sent or fetched at decides it.
 
 ## Signatures
 
-API requests and responses between instances **must** include a [Signature](/signatures), signed with the [instance's private key](/entities/instance-metadata), except on the routes listed in [Signatures](/signatures#where-signatures-are-required).
+API requests and responses between instances **MUST** include a [Signature](/signatures), signed with the [instance's private key](/entities/instance-metadata), except on the routes listed in [Signatures](/signatures#where-signatures-are-required).
 
 ## Encoding
 

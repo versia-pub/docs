@@ -117,7 +117,7 @@ import Example from "../../../components/spec/Example.astro";
         Example: `GET /.versia/v0.6/entities/User/1234/collections/followers` fetches the followers of the user with ID `1234`.
     </div>
     <div slot="response">
-        **Must** be either a [Collection](/structures/collection) or a [ReferenceCollection](/structures/collection#reference-collection) as JSON.
+        **MUST** be either a [Collection](/structures/collection) or a [ReferenceCollection](/structures/collection#reference-collection) as JSON.
     </div>
 
     <Example slot="example">
@@ -144,14 +144,14 @@ import Example from "../../../components/spec/Example.astro";
 
 ### Pagination
 
-Collections **must** support pagination, using the following URI parameters:
+Collections **MUST** support pagination, using the following URI parameters:
 
 - `offset`: The number of items to skip before returning the first item. Defaults to `0`.
-- `limit`: The maximum number of items to return, from `1` to `40`. Defaults to `40`. Any other whole number **must** be clamped to that range.
+- `limit`: The maximum number of items to return, from `1` to `40`. Defaults to `40`. Any other whole number **MUST** be clamped to that range.
 
-A value that is not a whole number, or a negative `offset`, **must** be rejected with a `422 Unprocessable Entity` status code. An `offset` past the end returns empty `items` and the true `total`.
+A value that is not a whole number, or a negative `offset`, **MUST** be rejected with a `422 Unprocessable Entity` status code. An `offset` past the end returns empty `items` and the true `total`.
 
-Items **must** be in a stable order, oldest first, so that new items do not shift earlier pages. Removing an item can still shift later ones, so a request walking through a collection may see an item twice or miss one.
+Items **MUST** be in a stable order, oldest first, so that new items do not shift earlier pages. Removing an item can still shift later ones, so a request walking through a collection may see an item twice or miss one.
 
 A collection lists only the items the requesting instance [may fetch](/federation#access).
 
@@ -172,7 +172,7 @@ Accept: application/vnd.versia+json
         Example: `GET /.versia/v0.6/instance/collections/admins` fetches the administrators of the instance.
     </div>
     <div slot="response">
-        **Must** be either a [Collection](/structures/collection) or a [ReferenceCollection](/structures/collection#reference-collection) as JSON.
+        **MUST** be either a [Collection](/structures/collection) or a [ReferenceCollection](/structures/collection#reference-collection) as JSON.
     </div>
 
     <Example slot="example">
@@ -204,7 +204,7 @@ The delivery mechanism is described further in the [Federation](/federation#inbo
 
 <Endpoint name="Inbox" method="POST" path="/.versia/v0.6/inbox">
     <div slot="response">
-        **Should** be `202 Accepted` with no body. See [Status Codes](/federation/http#status-codes) for all possible answers.
+        **SHOULD** be `202 Accepted` with no body. See [Status Codes](/federation/http#status-codes) for all possible answers.
     </div>
 
     <Example slot="example">

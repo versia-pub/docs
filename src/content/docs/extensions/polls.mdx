@@ -16,7 +16,7 @@ Polls (also known as surveys) are a useful tool for gathering feedback from foll
 
 ## Privacy
 
-Individual votes are private. Clients **should not** display who voted, only the number of votes for each option and the total number of votes cast.
+Individual votes are private. Clients **SHOULD NOT** display who voted, only the number of votes for each option and the total number of votes cast.
 
 A poll's `options` hold numbers of votes, not voters, and a Vote can only be fetched by the instance of the poll's author.
 
@@ -101,7 +101,7 @@ Note that there is no `question` field: the question should be included in the `
 
 A Vote is one user's vote for one option. On a poll with `multiple_choice`, a user sends one Vote for each option.
 
-The instance of the poll's author **must not** count a Vote for a poll that has closed, for an `option` that does not exist, or for a second option on a poll without `multiple_choice`. Such a Vote is answered with `422 Unprocessable Entity` if it is checked before the [inbox answers](/federation/http#status-codes), and is otherwise dropped silently. A user's votes for the same option count once, whatever their `id`.
+The instance of the poll's author **MUST NOT** count a Vote for a poll that has closed, for an `option` that does not exist, or for a second option on a poll without `multiple_choice`. Such a Vote is answered with `422 Unprocessable Entity` if it is checked before the [inbox answers](/federation/http#status-codes), and is otherwise dropped silently. A user's votes for the same option count once, whatever their `id`.
 
 A user changes a vote by [sending the Vote again](/entities#changing-an-entity) with the same `id` and a new `option`, and withdraws it with a [Delete](/entities/delete). A change or Delete that arrives after the poll has closed leaves the numbers as they are.
 
@@ -109,7 +109,7 @@ A Vote's `target` **MUST NOT** change, and a receiver **MUST** discard a version
 
 <Entity name="Vote" type="pub.versia:polls/Vote">
     <Field name="type" type="string" required>
-        **Must** be `pub.versia:polls/Vote`.
+        **MUST** be `pub.versia:polls/Vote`.
     </Field>
     <Field name="author" type="Reference" required>
         [Reference](/entities#reference) of the user who cast the vote.
@@ -139,11 +139,11 @@ A Vote's `target` **MUST NOT** change, and a receiver **MUST** discard a version
 
 ## Delivery and Access
 
-A sender **must** [deliver](/federation#delivery) Votes to the author of the [Note](/entities/note).
+A sender **MUST** [deliver](/federation#delivery) Votes to the author of the [Note](/entities/note).
 
 Only the instance of the Note's author may [fetch](/federation#access) a Vote.
 
-When a poll's votes change, its Note is [sent again](/entities#changing-an-entity), and **must** also be delivered to the users who voted.
+When a poll's votes change, its Note is [sent again](/entities#changing-an-entity), and **MUST** also be delivered to the users who voted.
 
 ## Interaction Types
 

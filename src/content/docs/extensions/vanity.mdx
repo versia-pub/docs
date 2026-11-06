@@ -55,7 +55,7 @@ All properties are optional.
         <Field name="reflexive" type="string" required />
     </Field>
     <Field name="birthday" type="string">
-        User's birthday. **Must** be an [RFC 3339 `full-date`](https://datatracker.ietf.org/doc/html/rfc3339#section-5.6) (`YYYY-MM-DD`). A year of `0000` means the year is hidden, and implementations **SHOULD NOT** display it.
+        User's birthday. **MUST** be an [RFC 3339 `full-date`](https://datatracker.ietf.org/doc/html/rfc3339#section-5.6) (`YYYY-MM-DD`). A year of `0000` means the year is hidden, and implementations **SHOULD NOT** display it.
     </Field>
     <Field name="location" type="string">
         User's location. Can be an [ISO 6709 Annex H](https://en.wikipedia.org/wiki/ISO_6709#String_expression_(Annex_H)) string or a human-readable string (e.g. "New York, NY").

@@ -4,17 +4,17 @@ description: "Guidelines on JSON handling and serialization"
 kind: Core concept
 ---
 
-All JSON in the Versia protocol **must** be an [I-JSON message](https://datatracker.ietf.org/doc/html/rfc7493), a restricted profile of JSON. Messages are [signed](/signatures) as raw bytes, so there is no canonical form to follow.
+All JSON in the Versia protocol **MUST** be an [I-JSON message](https://datatracker.ietf.org/doc/html/rfc7493), a restricted profile of JSON. Messages are [signed](/signatures) as raw bytes, so there is no canonical form to follow.
 
 ## Encoding
 
-All JSON data **must** be encoded in UTF-8. This is the only encoding supported by the Versia protocol. As I-JSON requires, keys and string values **must not** contain surrogate or noncharacter code points.
+All JSON data **MUST** be encoded in UTF-8. This is the only encoding supported by the Versia protocol. As I-JSON requires, keys and string values **MUST NOT** contain surrogate or noncharacter code points.
 
-Line breaks inside string values **should** be Unix-style `\n` (LF), not Windows-style `\r\n` (CRLF). There is no rule on whitespace between JSON tokens.
+Line breaks inside string values **SHOULD** be Unix-style `\n` (LF), not Windows-style `\r\n` (CRLF). There is no rule on whitespace between JSON tokens.
 
 ## Keys
 
-Keys **must not** be empty. Senders **must not** send an object with duplicate keys.
+Keys **MUST NOT** be empty. Senders **MUST NOT** send an object with duplicate keys.
 
 Which keys an object can have depends on the object:
 
@@ -27,13 +27,13 @@ Which keys an object can have depends on the object:
 
 ### Numbers
 
-Numbers **should not** have greater magnitude or precision than an IEEE 754 double-precision number. Any form that JSON allows is valid, including `1.0` and `1e3`.
+Numbers **SHOULD NOT** have greater magnitude or precision than an IEEE 754 double-precision number. Any form that JSON allows is valid, including `1.0` and `1e3`.
 
 Numeric fields state their type:
 
-- `u64`: a whole number from 0 to 2⁵³-1 (`9007199254740991`), in any form, so `1000`, `1000.0` and `1e3` are all valid. Values above that **must not** be sent.
+- `u64`: a whole number from 0 to 2⁵³-1 (`9007199254740991`), in any form, so `1000`, `1000.0` and `1e3` are all valid. Values above that **MUST NOT** be sent.
 - `f64`: an IEEE 754 double-precision number.
 
 ### Optional Fields
 
-Fields that are not marked as **required** are optional. Omitting a field and setting it to `null` mean the same thing. Senders **should** omit the field, and receivers **must** accept both.
+Fields that are not marked as **required** are optional. Omitting a field and setting it to `null` mean the same thing. Senders **SHOULD** omit the field, and receivers **MUST** accept both.

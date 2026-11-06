@@ -11,7 +11,7 @@ import Note from "../../../components/Note.astro";
 
 Versia uses the HTTP protocol for all communications between instances. HTTP requests follow the rules on this page to ensure compatibility between different implementations, as well as to ensure the security and integrity of the data being exchanged.
 
-HTTP requests and responses between instances **must** include a [Signature](/signatures), signed with the [instance's private key](/entities/instance-metadata), except on the routes listed in [Signatures](/signatures#where-signatures-are-required).
+HTTP requests and responses between instances **MUST** include a [Signature](/signatures), signed with the [instance's private key](/entities/instance-metadata), except on the routes listed in [Signatures](/signatures#where-signatures-are-required).
 
 ## Requests
 
@@ -53,15 +53,15 @@ HTTP requests and responses between instances **must** include a [Signature](/si
 
 ## Rate Limits
 
-Implementations **must** respect the rate limits of remote instances.
+Implementations **MUST** respect the rate limits of remote instances.
 
-An instance that rate limits a request **must** respond with a [`429 Too Many Requests`](https://datatracker.ietf.org/doc/html/rfc6585#section-4) status code and a [`Retry-After`](https://datatracker.ietf.org/doc/html/rfc9110#section-10.2.3) header. The sender **must not** retry the request before that time.
+An instance that rate limits a request **MUST** respond with a [`429 Too Many Requests`](https://datatracker.ietf.org/doc/html/rfc6585#section-4) status code and a [`Retry-After`](https://datatracker.ietf.org/doc/html/rfc9110#section-10.2.3) header. The sender **MUST NOT** retry the request before that time.
 
 ## Retries
 
-A sender delivering to an [inbox](/api/endpoints#inbox) **should** retry with increasing delays after a network failure, a `5xx` status code, a `408 Request Timeout`, a `429 Too Many Requests`, or a `2xx` response [it had to discard](/signatures#where-signatures-are-required). It **must** honor any `Retry-After` header. It **must not** retry after any other `4xx` status code.
+A sender delivering to an [inbox](/api/endpoints#inbox) **SHOULD** retry with increasing delays after a network failure, a `5xx` status code, a `408 Request Timeout`, a `429 Too Many Requests`, or a `2xx` response [it had to discard](/signatures#where-signatures-are-required). It **MUST** honor any `Retry-After` header. It **MUST NOT** retry after any other `4xx` status code.
 
-Each retry **must** be [signed](/signatures) again, as the signature's timestamp will no longer be valid.
+Each retry **MUST** be [signed](/signatures) again, as the signature's timestamp will no longer be valid.
 
 How long to keep trying is up to the implementation. 48 hours is a reasonable default.
 
@@ -112,11 +112,11 @@ Every federation route uses these status codes. A check that runs after a `2xx` 
 | `422 Unprocessable Entity` | The entity is [invalid](/federation/validation), its [author does not belong to the signer](/federation/validation#authors-and-signers), or its [core type is unknown](/federation/validation#unknown-fields-and-types). Also used for invalid [pagination parameters](/api/endpoints#pagination). |
 | `429 Too Many Requests` | The sender is [rate limited](#rate-limits). |
 
-The inbox **should** answer with `202 Accepted` and no body. Senders **must** treat any `2xx` status code from the inbox as delivered, as long as [its signature verifies](/signatures#where-signatures-are-required).
+The inbox **SHOULD** answer with `202 Accepted` and no body. Senders **MUST** treat any `2xx` status code from the inbox as delivered, as long as [its signature verifies](/signatures#where-signatures-are-required).
 
 ## Error Bodies
 
-A response with a `4xx` or `5xx` status code **may** have a body in the format below. The status code is what counts: an instance **must not** change its behavior based on an error body.
+A response with a `4xx` or `5xx` status code **MAY** have a body in the format below. The status code is what counts: an instance **MUST NOT** change its behavior based on an error body.
 
 <Fields name="Error">
     <Field name="error" type="string" required>

@@ -26,7 +26,7 @@ Notes represent a piece of content on a Versia instance. They can be posted by [
     </div>
 
     <Field name="attachments" type="ContentFormat[]" required>
-        Media attachments to the note. May be any format. **Must** use `url`.
+        Media attachments to the note. May be any format. **MUST** use `url`.
     </Field>
     <Field name="author" type="Reference" required>
         [Reference](/entities#reference) to the `User` considered the author of the note.
@@ -45,7 +45,7 @@ Notes represent a piece of content on a Versia instance. They can be posted by [
         }} />
     </Field>
     <Field name="content" type="ContentFormat">
-        The content of the note. **Must** be text format (`text/html`, `text/markdown`, etc). **Must** use `content`, not `url`.
+        The content of the note. **MUST** be text format (`text/html`, `text/markdown`, etc). **MUST** use `content`, not `url`.
     </Field>
     <Field name="device" type="Device">
         Device used to post the note. Useful for functionality such as Twitter's "posted via" feature.
@@ -87,7 +87,7 @@ Notes represent a piece of content on a Versia instance. They can be posted by [
         [Reference](/entities#reference) to the note that this note is a reply to, if any.
     </Field>
     <Field name="subject" type="string">
-        A subject for the note. Useful for clients to display a "content warning" or "spoiler" feature, such as on Mastodon. **Must** be a plaintext string (`text/plain`).
+        A subject for the note. Useful for clients to display a "content warning" or "spoiler" feature, such as on Mastodon. **MUST** be a plaintext string (`text/plain`).
     </Field>
     <Inherits />
 

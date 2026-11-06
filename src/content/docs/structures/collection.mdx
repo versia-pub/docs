@@ -10,7 +10,7 @@ import Fields from "../../../components/spec/Fields.astro";
 
 Collections are a way to represent paginated groups of entities. They are used everywhere lists of entities can be found, such as a user's outbox.
 
-As Collections are independent and not part of a larger entity (like [ContentFormat](/structures/content-format)), responses carrying them **must** have a valid [Signature](/signatures).
+As Collections are independent and not part of a larger entity (like [ContentFormat](/structures/content-format)), responses carrying them **MUST** have a valid [Signature](/signatures).
 
 A Collection can only hold entities [authored on the instance serving it](/federation/validation#authors-and-signers). To list entities from other instances, use a [Reference Collection](#reference-collection).
 
@@ -21,7 +21,7 @@ A Collection can only hold entities [authored on the instance serving it](/feder
         Total number of entities in the collection that the requesting instance [may fetch](/federation#access), across all pages.
     </Field>
     <Field name="items" type="Entity[]" required>
-        Collection contents. **Must** be an array of entities.
+        Collection contents. **MUST** be an array of entities.
     </Field>
 
     <Example slot="example" unchecked>
@@ -58,7 +58,7 @@ Neither kind of collection carries a field saying which kind it is. The page tha
         Total number of entities in the collection that the requesting instance [may fetch](/federation#access), across all pages.
     </Field>
     <Field name="items" type="Reference[]" required>
-        Collection contents. **Must** be an array of [References](/entities#reference).
+        Collection contents. **MUST** be an array of [References](/entities#reference).
     </Field>
 
     <Example slot="example">

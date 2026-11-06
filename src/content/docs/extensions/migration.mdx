@@ -25,27 +25,27 @@ The user creates an account on the new instance, and sets its `previous` field t
 
 The user requests migration from the old instance. The old instance checks that the new account's `previous` field names the old account, and sends a Migration entity.
 
-It **must** [deliver](/federation#delivery) the Migration to the instances hosting a follower of the old account or a user it follows, and to the new account's instance. It **may** also deliver it to others.
+It **MUST** [deliver](/federation#delivery) the Migration to the instances hosting a follower of the old account or a user it follows, and to the new account's instance. It **MAY** also deliver it to others.
 
-A receiver **must** fetch the `destination` account, and **must** ignore the Migration if that account's `previous` field does not name the `author`.
+A receiver **MUST** fetch the `destination` account, and **MUST** ignore the Migration if that account's `previous` field does not name the `author`.
 
 Relationships then move through normal [Follows](/entities/follow):
 
-- An instance hosting a follower of the old account **must** send a Follow to the new account for each of them, and drop their relationship with the old account.
-- The new account's instance **should** accept these Follows automatically, even if the account has `manually_approves_followers` set.
-- The new account's instance **must** send a Follow to each account in the old account's `following` collection. The followee's usual rules apply, so one who manually approves followers still decides.
+- An instance hosting a follower of the old account **MUST** send a Follow to the new account for each of them, and drop their relationship with the old account.
+- The new account's instance **SHOULD** accept these Follows automatically, even if the account has `manually_approves_followers` set.
+- The new account's instance **MUST** send a Follow to each account in the old account's `following` collection. The followee's usual rules apply, so one who manually approves followers still decides.
 
 ### Complete Migration
 
 The old instance sets the `destination` field of the old account to a [Reference](/entities#reference) to the new account, and disables the old account.
 
-It **should** keep serving the old account and its `followers` and `following` collections for long enough that other instances can finish moving. At least 30 days is suggested.
+It **SHOULD** keep serving the old account and its `followers` and `following` collections for long enough that other instances can finish moving. At least 30 days is suggested.
 
 ## Entity Definition
 
 <Entity name="Migration" type="pub.versia:migration/Migration" transient>
     <Field name="type" type="string" required>
-        **Must** be `pub.versia:migration/Migration`.
+        **MUST** be `pub.versia:migration/Migration`.
     </Field>
     <Field name="author" type="Reference" required>
         [Reference](/entities#reference) to the [User](/entities/user) who is migrating.

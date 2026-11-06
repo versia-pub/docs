@@ -43,18 +43,18 @@ Bob's instance receives the message and processes it according to the rules defi
 In addition to inboxes, every user has an outbox (at `/.versia/v0.6/entities/User/<id>/collections/outbox`). The outbox is simply a [Collection](/structures/collection) of all the messages that a user has sent. When a user sends a message to another user, a copy of that message is accessible in the sender's outbox.
 
 <Warning>
-    An outbox **must** list only the entities the requesting instance [may fetch](#access).
+    An outbox **MUST** list only the entities the requesting instance [may fetch](#access).
 
     For example, if Alice sends a [Note](/entities/note) whose `visibility` is `mentions` and that only mentions Bob:
-    - Alice's instance **must** return the [Note](/entities/note) in response to a request from Bob's instance.
-    - Alice's instance **must not** list the [Note](/entities/note) in her outbox in response to a request from Joe's instance.
+    - Alice's instance **MUST** return the [Note](/entities/note) in response to a request from Bob's instance.
+    - Alice's instance **MUST NOT** list the [Note](/entities/note) in her outbox in response to a request from Joe's instance.
 </Warning>
 
 Outboxes are very useful for "backfilling" data when a new instance joins the network. By resolving the outboxes of all new users it encounters, a new instance can quickly catch up on all old messages.
 
 ## Delivery
 
-A sender **must** deliver each entity to the instances hosting the users below. It **may** also deliver it to other instances that [may fetch it](#access), and it may skip instances it refuses to federate with.
+A sender **MUST** deliver each entity to the instances hosting the users below. It **MAY** also deliver it to other instances that [may fetch it](#access), and it may skip instances it refuses to federate with.
 
 | Entity | Delivered to |
 | --- | --- |
@@ -71,7 +71,7 @@ Extensions state the delivery rules for their own entities on their own pages.
 
 ## Access
 
-Requests identify an instance, not a user, so access is decided per instance. An instance **must not** serve an entity to an instance that may not fetch it, and **must** answer such a request with a `404 Not Found` status code, so as not to reveal that the entity exists.
+Requests identify an instance, not a user, so access is decided per instance. An instance **MUST NOT** serve an entity to an instance that may not fetch it, and **MUST** answer such a request with a `404 Not Found` status code, so as not to reveal that the entity exists.
 
 | Entity | May be fetched by |
 | --- | --- |
@@ -80,14 +80,14 @@ Requests identify an instance, not a user, so access is decided per instance. An
 | Note, `visibility` is `followers` | Instances hosting a follower of the author, a mentioned user, or the author of a Note it replies to |
 | Note, `visibility` is `mentions` | Instances hosting a mentioned user or the author of a Note it replies to |
 
-An instance that fetches an entity **must** apply the same limits to its own users.
+An instance that fetches an entity **MUST** apply the same limits to its own users.
 
-[Collections](/structures/collection) list only the items the requesting instance may fetch. [Transient entities](/entities#transient-entities) cannot be fetched at all. Extensions state the access rules for their own entities on their own pages. An extension **may** add to who can fetch an entity, and **must** state it on its page. It **must not** take anyone away.
+[Collections](/structures/collection) list only the items the requesting instance may fetch. [Transient entities](/entities#transient-entities) cannot be fetched at all. Extensions state the access rules for their own entities on their own pages. An extension **MAY** add to who can fetch an entity, and **MUST** state it on its page. It **MUST NOT** take anyone away.
 
 ## Ordering
 
 Delivery order is not guaranteed. An instance can receive a Like before the Note it refers to.
 
-A receiver **should** fetch referenced entities it does not have. If it cannot, it **may** retry later or drop the entity.
+A receiver **SHOULD** fetch referenced entities it does not have. If it cannot, it **MAY** retry later or drop the entity.
 
-An entity with nothing to apply to, such as a [FollowAccept](/entities/follow-accept) with no pending request, **must** be ignored, and is not an error.
+An entity with nothing to apply to, such as a [FollowAccept](/entities/follow-accept) with no pending request, **MUST** be ignored, and is not an error.

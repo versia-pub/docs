@@ -71,11 +71,11 @@ It is a good idea to provide at least two versions of an image (if possible): on
 
 ## Definition
 
-Each value in a `ContentFormat` is an object with the fields below. It **must** have exactly one of `content` or `url`.
+Each value in a `ContentFormat` is an object with the fields below. It **MUST** have exactly one of `content` or `url`.
 
 <Fields name="ContentFormat">
     <Field name="content" type="string">
-        The content itself, embedded in the entity as text. Binary formats **must** use `url` instead.
+        The content itself, embedded in the entity as text. Binary formats **MUST** use `url` instead.
     </Field>
     <Field name="url" type="URI">
         Where to fetch the content from.
@@ -99,10 +99,10 @@ Each value in a `ContentFormat` is an object with the fields below. It **must** 
         Height of the content in pixels. Only applicable to content types that have a height.
     </Field>
     <Field name="fps" type="number" numberType="f64">
-        Frames per second, such as `29.97`. **Must not** be negative. Only applicable to video content.
+        Frames per second, such as `29.97`. **MUST NOT** be negative. Only applicable to video content.
     </Field>
     <Field name="duration" type="number" numberType="f64">
-        Duration of the content in seconds. **Must not** be negative. Only applicable to content types that have a duration.
+        Duration of the content in seconds. **MUST NOT** be negative. Only applicable to content types that have a duration.
     </Field>
 
     <Example slot="example" unchecked>

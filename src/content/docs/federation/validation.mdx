@@ -7,9 +7,9 @@ kind: Federation
 
 Implementations **MUST** strictly validate all incoming data to ensure that it is well-formed and adheres to the Versia Protocol. If a request is invalid, the instance **MUST** reject it with the matching [status code](/federation/http#status-codes).
 
-Remember that while *your* implementation may disallow or restrict some user input, other implementations may not. You **should not** apply those restrictions to data coming from other instances.
+Remember that while *your* implementation may disallow or restrict some user input, other implementations may not. You **SHOULD NOT** apply those restrictions to data coming from other instances.
 
-For example, if your implementation disallows using HTML in posts, you should not strip HTML from posts coming from other instances. You *may* choose to display them differently, but you should not modify the data itself. [Sanitizing HTML before rendering it](/security#remote-content) does not change this: it applies to what you display, not to what you store.
+For example, if your implementation disallows using HTML in posts, you should not strip HTML from posts coming from other instances. You **MAY** choose to display them differently, but you should not modify the data itself. [Sanitizing HTML before rendering it](/security#remote-content) does not change this: it applies to what you display, not to what you store.
 
 Things to validate include, but are not limited to:
 
@@ -32,17 +32,17 @@ It is your implementation's duty to reject data from other instances that does n
 
 ## Authors and Signers
 
-An entity's `author` **must** belong to the instance that signed the message carrying it, whether the entity was delivered to an inbox or fetched. This also applies to each entity in a [Collection](/structures/collection)'s `items`.
+An entity's `author` **MUST** belong to the instance that signed the message carrying it, whether the entity was delivered to an inbox or fetched. This also applies to each entity in a [Collection](/structures/collection)'s `items`.
 
-An instance **must** reject an entity that breaks this rule. If it checks before answering an inbox request, it **must** return a `422 Unprocessable Entity` status code. If it processes the entity after answering, it **must** drop the entity, and no status code is required.
+An instance **MUST** reject an entity that breaks this rule. If it checks before answering an inbox request, it **MUST** return a `422 Unprocessable Entity` status code. If it processes the entity after answering, it **MUST** drop the entity, and no status code is required.
 
 Entities without an `author` field state which instance may send them on their own page.
 
 ## Unknown Fields and Types
 
-Receivers **must** ignore fields they do not recognize on entities and structures, and **must not** reject an entity for having them. They do not need to store them. This is what lets a `0.X.Y` release add optional fields.
+Receivers **MUST** ignore fields they do not recognize on entities and structures, and **MUST NOT** reject an entity for having them. They do not need to store them. This is what lets a `0.X.Y` release add optional fields.
 
 An entity whose `type` the receiver does not recognize is handled by what kind of type it is:
 
-- A namespaced type, which belongs to an [extension](/extensions#naming), **must** be answered with a `2xx` status code and dropped.
-- Any other type is a core type, and **must** be rejected with a `422 Unprocessable Entity` status code. Core types only change between `X` versions, so an unknown one is an invalid entity.
+- A namespaced type, which belongs to an [extension](/extensions#naming), **MUST** be answered with a `2xx` status code and dropped.
+- Any other type is a core type, and **MUST** be rejected with a `422 Unprocessable Entity` status code. Core types only change between `X` versions, so an unknown one is an invalid entity.
