@@ -125,78 +125,60 @@ export default defineConfig({
                     ],
                 },
                 {
-                    label: "Reference",
+                    label: "Entities",
                     items: [
-                        {
-                            label: "Entities",
-                            items: [
-                                link("Delete", "/entities/delete", true),
-                                link("Follow", "/entities/follow", true),
-                                link(
-                                    "FollowAccept",
-                                    "/entities/follow-accept",
-                                    true,
-                                ),
-                                link(
-                                    "FollowReject",
-                                    "/entities/follow-reject",
-                                    true,
-                                ),
-                                link(
-                                    "InstanceMetadata",
-                                    "/entities/instance-metadata",
-                                    true,
-                                ),
-                                link("Note", "/entities/note", true),
-                                link("Unfollow", "/entities/unfollow", true),
-                                link("User", "/entities/user", true),
-                            ],
-                        },
-                        {
-                            label: "Structures",
-                            items: [
-                                link(
-                                    "Collection",
-                                    "/structures/collection",
-                                    true,
-                                ),
-                                link(
-                                    "ContentFormat",
-                                    "/structures/content-format",
-                                    true,
-                                ),
-                            ],
-                        },
-                        {
-                            label: "Extensions",
-                            items: [
-                                link("Overview", "/extensions"),
-                                link(
-                                    "Custom Emojis",
-                                    "/extensions/custom-emojis",
-                                ),
-                                link("Delegation", "/extensions/delegation"),
-                                link("Groups", "/extensions/groups"),
-                                link(
-                                    "Instance Messaging",
-                                    "/extensions/instance-messaging",
-                                ),
-                                link(
-                                    "Interaction Controls",
-                                    "/extensions/interaction-controls",
-                                ),
-                                link("Likes", "/extensions/likes"),
-                                link("Migration", "/extensions/migration"),
-                                link("Polls", "/extensions/polls"),
-                                link("Reactions", "/extensions/reactions"),
-                                link("Reports", "/extensions/reports"),
-                                link("Share", "/extensions/share"),
-                                link("Vanity", "/extensions/vanity"),
-                            ],
-                        },
-                        link("Types", "/types"),
-                        link("Links", "/links"),
+                        link("Delete", "/entities/delete", true),
+                        link("Follow", "/entities/follow", true),
+                        link("FollowAccept", "/entities/follow-accept", true),
+                        link("FollowReject", "/entities/follow-reject", true),
+                        link(
+                            "InstanceMetadata",
+                            "/entities/instance-metadata",
+                            true,
+                        ),
+                        link("Note", "/entities/note", true),
+                        link("Unfollow", "/entities/unfollow", true),
+                        link("User", "/entities/user", true),
                     ],
+                },
+                {
+                    label: "Structures",
+                    items: [
+                        link("Collection", "/structures/collection", true),
+                        link(
+                            "ContentFormat",
+                            "/structures/content-format",
+                            true,
+                        ),
+                    ],
+                },
+                {
+                    label: "Extensions",
+                    items: [
+                        link("Overview", "/extensions"),
+                        link("Custom Emojis", "/extensions/custom-emojis"),
+                        link("Delegation", "/extensions/delegation"),
+                        link("Groups", "/extensions/groups"),
+                        link(
+                            "Instance Messaging",
+                            "/extensions/instance-messaging",
+                        ),
+                        link(
+                            "Interaction Controls",
+                            "/extensions/interaction-controls",
+                        ),
+                        link("Likes", "/extensions/likes"),
+                        link("Migration", "/extensions/migration"),
+                        link("Polls", "/extensions/polls"),
+                        link("Reactions", "/extensions/reactions"),
+                        link("Reports", "/extensions/reports"),
+                        link("Share", "/extensions/share"),
+                        link("Vanity", "/extensions/vanity"),
+                    ],
+                },
+                {
+                    label: "Reference",
+                    items: [link("Types", "/types"), link("Links", "/links")],
                 },
                 {
                     label: "Project",

@@ -5,19 +5,15 @@ type Entry = StarlightRouteData["sidebar"][number];
 
 interface Props {
     entries: Entry[];
-    depth?: number;
 }
 
-const { entries, depth = 0 } = Astro.props;
+const { entries } = Astro.props;
 const { headings } = Astro.locals.starlightRoute;
 
 const sections = headings.filter((heading) => heading.depth === 2);
-
-const hasCurrent = (entry: Entry): boolean =>
-    entry.type === "link" ? entry.isCurrent : entry.entries.some(hasCurrent);
 ---
 
-<ul class:list={["nav-list", `nav-depth-${depth}`]}>
+<ul class="nav-list">
     {entries.map((entry) => (
         <li>
             {entry.type === "link" ? (
@@ -37,16 +33,11 @@ const hasCurrent = (entry: Entry): boolean =>
                         </ul>
                     )}
                 </>
-            ) : depth === 0 ? (
+            ) : (
                 <>
                     <p class="nav-label">{entry.label}</p>
-                    <Astro.self entries={entry.entries} depth={depth + 1} />
+                    <Astro.self entries={entry.entries} />
                 </>
-            ) : (
-                <details open={hasCurrent(entry)}>
-                    <summary class="nav-link">{entry.label}</summary>
-                    <Astro.self entries={entry.entries} depth={depth + 1} />
-                </details>
             )}
         </li>
     ))}
@@ -78,7 +69,6 @@ const hasCurrent = (entry: Entry): boolean =>
         font-size: var(--text-sm);
         line-height: 1.45;
         text-decoration: none;
-        cursor: pointer;
     }
 
     .nav-link:hover {
@@ -96,16 +86,9 @@ const hasCurrent = (entry: Entry): boolean =>
         font-size: var(--code-size);
     }
 
-    .nav-depth-2 {
-        margin: 0.1rem 0 0.4rem 0.2rem;
-        padding-left: 0.75rem;
-        border-left: 1px solid var(--hair);
-    }
-
     .sublinks {
         margin: 0.1rem 0 0.5rem;
         padding-left: 0.75rem;
-        border-left: 1px solid var(--hair);
     }
 
     .sublinks a {
@@ -124,8 +107,8 @@ const hasCurrent = (entry: Entry): boolean =>
     }
 
     .sublinks a.is-current {
-        margin-left: calc(-0.75rem - 1px);
-        padding-left: calc(0.75rem - 2px + 1px);
+        margin-left: -0.75rem;
+        padding-left: calc(0.75rem - 2px);
         border-left: 2px solid var(--accent);
     }
 </style>
