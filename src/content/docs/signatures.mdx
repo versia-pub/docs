@@ -141,11 +141,10 @@ To send the request, Bob would use the following code:
 ```typescript
 const headers = new Headers();
 
-headers.set("Accept", "application/vnd.versia+json");
 headers.set("Versia-Signed-By", "bob.com");
 headers.set("Versia-Signed-At", String(timestamp));
 headers.set("Versia-Signature", base64Signature);
-headers.set("Content-Type", "application/vnd.versia+json; charset=utf-8");
+headers.set("Content-Type", "application/vnd.versia+json");
 
 const response = await fetch("https://alice.com/.versia/v0.6/inbox", {
     method: "POST",

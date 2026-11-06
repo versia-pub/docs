@@ -60,7 +60,7 @@ import Example from "../../../components/spec/Example.astro";
 
     ```http title="Example response"
     HTTP/1.1 200 OK
-    Content-Type: application/vnd.versia+json; charset=utf-8
+    Content-Type: application/vnd.versia+json
 
     {
         "type": "InstanceMetadata",
@@ -95,7 +95,7 @@ import Example from "../../../components/spec/Example.astro";
 
     ```http title="Example response"
     HTTP/1.1 200 OK
-    Content-Type: application/vnd.versia+json; charset=utf-8
+    Content-Type: application/vnd.versia+json
 
     {
         "type": "User",
@@ -129,10 +129,9 @@ import Example from "../../../components/spec/Example.astro";
 
     ```http title="Example response"
     HTTP/1.1 200 OK
-    Content-Type: application/vnd.versia+json; charset=utf-8
+    Content-Type: application/vnd.versia+json
 
     {
-        "author": "b.social:1234",
         "total": 2,
         "items": [
             "a.social:f8b0d4b4-d354-4798-bbc5-c2ba8acabfe3",
@@ -185,7 +184,7 @@ Accept: application/vnd.versia+json
 
     ```http title="Example response"
     HTTP/1.1 200 OK
-    Content-Type: application/vnd.versia+json; charset=utf-8
+    Content-Type: application/vnd.versia+json
 
     {
         "total": 2,
@@ -212,8 +211,7 @@ The delivery mechanism is described further in the [Federation](/federation#inbo
     ```http title="Example request"
     POST /.versia/v0.6/inbox
     Host: b.social
-    Accept: application/vnd.versia+json
-    Content-Type: application/vnd.versia+json; charset=utf-8
+    Content-Type: application/vnd.versia+json
 
     {
         "type": "Note",

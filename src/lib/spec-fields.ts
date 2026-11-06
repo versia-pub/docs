@@ -4,7 +4,6 @@ export const inheritedFields = [
     { name: "type", type: "string", required: true },
     { name: "created_at", type: "RFC3339", required: true },
     { name: "updated_at", type: "RFC3339", required: false },
-    { name: "$schema", type: "string", required: false },
     { name: "extensions", type: "Extensions", required: false },
 ];
 

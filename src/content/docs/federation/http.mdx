@@ -9,18 +9,18 @@ import Field from "../../../components/spec/Field.astro";
 import Fields from "../../../components/spec/Fields.astro";
 import Note from "../../../components/Note.astro";
 
-Versia uses the HTTP protocol for all communications between instances. HTTP requests must conform to certain standards to ensure compatibility between different implementations, as well as to ensure the security and integrity of the data being exchanged.
+Versia uses the HTTP protocol for all communications between instances. HTTP requests follow the rules on this page to ensure compatibility between different implementations, as well as to ensure the security and integrity of the data being exchanged.
 
 HTTP requests and responses between instances **must** include a [Signature](/signatures), signed with the [instance's private key](/entities/instance-metadata), except on the routes listed in [Signatures](/signatures#where-signatures-are-required).
 
 ## Requests
 
 <Fields name="HTTP Request" label="Headers">
-    <Field name="Accept" type="string" required>
-        **Must** be `application/vnd.versia+json` on every `/.versia/` route. Basic `application/json` is **not** allowed on them. The [well-known](/api/endpoints#well-known), [WebFinger](/federation/discovery) and [Instance Messaging](/extensions/instance-messaging) routes state their own.
+    <Field name="Accept" type="string">
+        **MUST** be `application/vnd.versia+json` on every `/.versia/` route except the [inbox](/api/endpoints#inbox) and [Instance Messaging](/extensions/instance-messaging), which do not need it. Basic `application/json` **MUST NOT** be used on those routes. The [well-known](/api/endpoints#well-known) and [WebFinger](/federation/discovery) routes state their own.
     </Field>
     <Field name="Content-Type" type="string" required>
-        **Must** be `application/vnd.versia+json; charset=utf-8` if the request has a body, except on the [Instance Messaging](/extensions/instance-messaging) route.
+        **MUST** be `application/vnd.versia+json` if the request has a body, except on the [Instance Messaging](/extensions/instance-messaging) route. Receivers **MUST** accept it with or without `charset=utf-8`.
     </Field>
     <Field name="Versia-Signature" type="string" required>
         See [Signatures](/signatures) for more information.
@@ -42,8 +42,7 @@ HTTP requests and responses between instances **must** include a [Signature](/si
     <Example slot="example">
     ```http title="Example Request"
     POST https://bob.com/.versia/v0.6/inbox HTTP/1.1
-    Accept: application/vnd.versia+json
-    Content-Type: application/vnd.versia+json; charset=utf-8
+    Content-Type: application/vnd.versia+json
     User-Agent: CoolServer/1.0 (https://coolserver.com)
     Versia-Signature: fNL6ahaIp875nssChgKbowDYphTPC+aArjRMOr8AdIalREv2D5mzznkx2ApPZ8YcV0V2OSE5Tel1dmyTe+LhBA==
     Versia-Signed-By: example.com
@@ -70,7 +69,7 @@ How long to keep trying is up to the implementation. 48 hours is a reasonable de
 
 <Fields name="HTTP Response" label="Headers">
     <Field name="Content-Type" type="string" required>
-        **Must** include `application/vnd.versia+json; charset=utf-8` if the response has a body, unless specified otherwise.
+        **MUST** be `application/vnd.versia+json` if the response has a body, unless specified otherwise. Receivers **MUST** accept it with or without `charset=utf-8`.
     </Field>
     <Field name="Versia-Signature" type="string" required>
         See [Signatures](/signatures) for more information.
@@ -86,7 +85,7 @@ How long to keep trying is up to the implementation. 48 hours is a reasonable de
     ```http title="Example Response"
     # Answers GET /.versia/v0.6/instance/collections/admins, sent to bob.com
     HTTP/1.1 200 OK
-    Content-Type: application/vnd.versia+json; charset=utf-8
+    Content-Type: application/vnd.versia+json
     Versia-Signature: Z7jS2clgNsfHTAJQ00teQRZ/ssvim+Y5zA/fOR9USG9Yr/v8A1fvPZGpjjf3bfDuGMi7eY35Cq0qGwsdy784DA==
     Versia-Signed-By: bob.com
     Versia-Signed-At: 1729241717

@@ -152,8 +152,7 @@ It is now time for `a.social` to send the note to `joe`.
 # The request is signed by a.social's instance private key
 curl -X POST https://b.social/.versia/v0.6/inbox \
     --data-binary @note.json \
-    -H "Content-Type: application/vnd.versia+json; charset=utf-8" \
-    -H "Accept: application/vnd.versia+json" \
+    -H "Content-Type: application/vnd.versia+json" \
     -H "User-Agent: CoolServer/1.0 (https://coolserver.com)" \
     -H "Versia-Signature: 0vmNrZ2923qKM59Gv7WtvJUqSeH4XBDfr89ea9gPklU9xmX+xk2xNiJDoXCJPj2KbcRC5J8NDYWJj/nO7iQTCg==" \
     -H "Versia-Signed-By: a.social" \

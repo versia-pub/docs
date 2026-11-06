@@ -32,7 +32,7 @@ It is your implementation's duty to reject data from other instances that does n
 
 ## Authors and Signers
 
-An entity's `author` **must** belong to the instance that signed the message carrying it, whether the entity was delivered to an inbox or fetched. This also applies to a [Collection](/structures/collection)'s own `author` and to each entity in its `items`.
+An entity's `author` **must** belong to the instance that signed the message carrying it, whether the entity was delivered to an inbox or fetched. This also applies to each entity in a [Collection](/structures/collection)'s `items`.
 
 An instance **must** reject an entity that breaks this rule. If it checks before answering an inbox request, it **must** return a `422 Unprocessable Entity` status code. If it processes the entity after answering, it **must** drop the entity, and no status code is required.
 
