@@ -12,7 +12,7 @@ Versia defines a very simple API for server-to-server communication, mainly fetc
 
 Versia Protocol versions are written as `0.X.Y`:
 
-- `X` changes when a release breaks compatibility with earlier versions.
+- `X` changes when a release breaks compatibility with earlier versions. Adding a core entity type is a breaking change.
 - `Y` changes when a release stays compatible with other `0.X` versions, for example by adding an optional field.
 
 Every Versia API endpoint is prefixed with `/.versia/v0.X/`, so all `0.X.Y` versions share one prefix. The current prefix is `/.versia/v0.6/`. Instances list the versions they support at the [well-known endpoint](/api/endpoints#well-known).
@@ -20,6 +20,14 @@ Every Versia API endpoint is prefixed with `/.versia/v0.X/`, so all `0.X.Y` vers
 Requests not encrypted with TLS (aka HTTPS) **must not** be sent or responded to. All implementations are required to use TLS 1.2 or higher, and to support HTTP/2.
 
 Implementations have no obligation to support more than one Versia version. It is recommended to always support the latest version, as it helps avoid bogging down the network with old versions.
+
+### Choosing a Version
+
+To talk to another instance, a sender reads its [well-known endpoint](/api/endpoints#well-known) and uses the highest `0.X` that both instances support, at that version's prefix.
+
+Instances that share `X` but differ in `Y` **must** interoperate. Instances with no `X` in common **must not** federate.
+
+Entities do not state a version: the prefix they are sent or fetched at decides it.
 
 ## Signatures
 

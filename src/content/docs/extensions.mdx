@@ -23,7 +23,7 @@ These extensions are documented on this site, and all use the `pub.versia` names
 
 ## Handling Unsupported Extensions
 
-When an extension is not supported by an Implementation, it **can** be ignored. This means that the extension is not processed, and its data is not used. Implementations **must not** throw an error when encountering an unsupported extension, as long as the rest of the entity is valid.
+When an extension is not supported by an Implementation, it **can** be ignored. This means that the extension is not processed, and its data is not used. Implementations **must not** throw an error when encountering an unsupported extension, as long as the rest of the entity is valid. An entity whose type comes from an unsupported extension is [answered with a `2xx` status code and dropped](/federation/validation#unknown-fields-and-types).
 
 Extensions **must not** be designed in a way that makes them required to understand or process other non-extension entities.
 

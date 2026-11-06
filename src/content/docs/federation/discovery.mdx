@@ -51,7 +51,7 @@ Accept: application/jrd+json
 Instance metadata can be accessed in two steps:
 
 1. Making a `GET` request to the instance's [`/.well-known/versia` endpoint](/api/endpoints#well-known) to discover supported Versia Protocol versions.
-2. Picking a protocol version to use, and then querying the instance metadata endpoint as documented in the [Endpoints](/api/endpoints#instance-metadata) document.
+2. [Choosing the protocol version](/api/basics#choosing-a-version) to use, and then querying the instance metadata endpoint as documented in the [Endpoints](/api/endpoints#instance-metadata) document.
 
 ### Example
 
@@ -72,7 +72,7 @@ Accept: application/json
 ```
 
 Then, we
-- Pick version `0.6.1` to use
+- Pick `0.6`, the highest `0.X` that both instances support
 - Make a `GET` request to `https://versia.social/.versia/v0.6/instance`.
 
 This endpoint will return an [InstanceMetadata](/entities/instance-metadata) entity.
