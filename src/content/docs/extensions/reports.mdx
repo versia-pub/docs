@@ -23,8 +23,15 @@ When an instance receives a report, it *should* be reviewed by a moderator or ad
     <Field name="author" type="Reference">
         [Reference](/entities#reference) to the reporting [User](/entities/user). Optional if the report is anonymous. A report without an `author` can only be attributed to the instance that signed it.
     </Field>
-    <Field name="reported" type="Reference[]" required>
-        [References](/entities#reference) to the content being reported.
+    <Field name="reported" type="ReportedEntity[]" required>
+        The entities being reported.
+
+        <Field name="type" type="string" required>
+            Type of the entity being reported, such as `User` or `Note`.
+        </Field>
+        <Field name="reference" type="Reference" required>
+            [Reference](/entities#reference) to the entity being reported.
+        </Field>
     </Field>
     <Field name="tags" type="string[]" required>
         Report tags. Should be concise and clear, such as `spam`, `harassment`, `misinformation`, etc. Used for categorization.
@@ -42,8 +49,14 @@ When an instance receives a report, it *should* be reviewed by a moderator or ad
         "created_at": "2021-01-01T00:00:00Z",
         "author": "example.com:6f3001a1-641b-4763-a9c4-a089852eec84",
         "reported": [
-            "test.com:46f936a3-9a1e-4b02-8cde-0902a89769fa",
-            "test.com:213d7c56-fb9b-4646-a4d2-7d70aa7d106a"
+            {
+                "type": "User",
+                "reference": "test.com:46f936a3-9a1e-4b02-8cde-0902a89769fa"
+            },
+            {
+                "type": "Note",
+                "reference": "test.com:213d7c56-fb9b-4646-a4d2-7d70aa7d106a"
+            }
         ],
         "tags": [
             "spam",

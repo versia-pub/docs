@@ -27,35 +27,41 @@ Consider the following example:
 
 ### Sending a Follow Request
 
-To establish a follow relationship, `social.joe.org` can do the following:
+To establish a follow relationship, `social.joe.org` **must** do the following:
 
 1. Create a `Follow` entity with `Joe` as the author and `Alice` as the followee.
 2. Send the `Follow` entity to `Alice`'s inbox.
-3. Mark the relationship as "processing" in its database until `Alice` accepts the follow request.
+3. Treat the relationship as "processing" until a `FollowAccept` arrives.
 
 ### Accepting the Follow Request
 
-To accept the follow request, `Alice` can do the following:
+`alice.dev` **must** answer every `Follow` with a [FollowAccept](/entities/follow-accept) or a [FollowReject](/entities/follow-reject), even if [`manually_approves_followers`](/entities/user#user-manually-approves-followers) is `false`. If `Joe` is already following `Alice` and sends another `Follow`, `alice.dev` **must** send a `FollowAccept` again, in case the first was lost.
+
+To accept the follow request, `alice.dev` **must** do the following:
 
 1. Create a [FollowAccept](/entities/follow-accept) entity with `Alice` as the author and `Joe` as the follower.
 2. Send the `FollowAccept` entity to `Joe`'s inbox.
-3. Update the relationship status in its database to "accepted".
+
+It then treats `Joe` as a follower of `Alice`.
 
 ### Rejecting the Follow Request
 
-To reject the follow request, `Alice` can do the following:
+To reject the follow request, `alice.dev` **must** do the following:
 
 1. Create a [FollowReject](/entities/follow-reject) entity with `Alice` as the author and `Joe` as the follower.
 2. Send the `FollowReject` entity to `Joe`'s inbox.
-3. Optionally, log the rejection in its database.
+
+### Cancelling the Follow Request
+
+To cancel a follow request that has not been answered, `social.joe.org` sends an [Unfollow](/entities/unfollow).
 
 ### Final Steps
 
-Depending on whether the follow request is accepted or rejected, `social.joe.org` can then update the relationship status accordingly in its database.
+`social.joe.org` **must** mark the relationship as "accepted" when it receives a `FollowAccept`, and remove it when it receives a `FollowReject`.
 
 ## Behaviour
 
-Once a follow relationship is established, the **followee**'s instance should send all new notes from the **followee** to the **follower**'s inbox.
+Once a follow relationship is established, the **followee**'s instance **must** send new notes from the **followee** to the **follower**'s inbox, as described in [Delivery](/federation#delivery).
 
 ## Entity Definition
 

@@ -71,7 +71,7 @@ Instance **must** be the [Domain](/api/basics#domain) that the user is on.
         A header image for the user's profile. Also known as a cover photo or a banner. **Must** be an image format (`image/*`).
     </Field>
     <Field name="manually_approves_followers" type="boolean" required>
-        If `true`, the user must approve any new followers manually. If `false`, followers are automatically approved. This does not affect federation, and is meant to be used for clients to display correct UI.
+        If `true`, the user must approve any new followers manually. If `false`, followers are automatically approved. This does not affect federation, and is meant to be used for clients to display correct UI: [every `Follow` is still answered](/entities/follow#accepting-the-follow-request).
     </Field>
     <Field name="indexable" type="boolean" required>
         User consent to be indexed by search engines. If `false`, the user's profile should not be indexed.
