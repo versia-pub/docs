@@ -49,11 +49,12 @@
 }
 
 .has-focused .line:not(.focused) {
-    opacity: 0.5;
+    opacity: 0.3;
     transition: opacity 0.2s;
 }
 
-.has-focused:hover .line:not(.focused) {
+.has-focused:hover .line:not(.focused),
+.has-focused:focus-within .line:not(.focused) {
     opacity: 1;
 }
 
