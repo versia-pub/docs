@@ -49,6 +49,20 @@ Furthermore, adding more complex cryptography would make the specification signi
 
 Additionally, we would like to avoid re-creating what would essentially be a shoddier version of much stronger centralized platforms like [Signal](https://signal.org/). We feel that it is better to leave the confidentiality to the experts.
 
+## Remote Content
+
+Everything in an entity is written by another instance, and should be treated as untrusted.
+
+### HTML
+
+[Validation](/federation/validation) asks implementations not to modify the content they store. They **should** sanitize remote HTML before rendering it or passing it to clients, removing at least scripts, event handlers and other active content, to prevent cross-site scripting. Which tags to allow is up to the implementation.
+
+### Outbound Requests
+
+Remote entities contain URLs and domains that an instance then fetches. A hostile entity could point them at the instance's own network.
+
+When fetching anything named by remote data, instances **should not** connect to loopback, link-local or private addresses. This should be checked after DNS resolution and on every redirect. Development setups may be exempted by local configuration.
+
 ## Conclusion
 
 Now that you understand the security model, you have a better understanding of how to design your Versia implementation. If you have questions or problems with security that you would like to discuss, please [feel free to reach out to any one of us here](/#team).

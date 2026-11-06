@@ -54,7 +54,7 @@ Each piece of data in the `ContentFormat` structure is meant to be a different r
 
 Implementations should always process text content with the richest format available, such as HTML. However, they should also provide other formats like plain text and Markdown for compatibility with other systems.
 
-HTML is the recommended content type for text content, and as such every text content should have an HTML representation. If the content is not HTML, it should be converted to HTML using appropriate conversion rules.
+HTML is the recommended content type for text content, and as such every text content should have an HTML representation. If the content is not HTML, it should be converted to HTML using appropriate conversion rules. Remote HTML [should be sanitized before it is rendered](/security#remote-content).
 
 Rich formats include:
 - `text/html`
