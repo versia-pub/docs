@@ -8,12 +8,38 @@ kind: Extension
 import Entity from "../../../components/spec/Entity.astro";
 import Example from "../../../components/spec/Example.astro";
 import Field from "../../../components/spec/Field.astro";
+import Fields from "../../../components/spec/Fields.astro";
 import Inherits from "../../../components/spec/Inherits.astro";
 import Note from "../../../components/Note.astro";
 
 Groups are a way to organize users and notes into communities. They can be used for any purpose, such as forums, blogs, image galleries, video sharing, audio sharing, and messaging. They are similar to Discord's channels or Matrix's rooms.
 
-Refer to [Note](/entities/note#entity-definition)'s `group` property for how notes can be associated with groups.
+## Notes in a Group
+
+A [Note](/entities/note) is posted to a group through the `pub.versia:groups` key of its `extensions` field.
+
+Members of the group can see the Note, on top of the audience its `visibility` gives it, and their instances [may fetch it](/federation#access). To post a Note that only members and mentioned users can see, use a `visibility` of `mentions`: an instance that does not support this extension will then show it only to the mentioned users.
+
+<Fields name="GroupNote" extension="pub.versia:groups" on="Note">
+    <Field name="group" type="Reference" required>
+        [Reference](/entities#reference) to the [Group](#entity-definition) the Note is posted to.
+    </Field>
+
+    <Example slot="example" unchecked>
+    ```jsonc title="Example Note in a Group"
+    {
+        "type": "Note",
+        "visibility": "mentions",
+        ...
+        "extensions": { // [!code focus:5]
+            "pub.versia:groups": {
+                "group": "example.com:ed480922-b095-4f09-9da5-c995be8f5960"
+            }
+        }
+    }
+    ```
+    </Example>
+</Fields>
 
 ## Entity Definition
 
@@ -200,7 +226,7 @@ Indicates that a [Group](#entity-definition) has rejected a [User](/entities/use
 
 Group federation represents a particularly challenging problem, as it requires a way to make sure every single [Note](/entities/note) posted to it is delivered to every single member of the group.
 
-All [Notes](/entities/note) posted to a group (using the `group` field) **must** be sent to its instance's [inbox](/api/endpoints#inbox).
+All [Notes](/entities/note) [posted to a group](#notes-in-a-group) **must** be sent to its instance's [inbox](/api/endpoints#inbox).
 
 Once this is done, the group's instance **must** then federate this [Note](/entities/note) to every member of the group. However, this cannot be done the "normal way", as the group's instance does not have the private key to [sign](/signatures) the [Note](/entities/note).
 

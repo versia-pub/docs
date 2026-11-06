@@ -54,17 +54,12 @@ Notes represent a piece of content on a Versia instance. They can be posted by [
         <Field name="version" type="string" />
         <Field name="url" type="string" />
     </Field>
-    <Field name="group" type={'Reference | "public" | "followers"'}>
-        [Reference](/entities#reference) to a [Group](/extensions/groups) that the note is only visible in, or one of the following strings:
+    <Field name="visibility" type={'"public" | "followers" | "mentions"'} required>
+        Who can see the note, besides its author:
 
-        - `public`: The note is visible to anyone.
-        - `followers`: The note is visible only to the author's followers.
-
-        If not provided, the note is only visible to the author and those mentioned in the note.
-
-        <Note>
-            If the implementation does not support the [Groups Extension](/extensions/groups), any value other than `public` or `followers` should be treated as `null`.
-        </Note>
+        - `public`: Anyone.
+        - `followers`: The author's followers and the users mentioned in the note.
+        - `mentions`: Only the users mentioned in the note.
     </Field>
     <Field name="is_sensitive" type="boolean" required>
         Whether the note contains "sensitive content". This can be used with `subject` as a "content warning" feature.
@@ -141,7 +136,7 @@ Notes represent a piece of content on a Versia instance. They can be posted by [
                 "emojis": []
             }
         },
-        "group": "public",
+        "visibility": "public",
         "is_sensitive": false,
         "mentions": [],
         "subject": "Versia development",

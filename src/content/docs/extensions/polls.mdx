@@ -80,7 +80,7 @@ Note that there is no `question` field: the question should be included in the `
                 "expires_at": "2021-01-04T00:00:00.000Z"
             }
         },
-        "group": "public",
+        "visibility": "public",
         "is_sensitive": false,
         "mentions": []
     }
@@ -100,7 +100,7 @@ If a vote is cast to a poll that is closed, the vote should be rejected with a `
     <Field name="author" type="Reference" required>
         [Reference](/entities#reference) of the user who cast the vote.
     </Field>
-    <Field name="poll" type="Reference" required>
+    <Field name="target" type="Reference" required>
         [Reference](/entities#reference) to the note with poll that the user voted on.
     </Field>
     <Field name="option" type="number" required numberType="u64">
@@ -116,16 +116,18 @@ If a vote is cast to a poll that is closed, the vote should be rejected with a `
         "type": "pub.versia:polls/Vote", // [!code focus]
         "created_at": "2021-01-01T00:00:00.000Z",
         "author": "otherexample.org:6e0204a2-746c-4972-8602-c4f37fc63bbe", // [!code focus:3]
-        "poll": "example.com:f08a124e-fe90-439e-8be4-15a428a72a19",
+        "target": "example.com:f08a124e-fe90-439e-8be4-15a428a72a19",
         "option": 1
     }
     ```
     </Example>
 </Entity>
 
-## Delivery
+## Delivery and Access
 
 A sender **must** [deliver](/federation#delivery) Votes to the author of the [Note](/entities/note).
+
+Any instance that [may fetch](/federation#access) the Note, and the instance of the Note's author, may fetch a Vote.
 
 When a poll's votes change, its Note is [sent again](/entities#changing-an-entity), and **must** also be delivered to the users who voted.
 

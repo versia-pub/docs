@@ -28,7 +28,7 @@ Likes are a way for users to show appreciation for a note, like Twitter's "heart
     <Field name="author" type="Reference" required>
         [Reference](/entities#reference) to the [User](/entities/user) who created the Like.
     </Field>
-    <Field name="liked" type="Reference" required>
+    <Field name="target" type="Reference" required>
         [Reference](/entities#reference) to the note being liked.
     </Field>
 
@@ -41,7 +41,7 @@ Likes are a way for users to show appreciation for a note, like Twitter's "heart
         "type": "pub.versia:likes/Like",
         "created_at": "2021-01-01T00:00:00.000Z",
         "author": "example.com:6e0204a2-746c-4972-8602-c4f37fc63bbe",
-        "liked": "otherexample.org:fmKZ763jzIU8"
+        "target": "otherexample.org:fmKZ763jzIU8"
     }
     ```
     </Example>
@@ -60,7 +60,7 @@ Dislikes are a way for users to show disapproval for a note, like YouTube's "dis
     <Field name="author" type="Reference" required>
         [Reference](/entities#reference) to the [User](/entities/user) who created the Dislike.
     </Field>
-    <Field name="disliked" type="Reference" required>
+    <Field name="target" type="Reference" required>
         [Reference](/entities#reference) to the note being disliked.
     </Field>
 
@@ -73,7 +73,7 @@ Dislikes are a way for users to show disapproval for a note, like YouTube's "dis
         "type": "pub.versia:likes/Dislike",
         "created_at": "2021-01-01T00:00:00.000Z",
         "author": "example.com:6e0204a2-746c-4972-8602-c4f37fc63bbe",
-        "disliked": "otherexample.org:fmKZ763jzIU8"
+        "target": "otherexample.org:fmKZ763jzIU8"
     }
     ```
     </Example>
@@ -83,9 +83,11 @@ Dislikes are a way for users to show disapproval for a note, like YouTube's "dis
 
 To undo a like or dislike, a [Delete](/entities/delete) entity should be used. The `deleted` property of the Delete entity should link to the Like or Dislike entity to be removed.
 
-## Delivery
+## Delivery and Access
 
 A sender **must** [deliver](/federation#delivery) Likes and Dislikes to the author of the [Note](/entities/note) and, if the Note is public, to the followers of the user who sent them.
+
+Any instance that [may fetch](/federation#access) the Note, and the instance of the Note's author, may fetch a Like or Dislike.
 
 ## User Collections
 

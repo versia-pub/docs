@@ -132,7 +132,7 @@ Finally, `a.social` serializes the note to send it to `joe`.
             "content": "Hello, @joe@b.social! How are you doing today?"
         }
     },
-    "group": "public",
+    "visibility": "public",
     "mentions": [ // [!code focus:3]
         "b.social:bde22zi3ca8762"
     ],
@@ -155,7 +155,7 @@ curl -X POST https://b.social/.versia/v0.6/inbox \
     -H "Content-Type: application/vnd.versia+json; charset=utf-8" \
     -H "Accept: application/vnd.versia+json" \
     -H "User-Agent: CoolServer/1.0 (https://coolserver.com)" \
-    -H "Versia-Signature: khmas9nMKjoB1PmOYa0kFnlyRTWngbl6mHNTZmnqPoNaTeOtlTW49BacCDEZDG/89MoyE8AvXmu3sRHH2RaQAw==" \
+    -H "Versia-Signature: 0vmNrZ2923qKM59Gv7WtvJUqSeH4XBDfr89ea9gPklU9xmX+xk2xNiJDoXCJPj2KbcRC5J8NDYWJj/nO7iQTCg==" \
     -H "Versia-Signed-By: a.social" \
     -H "Versia-Signed-At: 1733051946"
 ```

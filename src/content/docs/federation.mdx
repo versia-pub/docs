@@ -45,7 +45,7 @@ In addition to inboxes, every user has an outbox (at `/.versia/v0.6/entities/Use
 <Warning>
     An outbox **must** list only the entities the requesting instance [may fetch](#access).
 
-    For example, if Alice sends a [Note](/entities/note) that has no `group` and only mentions Bob:
+    For example, if Alice sends a [Note](/entities/note) whose `visibility` is `mentions` and that only mentions Bob:
     - Alice's instance **must** return the [Note](/entities/note) in response to a request from Bob's instance.
     - Alice's instance **must not** list the [Note](/entities/note) in her outbox in response to a request from Joe's instance.
 </Warning>
@@ -58,9 +58,9 @@ A sender **must** deliver each entity to the instances hosting the users below. 
 
 | Entity | Delivered to |
 | --- | --- |
-| [Note](/entities/note), `group` is `public` | The author's followers, the users it mentions, and the authors of the Notes it replies to and quotes |
-| Note, `group` is `followers` | The author's followers and the users it mentions |
-| Note, no `group` | The users it mentions |
+| [Note](/entities/note), `visibility` is `public` | The author's followers, the users it mentions, and the authors of the Notes it replies to and quotes |
+| Note, `visibility` is `followers` | The author's followers and the users it mentions |
+| Note, `visibility` is `mentions` | The users it mentions |
 | [User](/entities/user), after a change | The user's followers |
 | [Follow](/entities/follow), [Unfollow](/entities/unfollow) | The followee |
 | [FollowAccept](/entities/follow-accept), [FollowReject](/entities/follow-reject) | The follower |
@@ -76,14 +76,13 @@ Requests identify an instance, not a user, so access is decided per instance. An
 | Entity | May be fetched by |
 | --- | --- |
 | [User](/entities/user) | Any instance |
-| [Note](/entities/note), `group` is `public` | Any instance |
-| Note, `group` is `followers` | Instances hosting a follower of the author or a mentioned user |
-| Note, no `group` | Instances hosting a mentioned user |
-| [Like, Dislike](/extensions/likes), [Reaction](/extensions/reactions), [Share](/extensions/share), [Vote](/extensions/polls) | Any instance that may fetch the Note, and the instance of the Note's author |
+| [Note](/entities/note), `visibility` is `public` | Any instance |
+| Note, `visibility` is `followers` | Instances hosting a follower of the author or a mentioned user |
+| Note, `visibility` is `mentions` | Instances hosting a mentioned user |
 
 An instance that fetches an entity **must** apply the same limits to its own users.
 
-[Collections](/structures/collection) list only the items the requesting instance may fetch. [Transient entities](/entities#transient-entities) cannot be fetched at all. Other extensions state their own access rules.
+[Collections](/structures/collection) list only the items the requesting instance may fetch. [Transient entities](/entities#transient-entities) cannot be fetched at all. Extensions state the access rules for their own entities on their own pages. An extension **may** add to who can fetch an entity, and **must** state it on its page. It **must not** take anyone away.
 
 ## Ordering
 
