@@ -13,11 +13,9 @@ Signals the deletion of an entity.
 
 ## Authorization
 
-Implementations **must** ensure that the author of the `Delete` entity has the authorization to delete the target entity.
+A `Delete` **must** come from the instance hosting the entity it deletes, which is the domain in the `deleted` [Reference](/entities#reference). A receiver **must** [reject](/federation/validation#authors-and-signers) any other `Delete`.
 
-Having the authorization is defined as:
-- The author is the creator of the target entity (including [delegation](/extensions/delegation)).
-- The author is the instance.
+Which of its users may delete what is up to that instance. With no `author`, the `Delete` comes from the instance that signed it.
 
 ## Fetching Deleted Entities
 
@@ -28,8 +26,8 @@ A `404 Not Found` can also mean that the requesting instance [may not fetch the 
 ## Entity Definition
 
 <Entity name="Delete" type="Delete" transient>
-    <Field name="author" type="Reference" required>
-        [Reference](/entities#reference) to the `User` who is deleting the entity.
+    <Field name="author" type="Reference">
+        [Reference](/entities#reference) to the `User` who is deleting the entity. Left out if the instance itself is deleting it.
     </Field>
     <Field name="deleted_type" type="string" required>
         Type of the entity being deleted.
