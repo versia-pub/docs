@@ -31,7 +31,9 @@ In this scenario, `jane.org` has no way of knowing what went wrong, as `joe.soci
 
 To send a federation debug message, instances **should** make a `POST` request to the `/.versia/v0.6/extensions/pub.versia:instance_messaging/messaging` endpoint with a simple text body containing a helpful message.
 
-No signatures are required (either on the request or response), and no response body is expected.
+The request has a `Content-Type` of `text/plain`, and needs no `Accept`. No signatures are required (either on the request or response), so that a message can still arrive when signing is what is broken. No response body is expected.
+
+A receiver **must** treat the sender as unverified and the text as untrusted. It **may** answer `429 Too Many Requests`, or `413 Content Too Large` for a message it finds too long.
 
 ```text title="Helpful Message"
 Validation failed for https://jane.org/.versia/v0.6/entities/User/nkGEd8eI98.

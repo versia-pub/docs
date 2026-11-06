@@ -17,10 +17,10 @@ HTTP requests and responses between instances **must** include a [Signature](/si
 
 <Fields name="HTTP Request" label="Headers">
     <Field name="Accept" type="string" required>
-        **Must** be `application/vnd.versia+json` on every `/.versia/` route. Basic `application/json` is **not** allowed on them. The [well-known](/api/endpoints#well-known) and [WebFinger](/federation/discovery) routes state their own.
+        **Must** be `application/vnd.versia+json` on every `/.versia/` route. Basic `application/json` is **not** allowed on them. The [well-known](/api/endpoints#well-known), [WebFinger](/federation/discovery) and [Instance Messaging](/extensions/instance-messaging) routes state their own.
     </Field>
     <Field name="Content-Type" type="string" required>
-        **Must** be `application/vnd.versia+json; charset=utf-8` if the request has a body.
+        **Must** be `application/vnd.versia+json; charset=utf-8` if the request has a body, except on the [Instance Messaging](/extensions/instance-messaging) route.
     </Field>
     <Field name="Versia-Signature" type="string" required>
         See [Signatures](/signatures) for more information.

@@ -12,7 +12,7 @@ import Note from "../../../components/Note.astro";
 
 The Vanity extension adds more optional metadata to the user profile.
 
-## Entity Definition
+## Extensions to User
 
 All properties are optional.
 
@@ -44,9 +44,9 @@ All properties are optional.
         Audio format (e.g. `audio/mpeg`).
     </Field>
     <Field name="pronouns" type="{ [key: LanguageCode]: Pronoun[] }">
-        An array of internationalized pronouns the user uses.
+        The pronouns the user uses, for each language.
 
-        `LanguageCode` is a string, for example `en-US` or `fr`. Each `Pronoun` has:
+        `LanguageCode` is a [BCP 47](https://www.rfc-editor.org/info/bcp47) language tag, for example `en-US` or `fr`. Each `Pronoun` has:
 
         <Field name="subject" type="string" required />
         <Field name="object" type="string" required />
@@ -64,9 +64,6 @@ All properties are optional.
     </Field>
     <Field name="timezone" type="string">
         User's timezone. Should be a valid [IANA timezone](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones) string.
-    </Field>
-    <Field name="aliases" type="Reference[]">
-        [References](/entities#reference) to [Users](/entities/user) that should be considered aliases (or "alt accounts") of this profile.
     </Field>
 
     <Example slot="example" unchecked>
@@ -119,11 +116,7 @@ All properties are optional.
                 },
                 "birthday": "1998-04-12",
                 "location": "+40.6894-074.0447/",
-                "timezone": "America/New_York",
-                "aliases": [
-                    "burger.social:349ee237-c672-41c1-aadc-677e185f795a",
-                    "versia.social:f565ef02-035d-4974-ba5e-f62a8558331d"
-                ]
+                "timezone": "America/New_York"
             }
         }
     }

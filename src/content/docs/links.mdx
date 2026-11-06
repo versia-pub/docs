@@ -20,11 +20,11 @@ Versia Links are a way to reference entities in the Versia Protocol, in a way th
     </Field>
     <Field name="action" type="string" required>
         Action to take on the entity. Can have multiple slashes as a way to segment the action.
-        Links that reference instance-specific content (like Entities) **must** reference a Instance.
 
         Possible actions:
 
         - `users/:instance/:id`: Open a user profile.
+        - `users/:instance/@:username`: Open a user profile by username, [resolved through WebFinger](/federation/discovery).
         - `notes/:instance/:id`: Open a note.
         - `groups/:instance/:id`: Open a group.
         - `reply/:instance/:id`: Open the composer to reply to a note.
@@ -33,12 +33,18 @@ Versia Links are a way to reference entities in the Versia Protocol, in a way th
         - `compose/:text`: Compose a new note. Text passed at the end will be added in the note compose field. Used for "Share with Versia" buttons on websites.
     </Field>
     <Field name="instance" type="Domain">
-        Instance hosting the referenced content.
+        Instance hosting the referenced content. **Must** be present on every action except `compose`.
     </Field>
+
+    A `:id` is the entity's `id`. `:id` and `:text` **must** be percent-encoded as URI path segments, and an `@` in a `:id` **must** be written as `%40`, so a raw `@` always marks a username.
 
     <Example slot="example">
     ```text title="Viewing a user profile"
-    web+versia://users/bob.social/alice
+    web+versia://users/bob.social/73cb1728-75d7-4080-8d28-4adf49bb0a0d
+    ```
+
+    ```text title="Viewing a user profile by username"
+    web+versia://users/bob.social/@alice
     ```
 
     ```text title="Viewing a note"
