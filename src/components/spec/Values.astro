@@ -9,7 +9,7 @@ const { values } = Astro.props;
 <dl class="values">
     {Object.entries(values).map(([value, description]) => (
         <div>
-            <dt><code>"{value}"</code></dt>
+            <dt><code>"{value}"</code></dt>{" "}
             <dd>{description}</dd>
         </div>
     ))}

@@ -18,8 +18,8 @@ const fields = inheritedFields.filter((field) => !omitted.includes(field.name));
     <ul>
         {fields.map((field) => (
             <li>
-                <FieldName name={field.name} href={inheritedFieldHref(field.name)} />
-                <Type value={field.type} />
+                <FieldName name={field.name} href={inheritedFieldHref(field.name)} />{" "}
+                <Type value={field.type} />{" "}
                 {field.required && <RequiredTag />}
             </li>
         ))}

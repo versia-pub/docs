@@ -23,9 +23,10 @@ const { name, type, required = false, numberType, anchor } = Astro.props;
 
 <div class="field" id={anchor} data-field={name}>
     <div class="field-head">
-        <FieldName name={name} href={`#${anchor}`} />
-        {type && <Type value={type} />}
-        {numberType && <abbr class="field-number" title={numberTitles[numberType]}>{numberType}</abbr>}
+        {/* The spaces keep these apart in search excerpts. */}
+        <FieldName name={name} href={`#${anchor}`} />{" "}
+        {type && <Type value={type} />}{" "}
+        {numberType && <abbr class="field-number" title={numberTitles[numberType]}>{numberType}</abbr>}{" "}
         {required && <RequiredTag />}
     </div>
     {Astro.slots.has("default") && <div class="field-body"><slot /></div>}

@@ -11,7 +11,7 @@ const { name, href, description } = Astro.props;
 
 <a class="guide" href={href}>
     <slot name="icon" />
-    <strong><slot name="name">{name}</slot></strong>
+    <strong><slot name="name">{name}</slot></strong>{" "}
     <span>{description}</span>
 </a>
 

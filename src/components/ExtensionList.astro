@@ -23,7 +23,7 @@ const extensions = (await getCollection("docs"))
     .sort((a, b) => a.name.localeCompare(b.name));
 ---
 
-<ul class="extensions">
+<ul class="extensions" data-pagefind-ignore>
     {extensions.map(({ name, extension, description, href }) => (
         <li>
             <a href={href}>{name}</a>

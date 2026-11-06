@@ -19,7 +19,7 @@ const cleanTree = (entries: Tree[]) => {
     }
 };
 
-export const onRequest = defineRouteMiddleware(({ locals }) => {
+export const onRequest = defineRouteMiddleware(({ locals, url }) => {
     const { head, sidebar, pagination } = locals.starlightRoute;
     for (const { attrs } of head) {
         for (const key of ["href", "content"] as const) {
@@ -35,6 +35,16 @@ export const onRequest = defineRouteMiddleware(({ locals }) => {
             }
         }
     }
+    // Search results link to this address instead of the built file.
+    head.push({
+        tag: "meta",
+        attrs: {
+            "data-pagefind-meta": "url[content]",
+            content: url.pathname
+                .replace(/\/index\.html$/, "/")
+                .replace(/\.html$/, ""),
+        },
+    });
     cleanTree(sidebar as Tree[]);
     if (pagination.prev) clean(pagination.prev);
     if (pagination.next) clean(pagination.next);
