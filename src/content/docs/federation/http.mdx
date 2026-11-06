@@ -44,6 +44,7 @@ HTTP requests/responses between instances **must** include a [Signature](/signat
     POST https://bob.com/.versia/v0.6/inbox HTTP/1.1
     # This specific endpoint returns plain JSON
     Accept: application/json
+    Content-Type: application/vnd.versia+json; charset=utf-8
     User-Agent: CoolServer/1.0 (https://coolserver.com)
     Versia-Signature: /CjB2L9bcvRg+uP19B4/rqy7Ji9/cqMFPlL3GVCIndnQjYyOpBzJEAl9weDnXm7Jrqa3y6sBC+EYWKThO2r9Bw==
     Versia-Signed-By: example.com
