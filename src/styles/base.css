@@ -26,6 +26,5 @@ summary:focus-visible {
 }
 
 ::selection {
-    background: var(--accent);
-    color: var(--paper);
+    background: color-mix(in srgb, var(--accent) 35%, transparent);
 }

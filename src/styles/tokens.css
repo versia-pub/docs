@@ -44,7 +44,7 @@
 :root[data-theme="light"] {
     color-scheme: light;
     --paper: #ffffff;
-    --paper-raised: #f6f6f6;
+    --paper-raised: #f3f3f3;
     --ink: #1a1a1a;
     --ink-soft: #4d4d4d;
     --ink-faint: #6e6e6e;
@@ -60,7 +60,7 @@
     :root[data-theme] {
         color-scheme: light;
         --paper: #ffffff;
-        --paper-raised: #f6f6f6;
+        --paper-raised: #f3f3f3;
         --ink: #1a1a1a;
         --ink-soft: #4d4d4d;
         --ink-faint: #6e6e6e;
@@ -92,7 +92,7 @@
     --sl-color-text-accent: var(--accent);
     --sl-color-bg: var(--paper);
     --sl-color-bg-nav: var(--paper);
-    --sl-color-bg-sidebar: var(--paper);
+    --sl-color-bg-sidebar: var(--paper-raised);
     --sl-color-hairline: var(--hair);
     --sl-color-hairline-light: var(--hair);
     --sl-color-hairline-shade: var(--hair);
