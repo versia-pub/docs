@@ -13,27 +13,25 @@ The `User` entity represents an account on a Versia instance. Users can post [No
 
 ## Addresses
 
-Users may be represented by a shorthand address, in the following formats:
+Users may be represented by a shorthand address, in the following format:
 
 ```
 @username@instance
-@id@instance
 ```
 
 For example:
 
 ```
 @jessew@versia.social
-@018ec082-0ae1-761c-b2c5-22275a611771@versia.social
 ```
 
 This is similar to an email address or an ActivityPub address. Usernames are case-insensitive.
 
-### Identifier
+### Username
 
-Identifier **must** be either a valid `username` or a valid `id`. It should have the same username/id as the user's profile.
+Username **must** be the user's `username`.
 
-Usernames can be changed by the user, so it is recommended to use `id` for long-term references.
+Usernames can be changed by the user, so an address may stop working. Use a [Reference](/entities#reference) for long-term references.
 
 ### Instance
 
