@@ -19,7 +19,7 @@ Federation is built on the [HyperText Transfer Protocol (HTTP)](https://datatrac
     <Guide name="HTTP Guidelines" href="/federation/http" description="Guidelines for HTTP communication in Versia." />
     <Guide name="Validation" href="/federation/validation" description="Validation rules for Versia implementations." />
     <Guide name="Discovery" href="/federation/discovery" description="How Versia instances can discover users, capabilities, and endpoints." />
-    <Guide name="Delegation" href="/extensions/delegation" description="Authorizing actions on behalf of another user." />
+    <Guide name="Delegation" href="/extensions/delegation" description="Showing a user's actions under another user's name." />
 </Guides>
 
 ## Inboxes
@@ -59,8 +59,8 @@ A sender **must** deliver each entity to the instances hosting the users below. 
 | Entity | Delivered to |
 | --- | --- |
 | [Note](/entities/note), `visibility` is `public` | The author's followers, the users it mentions, and the authors of the Notes it replies to and quotes |
-| Note, `visibility` is `followers` | The author's followers and the users it mentions |
-| Note, `visibility` is `mentions` | The users it mentions |
+| Note, `visibility` is `followers` | The author's followers, the users it mentions, and the authors of the Notes it replies to |
+| Note, `visibility` is `mentions` | The users it mentions and the authors of the Notes it replies to |
 | [User](/entities/user), after a change | The user's followers |
 | [Follow](/entities/follow), [Unfollow](/entities/unfollow) | The followee |
 | [FollowAccept](/entities/follow-accept), [FollowReject](/entities/follow-reject) | The follower |
@@ -77,8 +77,8 @@ Requests identify an instance, not a user, so access is decided per instance. An
 | --- | --- |
 | [User](/entities/user) | Any instance |
 | [Note](/entities/note), `visibility` is `public` | Any instance |
-| Note, `visibility` is `followers` | Instances hosting a follower of the author or a mentioned user |
-| Note, `visibility` is `mentions` | Instances hosting a mentioned user |
+| Note, `visibility` is `followers` | Instances hosting a follower of the author, a mentioned user, or the author of a Note it replies to |
+| Note, `visibility` is `mentions` | Instances hosting a mentioned user or the author of a Note it replies to |
 
 An instance that fetches an entity **must** apply the same limits to its own users.
 

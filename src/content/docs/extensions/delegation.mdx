@@ -1,6 +1,6 @@
 ---
 title: "Delegation Extension"
-description: "Lets users perform actions on other accounts' behalf."
+description: "Lets users show their actions under another user's name."
 extension: pub.versia:delegation
 kind: Extension
 ---
@@ -10,12 +10,12 @@ import Field from "../../../components/spec/Field.astro";
 import Fields from "../../../components/spec/Fields.astro";
 import Warning from "../../../components/Warning.astro";
 
-Delegation is used to authorize actions on behalf of another user.
+Delegation lets a user's actions be shown under another user's name.
 
 ## Vocabulary
 
-- **Delegator**: The user that is delegating actions to another user. (The user that owns the key)
-- **Delegate**: The user that is being delegated actions. (The user that the key is pointing to)
+- **Delegator**: The user that actions are shown as.
+- **Delegate**: The user that performs the actions.
 
 ## Implementation Details
 
@@ -24,10 +24,10 @@ Any actions or entities created by the **delegate** should be attributed to the 
 This is useful as a way to centralize all of a user's many "alt accounts" into a single, unified feed.
 
 <Warning>
-    If an instance encounters an action from a User that has a Delegator listed, but that Delegator does not allow the User to perform actions on their behalf, the actions **MUST** be shown as the User's own.
-
-    Also, if a User has a Delegator listed, but that Delegator does not allow the User to perform actions on their behalf, instances **SHOULD** mark the User with a warning about possible impersonation or fraud.
+    If a User names a **delegator** that does not list them in `allowed_delegates`, instances **must** show the User's actions as their own.
 </Warning>
+
+Delegation only changes who an action is shown as. It grants no rights over the other user's entities: each user's entities are still hosted, changed and [deleted](/entities/delete) by their own instance. That instance **may** let delegates ask it to act, which is outside this specification.
 
 ## Extension Definition
 
@@ -36,7 +36,7 @@ The Delegation extension uses an ID of `pub.versia:delegation`.
 If the extension is present, exactly **one** of the fields **MUST** be specified:
 <Fields name="Delegation" extension="pub.versia:delegation" on="User">
     <Field name="delegator" type="Reference">
-        If this user performs actions on behalf on another user, **MUST** have a reference to that user.
+        If this user performs actions on behalf of another user, **MUST** have a reference to that user.
     </Field>
     <Field name="allowed_delegates" type="Reference[]">
         If other users perform actions on behalf of this user, **MUST** have a list of references to all such users.

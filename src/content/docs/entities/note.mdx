@@ -58,8 +58,8 @@ Notes represent a piece of content on a Versia instance. They can be posted by [
         Who can see the note, besides its author:
 
         - `public`: Anyone.
-        - `followers`: The author's followers and the users mentioned in the note.
-        - `mentions`: Only the users mentioned in the note.
+        - `followers`: The author's followers, the users mentioned in the note, and the authors of the Notes it replies to.
+        - `mentions`: Only the users mentioned in the note, and the authors of the Notes it replies to.
     </Field>
     <Field name="is_sensitive" type="boolean" required>
         Whether the note contains "sensitive content". This can be used with `subject` as a "content warning" feature.
