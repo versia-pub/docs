@@ -6,6 +6,22 @@ kind: Project
 
 This page lists changes since Working Draft 3.
 
+## v0.6.1
+
+- Added an [endpoint for instance collections](/api/endpoints#instance-collections), since [Instance Metadata](/entities/instance-metadata) has no `id`.
+- The [inbox](/api/endpoints#inbox) now also allows `Accept: application/json`.
+- [References](/entities#reference) now use a [Domain](/api/basics#domain) as their prefix, so they cannot contain port numbers or IP addresses. Their definition moved to [Entities](/entities#reference).
+- [Domains](/api/basics#domain) in examples no longer have port numbers, and entity types in URLs are always capitalized.
+- Protocol versions are now written as `0.X.0`, matching the examples.
+- Named the [Instance Messaging](/extensions/instance-messaging) extension `pub.versia:instance_messaging`, so that instances can list it in `compatibility.extensions`.
+- [Migration](/extensions/migration)'s `previous` field is now optional, and `new` is described as a Reference to the user, not to the user's URI.
+- [Note](/entities/note)'s `group` field now has one rule: if not provided, the note is visible to the author and those mentioned in it.
+- [ContentFormat](/structures/content-format)'s `hash` field is now a `string`, as the `Hash` type was never defined.
+- [Interaction Controls](/extensions/interaction-controls)' `InteractionGroup` values now match their descriptions: `followed` is gone, and `following` and `mentioned` are added.
+- The [signed string](/signatures) is now described as one line with its parts separated by single spaces. The text used to say it included newlines, which its sample did not.
+- Corrected the samples on the [federation example](/federation/example), including its URLs, which instance key signs and its timestamps.
+- Removed the Types page. RFC3339 and URI types now link directly to their RFCs.
+
 ## Since WD 5
 
 - Added a new `content-type` for Versia entities: `application/vnd.versia+json`.
