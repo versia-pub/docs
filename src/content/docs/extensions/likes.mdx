@@ -15,6 +15,8 @@ The Likes extension adds support for users to like and dislike notes.
 
 Implementations should make sure that users cannot like and dislike the same note at the same time. If a user dislikes a note they have already liked, the like should be removed, and vice versa.
 
+Likes and Dislikes are [delivered](/federation#delivery) to the author of the note and, if the note is public, to the followers of the user who sent them.
+
 ## Likes
 
 Likes are a way for users to show appreciation for a note, like Twitter's "heart" button or Reddit's "upvote".
@@ -26,7 +28,7 @@ Likes are a way for users to show appreciation for a note, like Twitter's "heart
         **Must** be `pub.versia:likes/Like`.
     </Field>
     <Field name="author" type="Reference" required>
-        [Reference](/entities#reference) to the creator of the Like.
+        [Reference](/entities#reference) to the [User](/entities/user) who created the Like.
     </Field>
     <Field name="liked" type="Reference" required>
         [Reference](/entities#reference) to the note being liked.
@@ -58,7 +60,7 @@ Dislikes are a way for users to show disapproval for a note, like YouTube's "dis
         **Must** be `pub.versia:likes/Dislike`.
     </Field>
     <Field name="author" type="Reference" required>
-        [Reference](/entities#reference) to the creator of the Dislike.
+        [Reference](/entities#reference) to the [User](/entities/user) who created the Dislike.
     </Field>
     <Field name="disliked" type="Reference" required>
         [Reference](/entities#reference) to the note being disliked.
