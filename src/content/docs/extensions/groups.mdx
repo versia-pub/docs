@@ -273,7 +273,7 @@ The instance hosting a group cannot send the Notes posted to it, as an entity's 
 
 The instance of the author **MUST** allow that fetch if the requesting instance hosts a user in the group's `members` collection, unless it [refuses to federate](/federation/http#status-codes) with that instance. It **MAY** cache that collection, and **SHOULD** fetch it again before refusing an instance it does not find there.
 
-When a Note posted to a group changes or is deleted, the group's instance **MUST** send a `GroupFederate` for it again, and receivers fetch it again. The instance of the author **MUST** answer with `410 Gone` for a deleted Note that was posted to a group.
+When a Note posted to a group changes or is deleted, the group's instance **MUST** send a `GroupFederate` for it again, and receivers fetch it again. The instance of the author answers a request for the deleted Note as [Delete describes](/entities/delete#fetching-deleted-entities). After a `404 Not Found`, members keep their copy.
 
 ## Delivery and Access
 
