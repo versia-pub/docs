@@ -107,8 +107,8 @@ export const extensionNameProblem = (name: string) =>
         ? undefined
         : "is not an extension name, such as `pub.versia:likes`";
 
-/** /structures/content-format: keys are media types. */
-export const MEDIA_TYPE = /^[\w.+-]+\/[\w.+-]+$/;
+/** /structures/media: `media_type` is a media type, such as `image/png`. */
+const MEDIA_TYPE = /^[\w.+-]+\/[\w.+-]+$/;
 
 /** Rules a field's description states, for the fields that `format` marks. */
 export const formatProblems: Record<
@@ -129,4 +129,8 @@ export const formatProblems: Record<
             : undefined,
     "non-negative": (value) =>
         typeof value === "number" && value < 0 ? "is negative" : undefined,
+    "media-type": (value) =>
+        typeof value === "string" && !MEDIA_TYPE.test(value)
+            ? "is not a media type, such as `image/png`"
+            : undefined,
 };

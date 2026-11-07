@@ -5,7 +5,7 @@ import type { Node } from "unist";
 import { visit } from "unist-util-visit";
 import type { VFile } from "vfile";
 import { checkEntity, unknownTypes } from "./entity-checker/check.ts";
-import { CONTENT_FORMAT_FIELDS } from "./entity-checker/content-format.ts";
+import { MEDIA_FIELDS } from "./entity-checker/media.ts";
 import type { EntitySchema, FieldSpec } from "./entity-checker/types.ts";
 import {
     anchorPart,
@@ -173,18 +173,7 @@ const checkExample = (
 };
 
 const MEDIA_TYPE = /^[\w.+-]+\/[\w.+-]+$/;
-const FORMAT_FIELDS = new Set([
-    "content",
-    "url",
-    "description",
-    "size",
-    "hash",
-    "thumbhash",
-    "width",
-    "height",
-    "fps",
-    "duration",
-]);
+const MEDIA_FIELD_NAMES = new Set(MEDIA_FIELDS.map((f) => f.name));
 
 const parseSample = (code: Code, file: VFile): unknown => {
     const source = code.value;
@@ -201,51 +190,48 @@ const parseSample = (code: Code, file: VFile): unknown => {
     return data;
 };
 
-const checkFormat = (
-    mediaType: string,
-    value: unknown,
-    code: Code,
-    file: VFile,
-) => {
-    const fail = (problem: string) =>
-        file.fail(`ContentFormat "${mediaType}" ${problem}`, code);
-
-    if (typeof value !== "object" || value === null) {
-        return fail("is not an object");
-    }
-    const format = value as Record<string, unknown>;
-    const unlisted = Object.keys(format).filter((k) => !FORMAT_FIELDS.has(k));
-    if (unlisted.length > 0) {
-        fail(`has unlisted keys: ${unlisted.join(", ")}`);
-    }
-    if ("content" in format === "url" in format) {
-        fail("needs exactly one of content or url");
-    }
-    if (/^https?:\/\//.test(String(format.content))) {
-        fail("has a URL in content, which belongs in url");
-    }
-};
-
-const checkFormats = (value: unknown, code: Code, file: VFile) => {
+/**
+ * Fails the build on a Media object with unlisted keys or without its required fields, and on a
+ * leftover ContentFormat map, whose keys were media types.
+ */
+const checkMedia = (value: unknown, code: Code, file: VFile) => {
     if (typeof value !== "object" || value === null) {
         return;
     }
     const entries = Object.entries(value);
-    const isFormat =
+    if (
         !Array.isArray(value) &&
         entries.length > 0 &&
-        entries.every(([key]) => MEDIA_TYPE.test(key));
-    for (const [key, child] of entries) {
-        if (isFormat) {
-            checkFormat(key, child, code, file);
-        } else {
-            checkFormats(child, code, file);
+        entries.every(([key]) => MEDIA_TYPE.test(key))
+    ) {
+        file.fail(
+            `A sample still uses a ContentFormat map (${entries.map(([key]) => key).join(", ")}); use Media or RichText`,
+            code,
+        );
+    }
+    if ("media_type" in value) {
+        const keys = Object.keys(value);
+        const unlisted = keys.filter((k) => !MEDIA_FIELD_NAMES.has(k));
+        const missing = MEDIA_FIELDS.filter(
+            (f) => f.required && !keys.includes(f.name),
+        );
+        if (unlisted.length > 0) {
+            file.fail(`Media has unlisted keys: ${unlisted.join(", ")}`, code);
         }
+        if (missing.length > 0) {
+            file.fail(
+                `Media lacks required fields: ${missing.map((f) => f.name).join(", ")}`,
+                code,
+            );
+        }
+    }
+    for (const [, child] of entries) {
+        checkMedia(child, code, file);
     }
 };
 
-/** Fails the build when the ContentFormat sheet and the checker's copy of its fields disagree. */
-const checkContentFormatSheet = (
+/** Fails the build when the Media sheet and the checker's copy of its fields disagree. */
+const checkMediaSheet = (
     fields: FieldSpec[],
     sheet: JsxElement,
     file: VFile,
@@ -257,9 +243,9 @@ const checkContentFormatSheet = (
                     `${f.name}:${f.type}:${f.numberType ?? ""}:${f.required}`,
             )
             .join(", ");
-    if (summary(fields) !== summary(CONTENT_FORMAT_FIELDS)) {
+    if (summary(fields) !== summary(MEDIA_FIELDS)) {
         file.fail(
-            `The ContentFormat sheet no longer matches CONTENT_FORMAT_FIELDS in src/lib/entity-checker/content-format.ts:\n  sheet:   ${summary(fields)}\n  checker: ${summary(CONTENT_FORMAT_FIELDS)}`,
+            `The Media sheet no longer matches MEDIA_FIELDS in src/lib/entity-checker/media.ts:\n  sheet:   ${summary(fields)}\n  checker: ${summary(MEDIA_FIELDS)}`,
             sheet,
         );
     }
@@ -351,8 +337,8 @@ const linkEntity = (entity: JsxElement, file: VFile) => {
     };
     const fields = walk((entity as JsxElement).children, prefix);
 
-    if (entity.name === "Fields" && nameOf(entity) === "ContentFormat") {
-        checkContentFormatSheet(fields, entity, file);
+    if (entity.name === "Fields" && nameOf(entity) === "Media") {
+        checkMediaSheet(fields, entity, file);
     }
 
     // A field the entity lists itself, such as an extension's `type`, wins over the inherited one.
@@ -407,13 +393,13 @@ const linkEntity = (entity: JsxElement, file: VFile) => {
  * Gives each `Field` in an `Entity` or `Fields` sheet its anchor, tells the
  * example's JSON blocks which keys can link to a field, and fails the build
  * when an example and its field list disagree, or when any JSON block on the
- * page is invalid or holds an invalid ContentFormat.
+ * page is invalid or holds an invalid Media object.
  */
 export function remarkSpec() {
     return (tree: Root, file: VFile) => {
         for (const code of codeIn(tree)) {
             if (code.lang === "json" || code.lang === "jsonc") {
-                checkFormats(parseSample(code, file), code, file);
+                checkMedia(parseSample(code, file), code, file);
             }
         }
         for (const sheet of [

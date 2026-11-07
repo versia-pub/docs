@@ -1,17 +1,13 @@
 import {
-    CONTENT_FORMAT_FIELDS,
-    CONTENT_FORMAT_HREF,
-} from "./content-format.ts";
-import {
     domainProblem,
     extensionNameProblem,
     formatProblems,
     integerProblem,
-    MEDIA_TYPE,
     referenceProblem,
     timestampProblem,
     uriProblem,
 } from "./formats.ts";
+import { MEDIA_FIELDS } from "./media.ts";
 import { childPath } from "./path.ts";
 import type { EntitySchema, FieldSpec, Finding } from "./types.ts";
 
@@ -60,7 +56,8 @@ const SCALAR_TYPES = new Set([
     "Domain",
     "RFC3339",
     "Reference",
-    "ContentFormat",
+    "RichText",
+    "Media",
     "Extensions",
     "Category",
 ]);
@@ -129,40 +126,6 @@ export const checkEntity = (
         }
     };
 
-    const checkContentFormat = (value: unknown, href: string, path: string) => {
-        if (!isObject(value)) {
-            return problem(
-                path,
-                href,
-                `is ${describe(value)}, not a ContentFormat object`,
-            );
-        }
-        for (const [mediaType, format] of Object.entries(value)) {
-            const at = childPath(path, mediaType);
-            if (!MEDIA_TYPE.test(mediaType)) {
-                problem(at, CONTENT_FORMAT_HREF, "is not a media type");
-            }
-            if (!isObject(format)) {
-                problem(
-                    at,
-                    CONTENT_FORMAT_HREF,
-                    `is ${describe(format)}, not an object`,
-                );
-                continue;
-            }
-            const has = (name: string) =>
-                format[name] !== undefined && format[name] !== null;
-            if (has("content") === has("url")) {
-                problem(
-                    at,
-                    CONTENT_FORMAT_HREF,
-                    "needs exactly one of `content` and `url`",
-                );
-            }
-            checkObject(format, CONTENT_FORMAT_FIELDS, at, "a ContentFormat");
-        }
-    };
-
     const checkValue = (
         value: unknown,
         field: FieldSpec,
@@ -210,6 +173,7 @@ export const checkEntity = (
 
         switch (type) {
             case "string":
+            case "RichText":
                 if (typeof value !== "string") return expect("a string");
                 break;
             case "boolean":
@@ -232,8 +196,9 @@ export const checkEntity = (
                 return text(timestampProblem);
             case "Reference":
                 return text(referenceProblem);
-            case "ContentFormat":
-                return checkContentFormat(value, href, path);
+            case "Media":
+                if (!isObject(value)) return expect("a Media object");
+                return checkObject(value, MEDIA_FIELDS, path, "a Media");
             case "Extensions": {
                 if (!isObject(value)) return expect("an object");
                 for (const [key, data] of Object.entries(value)) {

@@ -4,13 +4,14 @@ export const API_PREFIX = "/.versia/v0.7";
 /** Where each named type is defined, so that type strings can link themselves. */
 export const typeLinks: Record<string, string> = {
     Collection: "/structures/collection",
-    ContentFormat: "/structures/content-format",
     CustomEmoji: "/extensions/custom-emojis#custom-emoji",
     Domain: "/entities#domain",
     Entity: "/entities",
     Extensions: "/extensions#entity-extension",
+    Media: "/structures/media",
     Reference: "/entities#reference",
     ReferenceCollection: "/structures/collection#reference-collection",
     RFC3339: "https://datatracker.ietf.org/doc/html/rfc3339",
+    RichText: "/structures/rich-text",
     URI: "https://datatracker.ietf.org/doc/html/rfc3986",
 };

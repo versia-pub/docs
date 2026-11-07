@@ -1,5 +1,5 @@
 /** A rule from the pages that a field's text has to follow, beyond its type. */
-type FieldFormat = "id" | "sha256" | "base64" | "non-negative";
+type FieldFormat = "id" | "sha256" | "base64" | "non-negative" | "media-type";
 
 /** A field as its sheet lists it. `remark-spec` reads these from the page. */
 export interface FieldSpec {
