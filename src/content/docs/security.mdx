@@ -4,24 +4,9 @@ description: "Description of Versia's security model (what to expect and what to
 kind: Core concept
 ---
 
-
 **In a nutshell**: Versia is designed to guarantee the integrity and origin of messages between instances, but not end-to-end confidentiality. This means that you can trust which instance sent a message, but you should not assume that its contents are private, or that the instance was honest about them. TLS protects messages in transit, but every instance that handles a message can read it.
 
-This is in line with most other federated systems, such as email and ActivityPub: if you are looking for end-to-end confidentiality, you should be using end-to-end encrypted platforms such as [Signal](https://signal.org/).
-
-## Overview
-
-Versia's security model is designed to ensure the integrity and authenticity of data, with a simple but robust system of cryptographic signatures. This system is designed to be easy to implement and understand, while still providing strong guarantees.
-
-However, **it is very important to understand the limitations of this system**. Versia's security model is designed to prevent one instance from impersonating another and to detect tampering in transit, but it does not provide end-to-end confidentiality, and it cannot protect users from their own instance.
-
-There are three main kinds of security that are commonly discussed in the context of cryptography:
-
-- **Integrity**: Ensuring that data has not been tampered with.
-- **Authenticity**: Ensuring that data comes from the party it claims to come from.
-- **Confidentiality**: Ensuring that data is private and cannot be read by unauthorized parties.
-
-### Security Concerns
+## Security Concerns
 
 All data that your instance federates, including but not limited to DMs and private posts, is assumed to be accessible by the following parties:
 - Your instance administrator.
@@ -30,13 +15,13 @@ All data that your instance federates, including but not limited to DMs and priv
 
 Data that your instance does not federate, such as your password, is only exposed to your instance.
 
-### Security Guarantees
+## Security Guarantees
 
 Versia's security model provides the following guarantees:
 - **Integrity**: A message cannot be changed in transit without its signature failing to verify. If the signature is valid, the message is the one its signer sent.
 - **Authenticity**: A valid signature proves which instance sent a message. As an entity's author [must belong to the signing instance](/validation#authors-and-signers), an instance cannot speak for another instance's users.
 
-### What Signatures Do Not Prove
+## What Signatures Do Not Prove
 
 - **Which user wrote something**: Signatures identify an instance, not a user. An instance can create or change entities in the name of any of its own users, and other instances cannot tell.
 - **Where an entity came from later on**: A signature covers one HTTP message, and is not part of the entities in it. Once an entity has been stored, nothing in it proves its origin, so it cannot be passed on to a third party as evidence.
@@ -44,17 +29,15 @@ Versia's security model provides the following guarantees:
 
 ## Why No End-to-End Confidentiality?
 
-There are several reasons why end-to-end confidentiality is not covered as part of this specification. Most federated platforms, such as ActivityPub and email, do not provide it either.
+End-to-end confidentiality is not part of this specification. Most federated platforms, such as ActivityPub and email, do not provide it either.
 
-End-to-end confidentiality is **several orders of magnitude more complex** than integrity and authenticity. It requires a completely different set of tools and assumptions, which are not feasible to reliably implement in a complex federated system (if you've ever seen `** Unable to decrypt: The sender's device has not sent us the keys for this message. **`, you know what we're talking about).
+It requires a different set of tools and assumptions, which are hard to implement reliably in a federated system. The added cryptography would also make the specification harder to implement for smaller developers.
 
-Furthermore, adding more complex cryptography would make the specification significantly more complex, which would likely make it harder to implement for smaller developers with less resources.
-
-Additionally, we would like to avoid re-creating what would essentially be a shoddier version of much stronger centralized platforms like [Signal](https://signal.org/). We feel that it is better to leave the confidentiality to the experts.
+Platforms such as [Signal](https://signal.org/) already do this well, so Versia leaves confidentiality to them.
 
 ## Remote Content
 
-Everything in an entity is written by another instance, and should be treated as untrusted. [Validation](/validation#remote-content) has the rules for rendering remote HTML and for fetching what remote data names.
+[Validation](/validation#remote-content) has the rules for rendering remote HTML and for fetching what remote data names.
 
 ## Reporting a Vulnerability
 
