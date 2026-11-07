@@ -1,6 +1,6 @@
 ---
 title: "Example"
-description: "A description of how a typical federation flow might look like"
+description: "One note sent from one instance to another, step by step."
 kind: Federation
 ---
 
@@ -8,12 +8,14 @@ import Note from "../../../components/Note.astro";
 import Message from "../../../components/spec/Message.astro";
 import WireTrace from "../../../components/spec/WireTrace.astro";
 
-This page describes a typical federation flow between two servers, `a.social` and `b.social`, in several different contexts.
+This page follows one note from `a.social` to `b.social`, from resolving a mention to displaying the note.
 
 <Note>
     All examples, domains, names and timestamps are **fictional** and are used **for illustrative purposes only**.
 
     Some details have been slightly simplified for clarity.
+
+    The signatures are real. They were made with the [example key](/signatures#example) from Signatures, so you can check them by [exporting its public key](/signatures#exporting-the-public-key).
 </Note>
 
 ## Sending a Note
@@ -25,10 +27,12 @@ The whole exchange looks like this, and the sections below go through each step.
     <Message from="a" label="GET /.well-known/webfinger?resource=acct:joe@b.social">[Resolve the mention](#resolving-the-mention) using WebFinger.</Message>
     <Message from="b">Responds with the URL of `joe`'s profile.</Message>
     <Message from="a" label="GET /.versia/v0.7/entities/User/bde22zi3ca8762">[Fetch the user](#fetching-the-user) from that URL.</Message>
+    <Message from="b" request label="GET /.versia/v0.7/instance">[Verify the signature](/signatures#verifying-the-signature). `b.social` fetches `a.social`'s metadata if it does not have its public key yet.</Message>
+    <Message from="a" request={false}>Responds with its `InstanceMetadata`, which holds the public key.</Message>
     <Message from="b">Responds with the `User` entity.</Message>
     <Message from="a" local>[Serialize the note](#serializing-the-note).</Message>
     <Message from="a" label="POST /.versia/v0.7/inbox">[Send the note](#sending-the-note) to the inbox.</Message>
-    <Message from="b" label="202 Accepted" />
+    <Message from="b" label="202 Accepted">Verifies the signature with the key it already has, then responds.</Message>
     <Message from="b" local>[Display the note](#displaying-the-note) to `joe`.</Message>
 </WireTrace>
 
@@ -77,7 +81,13 @@ curl https://b.social/.versia/v0.7/entities/User/bde22zi3ca8762 \
     -H "Versia-Signed-At: 1733051945"
 ```
 
-`b.social` responds with the following JSON:
+`b.social` [verifies the signature](/signatures#verifying-the-signature) before it answers. That takes `a.social`'s public key, so if `b.social` does not have it yet, it reads it from `a.social`'s [metadata](/entities/instance-metadata):
+
+```bash
+curl https://a.social/.versia/v0.7/instance -H "Accept: application/vnd.versia+json"
+```
+
+`b.social` then responds with the following JSON. Its response is signed too, and `a.social` verifies it the same way, using `b.social`'s public key.
 
 ```json
 {
@@ -159,7 +169,7 @@ curl -X POST https://b.social/.versia/v0.7/inbox \
     -H "Versia-Signed-At: 1733051946"
 ```
 
-`b.social` responds with a `202 Accepted` status code.
+`b.social` verifies the signature with the key it already has, and responds with a `202 Accepted` status code.
 
 ### Displaying the Note
 
