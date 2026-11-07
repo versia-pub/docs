@@ -6,7 +6,7 @@ kind: Core concept
 
 import Button from "../../components/Button.astro";
 
-The Versia Protocol is a communication medium for federated applications, using HTTP and plain JSON. It is heavily inspired by [ActivityPub](https://www.w3.org/TR/activitypub/). Messages between instances are signed, and anything beyond the core protocol is a namespaced [extension](/extensions).
+The Versia Protocol is a communication medium for federated applications, using HTTP and plain JSON. It is heavily inspired by [ActivityPub](https://www.w3.org/TR/activitypub/). Messages between instances are signed. The core protocol covers users, subscriptions and how instances exchange entities, and anything beyond it, posts included, is a namespaced [extension](/extensions).
 
 <div class="actions">
   <Button href="/entities" arrow="right">Entities</Button>
@@ -23,9 +23,9 @@ It covers what instances exchange with each other: [entities](/entities), [signa
 
 1. [Entities](/entities), [JSON](/json) and [Signatures](/signatures), which everything else builds on.
 2. [Federation](/federation), for how instances exchange entities.
-3. The entity pages, starting with [Note](/extensions/social#note) and [User](/entities/user).
+3. The core entity pages, starting with [User](/entities/user) and [Subscribe](/entities/subscribe).
 4. [Validation](/validation), for what to check on everything you receive.
-5. [Extensions](/extensions), as you need them.
+5. [Extensions](/extensions), as you need them. Most others build on [Social](/extensions/social), which defines posts.
 
 Two guides walk through [signing requests](/guides/signing-requests) and [implementing a receiver](/guides/implementing-a-receiver). The reasoning behind the design is in [Principles](/principles), and terms are defined in the [Glossary](/glossary).
 

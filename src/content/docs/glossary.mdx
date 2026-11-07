@@ -10,7 +10,7 @@ Terms used across this specification.
 - **[Delegate](/extensions/delegation)**: The user that performs actions shown under another user's name.
 - **[Delegator](/extensions/delegation)**: The user that a delegate's actions are shown as.
 - **[Domain](/entities#domain)**: The hostname of an instance, used to identify it in the network.
-- **[Entity](/entities#definition)**: A JSON object with a `type` and a `created_at`, such as a [User](/entities/user) or a [Note](/extensions/social#note).
+- **[Entity](/entities#definition)**: A JSON object with a `type` and a `created_at`, such as a [User](/entities/user) or a [Subscribe](/entities/subscribe).
 - **[Extension](/extensions)**: An optional, namespaced addition to the core protocol.
 - **[Federation](/federation)**: The process of exchanging data between two or more instances.
 - **Implementation**: A software application that implements the Versia Protocol. Mastodon is an implementation of ActivityPub.
@@ -22,7 +22,10 @@ Terms used across this specification.
 - **[Reference](/entities#reference)**: A string of the form `domain:id`, which points to an entity.
 - **[Reference Collection](/structures/collection#reference-collection)**: A Collection of references, used to list entities from other instances.
 - **[RichText](/structures/rich-text)**: Formatted text, as one HTML string with a fixed set of elements.
+- **[Requirement](/extensions#requirements)**: An extension that another extension builds on. An instance that lists an extension also lists the extensions it requires.
 - **Sender**: The instance that sends a message.
 - **[Structure](/entities#definition)**: A JSON object that does not meet the definition of an entity, such as a Media.
+- **[Subscriber](/entities/subscribe)**: A user subscribed to an entity, such as another user.
+- **[Subscription](/entities/subscribe)**: The link between a subscriber and the entity they are subscribed to, started with a Subscribe and ended with an Unsubscribe.
 - **[Transient Entity](/entities#transient-entities)**: An entity with no `id`, which cannot be fetched or referenced.
 - **[User address](/entities/user#addresses)**: A shorthand for a user, in the form `@username@instance`.

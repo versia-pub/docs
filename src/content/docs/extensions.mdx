@@ -31,7 +31,7 @@ Extensions **MUST NOT** be designed in a way that makes them required to underst
 
 ## Requirements
 
-An extension can build on another, for example by adding interactions to entities that the other extension defines. It then **requires** that extension. Its page lists the extensions it requires, each with a [version](#versions). For example, `com.example:post_likes@1` could require `com.example:posts@1`.
+An extension can build on another, for example by adding interactions to entities that the other extension defines. It then **requires** that extension. Its page lists the extensions it requires, each with a [version](#versions). For example, [`pub.versia:likes@1`](/extensions/likes) requires [`pub.versia:social@1`](/extensions/social), because likes are given to Notes, which Social defines.
 
 An Instance that lists an extension in [`compatibility.extensions`](/entities/instance-metadata) **MUST** also list every extension it requires, at the required version. An extension **MUST NOT** require itself, directly or through other extensions.
 
