@@ -89,6 +89,9 @@ A `Note` is a piece of content posted by a [User](/entities/user). Notes can con
     <Field name="subject" type="string">
         A subject for the note. Useful for clients to display a "content warning" or "spoiler" feature, such as on Mastodon. **MUST** be plain text, not [RichText](/structures/rich-text).
     </Field>
+    <Field name="url" type="URI">
+        Address of the note's page on its instance, for people to open in a browser. Software that shows the note elsewhere can link to it.
+    </Field>
     <Inherits />
 
     <Example slot="example">
@@ -131,7 +134,8 @@ A `Note` is a piece of content posted by a [User](/entities/user). Notes can con
         "is_sensitive": false,
         "mentions": [],
         "previews": [],
-        "subject": "Versia development"
+        "subject": "Versia development",
+        "url": "https://versia.example/notes/0341e147rp002"
     }
     ```
     </Example>

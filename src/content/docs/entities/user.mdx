@@ -50,6 +50,9 @@ The `User` entity represents an account on a Versia instance. Users can post [No
     <Field name="indexable" type="boolean" required>
         User consent to be indexed by search engines. If `false`, the user's profile **SHOULD NOT** be indexed.
     </Field>
+    <Field name="url" type="URI">
+        Address of the user's profile page on their instance, for people to open in a browser. Software that shows the user elsewhere can link to it.
+    </Field>
 
     <Inherits />
 
@@ -78,7 +81,8 @@ The `User` entity represents an account on a Versia instance. Users can post [No
         ],
         "username": "april",
         "manually_approves_followers": false,
-        "indexable": false
+        "indexable": false,
+        "url": "https://versia.example/@april"
     }
     ```
     </Example>

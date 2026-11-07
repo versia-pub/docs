@@ -45,6 +45,7 @@ All endpoints moved from `/.versia/v0.6/` to `/.versia/v0.7/`. This version also
 - Media's `hash` is a lowercase hexadecimal `string`, and `thumbhash` is standard padded base64. Senders should include `size` and `hash`, and `thumbhash`, `width` and `height` for images and video.
 - Renamed URI Collection to [Reference Collection](/structures/collection#reference-collection). A Collection only holds entities authored on the instance serving it.
 - [Note](/entities/note): `quotes` is now `quoting`, and the new required `visibility` field replaces the `group` field's visibility values. Groups moved to the [Groups extension](/extensions/groups). An unknown `category` is treated as absent.
+- [User](/entities/user), [Note](/entities/note) and [Group](/extensions/groups) have a new optional `url`, the address of their page on their instance.
 - [User](/entities/user): `birthday` is now a full date, in the [Vanity extension](/extensions/vanity). Whether a well-formed date is plausible is up to implementations.
 - Removed the Types page. RFC3339 and URI types now link directly to their RFCs.
 

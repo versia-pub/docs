@@ -84,7 +84,7 @@ A link's `href` **MUST** be an absolute URL with one of these schemes: `http`, `
 
 ### Mentions
 
-A mention of a [User](/entities/user) is a link with a `data-mention` attribute, which holds the user's [Reference](/entities#reference). Its `href` **SHOULD** be the address of the user's profile on their instance, and its text is up to the sender, usually the [user address](/entities/user#addresses).
+A mention of a [User](/entities/user) is a link with a `data-mention` attribute, which holds the user's [Reference](/entities#reference). Its `href` **SHOULD** be the user's [`url`](/entities/user), or another address of their profile on their instance, and its text is up to the sender, usually the [user address](/entities/user#addresses).
 
 ```html
 <a href="https://b.example/@joe" data-mention="b.example:bde22zi3ca8762">@joe@b.example</a>
