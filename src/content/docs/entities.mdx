@@ -21,12 +21,13 @@ Fields not marked as `required` are [optional](/json#optional-fields).
 
 <Fields name="Entity">
     <Field name="id" type="string" required>
-        Unique identifier for the entity. **MUST** be unique within the instance, and at least 1 character long. There is no fixed maximum, though [receivers may set a generous limit](/validation). Can be any string with the following character sets:
+        Unique identifier for the entity. **MUST** be unique within the instance, and from 1 to 13 characters long. **MUST** contain only the following characters:
 
         - `a-z`
-        - `A-Z`
         - `0-9`
         - `-`, `_`
+
+        An id is opaque: receivers **MUST NOT** derive a time, an order or any other meaning from it. See [Choosing IDs](#choosing-ids).
 
         Required on every entity except [Transient Entities](#transient-entities) and [InstanceMetadata](/entities/instance-metadata), which do not have it.
     </Field>
@@ -54,17 +55,17 @@ Fields not marked as `required` are [optional](/json#optional-fields).
     <Example slot="example" unchecked>
     ```jsonc title="Example Entity"
     {
-        "id": "3e7e4750-afd4-4d99-a256-02f0710a0520",
+        "id": "033gs6adpp000",
         "type": "pub.versia:likes/Like",
         "created_at": "2021-01-01T00:00:00Z",
-        "author": "example.com:6e0204a2-746c-4972-8602-c4f37fc63bbe",
-        "target": "example.org:fmKZ763jzIU8"
+        "author": "example.com:033wv9k6n0007",
+        "target": "example.org:033w19vsgr000"
     }
     ```
 
     ```jsonc title="With Extensions"
     {
-        "id": "f0aacf0b-df7a-4ee5-a2ba-6c4acafd8642",
+        "id": "033qkb1gq0002",
         "type": "com.example:zlorbs/Zlorb",
         "created_at": "2023-04-13T08:00:00Z",
         "extensions": { // [!code focus:10]
@@ -81,6 +82,18 @@ Fields not marked as `required` are [optional](/json#optional-fields).
     ```
     </Example>
 </Fields>
+
+## Choosing IDs
+
+A [reference](#reference) carries the domain of the entity's instance, so an id only has to be unique within that instance, not across the network. So it can be much shorter than a UUID, which at 36 characters is not a valid id. Short ids are also easier to read and type where they appear, such as in [Versia Links](/links) and in the paths of the [Federation API](/federation/endpoints).
+
+How an instance creates ids is up to it. For example, it can take the time the entity is created, in milliseconds since the Unix epoch, multiply it by 65 536, add a counter for entities created in the same millisecond, and write the result in lowercase [Crockford base32](https://www.crockford.com/base32.html), padded with `0` to 13 characters. Crockford base32 leaves out `i`, `l`, `o` and `u`, so an id cannot be misread as `1` or `0` when someone types it.
+
+```text title="An id made from a time and a counter"
+0341e147rp002
+```
+
+Ids made this way sort by creation time within one instance, which helps the instance store and page through them. Other instances still treat them as opaque.
 
 ## Transient Entities
 
@@ -122,9 +135,9 @@ A reference does not say what type of entity it points to, but [fetching an enti
 ```jsonc
 {
     "type": "Follow",
-    "author": "example.com:6e0204a2-746c-4972-8602-c4f37fc63bbe", // [!code focus]
+    "author": "example.com:033wv9k6n0007", // [!code focus]
     "created_at": "2021-01-01T00:00:00Z",
-    "followee": "example.org:02e1e3b2-cb1f-4e4a-b82e-98866bee5de7" // [!code focus]
+    "followee": "example.org:033qtdbdkj006" // [!code focus]
 }
 ```
 

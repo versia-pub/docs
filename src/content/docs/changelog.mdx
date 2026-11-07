@@ -37,6 +37,7 @@ All endpoints moved from `/.versia/v0.6/` to `/.versia/v0.7/`. This version also
 - Strings and arrays may be empty unless their field says otherwise. [`id`](/entities), `username` and a Reaction's `content` have at least 1 character.
 - Senders may now omit [optional fields](/json#optional-fields) instead of setting them to `null`. Both mean the same, and receivers must accept both.
 - [Entities](/entities), structures and [transient entities](/entities#transient-entities) now have definitions. Transient entities have no `id`.
+- An [`id`](/entities) is now 1 to 13 characters of `a-z`, `0-9`, `-` and `_`, so UUIDs and uppercase letters are no longer valid. Ids are opaque: receivers must not read a time or an order from them. [Choosing IDs](/entities#choosing-ids) shows one way to make short ids.
 - Added [`updated_at`](/entities) and defined [how an entity changes](/entities#changing-an-entity): the whole entity is sent again with the same `id`, and `id`, `type`, `author` and `created_at` cannot change.
 - Removed `$schema` from entities, and `author` from [Collections](/structures/collection) and Reference Collections.
 - ContentFormat is replaced by two types. [RichText](/structures/rich-text) is one HTML string, and other text formats are gone. [Media](/structures/media) is one file, with its `url` and `media_type` in the same object, and no other versions of the file.
