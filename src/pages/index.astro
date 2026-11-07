@@ -2,71 +2,62 @@
 import StarlightPage from "@astrojs/starlight/components/StarlightPage.astro";
 import ExtensionList from "../components/ExtensionList.astro";
 import SignedNote from "../components/SignedNote.astro";
-import { team } from "../lib/home";
+import { maintainer } from "../lib/home";
 
 ---
 
 <StarlightPage
     frontmatter={{
-        title: "Federation, simpler",
+        title: "Federation you can read.",
         description:
-            "Introduction to the Versia Protocol, a communication medium for federated applications, using the HTTP stack.",
+            "Versia is a federation protocol: signed JSON over HTTP, with a small core and namespaced extensions.",
     }}
 >
     <p class="intro">
-        A simple, extensible federated protocol for building useful applications.{" "}
-        <a href="/introduction">Read the introduction</a>, or start with <a href="/entities/note">a Note</a>.
-        Formerly known as Lysand.
+        Versia is a federation protocol: signed JSON over HTTP, with a small core and namespaced extensions.
+        Here is one message, whole. <a href="/introduction">Read the introduction</a>, or start with{" "}
+        <a href="/entities/note">a Note</a>.
     </p>
 
     <SignedNote />
-
-    <h2>Made by developers</h2>
-    <p>
-        Versia is designed and maintained by the developers of the Versia Server, which uses Versia for federation.
-        It is easy to implement in any language, standardized to break vendor lock-in, and has an{" "}
-        <a href="/sdks">official TypeScript SDK</a>. We know it works well, because we use it in our own projects :)
-    </p>
-    <p>This community could include you! Check out our <a href="https://github.com/versia-pub/docs">Git repository</a> to see how you can contribute.</p>
 
     <h2>Extensions</h2>
     <p>The core stays small. Everything else is a namespaced <a href="/extensions">extension</a>, implemented in any combination.</p>
     <ExtensionList />
 
-    <h2>Try it out</h2>
+    <h2>Implement it</h2>
     <p>
-        Use the reference implementation, <a href="https://github.com/versia-pub/server">Versia Server</a>. It’s a
-        microblogging server with a focus on feeling like current Fediverse platforms, like Sharkey and Mastodon.
+        Versia can be implemented in any language. Start with the guide to{" "}
+        <a href="/guides/implementing-a-receiver">implementing a receiver</a>, or use the{" "}
+        <a href="/sdks">official TypeScript SDK</a>.
     </p>
+    <p>
+        <a href="https://github.com/versia-pub/verso">Verso</a> is the reference implementation. It also implements
+        the Mastodon client API, so it works with the apps people already use. It is in early development and isn’t
+        ready for production yet.
+    </p>
+    <p>This community could include you! Check out our <a href="https://github.com/versia-pub/docs">Git repository</a> to see how you can contribute.</p>
 
-    <h2 id="team">People</h2>
-    <p>You can ask Jesse for help with anything Versia-related, or if you just want to chat!</p>
-    <div class="team">
-        {team.map((member) => (
-            <section>
-                <img src={member.avatarUrl} width="56" height="56" alt="" loading="lazy" />
-                <div>
-                    <h3>{member.name} <code>@{member.username}</code></h3>
-                    <p>{member.bio}</p>
-                    <ul>
-                        {member.socials.map((social) => <li><a href={social.url}>{social.name}</a></li>)}
-                    </ul>
-                </div>
-            </section>
-        ))}
-    </div>
+    <h2>Maintainer</h2>
+    <p>
+        Versia, formerly known as Lysand, is maintained by {maintainer.name} (<code>@{maintainer.username}</code>).
+        You can ask {maintainer.name} for help with anything Versia-related, or if you just want to chat!
+    </p>
+    <ul class="socials">
+        {maintainer.socials.map((social) => <li><a href={social.url}>{social.name}</a></li>)}
+    </ul>
 
-    <h2 id="thanks">Thanks</h2>
+    <h2>Thanks</h2>
     <p>Thanks to <a href="https://fastly.com">Fastly</a> for supporting us with their resources!</p>
-    <p><img src="/logos/fastly.svg" alt="Fastly logo" height="48" /></p>
+    <p><a href="https://fastly.com"><img class="sponsor" src="/logos/fastly.svg" alt="Fastly" height="64" /></a></p>
 </StarlightPage>
 
 <style>
-    /* The front door gets a much larger title than the documents behind it. */
+    /* The front door gets a larger title than the documents behind it. */
     :global(h1#_top) {
         max-width: none;
-        font-size: clamp(3rem, 8vw, 6.5rem);
-        line-height: 0.98;
+        font-size: clamp(2.75rem, 6vw, 5rem);
+        line-height: 1;
     }
 
     .intro {
@@ -74,36 +65,20 @@ import { team } from "../lib/home";
         line-height: 1.5;
     }
 
-    .team section {
-        display: flex;
-        gap: 1rem;
-        padding-block: 1rem;
-    }
-
-    .team img {
-        width: 3.5rem;
-        height: 3.5rem;
-    }
-
-    .team h3 {
-        margin: 0;
-    }
-
-    .team p {
-        margin: 0.15rem 0 0.4rem;
-    }
-
-    .team ul {
+    .socials {
         display: flex;
         flex-wrap: wrap;
         gap: 0.25rem 0.75rem;
-        margin: 0;
         padding: 0;
         list-style: none;
-        font-size: var(--text-sm);
     }
 
-    .team li {
+    .socials li {
         margin: 0;
+    }
+
+    .sponsor {
+        height: 4rem;
+        width: auto;
     }
 </style>

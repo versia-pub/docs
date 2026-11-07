@@ -1,6 +1,9 @@
 ---
-// A hand-written mock-up of one delivery. The values follow `/example`,
-// `/signatures` and `/entities/note`. The rows are fragments, so Shiki cannot tokenize them.
+// One delivery, split into rows so each part can carry its note. The rows are
+// fragments, so Shiki cannot tokenize them.
+//
+// The signature is real: it covers the exact bytes of the JSON below, signed with the
+// example key from `/guides/signing-requests`. Any change to the body needs a new signature.
 type Token = { text: string; kind?: "key" | "value" };
 
 // Colours a line the way the code theme does: pink for keys, the companion colour for values.
@@ -39,8 +42,9 @@ Content-Type: application/vnd.versia+json`,
     },
     {
         code: `Versia-Signed-By: a.example
-Versia-Signed-At: 1729241687
-Versia-Signature: /CjB2L9bcvRg+uP19B4/rqy7Ji9/cqMFPlL3GVCIndnQjYyOpBzJEAl9weDnXm7Jrqa3y6sBC+EYWKThO2r9Bw==`,
+Versia-Signed-At: 1733051946
+Versia-Signature: odN8Tqt2nouQ1Zju37z/LcVvdY146qnXcFTvQ7UIdbTyDs1WSCHpkRnHl+i3dKGPlujAqtWSeDcz15beqGbFBA==
+`,
         title: "Signed.",
         href: "/signatures",
         text: "Requests are signed with the instance’s Ed25519 key, and rejected if the timestamp is more than 5 minutes off.",
@@ -49,8 +53,9 @@ Versia-Signature: /CjB2L9bcvRg+uP19B4/rqy7Ji9/cqMFPlL3GVCIndnQjYyOpBzJEAl9weDnXm
         code: `{
     "id": "782addd9-c051-4eea-8ba4-23d561d0c5bb",
     "type": "Note",
-    "created_at": "2024-10-18T08:54:40Z",
-    "author": "a.example:018eb863-753f-76ff-83d6-fd590de7740a",`,
+    "created_at": "2024-12-01T11:19:04Z",
+    "author": "a.example:ac41xk9dfe7302",
+    "category": "microblog",`,
         title: "Self-description.",
         href: "/principles#self-description",
         text: "Headers and transport stay out of the data. One plain JSON object holds everything needed to process the entity, with no JSON-LD.",
@@ -61,21 +66,22 @@ Versia-Signature: /CjB2L9bcvRg+uP19B4/rqy7Ji9/cqMFPlL3GVCIndnQjYyOpBzJEAl9weDnXm
             "content": "Hello, @joe@b.example! How are you doing today?"
         }
     },
-    "attachments": [],`,
+    "visibility": "public",
+    "mentions": [
+        "b.example:bde22zi3ca8762"
+    ],
+    "attachments": [],
+    "is_sensitive": false,
+    "previews": [],`,
         title: "Determinism.",
         href: "/principles#determinism",
         text: "Text and media use the same structure, ContentFormat: one way to represent any single piece of data.",
     },
     {
-        code: `    "mentions": ["b.example:bde22zi3ca8762"],
-    "visibility": "public",
-    "is_sensitive": false,
-    "previews": [],
-    "category": "microblog",`,
-    },
-    {
         code: `    "extensions": {
-        "pub.versia:custom_emojis": { "emojis": [] }
+        "pub.versia:custom_emojis": {
+            "emojis": []
+        }
     }
 }`,
         title: "Extensions.",
@@ -94,19 +100,19 @@ Versia-Signature: /CjB2L9bcvRg+uP19B4/rqy7Ji9/cqMFPlL3GVCIndnQjYyOpBzJEAl9weDnXm
             {row.title && <p><a href={row.href}>{row.title}</a> {row.text}</p>}
         </div>
     ))}
-    <figcaption>What <code>a.example</code> sends <code>b.example</code> when someone posts. Domains, IDs and the signature are fictional, and some details are simplified. <a href="/example">See the whole exchange</a>.</figcaption>
+    <figcaption>What <code>a.example</code> sends <code>b.example</code> when someone posts. The signature is real: it was made with the <a href="/guides/signing-requests#example-key">example key</a>, so you can <a href="/signatures#verifying-the-signature">verify it</a>. <a href="/example">See the whole exchange</a>.</figcaption>
 </figure>
 
 <style>
     .message {
-        margin: 1rem 0 1.5rem;
+        margin: 1.5rem 0 1rem;
     }
 
     .row {
         display: grid;
         grid-template-columns: minmax(0, 1fr);
         gap: 0.5rem;
-        padding-block: 0.9rem;
+        padding-block: 0.6rem;
     }
 
     pre {
@@ -138,6 +144,7 @@ Versia-Signature: /CjB2L9bcvRg+uP19B4/rqy7Ji9/cqMFPlL3GVCIndnQjYyOpBzJEAl9weDnXm
     /* Wrapped lines stay at their own indent. */
     .line {
         display: block;
+        min-height: 1lh;
         padding-left: var(--indent);
         text-indent: calc(-1 * var(--indent));
     }
@@ -149,11 +156,37 @@ Versia-Signature: /CjB2L9bcvRg+uP19B4/rqy7Ji9/cqMFPlL3GVCIndnQjYyOpBzJEAl9weDnXm
         font-style: italic;
     }
 
-    /* The same columns as the reading text and its margin. */
+    /* The same columns as the reading text and its margin, with the rows closed up
+       so the message reads as one block. On narrow screens each note sits between
+       the rows it explains instead. */
     @media (min-width: 78rem) {
         .row {
             grid-template-columns: minmax(0, var(--prose-width)) var(--margin-width);
             gap: var(--margin-gap);
+            padding-block: 0;
+        }
+
+        pre {
+            padding-block: 0;
+            border-radius: 0;
+        }
+
+        .row p {
+            padding-bottom: 0.75rem;
+        }
+
+        .row:first-of-type pre {
+            padding-top: 0.75rem;
+            border-radius: var(--radius) var(--radius) 0 0;
+        }
+
+        .row:first-of-type p {
+            padding-top: 0.75rem;
+        }
+
+        .row:last-of-type pre {
+            padding-bottom: 0.75rem;
+            border-radius: 0 0 var(--radius) var(--radius);
         }
     }
 </style>
