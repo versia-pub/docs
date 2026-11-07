@@ -1,0 +1,16 @@
+---
+title: "Implementing a Receiver"
+description: "The checks an inbox runs on each request, with a link to the rule behind each one."
+kind: Guide
+---
+
+This guide lists what an [inbox](/federation/endpoints#inbox) does with each request. It adds no rules: each step links to the one it comes from. This order works, but the specification does not require it.
+
+1. **Check the headers.** Answer a wrong `Content-Type` with [`415 Unsupported Media Type`](/federation/http#status-codes).
+2. **Verify the signature.** [Verify it](/signatures#verifying-the-signature) against the raw body, answer a failure with `401 Unauthorized`, and answer a [repeated signature](/signatures#repeated-signatures) with a `2xx` status code without processing it.
+3. **Validate the body.** Answer a body that is not JSON with `400 Bad Request` and an [invalid entity](/validation) with `422 Unprocessable Entity`, and [handle an unknown type](/validation#unknown-fields-and-types) by what kind of type it is.
+4. **Check the author.** An entity's `author` [must belong to the signing instance](/validation#authors-and-signers).
+5. **Apply the entity.** Processing [must be idempotent](/signatures#repeated-signatures), a new version [replaces the copy you hold](/entities#changing-an-entity), and an entity with [nothing to apply to](/federation#ordering) is ignored.
+6. **Send the response.** The inbox [should answer](/federation/http#status-codes) with `202 Accepted` and no body.
+
+Checks can run after the response has been sent, but they can then no longer report a problem, so the entity is [dropped](/federation/http#status-codes) instead.

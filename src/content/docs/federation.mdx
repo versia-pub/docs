@@ -13,13 +13,15 @@ Being a federation protocol, Versia defines a set of rules for exchanging data b
 
 Federation is built on the [HyperText Transfer Protocol (HTTP)](https://datatracker.ietf.org/doc/html/rfc9110) and the [JavaScript Object Notation (JSON)](https://datatracker.ietf.org/doc/html/rfc8259) data format. Instances communicate with each other by sending and receiving JSON payloads over HTTP. If you have ever worked with ActivityPub, Versia's federation protocol will feel familiar.
 
-## Guides
+## Related Pages
 
 <Guides>
-    <Guide name="HTTP Guidelines" href="/federation/http" description="Guidelines for HTTP communication in Versia." />
-    <Guide name="Validation" href="/validation" description="Validation rules for Versia implementations." />
     <Guide name="Discovery" href="/federation/discovery" description="How Versia instances can discover users, capabilities, and public keys." />
-    <Guide name="Delegation" href="/extensions/delegation" description="Showing a user's actions under another user's name." />
+    <Guide name="Versions" href="/federation/versions" description="How instances choose a protocol version." />
+    <Guide name="HTTP" href="/federation/http" description="Rules for HTTP communication in Versia." />
+    <Guide name="Endpoints" href="/federation/endpoints" description="Every route instances serve." />
+    <Guide name="Validation" href="/validation" description="Validation rules for Versia implementations." />
+    <Guide name="Implementing a Receiver" href="/guides/implementing-a-receiver" description="The checks an inbox runs on each request." />
 </Guides>
 
 ## Inboxes

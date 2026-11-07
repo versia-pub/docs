@@ -114,6 +114,7 @@ export default defineConfig({
                     items: [
                         link("Introduction", "/introduction"),
                         link("Principles", "/principles"),
+                        link("Glossary", "/glossary"),
                         link("Security", "/security"),
                     ],
                 },
@@ -188,6 +189,16 @@ export default defineConfig({
                         link("Reports", "/extensions/reports"),
                         link("Share", "/extensions/share"),
                         link("Vanity", "/extensions/vanity"),
+                    ],
+                },
+                {
+                    label: "Guides",
+                    items: [
+                        link("Signing requests", "/guides/signing-requests"),
+                        link(
+                            "Implementing a receiver",
+                            "/guides/implementing-a-receiver",
+                        ),
                     ],
                 },
                 {

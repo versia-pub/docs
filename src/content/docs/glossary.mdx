@@ -1,0 +1,27 @@
+---
+title: "Glossary"
+description: "The terms used in the Versia specification."
+kind: Core concept
+---
+
+Terms used across this specification.
+
+- **[Collection](/structures/collection)**: A paginated group of entities, such as a user's outbox.
+- **[ContentFormat](/structures/content-format)**: Content with metadata, in one or more media types.
+- **[Delegate](/extensions/delegation)**: The user that performs actions shown under another user's name.
+- **[Delegator](/extensions/delegation)**: The user that a delegate's actions are shown as.
+- **[Domain](/entities#domain)**: The hostname of an instance, used to identify it in the network.
+- **[Entity](/entities#definition)**: A JSON object with a `type` and a `created_at`, such as a [User](/entities/user) or a [Note](/entities/note).
+- **[Extension](/extensions)**: An optional, namespaced addition to the core protocol.
+- **[Federation](/federation)**: The process of exchanging data between two or more instances.
+- **Implementation**: A software application that implements the Versia Protocol. Mastodon is an implementation of ActivityPub.
+- **[Inbox](/federation#inboxes)**: The endpoint that receives messages for all of an instance's users.
+- **Instance**: An application deploying an implementation. `mastodon.social` is an instance of Mastodon. It is described by its [InstanceMetadata](/entities/instance-metadata).
+- **[Interaction type](/extensions/interaction-controls#interaction-types)**: A kind of interaction with a Note that can be controlled, such as `reply`.
+- **Receiver**: The instance a message is sent to.
+- **[Reference](/entities#reference)**: A string of the form `domain:id`, which points to an entity.
+- **[Reference Collection](/structures/collection#reference-collection)**: A Collection of references, used to list entities from other instances.
+- **Sender**: The instance that sends a message.
+- **[Structure](/entities#definition)**: A JSON object that does not meet the definition of an entity, such as a ContentFormat.
+- **[Transient Entity](/entities#transient-entities)**: An entity with no `id`, which cannot be fetched or referenced.
+- **[User address](/entities/user#addresses)**: A shorthand for a user, in the form `@username@instance`.
