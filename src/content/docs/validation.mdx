@@ -29,11 +29,15 @@ Things to validate include, but are not limited to:
 
 It is your implementation's duty to reject data from other instances that does not follow this specification. **Accepting invalid data harms your instance and the network as a whole.**
 
+## Rejecting Entities
+
+Where a rule links here, an instance rejects an entity as follows. If it checks before answering an inbox request, it **MUST** return a `422 Unprocessable Entity` status code. If it processes the entity after answering, it **MUST** drop the entity.
+
 ## Authors and Signers
 
 An entity's `author` **MUST** belong to the instance that signed the message carrying it, whether the entity was delivered to an inbox or fetched. This also applies to each entity in a [Collection](/structures/collection)'s `items`.
 
-An instance **MUST** reject an entity that breaks this rule. If it checks before answering an inbox request, it **MUST** return a `422 Unprocessable Entity` status code. If it processes the entity after answering, it **MUST** drop the entity.
+An instance **MUST** [reject](#rejecting-entities) an entity that breaks this rule.
 
 Entities without an `author` field state which instance may send them on their own page.
 
@@ -44,7 +48,7 @@ Receivers **MUST** ignore fields they do not recognize on entities and structure
 An entity whose `type` the receiver does not recognize is handled by what kind of type it is:
 
 - A namespaced type, which belongs to an [extension](/extensions#naming), **MUST** be answered with a `2xx` status code and dropped.
-- Any other type is a core type, and **MUST** be rejected with a `422 Unprocessable Entity` status code. Core types only change between `X` versions, so an unknown one is an invalid entity.
+- Any other type is a core type, and **MUST** be [rejected](#rejecting-entities). Core types only change between `X` versions, so an unknown one is an invalid entity.
 
 ## Remote Content
 
