@@ -22,8 +22,13 @@ const { output, hidden } = Astro.props;
         font-size: var(--text-sm);
     }
 
-    button:hover {
+    button:hover:not(:disabled) {
         border-color: var(--accent);
         color: var(--accent);
+    }
+
+    button:disabled {
+        color: var(--ink-faint);
+        cursor: default;
     }
 </style>
