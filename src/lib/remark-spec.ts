@@ -89,11 +89,50 @@ const addLinks = (code: Code, links: string[]) => {
     code.meta = `${code.meta ?? ""} links="${links.join(",")}"`.trim();
 };
 
+/**
+ * Where an example's keys stop following the field list, for the fields the sheet lists itself and
+ * those nested under them, so a reader can match the two side by side. Inherited fields are left
+ * out, as the sheet lists them on their own line.
+ */
+const orderProblems = (
+    fields: FieldSpec[],
+    value: unknown,
+    path: string,
+): string[] => {
+    if (Array.isArray(value)) {
+        return value.flatMap((item, index) =>
+            orderProblems(fields, item, `${path}[${index}]`),
+        );
+    }
+    if (typeof value !== "object" || value === null) return [];
+    const names = fields.map((f) => f.name);
+    const keys = Object.keys(value).filter((key) => names.includes(key));
+    const listed = names.filter((name) => keys.includes(name));
+    const own =
+        keys.join() === listed.join()
+            ? []
+            : [
+                  `${path || "top level"}: ${keys.join(", ")}, but the sheet lists ${listed.join(", ")}`,
+              ];
+    return [
+        ...own,
+        ...fields.flatMap((field) =>
+            field.fields.length > 0
+                ? orderProblems(
+                      field.fields,
+                      (value as Record<string, unknown>)[field.name],
+                      path ? `${path}.${field.name}` : field.name,
+                  )
+                : [],
+        ),
+    ];
+};
+
 const checkExample = (
     code: Code,
     file: VFile,
     prefix: string,
-    fields: { name: string; required: boolean }[],
+    fields: FieldSpec[],
     inherited: { name: string; required: boolean }[],
 ) => {
     const errors: { error: number; offset: number; length: number }[] = [];
@@ -121,6 +160,13 @@ const checkExample = (
     if (missing.length > 0) {
         file.fail(
             `Example for ${prefix} lacks required fields: ${missing.map((f) => f.name).join(", ")}`,
+            code,
+        );
+    }
+    const misordered = orderProblems(fields, data, "");
+    if (misordered.length > 0) {
+        file.fail(
+            `Example for ${prefix} puts keys in another order than its field list:\n${misordered.map((m) => `  ${m}`).join("\n")}`,
             code,
         );
     }
