@@ -1,5 +1,5 @@
 ---
-import { getCollection } from "astro:content";
+import { listExtensions } from "../lib/extensions";
 
 interface Props {
     /** Show each extension's description under its name. */
@@ -8,19 +8,7 @@ interface Props {
 
 const { descriptions = false } = Astro.props;
 
-// Each extension page's frontmatter holds its ID, so a new page joins this list by itself.
-const extensions = (await getCollection("docs"))
-    .flatMap(({ id, data }) =>
-        data.extension
-            ? [{
-                  name: data.title.replace(/ Extension$/, ""),
-                  extension: data.extension,
-                  description: data.description,
-                  href: `/${id}`,
-              }]
-            : [],
-    )
-    .sort((a, b) => a.name.localeCompare(b.name));
+const extensions = await listExtensions();
 ---
 
 <ul class="extensions" data-pagefind-ignore>

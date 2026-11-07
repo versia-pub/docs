@@ -35,16 +35,25 @@ export const onRequest = defineRouteMiddleware(({ locals, url }) => {
             }
         }
     }
+    const path = url.pathname
+        .replace(/\/index\.html$/, "/")
+        .replace(/\.html$/, "");
     // Search results link to this address instead of the built file.
     head.push({
         tag: "meta",
-        attrs: {
-            "data-pagefind-meta": "url[content]",
-            content: url.pathname
-                .replace(/\/index\.html$/, "/")
-                .replace(/\.html$/, ""),
-        },
+        attrs: { "data-pagefind-meta": "url[content]", content: path },
     });
+    // The home page and the 404 have no Markdown version.
+    if (path !== "/" && path !== "/404") {
+        head.push({
+            tag: "link",
+            attrs: {
+                rel: "alternate",
+                type: "text/markdown",
+                href: `${path}.md`,
+            },
+        });
+    }
     cleanTree(sidebar as Tree[]);
     if (pagination.prev) clean(pagination.prev);
     if (pagination.next) clean(pagination.next);
