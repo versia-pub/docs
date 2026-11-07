@@ -21,6 +21,8 @@ In clients, `Shares` should be rendered in a way that makes it clear that the sh
 
 ## Delivery and Access
 
+A user **MUST NOT** share a [Note](/entities/note) whose `visibility` is not `public`. A receiver **MUST** ignore a Share of such a Note.
+
 A sender **MUST** [deliver](/federation#delivery) Shares to the author of the [Note](/entities/note) and to the followers of the user who shared it.
 
 Any instance that [may fetch](/federation#access) the Note, and the instance of the Note's author, may fetch a Share.

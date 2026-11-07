@@ -34,9 +34,9 @@ Reactions can be displayed to clients depending on the privacy settings of the a
         [Reference](/entities#reference) to the [Note](/entities/note) attached to the reaction.
     </Field>
     <Field name="content" type="string" required>
-        Emoji content of reaction. May also be arbitrary text, or [Custom Emoji](/extensions/custom-emojis) if supported.
+        Emoji content of reaction. May also be arbitrary text, or the `name` of a [Custom Emoji](/extensions/custom-emojis), such as `:happy_face:`, with a matching entry in this Reaction's own `pub.versia:custom_emojis` extension. **MUST** be at least 1 character long.
 
-        Clients are encouraged to disfavour text in favour of emoji where possible.
+        Receivers **MAY** drop a Reaction they cannot display. Clients are encouraged to disfavour text in favour of emoji where possible.
     </Field>
 
     <Inherits />
@@ -54,6 +54,10 @@ Reactions can be displayed to clients depending on the privacy settings of the a
     ```
     </Example>
 </Entity>
+
+## Undoing Reactions
+
+To undo a Reaction, a [Delete](/entities/delete) entity **MUST** be used. The `deleted` property of the Delete entity **MUST** link to the Reaction to be removed.
 
 ## Note Collections
 

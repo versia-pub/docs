@@ -40,7 +40,7 @@ Bob's instance receives the message and processes it according to the rules defi
 
 ## Outboxes
 
-In addition to inboxes, every user has an outbox (at `/.versia/v0.7/entities/User/<id>/collections/outbox`). The outbox is simply a [Collection](/structures/collection) of all the messages that a user has sent. When a user sends a message to another user, a copy of that message is accessible in the sender's outbox.
+In addition to inboxes, every user has an outbox (at `/.versia/v0.7/entities/User/<id>/collections/outbox`). The outbox is a [Collection](/structures/collection) of the [Notes](/entities/note) that the user has authored.
 
 <Warning>
     An outbox **MUST** list only the entities the requesting instance [may fetch](#access).

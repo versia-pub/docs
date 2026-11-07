@@ -8,7 +8,6 @@ kind: Extension
 import Example from "../../../components/spec/Example.astro";
 import Field from "../../../components/spec/Field.astro";
 import Fields from "../../../components/spec/Fields.astro";
-import Warning from "../../../components/Warning.astro";
 
 Delegation lets a user's actions be shown under another user's name.
 
@@ -23,9 +22,7 @@ Any actions or entities created by the **delegate** should be attributed to the 
 
 This is useful as a way to centralize all of a user's many "alt accounts" into a single, unified feed.
 
-<Warning>
-    If a User names a **delegator** that does not list them in `allowed_delegates`, instances **MUST** show the User's actions as their own.
-</Warning>
+If a User names a **delegator** that cannot be fetched, or that does not list them in `allowed_delegates`, instances **MUST** show the User's actions as their own. Instances **SHOULD** check again whenever they refetch either User, so that a withdrawn delegation stops applying.
 
 Delegation only changes who an action is shown as. It grants no rights over the other user's entities: each user's entities are still hosted, changed and [deleted](/entities/delete) by their own instance. That instance **MAY** let delegates ask it to act, which is outside this specification.
 

@@ -31,11 +31,13 @@ To establish a follow relationship, `social.joe.org` **MUST** do the following:
 
 1. Create a `Follow` entity with `Joe` as the author and `Alice` as the followee.
 2. Send the `Follow` entity to `alice.dev`'s inbox.
-3. Treat the relationship as "processing" until a `FollowAccept` arrives.
+3. Treat the relationship as "processing" until a `FollowAccept` or `FollowReject` arrives, or until `Joe` sends an [Unfollow](/entities/unfollow).
 
 ### Accepting the Follow Request
 
 `alice.dev` **MUST** answer every `Follow` with a [FollowAccept](/entities/follow-accept) or a [FollowReject](/entities/follow-reject), even if [`manually_approves_followers`](/entities/user#user-manually-approves-followers) is `false`. If `Joe` is already following `Alice` and sends another `Follow`, `alice.dev` **MUST** send a `FollowAccept` again, in case the first was lost.
+
+The answer can wait for `Alice` to decide. There is no time limit on a pending `Follow`.
 
 To accept the follow request, `alice.dev` **MUST** do the following:
 
