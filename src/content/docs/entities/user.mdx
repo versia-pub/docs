@@ -9,16 +9,14 @@ import Example from "../../../components/spec/Example.astro";
 import Field from "../../../components/spec/Field.astro";
 import Inherits from "../../../components/spec/Inherits.astro";
 
-The `User` entity represents an account on a Versia instance. Users can post [Notes](/entities/note), subscribe to other users, and interact with content. Users are identified by their `id` property, which is unique within the instance. Only the instance a User is on may send or serve that User.
+The `User` entity represents an account on a Versia instance. Users can subscribe to other users, and post and interact with content through extensions such as [Social](/extensions/social). Users are identified by their `id` property, which is unique within the instance. Only the instance a User is on may send or serve that User.
 
 ## Definition
 
 <Entity name="User" type="User" checker>
     <div slot="collections">
-        - `outbox`: [Collection](/structures/collection) of notes authored by the user.
         - `subscribers`: [Reference Collection](/structures/collection#reference-collection) of users subscribed to the user.
         - `subscriptions`: [Reference Collection](/structures/collection#reference-collection) of users that the user is subscribed to. It lists only Users: an extension whose types accept subscriptions can add a collection of its own for them.
-        - `featured`: [Reference Collection](/structures/collection#reference-collection) of notes that the user wants to feature on their profile ("pinned" notes).
     </div>
 
     <Field name="avatar" type="Media">

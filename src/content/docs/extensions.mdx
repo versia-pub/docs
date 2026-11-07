@@ -9,9 +9,9 @@ import Example from "../../components/spec/Example.astro";
 import Field from "../../components/spec/Field.astro";
 import Fields from "../../components/spec/Fields.astro";
 
-Versia provides a set of core entities and structures to build a barebones social network. However, it is not possible nor desirable to cover every use case. This is where extensions come in, allowing parts of the system to be extended or replaced with custom functionality.
+Versia's core provides users, subscriptions, and the rules for exchanging entities between instances. Everything else comes from extensions, which add entities, fields and behavior without any changes to the core. Posts, for example, come from the [Social extension](/extensions/social).
 
-Extensions can be implemented in any combination, without any changes to the core system.
+Extensions can be implemented in any combination that meets their [requirements](#requirements).
 
 Extensions **SHOULD** be standardized and publicly documented.
 

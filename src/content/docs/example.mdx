@@ -124,7 +124,7 @@ Finally, `a.example` serializes the note to send it to `joe`.
 ```json
 {
     "id": "033r20svqa000",
-    "type": "Note",
+    "type": "pub.versia:social/Note",
     "created_at": "2024-12-01T11:19:04Z",
     "attachments": [],
     "author": "a.example:034d45r3e6003",
@@ -151,7 +151,7 @@ curl -X POST https://b.example/.versia/v0.7/inbox \
     --data-binary @note.json \
     -H "Content-Type: application/vnd.versia+json" \
     -H "User-Agent: CoolServer/1.0 (https://coolserver.example)" \
-    -H "Versia-Signature: 4Tjwp96pnFDJnP1mwwk0zrO2Lyl6thn1Lh+3yyV4R6KdwbyMK7wcSaib3FanEikEV9uzTJWDGVNus04HA6MgAA==" \
+    -H "Versia-Signature: n+9b5vDR1CcvoxaO+XhWUj6hlVRQeZ+t+EC31SJHD8qHJQ7Y6yd8ZzgrJi9uOWnb7t3ht0EWVa2qF82Jq7ZlCQ==" \
     -H "Versia-Signed-By: a.example" \
     -H "Versia-Signed-At: 1733051946"
 ```

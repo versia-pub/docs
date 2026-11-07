@@ -4,7 +4,7 @@ description: "How formatted text is written: one HTML string, with a fixed set o
 kind: Format
 ---
 
-`RichText` is formatted text, such as the content of a [Note](/entities/note) or a [User](/entities/user)'s bio. It is a string of HTML, using the elements and attributes listed on this page and no others.
+`RichText` is formatted text, such as the content of a [Note](/extensions/social#note) or a [User](/entities/user)'s bio. It is a string of HTML, using the elements and attributes listed on this page and no others.
 
 Fields that hold short labels, such as a User's `display_name`, are plain strings instead.
 
@@ -55,7 +55,7 @@ Receivers that display RichText **MUST** show the content of every element below
 
 ### Media
 
-`img`, `video` and `audio` place a [Note](/entities/note)'s attachments inside its text, such as the images of a blog post. They are only allowed in a Note's `content`, and their `src` **MUST** be the `url` of one of that Note's `attachments`. Their description, size and dimensions come from that attachment, so these elements carry no other attributes. A receiver **MAY** show them as the attachments they point to.
+`img`, `video` and `audio` place an entity's attachments inside its text, such as the images of a blog post. They are only allowed in fields whose definition allows them, such as a [Note](/extensions/social#note)'s `content`, and their `src` **MUST** be the `url` of one of that entity's attachments. Their description, size and dimensions come from that attachment, so these elements carry no other attributes. A receiver **MAY** show them as the attachments they point to.
 
 ## Attributes
 
@@ -90,7 +90,7 @@ A mention of a [User](/entities/user) is a link with a `data-mention` attribute,
 <a href="https://b.example/@joe" data-mention="b.example:034de9r4fr006">@joe@b.example</a>
 ```
 
-A mention in RichText does not notify anyone. On a Note, every user named in a `data-mention` **MUST** also be listed in its `mentions` field, which is what [decides who is notified](/entities/note). A receiver **MAY** point the link at its own copy of the user instead of the `href`.
+A mention in RichText does not notify anyone. An entity that notifies the users it mentions lists them in a field of its own, as a [Note](/extensions/social#note) does in `mentions`. A receiver **MAY** point the link at its own copy of the user instead of the `href`.
 
 ## Extension Attributes
 

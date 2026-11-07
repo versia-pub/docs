@@ -27,7 +27,7 @@ const link = (label: string, path: string, ident = false) => ({
 
 export default defineConfig({
     site: "https://versia.pub",
-    // Matches the current URLs, such as /entities/note.
+    // Matches the current URLs, such as /entities/user.
     trailingSlash: "never",
     outDir: "./out",
     build: { format: "file" },
@@ -44,6 +44,7 @@ export default defineConfig({
         "/entities/follow-accept": "/entities/subscribe-accept",
         "/entities/follow-reject": "/entities/subscribe-reject",
         "/entities/unfollow": "/entities/unsubscribe",
+        "/entities/note": "/extensions/social",
     },
     markdown: {
         processor: unified({
@@ -157,7 +158,6 @@ export default defineConfig({
                 {
                     label: "Entities and structures",
                     items: [
-                        link("Note", "/entities/note", true),
                         link("User", "/entities/user", true),
                         link("Subscribe", "/entities/subscribe", true),
                         link(
@@ -213,6 +213,7 @@ export default defineConfig({
                         link("Reactions", "/extensions/reactions"),
                         link("Reports", "/extensions/reports"),
                         link("Share", "/extensions/share"),
+                        link("Social", "/extensions/social"),
                     ],
                 },
                 {

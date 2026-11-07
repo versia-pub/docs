@@ -6,11 +6,11 @@ kind: Core concept
 
 Terms used across this specification.
 
-- **[Collection](/structures/collection)**: A paginated group of entities, such as a user's outbox.
+- **[Collection](/structures/collection)**: A paginated group of entities, such as a user's subscribers.
 - **[Delegate](/extensions/delegation)**: The user that performs actions shown under another user's name.
 - **[Delegator](/extensions/delegation)**: The user that a delegate's actions are shown as.
 - **[Domain](/entities#domain)**: The hostname of an instance, used to identify it in the network.
-- **[Entity](/entities#definition)**: A JSON object with a `type` and a `created_at`, such as a [User](/entities/user) or a [Note](/entities/note).
+- **[Entity](/entities#definition)**: A JSON object with a `type` and a `created_at`, such as a [User](/entities/user) or a [Note](/extensions/social#note).
 - **[Extension](/extensions)**: An optional, namespaced addition to the core protocol.
 - **[Federation](/federation)**: The process of exchanging data between two or more instances.
 - **Implementation**: A software application that implements the Versia Protocol. Mastodon is an implementation of ActivityPub.

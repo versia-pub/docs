@@ -14,6 +14,8 @@ import Note from "../../../components/Note.astro";
 
 Groups are a way to organize users and notes into communities, for any purpose, such as forums, blogs or messaging.
 
+This extension requires [`pub.versia:social@1`](/extensions/social), which defines [Notes](/extensions/social#note).
+
 ## Definition
 
 ### Group
@@ -23,7 +25,7 @@ Only the instance hosting a group may send or serve that Group.
 <Entity name="Group" type="pub.versia:groups/Group">
     <div slot="collections">
         - `members`: [Reference Collection](/structures/collection#reference-collection) of [Users](/entities/user) that are members of the group.
-        - `notes`: [Reference Collection](/structures/collection#reference-collection) of [Notes](/entities/note) that are associated with the group.
+        - `notes`: [Reference Collection](/structures/collection#reference-collection) of [Notes](/extensions/social#note) that are associated with the group.
         - `moderators`: [Reference Collection](/structures/collection#reference-collection) of [Users](/entities/user) that moderate the group. It may be empty. This is for display and contact only: the instance hosting the group enforces its rules.
     </div>
 
@@ -68,7 +70,7 @@ Only the instance hosting a group may send or serve that Group.
 
 ### Notes in a Group
 
-A [Note](/entities/note) is posted to a group through the `pub.versia:groups` key of its `extensions` field.
+A [Note](/extensions/social#note) is posted to a group through the `pub.versia:groups` key of its `extensions` field.
 
 Members of the group can see the Note, on top of the audience its `visibility` gives it, and their instances [may fetch it](/federation#access). A Note with a `visibility` of `mentions` can be seen only by members and the rest of its `mentions` audience. An instance that does not support this extension shows it only to the mentioned users.
 
@@ -80,7 +82,7 @@ Members of the group can see the Note, on top of the audience its `visibility` g
     <Example slot="example" unchecked>
     ```jsonc title="Example Note in a Group"
     {
-        "type": "Note",
+        "type": "pub.versia:social/Note",
         "visibility": "mentions",
         // ...
         "extensions": { // [!code focus:5]
@@ -104,7 +106,7 @@ A receiver **MUST** ignore a `GroupFederate` that does not come from the instanc
         **MUST** be `pub.versia:groups/Federate`.
     </Field>
     <Field name="target" type="Reference" required>
-        [Reference](/entities#reference) to the [Note](/entities/note) to fetch.
+        [Reference](/entities#reference) to the [Note](/extensions/social#note) to fetch.
     </Field>
     <Field name="group" type="Reference" required>
         [Reference](/entities#reference) to the group federating the note.
@@ -136,7 +138,7 @@ A Group's subscribers are its **members**, listed in its `members` collection. T
 
 The instance hosting a group cannot send the Notes posted to it, as an entity's author [must belong to the instance that signs it](/validation#authors-and-signers). A Note therefore reaches the group's members in three steps:
 
-1. The instance of the Note's author **MUST** send the [Note](/entities/note) to the [inbox](/federation/endpoints#inbox) of the group's instance, on top of its usual [delivery](/federation#delivery). It **MUST** do the same with any change to the Note, and with a [Delete](/entities/delete) for it.
+1. The instance of the Note's author **MUST** send the [Note](/extensions/social#note) to the [inbox](/federation/endpoints#inbox) of the group's instance, on top of its usual [delivery](/federation#delivery). It **MUST** do the same with any change to the Note, and with a [Delete](/entities/delete) for it.
 2. The group's instance decides which Notes to federate. A Note it refuses is dropped silently. For the others, it **MUST** send a `GroupFederate` to every instance hosting a member of the group.
 3. Each of those instances fetches the Note from the instance of its author.
 
@@ -152,3 +154,9 @@ When a Note posted to a group changes or is deleted, the group's instance **MUST
 | [Group](#group), after a change or [Delete](/entities/delete) | Instances hosting a member of the group |
 
 Any instance may fetch a Group and its `members` and `moderators` collections.
+
+## Versia Links
+
+The Groups extension adds the following [Versia Link](/links) action:
+
+- `groups/{instance}/{id}`: Open a group.

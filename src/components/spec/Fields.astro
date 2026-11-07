@@ -17,7 +17,7 @@ interface Props {
 }
 
 const { name, label = "Fields", extension, on } = Astro.props;
-const onHref = { Note: "/entities/note", User: "/entities/user" };
+const onHref = { Note: "/extensions/social#note", User: "/entities/user" };
 ---
 
 <Sheet entity={name}>

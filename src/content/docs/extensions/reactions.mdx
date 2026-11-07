@@ -12,6 +12,8 @@ import Inherits from "../../../components/spec/Inherits.astro";
 
 The Reactions Extension allows users to express their reactions ("react") to notes with emojis.
 
+This extension requires [`pub.versia:social@1`](/extensions/social), which defines [Notes](/extensions/social#note).
+
 ## Definition
 
 <Entity name="Reaction" type="pub.versia:reactions/Reaction">
@@ -22,7 +24,7 @@ The Reactions Extension allows users to express their reactions ("react") to not
         [Reference](/entities#reference) to the [User](/entities/user) that is reacting.
     </Field>
     <Field name="target" type="Reference" required>
-        [Reference](/entities#reference) to the [Note](/entities/note) attached to the reaction.
+        [Reference](/entities#reference) to the [Note](/extensions/social#note) attached to the reaction.
     </Field>
     <Field name="content" type="string" required>
         Emoji content of reaction. Can also be arbitrary text, or the `name` of a [Custom Emoji](/extensions/custom-emojis), such as `:happy_face:`, with a matching entry in this Reaction's own `pub.versia:custom_emojis` extension. **MUST** be at least 1 character long.
@@ -52,15 +54,15 @@ To undo a Reaction, a [Delete](/entities/delete) entity **MUST** be used. The `d
 
 ## Delivery and Access
 
-A sender **MUST** [deliver](/federation#delivery) Reactions to the author of the [Note](/entities/note) and, if the Note is public, to the subscribers of the reacting user.
+A sender **MUST** [deliver](/federation#delivery) Reactions to the author of the [Note](/extensions/social#note) and, if the Note is public, to the subscribers of the reacting user.
 
-Any instance that [may fetch](/federation#access) the Note, and the instance of the Note's author, may fetch a Reaction.
+Any instance that [may fetch](/extensions/social#delivery-and-access) the Note, and the instance of the Note's author, may fetch a Reaction.
 
 Reactions can be displayed to clients depending on the privacy settings of the associated Note.
 
 ## Collections
 
-The Reactions extension adds the following collections to the [Note](/entities/note) entity:
+The Reactions extension adds the following collections to the [Note](/extensions/social#note) entity:
 
 - `pub.versia:reactions/Reactions`: [Reference Collection](/structures/collection#reference-collection) of all the reactions to the note.
 

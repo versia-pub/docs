@@ -12,6 +12,8 @@ import Inherits from "../../../components/spec/Inherits.astro";
 
 The Likes extension adds support for users to like and dislike notes.
 
+This extension requires [`pub.versia:social@1`](/extensions/social), which defines [Notes](/extensions/social#note).
+
 ## Definition
 
 ### Like
@@ -82,9 +84,9 @@ To undo a like or dislike, a [Delete](/entities/delete) entity **MUST** be used.
 
 ## Delivery and Access
 
-A sender **MUST** [deliver](/federation#delivery) Likes and Dislikes to the author of the [Note](/entities/note) and, if the Note is public, to the subscribers of the user who sent them.
+A sender **MUST** [deliver](/federation#delivery) Likes and Dislikes to the author of the [Note](/extensions/social#note) and, if the Note is public, to the subscribers of the user who sent them.
 
-Any instance that [may fetch](/federation#access) the Note, and the instance of the Note's author, may fetch a Like or Dislike.
+Any instance that [may fetch](/extensions/social#delivery-and-access) the Note, and the instance of the Note's author, may fetch a Like or Dislike.
 
 ## Collections
 
@@ -97,7 +99,7 @@ The Likes extension adds the following collections to the [User](/entities/user)
 
 ### Note Collections
 
-The Likes extension adds the following collections to the [Note](/entities/note) entity:
+The Likes extension adds the following collections to the [Note](/extensions/social#note) entity:
 
 - `pub.versia:likes/Likes`: [Reference Collection](/structures/collection#reference-collection) of all the likes the note has received.
 - `pub.versia:likes/Dislikes`: [Reference Collection](/structures/collection#reference-collection) of all the dislikes the note has received.

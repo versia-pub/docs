@@ -25,18 +25,14 @@ Versia Links are a way to reference entities in the Versia Protocol, in a way th
 
         - `users/{instance}/{id}`: Open a user profile.
         - `users/{instance}/@{username}`: Open a user profile by username, [resolved through WebFinger](/federation/discovery).
-        - `notes/{instance}/{id}`: Open a note.
-        - `groups/{instance}/{id}`: Open a group.
-        - `reply/{instance}/{id}`: Open the composer to reply to a note.
-        - `quote/{instance}/{id}`: Open the composer to quote a note.
-        - `share/{instance}/{id}`: Share a note.
-        - `compose/{text}`: Compose a new note. Text passed at the end will be added in the note compose field. Used for "Share with Versia" buttons on websites.
+
+        [Extensions](/extensions) can add actions, which their pages list. [Social](/extensions/social#versia-links) adds `notes`, `reply`, `quote` and `compose`, [Share](/extensions/share#versia-links) adds `share`, and [Groups](/extensions/groups#versia-links) adds `groups`.
     </Field>
     <Field name="instance" type="Domain">
-        Instance hosting the referenced content. **MUST** be present on every action except `compose`.
+        Instance hosting the referenced content. **MUST** be present on every action whose definition includes `{instance}`.
     </Field>
 
-    An `{id}` is the entity's `id`, which cannot contain `@`, so a segment that starts with `@` always marks a username. `{text}` **MUST** be percent-encoded as a URI path segment.
+    An `{id}` is the entity's `id`, which cannot contain `@`, so a segment that starts with `@` always marks a username. Any other value in an action, such as the `{text}` of Social's `compose`, **MUST** be percent-encoded as a URI path segment.
 
     <Example slot="example">
     ```text title="Viewing a user profile"
@@ -45,14 +41,6 @@ Versia Links are a way to reference entities in the Versia Protocol, in a way th
 
     ```text title="Viewing a user profile by username"
     web+versia://users/bob.example/@alice
-    ```
-
-    ```text title="Viewing a note"
-    web+versia://notes/jim.example/0341e147rp002
-    ```
-
-    ```text title="Replying to a note"
-    web+versia://reply/bob.example/0341e147rp002
     ```
     </Example>
 </Fields>
@@ -63,8 +51,7 @@ Versia clients **SHOULD** register themselves as handlers for the `web+versia://
 
 The default web client ("frontend") on a Versia instance **SHOULD** also display Versia links for logged-out users on:
 - Profiles
-- Notes
-- Groups
+- The entities of extensions that add an action for them, such as Notes and Groups
 
 This could be used for easier subscribing to users from remote instances.
 

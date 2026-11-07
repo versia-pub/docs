@@ -8,7 +8,7 @@ import Example from "../../../components/spec/Example.astro";
 import Field from "../../../components/spec/Field.astro";
 import Fields from "../../../components/spec/Fields.astro";
 
-Collections are a way to represent paginated groups of entities. They are used everywhere lists of entities can be found, such as a user's outbox.
+Collections are a way to represent paginated groups of entities. They are used everywhere lists of entities can be found, such as a user's subscribers.
 
 A Collection can only hold entities [authored on the instance serving it](/validation#authors-and-signers). To list entities from other instances, use a [Reference Collection](#reference-collection).
 
@@ -29,7 +29,7 @@ A Collection can only hold entities [authored on the instance serving it](/valid
         "items": [
             {
                 "id": "033mcbcsyt000",
-                "type": "Note",
+                "type": "pub.versia:social/Note",
                 "created_at": "2024-04-09T01:38:51Z",
                 // ...
                 "content": "<p>Hello, world!</p>",

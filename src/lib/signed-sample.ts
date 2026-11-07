@@ -18,7 +18,7 @@ export const noteText =
 export const bodyParts = [
     `{
     "id": "033r20svqa000",
-    "type": "Note",
+    "type": "pub.versia:social/Note",
     "created_at": "2024-12-01T11:19:04Z",
     "attachments": [],
     "author": "a.example:034d45r3e6003",
@@ -46,7 +46,7 @@ export const sample = {
     body: bodyParts.join("\n"),
     signedBy: "a.example",
     signature:
-        "lzNOr378PcwSYAZAKBd5zxZJyVKjTpZJPoN4FbOJW4O1O2lrUbYUmo3syTRXbOxqRRME0l8q3mcF/yIuoScZCw==",
+        "vWLvWY6eu+B0iROzaDaIZsrX2wQNHMfZiCo8ob89B34m8ACwKj2BKJL+XRLyIS0ltAijrYKLHSTyoI0ho6KNCg==",
 };
 
 /** Whether the sample's signature covers this message, with the example key. */

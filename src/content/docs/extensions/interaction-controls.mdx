@@ -11,9 +11,11 @@ import Fields from "../../../components/spec/Fields.astro";
 
 The Interaction Controls extension lets a user control who may interact with a Note, for example who may reply to it.
 
+This extension requires [`pub.versia:social@1`](/extensions/social), which defines [Notes](/extensions/social#note).
+
 ## Definition
 
-The structure defined in this document **MUST** be inserted in the `pub.versia:interaction_controls` key of a [Note](/entities/note)'s extensions field.
+The structure defined in this document **MUST** be inserted in the `pub.versia:interaction_controls` key of a [Note](/extensions/social#note)'s extensions field.
 
 <Fields name="InteractionControls" extension="pub.versia:interaction_controls" on="Note">
     <Field name="interaction_type">
@@ -52,7 +54,7 @@ The structure defined in this document **MUST** be inserted in the `pub.versia:i
 
 The instance hosting the Note's author **MUST NOT** apply an interaction the user is not allowed to perform. Other instances **SHOULD** do the same when they have the data to check it.
 
-`allowed` never widens who can see a Note. A User **MUST** be able to [see the Note](/federation#access) to interact with it.
+`allowed` never widens who can see a Note. A User **MUST** be able to [see the Note](/extensions/social#delivery-and-access) to interact with it.
 
 A refused interaction **MUST** be [rejected](/validation#rejecting-entities). The instance **MAY** also tell the sender through the [Instance Messaging](/extensions/instance-messaging) extension.
 
@@ -74,7 +76,7 @@ Extensions **MAY** register their own interaction types. The name of an interact
 ```jsonc title="Example Usage"
 {
     "id": "033mcbcsyt000",
-    "type": "Note",
+    "type": "pub.versia:social/Note",
     "created_at": "2024-04-09T01:38:51Z",
     "content": "<p>Hello, world :happy_face:!</p>",
     "visibility": "public",

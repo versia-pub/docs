@@ -1,6 +1,6 @@
 ---
 title: "Federation"
-description: "How entities reach other instances: inboxes, outboxes, delivery, access and ordering."
+description: "How entities reach other instances: inboxes, delivery, access and ordering."
 kind: Core concept
 ---
 
@@ -30,17 +30,9 @@ Let's consider the following example:
 
 Alice, on the instance `alice.example`, sends a message to Bob on the instance `bob.example`.
 
-To perform this action, Alice's instance sends a `POST` request to Bob's instance's inbox endpoint. This request contains the [Note](/entities/note) entity that Alice wants to send to Bob, with [the appropriate metadata](/federation/http) to ensure the message is valid.
+To perform this action, Alice's instance sends a `POST` request to Bob's instance's inbox endpoint. This request contains the entity that Alice wants to send to Bob, such as a [Note](/extensions/social#note), with [the appropriate metadata](/federation/http) to ensure the message is valid.
 
 Bob's instance receives the message and processes it according to the rules defined in the [Validation](/validation) document.
-
-## Outboxes
-
-In addition to inboxes, every user has an outbox (at `/.versia/v0.7/entities/User/{id}/collections/outbox`). The outbox is a [Collection](/structures/collection) of the [Notes](/entities/note) that the user has authored.
-
-An outbox **MUST** list only the entities the requesting instance [may fetch](#access). For example, if Alice sends a [Note](/entities/note) whose `visibility` is `mentions` and that only mentions Bob, Alice's instance **MUST** return it in response to a request from Bob's instance, and **MUST NOT** list it in Alice's outbox in response to a request from Joe's instance.
-
-Outboxes are very useful for "backfilling" data when a new instance joins the network. By resolving the outboxes of all new users it encounters, a new instance can quickly catch up on all old messages.
 
 ## Delivery
 
@@ -48,9 +40,6 @@ A sender **MUST** deliver each entity to the instances hosting the users below. 
 
 | Entity | Delivered to |
 | --- | --- |
-| [Note](/entities/note), `visibility` is `public` | The author's subscribers, the users it mentions, and the authors of the Notes it replies to and quotes |
-| Note, `visibility` is `subscribers` | The author's subscribers, the users it mentions, and the authors of the Notes it replies to |
-| Note, `visibility` is `mentions` | The users it mentions and the authors of the Notes it replies to |
 | [User](/entities/user), after a change | The user's subscribers |
 | [Subscribe](/entities/subscribe), [Unsubscribe](/entities/unsubscribe) | The target |
 | [SubscribeAccept](/entities/subscribe-accept), [SubscribeReject](/entities/subscribe-reject) | The subscriber |
@@ -66,9 +55,6 @@ Requests identify an instance, not a user, so access is decided per instance. An
 | Entity | May be fetched by |
 | --- | --- |
 | [User](/entities/user) | Any instance |
-| [Note](/entities/note), `visibility` is `public` | Any instance |
-| Note, `visibility` is `subscribers` | Instances hosting a subscriber of the author, a mentioned user, or the author of a Note it replies to |
-| Note, `visibility` is `mentions` | Instances hosting a mentioned user or the author of a Note it replies to |
 
 An instance that fetches an entity **MUST** apply the same limits to its own users.
 
@@ -76,7 +62,7 @@ An instance that fetches an entity **MUST** apply the same limits to its own use
 
 ## Ordering
 
-Delivery order is not guaranteed. An instance can receive a Like before the Note it refers to.
+Delivery order is not guaranteed. An instance can receive a [Like](/extensions/likes) before the [Note](/extensions/social#note) it refers to.
 
 A receiver **SHOULD** fetch referenced entities it does not have. If it cannot, it **MAY** retry later or drop the entity.
 

@@ -44,8 +44,8 @@ All endpoints moved from `/.versia/v0.6/` to `/.versia/v0.7/`. This version also
 - RichText defines the elements and attributes senders can use, a fallback for each, and how to turn it into plain text. Mentions are links with a `data-mention` attribute, and [extensions](/structures/rich-text#extension-attributes) can add `data-` attributes to `span` and `div`.
 - Media's `hash` is a lowercase hexadecimal `string`, and `thumbhash` is standard padded base64. Senders should include `size` and `hash`, and `thumbhash`, `width` and `height` for images and video.
 - Renamed URI Collection to [Reference Collection](/structures/collection#reference-collection). A Collection only holds entities authored on the instance serving it.
-- [Note](/entities/note): `quotes` is now `quoting`, and the new required `visibility` field replaces the `group` field's visibility values. Groups moved to the [Groups extension](/extensions/groups). An unknown `category` is treated as absent.
-- [User](/entities/user), [Note](/entities/note) and [Group](/extensions/groups) have a new optional `url`, the address of their page on their instance.
+- [Note](/extensions/social#note): `quotes` is now `quoting`, and the new required `visibility` field replaces the `group` field's visibility values. Groups moved to the [Groups extension](/extensions/groups). An unknown `category` is treated as absent.
+- [User](/entities/user), [Note](/extensions/social#note) and [Group](/extensions/groups) have a new optional `url`, the address of their page on their instance.
 - Removed the Types page. RFC3339 and URI types now link directly to their RFCs.
 
 ### Federation
@@ -57,9 +57,9 @@ All endpoints moved from `/.versia/v0.6/` to `/.versia/v0.7/`. This version also
 - Rate limits now use `429` and `Retry-After`, replacing the expired IETF draft headers. Added retry rules.
 - Defined media types per route. `Content-Type` is now `application/vnd.versia+json`, with `charset=utf-8` optional, and the inbox no longer needs an `Accept` header.
 - Follow, FollowAccept, FollowReject and Unfollow are replaced by [Subscribe](/entities/subscribe), [SubscribeAccept](/entities/subscribe-accept), [SubscribeReject](/entities/subscribe-reject) and [Unsubscribe](/entities/unsubscribe), which also replace the four subscription entities of [Groups](/extensions/groups). They carry `subscriber`, `target` and `target_type` instead of an `author`, and receivers [check the sender](/entities/subscribe#checking-the-sender) against `subscriber` or `target`. They can target any type whose page says it accepts subscriptions. The target's instance must answer every Subscribe, with no time limit on a pending request, Unsubscribe cancels a pending request, and SubscribeReject also removes an existing subscriber.
-- Followers are now called subscribers. [User](/entities/user) `followers`, `following` and `manually_approves_followers` are now `subscribers`, `subscriptions` and `manually_approves_subscribers`, and the [Note](/entities/note) `visibility` value `followers` is now `subscribers`.
+- Followers are now called subscribers. [User](/entities/user) `followers`, `following` and `manually_approves_followers` are now `subscribers`, `subscriptions` and `manually_approves_subscribers`, and the [Note](/extensions/social#note) `visibility` value `followers` is now `subscribers`.
 - [Delete](/entities/delete): `author` is optional, instances can delete, and the instance hosting the entity must send the Delete. A Delete whose `deleted_type` differs from the stored type is ignored. Added `410` and `404` for fetching deleted entities.
-- [Outboxes](/federation#outboxes) hold the Notes a user has authored.
+- A user's [Notes collection](/extensions/social#notes-collection) holds the Notes they have authored.
 - Added an [endpoint for instance collections](/federation/endpoints#instance-collections), since Instance Metadata has no `id`, and defined [pagination](/federation/endpoints#pagination).
 - [Extension endpoints](/extensions) must be under `/.versia/v0.X/extensions/{extension_name}/`. Extensions now state their own delivery and access rules.
 - Entity types and collection names in paths are [no longer percent-encoded](/federation/http#encoding), as in `/entities/pub.versia:groups/Group/1234`.
@@ -69,6 +69,9 @@ All endpoints moved from `/.versia/v0.6/` to `/.versia/v0.7/`. This version also
 
 - Extensions now have [versions](/extensions#versions), listed in `compatibility.extensions` as `pub.versia:likes@1`. Instances use the highest version they have in common.
 - Extension values must be JSON objects, namespaces must come from a domain the author controls, and `pub.versia` is reserved.
+- Notes moved out of the core into the new [Social extension](/extensions/social) (`pub.versia:social`), so the core has no post type. A Note's `type` is now `pub.versia:social/Note`, and a bare `Note` is an unknown core type that receivers [reject](/validation#unknown-fields-and-types). The extension also holds visibility, mentions, replies and quotes, the delivery and access rules for Notes, and the `notes`, `reply`, `quote` and `compose` [Versia Link](/links) actions.
+- [User](/entities/user) `outbox` and `featured` are now the Social collections `pub.versia:social/Notes` and `pub.versia:social/Featured`. The outbox is renamed because it only ever held Notes.
+- [Likes](/extensions/likes), [Share](/extensions/share), [Reactions](/extensions/reactions), [Polls](/extensions/polls), [Groups](/extensions/groups) and [Interaction Controls](/extensions/interaction-controls) now require Social. The `share` and `groups` Versia Link actions moved to Share and Groups.
 - An extension can now [require](/extensions#requirements) other extensions at a version. An instance that lists it must also list what it requires, and instances leave out its data unless they share those too. Extensions may still never be required to process core entities.
 - All entities that act on another entity ([Like, Dislike](/extensions/likes), [Share](/extensions/share), [Reaction](/extensions/reactions) and [Vote](/extensions/polls)) now use `target`.
 - The Vanity extension (`pub.versia:vanity`) is split in two. [Profile](/extensions/profile) (`pub.versia:profile`) holds `pronouns`, `birthday`, `location` and `timezone`, and [Decorations](/extensions/decorations) (`pub.versia:decorations`) holds `avatar_overlays`, `avatar_mask`, `background` and `audio`. `aliases` is removed.
@@ -83,7 +86,7 @@ All endpoints moved from `/.versia/v0.6/` to `/.versia/v0.7/`. This version also
 - [Reactions](/extensions/reactions): defined how `content` holds a custom emoji, and a Reaction is undone with a Delete.
 - [Reports](/extensions/reports): `reported` is now a list of objects holding `type` and `reference`.
 - [Share](/extensions/share): only a public Note can be shared.
-- [Versia Links](/links): `instance` is required except for `compose`, usernames are allowed, and `{text}` is percent-encoded.
+- [Versia Links](/links): `instance` is required except for `compose`, usernames are allowed, `{text}` is percent-encoded, and extensions can add actions.
 
 ### Documentation
 
@@ -111,7 +114,7 @@ All endpoints moved from `/.versia/v0.6/` to `/.versia/v0.7/`. This version also
 - Replaced the `hash` field on [ContentFormat](/structures/content-format) with a hex-encoded SHA-256 hash.
 - Added more guidance on [handling JSON](/json).
 - Clarified what a [Domain](/entities#domain) means in Versia.
-- [Note](/entities/note): `is_sensitive`, `attachments`, `mentions` and `previews` are now required.
+- [Note](/extensions/social#note): `is_sensitive`, `attachments`, `mentions` and `previews` are now required.
 - [User](/entities/user): `fields`, `manually_approves_followers` and `indexable` are now required.
 - [Vanity](/extensions/profile): removed the short pronoun form, since union types are hard to parse in strongly typed languages.
 
@@ -125,13 +128,13 @@ All endpoints moved from `/.versia/v0.6/` to `/.versia/v0.7/`. This version also
     - `X-Signed-By` to `Versia-Signed-By`
 - Replaced the nonce in the [signature system](/signatures) with a timestamp, sent as `Versia-Signed-At`.
 - Rate limits now follow [IETF draft-polli-ratelimit-headers-02](https://www.ietf.org/archive/id/draft-polli-ratelimit-headers-02.html).
-- Moved [Groups](/extensions/groups) to an extension, as they were getting too complex for the core protocol, and documented how groups federate and how subscribing works. The [Note](/entities/note) `group` field's description changed to match.
+- Moved [Groups](/extensions/groups) to an extension, as they were getting too complex for the core protocol, and documented how groups federate and how subscribing works. The [Note](/extensions/social#note) `group` field's description changed to match.
 - Added [Versia Links](/links).
 - Timestamps now use [RFC 3339](https://datatracker.ietf.org/doc/html/rfc3339) instead of ISO 8601. The two are mostly interchangeable, and RFC 3339 is stricter, so most implementations should not need to change anything.
 - Added an optional `$schema` field to [Entities](/entities).
 - Added the [Interaction Controls extension](/extensions/interaction-controls).
 - Added URI Collections, now called [Reference Collections](/structures/collection#reference-collection). Every Collection that can contain remote entities now uses one, such as [User](/entities/user) `collections.followers`.
-- Added a `collections` field to [Notes](/entities/note). The [Likes](/extensions/likes), [Reactions](/extensions/reactions) and [Share](/extensions/share) extensions now use it, instead of a field in `extensions`.
+- Added a `collections` field to [Notes](/extensions/social#note). The [Likes](/extensions/likes), [Reactions](/extensions/reactions) and [Share](/extensions/share) extensions now use it, instead of a field in `extensions`.
 - [User](/entities/user) `username` may now contain uppercase letters, and is case-insensitive.
 - [Vanity](/extensions/profile): added `timezone`.
 
@@ -140,7 +143,7 @@ All endpoints moved from `/.versia/v0.6/` to `/.versia/v0.7/`. This version also
 - Rewrote the signature system from scratch, to be simpler and not depend on dates.
 - Moved [Likes and Dislikes](/extensions/likes) to an extension.
 - Added [Delegation](/extensions/delegation).
-- Renamed fields on several common entities, such as [Users](/entities/user) and [Notes](/entities/note).
+- Renamed fields on several common entities, such as [Users](/entities/user) and [Notes](/extensions/social#note).
 - Removed the `Patch` entity, since edits can be sent to inboxes directly.
 - A `uri` no longer has to contain the entity's `id`, and `uri` is optional on some entities that are not worth keeping track of.
 - `id` can now be any string, not only a UUID.
@@ -149,7 +152,7 @@ All endpoints moved from `/.versia/v0.6/` to `/.versia/v0.7/`. This version also
 - Switched from [BlurHash](https://blurha.sh/) to [ThumbHash](https://evanw.github.io/thumbhash/).
 - [Custom Emojis](/extensions/custom-emojis): added identification characters.
 - [Users](/entities/user): added `manually_approves_followers`.
-- [Notes](/entities/note): removed `visibility`, and `subject` is now optional.
+- [Notes](/extensions/social#note): removed `visibility`, and `subject` is now optional.
 - Clarified how [Follows](/entities/subscribe) work.
 - Renamed `Undo` to [Delete](/entities/delete), which is now only used to delete entities.
 - Added the [Unfollow](/entities/unsubscribe) entity.

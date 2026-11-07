@@ -1,7 +1,8 @@
 ---
-title: Note
-description: "A piece of content posted by a User: its fields, visibility and attachments."
-kind: Entity · Core
+title: "Social Extension"
+description: "Lets users post notes, with visibility, mentions, replies, quotes and a collection of each user's notes."
+extension: pub.versia:social
+kind: Extension
 ---
 
 import Note from "../../../components/Note.astro";
@@ -11,7 +12,9 @@ import Field from "../../../components/spec/Field.astro";
 import Inherits from "../../../components/spec/Inherits.astro";
 import Values from "../../../components/spec/Values.astro";
 
-A `Note` is a piece of content posted by a [User](/entities/user). Notes can contain text, images, and other media.
+The Social extension lets [Users](/entities/user) post [Notes](#note): text, images and other media, which other users can reply to and quote. It also gives each user a [collection of their notes](#notes-collection) and a list of featured notes.
+
+Other extensions build on it, such as [Likes](/extensions/likes), [Share](/extensions/share), [Reactions](/extensions/reactions), [Polls](/extensions/polls), [Groups](/extensions/groups) and [Interaction Controls](/extensions/interaction-controls).
 
 <Note>
     Notes are not just limited to microblogging. They can be used for any kind of content, such as forum posts, blog posts, image posts, video posts, audio posts, and even messaging.
@@ -19,12 +22,19 @@ A `Note` is a piece of content posted by a [User](/entities/user). Notes can con
 
 ## Definition
 
-<Entity name="Note" type="Note" checker>
+### Note
+
+A `Note` is a piece of content posted by a User.
+
+<Entity name="Note" type="pub.versia:social/Note" checker>
     <div slot="collections">
-        - `replies`: [Reference Collection](/structures/collection#reference-collection) of [Note](/entities/note) entities that are replies to this note.
-        - `quotes`: [Reference Collection](/structures/collection#reference-collection) of [Note](/entities/note) entities that quote this note.
+        - `replies`: [Reference Collection](/structures/collection#reference-collection) of [Note](#note) entities that are replies to this note.
+        - `quotes`: [Reference Collection](/structures/collection#reference-collection) of [Note](#note) entities that quote this note.
     </div>
 
+    <Field name="type" type="string" required>
+        **MUST** be `pub.versia:social/Note`.
+    </Field>
     <Field name="attachments" type="Media[]" required>
         Media attachments to the note. Any media type is allowed. The `content` can [place attachments inside the text](/structures/rich-text#media).
     </Field>
@@ -47,7 +57,7 @@ A `Note` is a piece of content posted by a [User](/entities/user). Notes can con
         A receiver **MUST** treat an unknown value as if `category` were left out.
     </Field>
     <Field name="content" type="RichText">
-        The content of the note.
+        The content of the note. It can [place the note's attachments inside its text](/structures/rich-text#media) with `img`, `video` and `audio`. Every user named in a [mention](/structures/rich-text#mentions) in it **MUST** also be listed in `mentions`.
     </Field>
     <Field name="device" type="Device">
         Device used to post the note. Useful for showing which app posted the note.
@@ -98,7 +108,7 @@ A `Note` is a piece of content posted by a [User](/entities/user). Notes can con
     ```jsonc title="Example Note"
     {
         "id": "0341e147rp002",
-        "type": "Note",
+        "type": "pub.versia:social/Note",
         "created_at": "2024-06-19T01:07:44Z",
         "attachments": [
             {
@@ -140,3 +150,53 @@ A `Note` is a piece of content posted by a [User](/entities/user). Notes can con
     ```
     </Example>
 </Entity>
+
+## Delivery and Access
+
+A sender **MUST** [deliver](/federation#delivery) a Note to the instances hosting these users:
+
+| Note | Delivered to |
+| --- | --- |
+| `visibility` is `public` | The author's subscribers, the users it mentions, and the authors of the Notes it replies to and quotes |
+| `visibility` is `subscribers` | The author's subscribers, the users it mentions, and the authors of the Notes it replies to |
+| `visibility` is `mentions` | The users it mentions and the authors of the Notes it replies to |
+
+These instances [may fetch](/federation#access) a Note:
+
+| Note | May be fetched by |
+| --- | --- |
+| `visibility` is `public` | Any instance |
+| `visibility` is `subscribers` | Instances hosting a subscriber of the author, a mentioned user, or the author of a Note it replies to |
+| `visibility` is `mentions` | Instances hosting a mentioned user or the author of a Note it replies to |
+
+## Notes Collection
+
+Every user has a `pub.versia:social/Notes` collection (at `/.versia/v0.7/entities/User/{id}/collections/pub.versia:social/Notes`). It is a [Collection](/structures/collection) of the Notes that the user has authored, and plays the role that an outbox plays in other protocols.
+
+It **MUST** list only the Notes the requesting instance [may fetch](#delivery-and-access). For example, if Alice sends a Note whose `visibility` is `mentions` and that only mentions Bob, Alice's instance **MUST** return it in response to a request from Bob's instance, and **MUST NOT** list it in Alice's collection in response to a request from Joe's instance.
+
+This collection is very useful for "backfilling" data when a new instance joins the network. By resolving the collections of all new users it encounters, a new instance can quickly catch up on all old notes.
+
+## User Collections
+
+The Social extension adds the following collections to the [User](/entities/user) entity:
+
+- `pub.versia:social/Notes`: [Collection](/structures/collection) of notes authored by the user, described under [Notes Collection](#notes-collection).
+- `pub.versia:social/Featured`: [Reference Collection](/structures/collection#reference-collection) of notes that the user wants to feature on their profile ("pinned" notes).
+
+## Versia Links
+
+The Social extension adds the following [Versia Link](/links) actions:
+
+- `notes/{instance}/{id}`: Open a note.
+- `reply/{instance}/{id}`: Open the composer to reply to a note.
+- `quote/{instance}/{id}`: Open the composer to quote a note.
+- `compose/{text}`: Compose a new note. Text passed at the end will be added in the note compose field. Used for "Share with Versia" buttons on websites. It has no `{instance}`.
+
+```text title="Viewing a note"
+web+versia://notes/jim.example/0341e147rp002
+```
+
+```text title="Replying to a note"
+web+versia://reply/bob.example/0341e147rp002
+```
