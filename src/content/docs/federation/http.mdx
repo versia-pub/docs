@@ -102,7 +102,7 @@ Every federation route uses these status codes. A check that runs after a `2xx` 
 | Status code | Meaning |
 | --- | --- |
 | `200 OK` | The requested entity or collection is in the body. |
-| `202 Accepted` | The [inbox](/api/endpoints#inbox) took the entity. It is also the answer to a [repeated signature](/signatures#repeated-signatures) and to an [unknown extension type](/federation/validation#unknown-fields-and-types). |
+| `202 Accepted` | The [inbox](/api/endpoints#inbox) took the entity. A [repeated signature](/signatures#repeated-signatures) and an [unknown extension type](/federation/validation#unknown-fields-and-types) also get a `2xx` status code. |
 | `400 Bad Request` | The body is not valid JSON. |
 | `401 Unauthorized` | The [signature](/signatures) is missing or invalid, or its timestamp is more than 5 minutes from the current time. |
 | `403 Forbidden` | The receiver refuses to federate with the sender's instance. |

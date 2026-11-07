@@ -36,7 +36,7 @@ Versia Links are a way to reference entities in the Versia Protocol, in a way th
         Instance hosting the referenced content. **MUST** be present on every action except `compose`.
     </Field>
 
-    A `:id` is the entity's `id`. `:id` and `:text` **MUST** be percent-encoded as URI path segments, and an `@` in a `:id` **MUST** be written as `%40`, so a raw `@` always marks a username.
+    An `:id` is the entity's `id`, which cannot contain `@`, so a segment that starts with `@` always marks a username. `:text` **MUST** be percent-encoded as a URI path segment.
 
     <Example slot="example">
     ```text title="Viewing a user profile"

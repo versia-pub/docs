@@ -18,7 +18,7 @@ Federation is built on the [HyperText Transfer Protocol (HTTP)](https://datatrac
 <Guides>
     <Guide name="HTTP Guidelines" href="/federation/http" description="Guidelines for HTTP communication in Versia." />
     <Guide name="Validation" href="/federation/validation" description="Validation rules for Versia implementations." />
-    <Guide name="Discovery" href="/federation/discovery" description="How Versia instances can discover users, capabilities, and endpoints." />
+    <Guide name="Discovery" href="/federation/discovery" description="How Versia instances can discover users, capabilities, and public keys." />
     <Guide name="Delegation" href="/extensions/delegation" description="Showing a user's actions under another user's name." />
 </Guides>
 
@@ -47,7 +47,7 @@ In addition to inboxes, every user has an outbox (at `/.versia/v0.7/entities/Use
 
     For example, if Alice sends a [Note](/entities/note) whose `visibility` is `mentions` and that only mentions Bob:
     - Alice's instance **MUST** return the [Note](/entities/note) in response to a request from Bob's instance.
-    - Alice's instance **MUST NOT** list the [Note](/entities/note) in her outbox in response to a request from Joe's instance.
+    - Alice's instance **MUST NOT** list the [Note](/entities/note) in Alice's outbox in response to a request from Joe's instance.
 </Warning>
 
 Outboxes are very useful for "backfilling" data when a new instance joins the network. By resolving the outboxes of all new users it encounters, a new instance can quickly catch up on all old messages.

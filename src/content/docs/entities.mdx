@@ -31,7 +31,7 @@ Fields not marked as `required` are [optional](/json#optional-fields).
         - `0-9`
         - `-`, `_`
 
-        Not present on [Transient Entities](#transient-entities) or [InstanceMetadata](/entities/instance-metadata).
+        Required on every entity except [Transient Entities](#transient-entities) and [InstanceMetadata](/entities/instance-metadata), which do not have it.
     </Field>
     <Field name="type" type="string" required>
         Type of the entity. Custom types **MUST** follow [Extension Naming](/extensions#naming).

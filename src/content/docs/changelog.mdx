@@ -32,6 +32,7 @@ This is Working Draft 7. All endpoints moved from `/.versia/v0.6/` to `/.versia/
 ### Data Model
 
 - All JSON must now be an [I-JSON message](/json). `u64` values are whole numbers up to 2^53-1, in any notation.
+- Unix-style `\n` line breaks inside string values are now recommended, not required.
 - Senders may now omit [optional fields](/json#optional-fields) instead of setting them to `null`. Both mean the same, and receivers must accept both.
 - [Entities](/entities), structures and [transient entities](/entities#transient-entities) now have definitions. Transient entities have no `id`.
 - Added [`updated_at`](/entities) and defined [how an entity changes](/entities#changing-an-entity): the whole entity is sent again with the same `id`, and `id`, `type`, `author` and `created_at` cannot change.
@@ -67,7 +68,7 @@ This is Working Draft 7. All endpoints moved from `/.versia/v0.6/` to `/.versia/
 - [Polls](/extensions/polls): `options` is now a list of objects holding `content` and `votes`. A Vote can change by being sent again, and is withdrawn by a Delete, but its `target` cannot change.
 - [Reports](/extensions/reports): `reported` is now a list of objects holding `type` and `reference`.
 - [Vanity](/extensions/vanity): removed `aliases`, and `LanguageCode` is now BCP 47.
-- [Versia Links](/links): `instance` is required except for `compose`, usernames are allowed, and values are percent-encoded.
+- [Versia Links](/links): `instance` is required except for `compose`, usernames are allowed, and `:text` is percent-encoded.
 
 ### Documentation
 

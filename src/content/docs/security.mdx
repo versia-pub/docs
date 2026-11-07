@@ -5,15 +5,15 @@ kind: Core concept
 ---
 
 
-**In a nutshell**: Versia is designed to guarantee the integrity and origin of messages between instances, but not confidentiality. This means that you can trust which instance sent a message, but you should not assume that its contents are private, or that the instance was honest about them.
+**In a nutshell**: Versia is designed to guarantee the integrity and origin of messages between instances, but not end-to-end confidentiality. This means that you can trust which instance sent a message, but you should not assume that its contents are private, or that the instance was honest about them. TLS protects messages in transit, but every instance that handles a message can read it.
 
-This is in line with most other federated systems, such as email and the Web: if you are looking for absolute confidentiality, you should be using end-to-end encrypted platforms such as [Signal](https://signal.org/).
+This is in line with most other federated systems, such as email and ActivityPub: if you are looking for end-to-end confidentiality, you should be using end-to-end encrypted platforms such as [Signal](https://signal.org/).
 
 ## Overview
 
 Versia's security model is designed to ensure the integrity and authenticity of data, with a simple but robust system of cryptographic signatures. This system is designed to be easy to implement and understand, while still providing strong guarantees.
 
-However, **it is very important to understand the limitations of this system**. Versia's security model is designed to prevent one instance from impersonating another and to detect tampering in transit, but it does not provide confidentiality, and it cannot protect users from their own instance.
+However, **it is very important to understand the limitations of this system**. Versia's security model is designed to prevent one instance from impersonating another and to detect tampering in transit, but it does not provide end-to-end confidentiality, and it cannot protect users from their own instance.
 
 There are three main kinds of security that are commonly discussed in the context of cryptography:
 
@@ -42,16 +42,11 @@ Versia's security model provides the following guarantees:
 - **Where an entity came from later on**: A signature covers one HTTP message, and is not part of the entities in it. Once an entity has been stored, nothing in it proves its origin, so it cannot be passed on to a third party as evidence.
 - **That an instance's key is genuine, without TLS**: Public keys are fetched from the instance over TLS, so a party that can break TLS can also replace a key.
 
-## Why No Confidentiality?
+## Why No End-to-End Confidentiality?
 
-There are several reasons why confidentiality is not covered as part of this specification. Before we go into them, it is important to note that most federated platforms or social media do not provide confidentiality guarantees either, such as:
+There are several reasons why end-to-end confidentiality is not covered as part of this specification. Most federated platforms, such as ActivityPub and email, do not provide it either.
 
-- ActivityPub
-- Email
-- The Web
-- Twitter
-
-Confidentiality is **several orders of magnitude more complex** than integrity and authenticity. It requires a completely different set of tools and assumptions, which are not feasible to reliably implement in a complex federated system (if you've ever seen `** Unable to decrypt: The sender's device has not sent us the keys for this message. **`, you know what we're talking about).
+End-to-end confidentiality is **several orders of magnitude more complex** than integrity and authenticity. It requires a completely different set of tools and assumptions, which are not feasible to reliably implement in a complex federated system (if you've ever seen `** Unable to decrypt: The sender's device has not sent us the keys for this message. **`, you know what we're talking about).
 
 Furthermore, adding more complex cryptography would make the specification significantly more complex, which would likely make it harder to implement for smaller developers with less resources.
 

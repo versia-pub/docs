@@ -74,7 +74,7 @@ The following extensions to [User](/entities/user) are used by the migration ext
 
 <Fields name="MigrationExtension" extension="pub.versia:migration" on="User">
     <Field name="previous" type="Reference">
-        If this user has migrated from another instance, this property **MUST** be a [Reference](/entities#reference) to the user on the previous instance.
+        If this user is migrating or has migrated from another instance, this property **MUST** be a [Reference](/entities#reference) to the user on the previous instance.
     </Field>
     <Field name="destination" type="Reference">
         If this user has migrated to another instance, this property **MUST** be a [Reference](/entities#reference) to the user on the new instance.
