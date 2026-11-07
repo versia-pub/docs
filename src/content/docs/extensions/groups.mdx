@@ -55,7 +55,7 @@ Only the instance hosting a group may send or serve that Group.
     ```jsonc title="Example Group"
     {
         "type": "pub.versia:groups/Group",
-        "id": "ed480922-b095-4f09-9da5-c995be8f5960",
+        "id": "033j6qrwzt002",
         "created_at": "2021-01-01T00:00:00Z",
         "name": "The Woozy fan club",
         "description": "<p>A group for fans of the <strong>Woozy</strong> emoji.</p>",
@@ -85,7 +85,7 @@ Members of the group can see the Note, on top of the audience its `visibility` g
         // ...
         "extensions": { // [!code focus:5]
             "pub.versia:groups": {
-                "group": "example.com:ed480922-b095-4f09-9da5-c995be8f5960"
+                "group": "example.com:033j6qrwzt002"
             }
         }
     }
@@ -114,8 +114,8 @@ Indicates that a [User](/entities/user) wishes to subscribe to a group. **MUST**
     ```jsonc title="Example GroupSubscribe"
     {
         "type": "pub.versia:groups/Subscribe",
-        "subscriber": "versia.example:e9277471-8aa1-4d40-a3d0-0878e818ccdc",
-        "group": "example.com:ed480922-b095-4f09-9da5-c995be8f5960",
+        "subscriber": "versia.example:034d3fsjny007",
+        "group": "example.com:033j6qrwzt002",
         "created_at": "2021-01-01T00:00:00Z"
     }
     ```
@@ -143,8 +143,8 @@ Indicates that a [User](/entities/user) wishes to unsubscribe from a group. **MU
     ```jsonc title="Example GroupUnsubscribe"
     {
         "type": "pub.versia:groups/Unsubscribe",
-        "subscriber": "versia.example:e9277471-8aa1-4d40-a3d0-0878e818ccdc",
-        "group": "example.com:ed480922-b095-4f09-9da5-c995be8f5960",
+        "subscriber": "versia.example:034d3fsjny007",
+        "group": "example.com:033j6qrwzt002",
         "created_at": "2021-01-01T00:00:00Z"
     }
     ```
@@ -172,8 +172,8 @@ Indicates that a [Group](#group) has accepted a [User](/entities/user)'s subscri
     ```jsonc title="Example GroupSubscribeAccept"
     {
         "type": "pub.versia:groups/SubscribeAccept",
-        "subscriber": "versia.example:e9277471-8aa1-4d40-a3d0-0878e818ccdc",
-        "group": "example.com:ed480922-b095-4f09-9da5-c995be8f5960",
+        "subscriber": "versia.example:034d3fsjny007",
+        "group": "example.com:033j6qrwzt002",
         "created_at": "2021-01-01T00:00:00Z"
     }
     ```
@@ -201,8 +201,8 @@ Indicates that a [Group](#group) has rejected a [User](/entities/user)'s subscri
     ```jsonc title="Example GroupSubscribeReject"
     {
         "type": "pub.versia:groups/SubscribeReject",
-        "subscriber": "versia.example:e9277471-8aa1-4d40-a3d0-0878e818ccdc",
-        "group": "example.com:ed480922-b095-4f09-9da5-c995be8f5960",
+        "subscriber": "versia.example:034d3fsjny007",
+        "group": "example.com:033j6qrwzt002",
         "created_at": "2021-01-01T00:00:00Z"
     }
     ```
@@ -232,8 +232,8 @@ A receiver **MUST** ignore a `GroupFederate` that does not come from the instanc
     ```jsonc title="Example GroupFederate"
     {
         "type": "pub.versia:groups/Federate",
-        "target": "versia.example:c5aa65fa-0356-4029-b61c-6b237e5d1393",
-        "group": "example.com:ed480922-b095-4f09-9da5-c995be8f5960",
+        "target": "versia.example:034e17jw54002",
+        "group": "example.com:033j6qrwzt002",
         "created_at": "2021-01-01T00:00:00Z"
     }
     ```

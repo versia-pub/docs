@@ -22,7 +22,7 @@ The whole exchange looks like this, and the sections below go through each step.
     <Message from="a" local>`@alice` posts a note that mentions `@joe@b.example`.</Message>
     <Message from="a" label="GET /.well-known/webfinger?resource=acct:joe@b.example" wire="resolving-the-mention:0">[Resolve the mention](#resolving-the-mention) using WebFinger.</Message>
     <Message from="b" wire="resolving-the-mention:1">Responds with the URL of `joe`'s profile.</Message>
-    <Message from="a" label="GET /.versia/v0.7/entities/User/bde22zi3ca8762" wire="fetching-the-user:0">[Fetch the user](#fetching-the-user) from that URL.</Message>
+    <Message from="a" label="GET /.versia/v0.7/entities/User/034de9r4fr006" wire="fetching-the-user:0">[Fetch the user](#fetching-the-user) from that URL.</Message>
     <Message from="b" request label="GET /.versia/v0.7/instance" wire="fetching-the-user:1">[Verify the signature](/signatures#verifying-the-signature). `b.example` fetches `a.example`'s metadata if it does not have its public key yet.</Message>
     <Message from="a" request={false}>Responds with its `InstanceMetadata`, which holds the public key.</Message>
     <Message from="b" wire="fetching-the-user:2">Responds with the `User` entity.</Message>
@@ -57,7 +57,7 @@ curl "https://b.example/.well-known/webfinger?resource=acct:joe@b.example" -H "A
         { // [!code focus:5]
             "rel": "self",
             "type": "application/vnd.versia+json",
-            "href": "https://b.example/.versia/v0.7/entities/User/bde22zi3ca8762"
+            "href": "https://b.example/.versia/v0.7/entities/User/034de9r4fr006"
         }
     ]
 }
@@ -69,10 +69,10 @@ curl "https://b.example/.well-known/webfinger?resource=acct:joe@b.example" -H "A
 
 ```bash
 # The request is signed by a.example's instance private key
-curl https://b.example/.versia/v0.7/entities/User/bde22zi3ca8762 \
+curl https://b.example/.versia/v0.7/entities/User/034de9r4fr006 \
     -H "Accept: application/vnd.versia+json" \
     -H "User-Agent: CoolServer/1.0 (https://coolserver.example)" \
-    -H "Versia-Signature: MLIVrdNTl+QFvd/Pcyx03R0jYZCgi8PlcV1qd5JgG3YQ59hSirebmHIJcVQWKT97oHWSVMB5XqmscH3ovIOXDw==" \
+    -H "Versia-Signature: L8icLiUGIu0kznC4Z1DgSMIzAvounZ0fJ7QsJFl+yFxnkb8qRQ/G2IT549f5yGcpfRFJQF87S12dWUM3161jDQ==" \
     -H "Versia-Signed-By: a.example" \
     -H "Versia-Signed-At: 1733051945"
 ```
@@ -87,7 +87,7 @@ curl https://a.example/.versia/v0.7/instance -H "Accept: application/vnd.versia+
 
 ```json
 {
-    "id": "bde22zi3ca8762",
+    "id": "034de9r4fr006",
     "type": "User",
     "created_at": "2024-10-13T18:48:19Z",
     "avatar": {
@@ -123,17 +123,17 @@ Finally, `a.example` serializes the note to send it to `joe`.
 
 ```json
 {
-    "id": "782addd9-c051-4eea-8ba4-23d561d0c5bb",
+    "id": "033r20svqa000",
     "type": "Note",
     "created_at": "2024-12-01T11:19:04Z",
     "attachments": [],
-    "author": "a.example:ac41xk9dfe7302",
+    "author": "a.example:034d45r3e6003",
     "category": "microblog",
-    "content": "<p>Hello, <a href=\"https://b.example/users/bde22zi3ca8762\" data-mention=\"b.example:bde22zi3ca8762\">@joe@b.example</a>! How are you doing today?</p>",
+    "content": "<p>Hello, <a href=\"https://b.example/users/034de9r4fr006\" data-mention=\"b.example:034de9r4fr006\">@joe@b.example</a>! How are you doing today?</p>",
     "visibility": "public",
     "is_sensitive": false,
     "mentions": [
-        "b.example:bde22zi3ca8762"
+        "b.example:034de9r4fr006"
     ],
     "previews": []
 }
@@ -151,7 +151,7 @@ curl -X POST https://b.example/.versia/v0.7/inbox \
     --data-binary @note.json \
     -H "Content-Type: application/vnd.versia+json" \
     -H "User-Agent: CoolServer/1.0 (https://coolserver.example)" \
-    -H "Versia-Signature: KpDCy62xzfGn80w1cmJWx6gNKd5YXEqyuLBKKkWn5ky2PMKA2DZWNNIpL6ED+RpXew2oP8u/Zj1SxMrH9gDFDQ==" \
+    -H "Versia-Signature: 4Tjwp96pnFDJnP1mwwk0zrO2Lyl6thn1Lh+3yyV4R6KdwbyMK7wcSaib3FanEikEV9uzTJWDGVNus04HA6MgAA==" \
     -H "Versia-Signed-By: a.example" \
     -H "Versia-Signed-At: 1733051946"
 ```

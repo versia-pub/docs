@@ -17,17 +17,17 @@ export const noteText =
 /** The body, cut where the notes beside it change. */
 export const bodyParts = [
     `{
-    "id": "782addd9-c051-4eea-8ba4-23d561d0c5bb",
+    "id": "033r20svqa000",
     "type": "Note",
     "created_at": "2024-12-01T11:19:04Z",
     "attachments": [],
-    "author": "a.example:ac41xk9dfe7302",
+    "author": "a.example:034d45r3e6003",
     "category": "microblog",`,
     `    "content": "${noteText}",
     "visibility": "public",
     "is_sensitive": false,
     "mentions": [
-        "b.example:bde22zi3ca8762"
+        "b.example:034de9r4fr006"
     ],
     "previews": [],`,
     `    "extensions": {
@@ -46,7 +46,7 @@ export const sample = {
     body: bodyParts.join("\n"),
     signedBy: "a.example",
     signature:
-        "ZvwwdlE9sYp0TS1F2rk4YVi7C7wGSFcgFA9dKUenezf/CJg5L8xn2k0ofSPGdHEYlnEIrWz8ZSw+XOe4sw0SCw==",
+        "lzNOr378PcwSYAZAKBd5zxZJyVKjTpZJPoN4FbOJW4O1O2lrUbYUmo3syTRXbOxqRRME0l8q3mcF/yIuoScZCw==",
 };
 
 /** Whether the sample's signature covers this message, with the example key. */

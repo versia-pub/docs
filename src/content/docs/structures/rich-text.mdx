@@ -10,7 +10,7 @@ Fields that hold short labels, such as a User's `display_name`, are plain string
 
 ```jsonc title="A Note's content"
 {
-    "content": "<p>Hello, <a href=\"https://b.example/@joe\" data-mention=\"b.example:bde22zi3ca8762\">@joe</a>! The notes from Tuesday:</p><ul><li>Ship the <code>0.7</code> release</li><li>Write the changelog</li></ul>"
+    "content": "<p>Hello, <a href=\"https://b.example/@joe\" data-mention=\"b.example:034de9r4fr006\">@joe</a>! The notes from Tuesday:</p><ul><li>Ship the <code>0.7</code> release</li><li>Write the changelog</li></ul>"
 }
 ```
 
@@ -87,7 +87,7 @@ A link's `href` **MUST** be an absolute URL with one of these schemes: `http`, `
 A mention of a [User](/entities/user) is a link with a `data-mention` attribute, which holds the user's [Reference](/entities#reference). Its `href` **SHOULD** be the user's [`url`](/entities/user), or another address of their profile on their instance, and its text is up to the sender, usually the [user address](/entities/user#addresses).
 
 ```html
-<a href="https://b.example/@joe" data-mention="b.example:bde22zi3ca8762">@joe@b.example</a>
+<a href="https://b.example/@joe" data-mention="b.example:034de9r4fr006">@joe@b.example</a>
 ```
 
 A mention in RichText does not notify anyone. On a Note, every user named in a `data-mention` **MUST** also be listed in its `mentions` field, which is what [decides who is notified](/entities/note). A receiver **MAY** point the link at its own copy of the user instead of the `href`.
