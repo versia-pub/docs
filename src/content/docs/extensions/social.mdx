@@ -184,6 +184,12 @@ The Social extension adds the following collections to the [User](/entities/user
 - `pub.versia:social/Notes`: [Collection](/structures/collection) of notes authored by the user, described under [Notes Collection](#notes-collection).
 - `pub.versia:social/Featured`: [Reference Collection](/structures/collection#reference-collection) of notes that the user wants to feature on their profile ("pinned" notes).
 
+## Interaction Types
+
+This extension registers the following [interaction types](/extensions/interaction-controls#interaction-types):
+- `pub.versia:social/reply`, for sending a Note whose `replies_to` is the Note.
+- `pub.versia:social/quote`, for sending a Note whose `quoting` is the Note.
+
 ## Versia Links
 
 The Social extension adds the following [Versia Link](/links) actions:

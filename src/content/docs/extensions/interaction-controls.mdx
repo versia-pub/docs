@@ -37,12 +37,12 @@ The structure defined in this document **MUST** be inserted in the `pub.versia:i
     <Example slot="example" unchecked>
     ```jsonc title="Example"
     {
-        "reply": {
+        "pub.versia:social/reply": {
             "allowed": [
                 "group"
             ]
         },
-        "pub.versia:likes/Like": {
+        "pub.versia:likes/like": {
             "allowed": []
         }
     }
@@ -64,12 +64,9 @@ To avoid server load from constant Collection refreshing, implementations **MAY*
 
 ## Interaction Types
 
-The following interaction types apply to every Note:
+Each extension that adds a way to interact with a Note registers its interaction types on its page. An interaction type is named `{extension}/{action}`, where `{extension}` is the name of the extension that registers it and `{action}` is a lowercase name for the interaction, such as `pub.versia:likes/like` for the [Likes Extension](/extensions/likes).
 
-- `reply`: Sending a Note with `replies_to` including this Note.
-- `quote`: Sending a Note with `quoting` including this Note.
-
-Extensions **MAY** register their own interaction types. The name of an interaction type is the `type` of the entity that performs it, such as `pub.versia:likes/Like` for the [Likes Extension](/extensions/likes).
+[Social](/extensions/social#interaction-types) registers `pub.versia:social/reply` and `pub.versia:social/quote`.
 
 ## Example
 
@@ -83,7 +80,7 @@ Extensions **MAY** register their own interaction types. The name of an interact
     // ...
     "extensions": { // [!code focus:7]
         "pub.versia:interaction_controls": {
-            "reply": {
+            "pub.versia:social/reply": {
                 "allowed": ["subscribers"]
             }
         }
