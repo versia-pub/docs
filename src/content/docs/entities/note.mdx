@@ -35,17 +35,19 @@ A `Note` is a piece of content posted by a [User](/entities/user). Notes can con
         Category of the note. Useful for clients to render notes differently depending on their intended purpose.
 
         <Values values={{
-            microblog: "Like Twitter, Mastodon",
-            forum: "Like Reddit",
-            blog: "Like WordPress, Medium",
-            image: "Like Instagram",
-            video: "Like YouTube, PeerTube",
-            audio: "Like SoundCloud, Spotify",
-            messaging: "Like Discord, Element (Matrix), Signal",
+            microblog: "Short posts, like Twitter or Mastodon",
+            forum: "Threaded discussions, like Reddit",
+            blog: "Long articles, like WordPress or Medium",
+            image: "Image posts, like Instagram",
+            video: "Video posts, like YouTube or PeerTube",
+            audio: "Audio posts, like SoundCloud or Spotify",
+            messaging: "Chat messages, like Discord, Element or Signal",
         }} />
+
+        A receiver **MUST** treat an unknown value as if `category` were left out.
     </Field>
     <Field name="content" type="ContentFormat">
-        The content of the note. **MUST** be text format (`text/html`, `text/markdown`, etc). **MUST** use `content`, not `url`.
+        The content of the note. **MUST** be text format (`text/*`). **MUST** use `content`, not `url`.
     </Field>
     <Field name="device" type="Device">
         Device used to post the note. Useful for showing which app posted the note.

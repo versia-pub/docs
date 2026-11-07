@@ -33,12 +33,12 @@ Only the instance hosting a group may send or serve that Group.
     <Field name="name" type="ContentFormat">
        Group name/title.
 
-       Text only (`text/plain`, `text/html`, etc).
+       **MUST** be text format (`text/*`).
     </Field>
     <Field name="description" type="ContentFormat">
         Short description of the group's contents and purpose.
 
-        Text only (`text/plain`, `text/html`, etc).
+        **MUST** be text format (`text/*`).
     </Field>
     <Field name="open" type="boolean" required>
         Whether the group is open to all users or requires approval to join.
