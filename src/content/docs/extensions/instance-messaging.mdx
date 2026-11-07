@@ -5,25 +5,12 @@ extension: pub.versia:instance_messaging
 kind: Extension
 ---
 
-import Note from "../../../components/Note.astro";
 
-Misconfigured or buggy instances often have trouble federating with others. This extension enables instances to send simple federation debug messages.
-
-<Note>
-    This extension is intended to help developers debug federation issues between instances. It is not intended for general-purpose messaging.
-</Note>
+This extension lets instances send each other simple federation debug messages. It is not intended for general-purpose messaging.
 
 The name of this extension is `pub.versia:instance_messaging`. Instances that support it list this name in `compatibility.extensions` of their [InstanceMetadata](/entities/instance-metadata).
 
-Often, federation "fails silently" with no indication of what went wrong, as instances are incapable of communicating with each other outside of administrators manually checking logs.
-
-For example, let's consider the following scenario:
-1. `joe.social` and `jane.org` are two instances.
-2. `joe.social` tries to fetch a user profile from `jane.org`, at `https://jane.org/.versia/v0.7/entities/User/nkGEd8eI98` for example.
-3. `jane.org` responds with a [User](/entities/user) object with a missing or incorrect field, such as an improperly validated `username`.
-4. `joe.social` is incapable of processing the response and silently fails to fetch the user profile.
-
-In this scenario, `jane.org` has no way of knowing what went wrong, as `joe.social` does not provide any feedback.
+Federation often fails silently. For example, if `joe.social` cannot process a [User](/entities/user) fetched from `jane.org` because of an invalid `username`, `jane.org` has no way of knowing what went wrong.
 
 ## Behaviour
 
