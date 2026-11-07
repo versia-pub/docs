@@ -96,8 +96,8 @@ curl https://a.example/.versia/v0.7/instance -H "Accept: application/vnd.versia+
         }
     },
     "display_name": "Joe Swanson (Winter Arc :gigachad:)",
-    "username": "joe",
     "fields": [],
+    "username": "joe",
     "manually_approves_followers": false,
     "indexable": true,
     "extensions": {
@@ -128,6 +128,7 @@ Finally, `a.example` serializes the note to send it to `joe`.
     "id": "782addd9-c051-4eea-8ba4-23d561d0c5bb",
     "type": "Note",
     "created_at": "2024-12-01T11:19:04Z",
+    "attachments": [],
     "author": "a.example:ac41xk9dfe7302",
     "category": "microblog",
     "content": {
@@ -139,11 +140,10 @@ Finally, `a.example` serializes the note to send it to `joe`.
         }
     },
     "visibility": "public",
+    "is_sensitive": false,
     "mentions": [
         "b.example:bde22zi3ca8762"
     ],
-    "attachments": [],
-    "is_sensitive": false,
     "previews": []
 }
 ```
@@ -160,7 +160,7 @@ curl -X POST https://b.example/.versia/v0.7/inbox \
     --data-binary @note.json \
     -H "Content-Type: application/vnd.versia+json" \
     -H "User-Agent: CoolServer/1.0 (https://coolserver.example)" \
-    -H "Versia-Signature: J6xjtXEJzPwatif9ZByx2Lw2tupdyPH5W30AcpcoMUMNQa0gsQoN1fYVY50GZh6r25KMqdUlOysV8krsSEe0Aw==" \
+    -H "Versia-Signature: L6QrlslJ1TDtb74on+2icDYqBp9YVyiEqddWj9ovgb9XauAFPewjFpp1svnSy3zSkC7GgFaHpqSBireUpgYkBg==" \
     -H "Versia-Signed-By: a.example" \
     -H "Versia-Signed-At: 1733051946"
 ```

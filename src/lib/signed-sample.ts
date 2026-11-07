@@ -19,6 +19,7 @@ export const bodyParts = [
     "id": "782addd9-c051-4eea-8ba4-23d561d0c5bb",
     "type": "Note",
     "created_at": "2024-12-01T11:19:04Z",
+    "attachments": [],
     "author": "a.example:ac41xk9dfe7302",
     "category": "microblog",`,
     `    "content": {
@@ -27,11 +28,10 @@ export const bodyParts = [
         }
     },
     "visibility": "public",
+    "is_sensitive": false,
     "mentions": [
         "b.example:bde22zi3ca8762"
     ],
-    "attachments": [],
-    "is_sensitive": false,
     "previews": [],`,
     `    "extensions": {
         "pub.versia:custom_emojis": {
@@ -49,7 +49,7 @@ export const sample = {
     body: bodyParts.join("\n"),
     signedBy: "a.example",
     signature:
-        "odN8Tqt2nouQ1Zju37z/LcVvdY146qnXcFTvQ7UIdbTyDs1WSCHpkRnHl+i3dKGPlujAqtWSeDcz15beqGbFBA==",
+        "GlHqOSGrz+nyATm8GqbgkmVJinCJ11NurstGMaeEQVDdNyQSNFdbFEHxj6XPUVEf2jh7aFwEKYznd0d/a4mGCA==",
 };
 
 /** Whether the sample's signature covers this message, with the example key. */
