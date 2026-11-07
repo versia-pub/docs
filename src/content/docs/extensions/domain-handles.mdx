@@ -1,0 +1,85 @@
+---
+title: "Domain Handles Extension"
+description: "Lets users be shown by a domain they own, such as @joe.example."
+extension: pub.versia:domain_handles
+kind: Extension
+---
+
+import Example from "../../../components/spec/Example.astro";
+import Field from "../../../components/spec/Field.astro";
+import Fields from "../../../components/spec/Fields.astro";
+
+The Domain Handles extension lets a [User](/entities/user) be shown by a domain they own, such as `@joe.example`, instead of their [address](/entities/user#addresses) `@joe@versia.example`. The user stays on their instance: the handle only changes how they are shown and mentioned.
+
+A handle is proven both ways. The User names the domain, and the domain names the User in a DNS record. Instances show the handle only when the two match.
+
+## Definition
+
+The field goes in the `pub.versia:domain_handles` key of a User's `extensions`.
+
+<Fields name="DomainHandles" extension="pub.versia:domain_handles" on="User">
+    <Field name="domain" type="Domain" required>
+        The domain the user wants to be shown as. **MUST** follow the rules for a [Domain](/entities#domain).
+    </Field>
+
+    <Example slot="example" unchecked>
+    ```jsonc title="Example User"
+    {
+        "id": "033p0g85e2000",
+        "type": "User",
+        // ...
+        "username": "joe",
+        "extensions": { // [!code focus:5]
+            "pub.versia:domain_handles": {
+                "domain": "joe.example"
+            }
+        }
+    }
+    ```
+    </Example>
+</Fields>
+
+### DNS Record
+
+The owner of the domain proves the handle with a DNS `TXT` record named `_versia.` followed by the domain. Its value is `user=` followed by a [Reference](/entities#reference) to the User.
+
+```text title="Example Record"
+_versia.joe.example.  TXT  "user=versia.example:033p0g85e2000"
+```
+
+Records at that name whose value does not start with `user=` are ignored. If more than one record starts with `user=`, the domain names no user.
+
+## Behavior
+
+### Verifying a Handle
+
+To verify a User's handle, an instance:
+
+1. Looks up the `TXT` records at `_versia.` followed by the User's `domain`.
+2. Checks that a [record](#dns-record) names a Reference to that User.
+
+An instance **MUST NOT** show a handle it has not verified, and **MUST** show the user's [address](/entities/user#addresses) instead. A handle that fails to verify does not make the User invalid.
+
+An instance **MUST** verify a handle when it first receives a User that claims it, and again when the User's `domain` changes. It **SHOULD** verify it again at least every 24 hours while it shows it, so that a handle stops being shown once the record no longer names the User. If the lookup fails without an answer, for example on a timeout, the instance keeps the result of its last check until the next one.
+
+If several Users claim the same domain, only the one that the record names can verify it.
+
+### Showing a Handle
+
+A verified handle is shown as `@` followed by the domain, such as `@joe.example`. Usernames cannot contain `.`, so a handle cannot be mistaken for a username, or for an address, which has two `@`.
+
+Handles do not change how users are referenced. A [mention](/structures/rich-text) still points to the user's Reference, and only its text shows the handle.
+
+### Resolving a Handle
+
+To find the user behind a handle, such as when someone mentions `@joe.example`, an instance looks up the DNS record, fetches the User it names, and checks that the User's `domain` is the handle's domain. If it is not, the handle names no user.
+
+### Moving Instances
+
+A handle is not tied to an instance. After a user [migrates](/extensions/migration), their new account claims the same domain, and the user changes the record to name the new account. Until then, instances keep showing the handle on the old account, and the address on the new one.
+
+## Security
+
+DNS records are not signed unless the domain uses [DNSSEC](https://datatracker.ietf.org/doc/html/rfc9364). An attacker who can change DNS answers can change which user a handle is shown on, but not what that user sends. Instances **SHOULD** use a resolver that validates DNSSEC.
+
+Domains to look up come from remote Users. An instance **SHOULD** limit how often it looks up each domain.

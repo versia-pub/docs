@@ -98,3 +98,5 @@ Subscriptions then move through normal [Subscribes](/entities/subscribe):
 The old instance sets the `destination` field of the old account to a [Reference](/entities#reference) to the new account, and disables the old account.
 
 It **SHOULD** keep serving the old account and its `subscribers` and `subscriptions` collections for at least 30 days, so that other instances can finish moving.
+
+A [domain handle](/extensions/domain-handles#moving-instances) moves when the user changes its DNS record to name the new account.

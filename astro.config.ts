@@ -198,6 +198,7 @@ export default defineConfig({
                         link("Custom Emojis", "/extensions/custom-emojis"),
                         link("Decorations", "/extensions/decorations"),
                         link("Delegation", "/extensions/delegation"),
+                        link("Domain Handles", "/extensions/domain-handles"),
                         link("Groups", "/extensions/groups"),
                         link(
                             "Instance Messaging",
