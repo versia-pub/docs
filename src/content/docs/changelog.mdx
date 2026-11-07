@@ -49,7 +49,7 @@ This is Working Draft 7. All endpoints moved from `/.versia/v0.6/` to `/.versia/
 
 - [Delivery](/federation#delivery) and [access](/federation#access) are now defined per entity type. Instances answer `404` for entities the requester may not fetch, and `followers` and `mentions` Notes also reach the authors of the Notes they reply to.
 - Delivery has no guaranteed order. Receivers should fetch missing references, and ignore entities with nothing to apply to.
-- Receivers must [ignore unknown fields](/validation#unknown-fields-and-types). An unknown namespaced type is answered with a `2xx` and dropped, and an unknown core type with a `422`.
+- Receivers must [ignore unknown fields](/validation#unknown-fields-and-types). An unknown namespaced type is answered with a `2xx` and dropped, and an unknown core type is [rejected](/validation#rejecting-entities).
 - Added a [status code table](/federation/http#status-codes) and an optional error body.
 - Rate limits now use `429` and `Retry-After`, replacing the expired IETF draft headers. Added retry rules.
 - Defined media types per route. `Content-Type` is now `application/vnd.versia+json`, with `charset=utf-8` optional, and the inbox no longer needs an `Accept` header.
@@ -69,9 +69,9 @@ This is Working Draft 7. All endpoints moved from `/.versia/v0.6/` to `/.versia/
 - [Delegation](/extensions/delegation): now only changes who an action is shown as. It grants no rights over the other user's entities. A delegator that cannot be fetched counts as not listing the delegate.
 - [Groups](/extensions/groups): defined subscription, moderators and federation, and `GroupFederate.note` is now `target`. The instance of a Note's author sends the Note to the group's instance, which sends a `GroupFederate` to its members' instances, and those fetch the Note.
 - [Instance Messaging](/extensions/instance-messaging): named `pub.versia:instance_messaging` so that instances can list it in `compatibility.extensions`, moved to the extensions path, and defined as unsigned with untrusted text. The body should name the sender.
-- [Interaction Controls](/extensions/interaction-controls): only `allowed` remains, priorities are gone, keys are entity types, and the `InteractionGroup` values now match their descriptions (`followed` is gone, `following` and `mentioned` are added).
-- [Migration](/extensions/migration): `new` is now `destination`, and `previous` is optional. Migrations have defined delivery, and relationships move through normal Follows.
-- [Polls](/extensions/polls): `options` is now a list of objects holding `content` and `votes`. A Vote can change by being sent again, and is withdrawn by a Delete, but its `target` cannot change.
+- [Interaction Controls](/extensions/interaction-controls): only `allowed` remains, priorities are gone, keys are entity types, and the `InteractionGroup` values now match their descriptions (`followed` is gone, `following` and `mentioned` are added). A refused interaction must be [rejected](/validation#rejecting-entities).
+- [Migration](/extensions/migration): `new` is now `destination`, and `previous` is optional. Migrations have defined delivery, and relationships move through normal Follows. The old account should stay served for at least 30 days.
+- [Polls](/extensions/polls): `options` is now a list of objects holding `content` and `votes`. A Vote can change by being sent again, and is withdrawn by a Delete, but its `target` cannot change. A refused Vote must be [rejected](/validation#rejecting-entities).
 - [Reactions](/extensions/reactions): defined how `content` holds a custom emoji, and a Reaction is undone with a Delete.
 - [Reports](/extensions/reports): `reported` is now a list of objects holding `type` and `reference`.
 - [Share](/extensions/share): only a public Note can be shared.
@@ -80,7 +80,7 @@ This is Working Draft 7. All endpoints moved from `/.versia/v0.6/` to `/.versia/
 
 ### Documentation
 
-- Requirements now use [BCP 14](/introduction#vocabulary) key words, only in bold capitals. Some that were only written in lowercase now use them, including undoing a Like or Dislike with a Delete.
+- Requirements now use [BCP 14](/introduction#vocabulary) key words, only in bold capitals. Some that were only written in lowercase now use them, including undoing a Like or Dislike with a Delete and the limits on remote data in [Validation](/validation).
 - Defined [conformance](/introduction#vocabulary).
 - The [Security Model](/security) now says what signatures do not prove and where to report a vulnerability. [Validation](/validation#remote-content) adds rules for remote HTML and outbound requests.
 - Restructured the site. `/api/basics` was split between [Versions](/federation/versions), [HTTP](/federation/http) and [Entities](/entities#domain), `/api/endpoints` moved to [Endpoints](/federation/endpoints), `/philosophy/principles` moved to [Principles](/principles), `/federation/validation` moved to [Validation](/validation), and `/federation/example` moved to [Example](/example). The old URLs redirect, without their fragments. Entity and extension pages now share one layout, so their section anchors changed.
