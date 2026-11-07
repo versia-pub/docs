@@ -4,7 +4,6 @@ import ExtensionList from "../components/ExtensionList.astro";
 import SignedNote from "../components/SignedNote.astro";
 import { team } from "../lib/home";
 
-const accountEmail = `mailto:aprl@versia.pub?subject=${encodeURIComponent("beta.versia.social Account Request")}&body=${encodeURIComponent("Hello, I would like to request an account on beta.versia.social.")}`;
 ---
 
 <StarlightPage
@@ -38,11 +37,6 @@ const accountEmail = `mailto:aprl@versia.pub?subject=${encodeURIComponent("beta.
     <p>
         Use the reference implementation, <a href="https://github.com/versia-pub/server">Versia Server</a>. It’s a
         microblogging server with a focus on feeling like current Fediverse platforms, like Sharkey and Mastodon.
-    </p>
-    <p>
-        To try Versia without setting up your own instance, use{" "}
-        <a href="https://beta.versia.social"><code>beta.versia.social</code></a>. Send an email to{" "}
-        <a href={accountEmail}><code>aprl@versia.pub</code></a> for an account.
     </p>
 
     <h2 id="team">People</h2>

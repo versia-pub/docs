@@ -8,7 +8,6 @@ export const team = [
             { name: "Website", url: "https://cpluspatch.com" },
             { name: "GitHub", url: "https://github.com/cpluspatch" },
             { name: "Fediverse", url: "https://mk.cpluspatch.com/@jessew" },
-            { name: "Versia", url: "https://beta.versia.social/@jessew" },
             {
                 name: "Matrix",
                 url: "https://matrix.to/#/@jesse:cpluspatch.dev",
@@ -28,7 +27,6 @@ export const team = [
         socials: [
             { name: "GitHub", url: "https://github.com/cutestnekoaqua" },
             { name: "Fediverse", url: "https://donotsta.re/april" },
-            { name: "Versia", url: "https://beta.versia.social/@aprl" },
             { name: "Matrix", url: "https://matrix.to/#/@aprl:uwu.is" },
             { name: "Email", url: "mailto:aprl@acab.dev" },
         ],
