@@ -1,5 +1,6 @@
 ---
 import { API_PREFIX } from "../../lib/spec";
+import EntityChecker from "../entity-checker/EntityChecker.astro";
 import Col from "./Col.astro";
 import Fact from "./Fact.astro";
 import Facts from "./Facts.astro";
@@ -17,9 +18,22 @@ interface Props {
     fetch?: { path: string; href: string };
     /** For an entity whose collections have their own endpoint. */
     collectionsHref?: string;
+    /** Adds a tool under the sheet that checks a pasted entity against its fields. */
+    checker?: boolean;
+    /** Set by `remark-spec` for `checker`: the fields as JSON, and the example. Not `example`, which is a slot. */
+    schema?: string;
+    sample?: string;
 }
 
-const { name, type, transient = false, fetch, collectionsHref = "/federation/endpoints#entity-collections" } = Astro.props;
+const {
+    name,
+    type,
+    transient = false,
+    fetch,
+    collectionsHref = "/federation/endpoints#entity-collections",
+    schema,
+    sample,
+} = Astro.props;
 const fetchPath = fetch?.path ?? `${API_PREFIX}/entities/${type}/{id}`;
 const fetchHref = fetch?.href ?? "/federation/endpoints#entity-data";
 ---
@@ -44,6 +58,7 @@ const fetchHref = fetch?.href ?? "/federation/endpoints#entity-data";
     </Col>
     <Col sticky><slot name="example" /></Col>
 </Sheet>
+{schema && sample && <EntityChecker name={name} transient={transient} schema={schema} sample={sample} />}
 
 <style>
     .type-value {

@@ -1,6 +1,6 @@
 /** Fields every entity inherits, documented on /entities. */
 export const inheritedFields = [
-    { name: "id", type: "string", required: true },
+    { name: "id", type: "string", required: true, format: "id" as const },
     { name: "type", type: "string", required: true },
     { name: "created_at", type: "RFC3339", required: true },
     { name: "updated_at", type: "RFC3339", required: false },

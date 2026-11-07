@@ -1,0 +1,82 @@
+---
+interface Props {
+    transient: boolean;
+    hasAuthor: boolean;
+}
+
+const { transient, hasAuthor } = Astro.props;
+---
+
+<div aria-live="polite">
+    <h5>Result</h5>
+    <div class="worked-out">
+        <p class="verdict" data-output="verdict"></p>
+        <p class="detail" data-output="detail" hidden></p>
+    </div>
+</div>
+
+<div data-output="problems-section" hidden>
+    <h5>Problems</h5>
+    <ul class="findings" data-output="problems"></ul>
+</div>
+
+<div data-output="notes-section" hidden>
+    <h5>Notes</h5>
+    <ul class="findings" data-output="notes"></ul>
+</div>
+
+<h5>Not Checked Here</h5>
+<ul class="limits">
+    <li>Rules in field descriptions, such as allowed media types.</li>
+    {hasAuthor && (
+        <li>That the <a href="/validation#authors-and-signers">author matches the signer</a>.</li>
+    )}
+    <li>That referenced entities exist.</li>
+    <li>That hashes and sizes match the content.</li>
+    {!transient && <li>The rules for <a href="/entities#changing-an-entity">changing an entity</a>.</li>}
+    <li>Data inside <code>extensions</code>.</li>
+</ul>
+
+<style>
+    p.verdict,
+    p.detail {
+        margin: 0;
+    }
+
+    .verdict {
+        font-size: var(--text-body);
+        font-weight: var(--weight-bold);
+        line-height: 1.4;
+    }
+
+    .verdict[data-state="pass"] {
+        color: var(--value);
+    }
+
+    .verdict[data-state="fail"] {
+        color: var(--accent);
+    }
+
+    .detail {
+        color: var(--ink-soft);
+    }
+
+    .findings,
+    .limits {
+        margin: 0;
+        padding-left: 1.25em;
+    }
+
+    .findings :global(li + li),
+    .limits li + li {
+        margin-top: 0.15rem;
+    }
+
+    .findings :global(a code) {
+        font-weight: var(--weight-bold);
+    }
+
+    .limits {
+        color: var(--ink-soft);
+    }
+</style>

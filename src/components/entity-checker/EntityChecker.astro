@@ -1,0 +1,141 @@
+---
+import { withArticle } from "../../lib/entity-checker/check";
+import type { EntitySchema } from "../../lib/entity-checker/types";
+import ToolButton from "../ToolButton.astro";
+import CheckResult from "./CheckResult.astro";
+
+interface Props {
+    name: string;
+    transient: boolean;
+    /** The fields from the sheet above, as `remark-spec` read them. */
+    schema: string;
+    /** The sheet's example, as plain JSON. */
+    sample: string;
+}
+
+const { name, transient, schema, sample } = Astro.props;
+const entity = withArticle(name);
+const hasAuthor = (JSON.parse(schema) as EntitySchema).fields.some((field) => field.name === "author");
+const fieldId = `check-${name.toLowerCase()}`;
+---
+
+<section class="checker wide" data-entity-checker data-schema={schema} hidden data-pagefind-ignore>
+    <header class="head">
+        <h4>Check {entity}</h4>
+        <p class="intro">
+            Checks {entity} against the fields above. Nothing leaves your browser.
+        </p>
+    </header>
+
+    <form class="bench" autocomplete="off">
+        <div>
+            <h5><label for={fieldId}>Entity</label></h5>
+            <textarea id={fieldId} name="entity" rows="18" spellcheck="false" wrap="off">{sample}</textarea>
+            <div class="actions">
+                <ToolButton output="use-example">Use the example</ToolButton>
+            </div>
+        </div>
+
+        <div>
+            <CheckResult transient={transient} hasAuthor={hasAuthor} />
+        </div>
+    </form>
+</section>
+
+<script>
+    import "../../lib/entity-checker/index";
+</script>
+
+<style>
+    /* The same frame as the signature playground, so a tool never reads as more of the spec. */
+    .checker {
+        margin-block: 2rem;
+        border: 1px solid var(--control-border);
+        border-radius: var(--radius);
+        font-size: var(--text-sm);
+        line-height: 1.5;
+    }
+
+    .head {
+        padding: 0.75rem 1rem;
+        background: var(--paper-raised);
+        border-bottom: 1px solid var(--control-border);
+    }
+
+    .head h4 {
+        margin: 0;
+        color: var(--ink);
+        font-family: var(--font-prose);
+        font-size: var(--text-body);
+        font-weight: var(--weight-bold);
+        line-height: 1.3;
+    }
+
+    .head p {
+        margin: 0.25rem 0 0;
+    }
+
+    .intro {
+        color: var(--ink-soft);
+    }
+
+    .bench {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr);
+        gap: 0 2rem;
+        padding: 0.25rem 1rem 1rem;
+    }
+
+    @media (min-width: 78rem) {
+        .bench {
+            grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+        }
+
+        /* Side by side, the result is in view however tall the box is. */
+        .bench textarea {
+            height: auto;
+        }
+    }
+
+    .checker :global(h5) {
+        margin: 1rem 0 0.35rem;
+        color: var(--ink);
+        font-family: var(--font-prose);
+        font-size: var(--text-sm);
+        font-weight: var(--weight-bold);
+        line-height: 1.3;
+    }
+
+    .checker :global(.worked-out) {
+        margin: 0;
+        padding: 0.75rem 1rem;
+        background: var(--paper-raised);
+        border-radius: var(--radius);
+    }
+
+    textarea {
+        display: block;
+        box-sizing: border-box;
+        width: 100%;
+        padding: 0.4rem 0.6rem;
+        border: 1px solid var(--control-border);
+        border-radius: var(--radius);
+        background: var(--paper);
+        color: var(--ink);
+        font-family: var(--font-mono);
+        font-size: var(--code-size);
+        line-height: 1.6;
+        resize: vertical;
+        /* Stacked, the result is below the box, so keep it short enough to see both. */
+        height: 15rem;
+        tab-size: 4;
+    }
+
+    textarea:focus {
+        border-color: var(--accent);
+    }
+
+    .actions {
+        margin-top: 0.5rem;
+    }
+</style>

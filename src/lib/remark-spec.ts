@@ -4,6 +4,9 @@ import type { MdxJsxFlowElement, MdxJsxTextElement } from "mdast-util-mdx-jsx";
 import type { Node } from "unist";
 import { visit } from "unist-util-visit";
 import type { VFile } from "vfile";
+import { checkEntity, unknownTypes } from "./entity-checker/check";
+import { CONTENT_FORMAT_FIELDS } from "./entity-checker/content-format";
+import type { EntitySchema, FieldSpec } from "./entity-checker/types";
 import { anchorPart, inheritedFieldHref, inheritedFields } from "./spec-fields";
 
 type JsxElement = MdxJsxFlowElement | MdxJsxTextElement;
@@ -41,6 +44,23 @@ const nameOf = (node: JsxElement) => {
         throw new Error(`<${node.name}> needs a plain string name`);
     }
     return value;
+};
+
+/** A plain string, or a string in braces, such as `type={'"public" | "followers"'}`. */
+const stringAttribute = (node: JsxElement, name: string) => {
+    const value = attribute(node, name)?.value;
+    if (typeof value === "string" || value === null || value === undefined) {
+        return value ?? undefined;
+    }
+    const [statement] = value.data?.estree?.body ?? [];
+    if (
+        statement?.type === "ExpressionStatement" &&
+        statement.expression.type === "Literal" &&
+        typeof statement.expression.value === "string"
+    ) {
+        return statement.expression.value;
+    }
+    throw new Error(`<${node.name}> needs a plain string ${name}`);
 };
 
 /** `required` and `required={true}` count, `required={false}` does not. */
@@ -174,16 +194,87 @@ const checkFormats = (value: unknown, code: Code, file: VFile) => {
     }
 };
 
+/** Fails the build when the ContentFormat sheet and the checker's copy of its fields disagree. */
+const checkContentFormatSheet = (
+    fields: FieldSpec[],
+    sheet: JsxElement,
+    file: VFile,
+) => {
+    const summary = (list: FieldSpec[]) =>
+        list
+            .map(
+                (f) =>
+                    `${f.name}:${f.type}:${f.numberType ?? ""}:${f.required}`,
+            )
+            .join(", ");
+    if (summary(fields) !== summary(CONTENT_FORMAT_FIELDS)) {
+        file.fail(
+            `The ContentFormat sheet no longer matches CONTENT_FORMAT_FIELDS in src/lib/entity-checker/content-format.ts:\n  sheet:   ${summary(fields)}\n  checker: ${summary(CONTENT_FORMAT_FIELDS)}`,
+            sheet,
+        );
+    }
+};
+
+/** Hands the entity's checker its fields and example, and fails the build if the example fails it. */
+const addChecker = (
+    entity: JsxElement,
+    file: VFile,
+    fields: FieldSpec[],
+    inherited: FieldSpec[],
+) => {
+    const name = nameOf(entity);
+    const type = stringAttribute(entity, "type");
+    if (!type) {
+        throw new Error(`<Entity name="${name}"> needs a type for its checker`);
+    }
+    const schema: EntitySchema = {
+        name,
+        type,
+        fields: [...fields, ...inherited],
+    };
+    const unknown = unknownTypes(schema.fields);
+    if (unknown.length > 0) {
+        file.fail(
+            `The checker for ${name} does not know these types: ${unknown.join(", ")}`,
+            entity,
+        );
+    }
+
+    const [code] = elementsIn(entity, "Example").flatMap((example) =>
+        codeIn(example).filter((c) => c.lang === "json" || c.lang === "jsonc"),
+    );
+    if (!code) {
+        file.fail(`The checker for ${name} needs a JSON example`, entity);
+    }
+    const example = parse(code.value, [], { allowTrailingComma: false });
+    const { problems } = checkEntity(schema, example);
+    if (problems.length > 0) {
+        file.fail(
+            `The example for ${name} fails its checker:\n${problems.map((p) => `  ${p.path || "(entity)"} ${p.message}`).join("\n")}`,
+            code,
+        );
+    }
+
+    entity.attributes.push(
+        {
+            type: "mdxJsxAttribute",
+            name: "schema",
+            value: JSON.stringify(schema),
+        },
+        {
+            type: "mdxJsxAttribute",
+            name: "sample",
+            value: JSON.stringify(example, null, 4),
+        },
+    );
+};
+
 const linkEntity = (entity: JsxElement, file: VFile) => {
     const prefix = anchorPart(nameOf(entity));
-    const fields: { name: string; required: boolean }[] = [];
     let hasInherited = false;
 
-    const walk = (
-        children: Node[],
-        parentAnchor: string,
-        topLevel: boolean,
-    ) => {
+    const walk = (children: Node[], parentAnchor: string): FieldSpec[] => {
+        const found: FieldSpec[] = [];
         for (const child of children) {
             if (isElement(child, "Inherits")) {
                 hasInherited = true;
@@ -191,16 +282,28 @@ const linkEntity = (entity: JsxElement, file: VFile) => {
                 const name = nameOf(child);
                 const anchor = `${parentAnchor}-${anchorPart(name)}`;
                 setAnchor(child, anchor);
-                if (topLevel) {
-                    fields.push({ name, required: isRequired(child) });
-                }
-                walk(child.children, anchor, false);
+                const numberType = stringAttribute(child, "numberType");
+                found.push({
+                    name,
+                    type: stringAttribute(child, "type"),
+                    required: isRequired(child),
+                    ...(numberType === "float" || numberType === "integer"
+                        ? { numberType }
+                        : {}),
+                    href: `#${anchor}`,
+                    fields: walk(child.children, anchor),
+                });
             } else if (!isElement(child, "Example") && "children" in child) {
-                walk(child.children as Node[], parentAnchor, topLevel);
+                found.push(...walk(child.children as Node[], parentAnchor));
             }
         }
+        return found;
     };
-    walk((entity as JsxElement).children, prefix, true);
+    const fields = walk((entity as JsxElement).children, prefix);
+
+    if (entity.name === "Fields" && nameOf(entity) === "ContentFormat") {
+        checkContentFormatSheet(fields, entity, file);
+    }
 
     // A field the entity lists itself, such as an extension's `type`, wins over the inherited one.
     // Transient entities and InstanceMetadata have no `id`, and so no `updated_at`, as /entities says.
@@ -234,6 +337,19 @@ const linkEntity = (entity: JsxElement, file: VFile) => {
             }
             addLinks(code, links);
         }
+    }
+
+    if (attribute(entity, "checker")) {
+        addChecker(
+            entity,
+            file,
+            fields,
+            inherited.map((f) => ({
+                ...f,
+                href: inheritedFieldHref(f.name),
+                fields: [],
+            })),
+        );
     }
 };
 
