@@ -68,6 +68,7 @@ All endpoints moved from `/.versia/v0.6/` to `/.versia/v0.7/`. This version also
 
 - Extensions now have [versions](/extensions#versions), listed in `compatibility.extensions` as `pub.versia:likes@1`. Instances use the highest version they have in common.
 - Extension values must be JSON objects, namespaces must come from a domain the author controls, and `pub.versia` is reserved.
+- An extension can now [require](/extensions#requirements) other extensions at a version. An instance that lists it must also list what it requires, and instances leave out its data unless they share those too. Extensions may still never be required to process core entities.
 - All entities that act on another entity ([Like, Dislike](/extensions/likes), [Share](/extensions/share), [Reaction](/extensions/reactions) and [Vote](/extensions/polls)) now use `target`.
 - The Vanity extension (`pub.versia:vanity`) is split in two. [Profile](/extensions/profile) (`pub.versia:profile`) holds `pronouns`, `birthday`, `location` and `timezone`, and [Decorations](/extensions/decorations) (`pub.versia:decorations`) holds `avatar_overlays`, `avatar_mask`, `background` and `audio`. `aliases` is removed.
 - [Profile](/extensions/profile): `pronouns` is plain text for each BCP 47 language tag, replacing the five pronoun forms. `birthday` is `YYYY-MM-DD`, or `--MM-DD` without the year, replacing the `0000` year. Whether a well-formed date is plausible is up to implementations. `location` is plain text only, and `timezone` must be an IANA time zone name.

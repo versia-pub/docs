@@ -36,7 +36,7 @@ Contains metadata about a Versia instance, such as its capabilities and public k
         Information about the compatibility of the instance. Supported Versia Protocol versions are listed at the [well-known endpoint](/federation/endpoints#well-known).
 
         <Field name="extensions" type="string[]" required>
-            Supported extensions, each with its [version](/extensions#versions), such as `pub.versia:likes@1`.
+            Supported extensions, each with its [version](/extensions#versions), such as `pub.versia:likes@1`. **MUST** include every extension that a listed one [requires](/extensions#requirements).
         </Field>
     </Field>
     <Field name="description" type="string">

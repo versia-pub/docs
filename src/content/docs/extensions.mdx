@@ -27,7 +27,13 @@ An extension does not need to be listed here to be used. To propose one for this
 
 When an extension is not supported by an Implementation, it can be ignored. This means that the extension is not processed, and its data is not used. Implementations **MUST NOT** throw an error when encountering an unsupported extension, as long as the rest of the entity is valid. An entity whose type comes from an unsupported extension is [answered with a `2xx` status code and dropped](/validation#unknown-fields-and-types).
 
-Extensions **MUST NOT** be designed in a way that makes them required to understand or process other non-extension entities.
+Extensions **MUST NOT** be designed in a way that makes them required to understand or process core entities, or the entities of an extension that does not [require](#requirements) them.
+
+## Requirements
+
+An extension can build on another, for example by adding interactions to entities that the other extension defines. It then **requires** that extension. Its page lists the extensions it requires, each with a [version](#versions). For example, `com.example:post_likes@1` could require `com.example:posts@1`.
+
+An Instance that lists an extension in [`compatibility.extensions`](/entities/instance-metadata) **MUST** also list every extension it requires, at the required version. An extension **MUST NOT** require itself, directly or through other extensions.
 
 ## Naming
 
@@ -60,7 +66,7 @@ Instances list what they support in [`compatibility.extensions`](/entities/insta
 pub.versia:likes@1
 ```
 
-Two instances that both list an extension use the highest version they have in common. If they have none in common, the sender **MUST** leave out that extension's data: its key in `extensions`, its entity types and its collections.
+Two instances that both list an extension use the highest version they have in common. If they have none in common, the sender **MUST** leave out that extension's data: its key in `extensions`, its entity types and its collections. The same applies when the version they would use requires an extension that they do not have in common at the required version.
 
 ## Extension Definition
 
