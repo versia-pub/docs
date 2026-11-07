@@ -102,7 +102,6 @@ const checkExample = (
     }
 };
 
-const ELIDED = "...";
 const MEDIA_TYPE = /^[\w.+-]+\/[\w.+-]+$/;
 const FORMAT_FIELDS = new Set([
     "content",
@@ -117,11 +116,8 @@ const FORMAT_FIELDS = new Set([
     "duration",
 ]);
 
-/** Samples can write `...` on its own line to skip keys. */
 const parseSample = (code: Code, file: VFile): unknown => {
-    const source = code.value
-        .replace(/^(\s*)\.\.\.,?\s*$/gm, `$1"${ELIDED}": true,`)
-        .replace(new RegExp(`("${ELIDED}": true),(\\s*})`, "g"), "$1$2");
+    const source = code.value;
     const errors: { error: number; offset: number; length: number }[] = [];
     const data = parse(source, errors, { allowTrailingComma: false });
     const [first] = errors;
@@ -148,9 +144,6 @@ const checkFormat = (
         return fail("is not an object");
     }
     const format = value as Record<string, unknown>;
-    if (ELIDED in format) {
-        return;
-    }
     const unlisted = Object.keys(format).filter((k) => !FORMAT_FIELDS.has(k));
     if (unlisted.length > 0) {
         fail(`has unlisted keys: ${unlisted.join(", ")}`);
@@ -167,7 +160,7 @@ const checkFormats = (value: unknown, code: Code, file: VFile) => {
     if (typeof value !== "object" || value === null) {
         return;
     }
-    const entries = Object.entries(value).filter(([key]) => key !== ELIDED);
+    const entries = Object.entries(value);
     const isFormat =
         !Array.isArray(value) &&
         entries.length > 0 &&
