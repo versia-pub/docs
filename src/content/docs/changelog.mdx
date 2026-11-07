@@ -1,14 +1,14 @@
 ---
 title: "Changelog"
-description: "Changes since the last version of the Versia protocol."
+description: "Changes to the Versia protocol since Working Draft 3, newest first."
 kind: Project
 ---
 
-This page lists changes since Working Draft 3.
+Changes to the protocol since Working Draft 3, newest first. Versions used to be called Working Drafts: Working Draft X is version `0.X`.
 
 ## v0.7.0
 
-This is Working Draft 7. All endpoints moved from `/.versia/v0.6/` to `/.versia/v0.7/`. It includes the changes previously listed as v0.6.1.
+All endpoints moved from `/.versia/v0.6/` to `/.versia/v0.7/`. This version also includes the changes previously listed as v0.6.1.
 
 ### Versions
 
@@ -88,82 +88,68 @@ This is Working Draft 7. All endpoints moved from `/.versia/v0.6/` to `/.versia/
 - Removed repeated statements of rules, which now link to the page that defines them, along with promotional text. No rule changed.
 - Corrected samples across the specification, including the [federation example](/example) and its signatures.
 
-## Since WD 5
+## v0.6.0
 
-- Added a new `content-type` for Versia entities: `application/vnd.versia+json`.
-- Overhauled the Instance-to-Instance API to have clearly defined and namespaced endpoints, under `/.versia/v0.6/`, instead of letting implementations define their own endpoints.
-- Removed per-User keypairs: now, only the instance keypair is used for signing.
-- Moved [Delegation](/extensions/delegation) to an extension
-- Changed the contents of the [Well-Known Versia Endpoint](/federation/endpoints#well-known) to only list supported protocol versions.
-- Modified how URIs and references to other entities are handled:
-    - The `uri` field has been removed from all entities.
-    - Every field that used to be a URI now uses that entity's `id` field.
-    - New endpoints have been defined under `/.versia/v0.6/` to fetch entities by their `id`.
+- Added a media type for Versia entities: `application/vnd.versia+json`.
+- Overhauled the instance-to-instance API. Its endpoints are now defined and namespaced under `/.versia/v0.6/`, instead of each implementation choosing its own.
+- Removed per-user key pairs. Only the instance key pair is used for signing.
+- Moved [Delegation](/extensions/delegation) to an extension.
+- The [well-known endpoint](/federation/endpoints#well-known) now only lists supported protocol versions.
+- Changed how entities refer to each other:
+    - Removed the `uri` field from all entities.
+    - Every field that held a URI now holds that entity's `id`.
+    - Added endpoints under `/.versia/v0.6/` to fetch entities by their `id`.
 - Added [References](/entities#reference) as a way to refer to other entities.
-- Changed usage of "`null` authors" to simply being an optional field.
-- Replaced the stupid `hash` field on [ContentFormat](/structures/content-format) with hex-encoded SHA-256.
-- Added more guidelines on [JSON data handling](/json).
-- Clarified the meaning of [Domain](/entities#domain) in the context of Versia.
-- Changes to [Note](/entities/note):
-    - `is_sensitive`, `attachments`, `mentions` and `previews` are now required.
-- Changes to [User](/entities/user):
-    - `fields`, `manually_approves_followers` and `indexable` are now required.
-- Removed "short pronoun" from [Vanity Extension](/extensions/vanity) (union types are tricky to parse in strongly typed languages).
+- Replaced `null` authors with an optional field.
+- Replaced the `hash` field on [ContentFormat](/structures/content-format) with a hex-encoded SHA-256 hash.
+- Added more guidance on [handling JSON](/json).
+- Clarified what a [Domain](/entities#domain) means in Versia.
+- [Note](/entities/note): `is_sensitive`, `attachments`, `mentions` and `previews` are now required.
+- [User](/entities/user): `fields`, `manually_approves_followers` and `indexable` are now required.
+- [Vanity](/extensions/vanity): removed the short pronoun form, since union types are hard to parse in strongly typed languages.
 
-## Since WD 4
+## v0.5.0
 
-- Removed URI from [Report](/extensions/reports), and replaced `reason` with `tags`.
-- Docs now use the term "Transient Entity" where appropriate.
-- Mandated Unix-style `\n` line endings in all text fields.
-- Renamed the following headers, as per [RFC 6648](https://tools.ietf.org/html/rfc6648):
-  - `X-Signature` to `Versia-Signature`
-  - `X-Signed-By` to `Versia-Signed-By`
-- Removed the nonce from the [signature system](/signatures), replaced with `Versia-Signed-At` (timestamps).
-- Standardize rate limits with [IETF draft draft-polli-ratelimit-headers-02](https://www.ietf.org/archive/id/draft-polli-ratelimit-headers-02.html).
-- Properly documented [Group](/extensions/groups) federation and subscribing.
-- Moved [Groups](/extensions/groups) to an extension, as they were getting too complex for the core protocol.
-  - The [Note](/entities/note) `group` field documentation has been updated to reflect this.
+- [Reports](/extensions/reports): removed the URI, and replaced `reason` with `tags`.
+- The docs now use the term "transient entity" where it applies.
+- Text fields must use Unix-style `\n` line endings.
+- Renamed two headers, following [RFC 6648](https://datatracker.ietf.org/doc/html/rfc6648):
+    - `X-Signature` to `Versia-Signature`
+    - `X-Signed-By` to `Versia-Signed-By`
+- Replaced the nonce in the [signature system](/signatures) with a timestamp, sent as `Versia-Signed-At`.
+- Rate limits now follow [IETF draft-polli-ratelimit-headers-02](https://www.ietf.org/archive/id/draft-polli-ratelimit-headers-02.html).
+- Moved [Groups](/extensions/groups) to an extension, as they were getting too complex for the core protocol, and documented how groups federate and how subscribing works. The [Note](/entities/note) `group` field's description changed to match.
 - Added [Versia Links](/links).
-- Switched from ISO 8601 to [RFC 3339](https://datatracker.ietf.org/doc/html/rfc3339) for timestamps.
-    - In most cases, the two are interchangeable, but RFC 3339 is more strict. Most implementations should not need to change anything.
-- Add optional `$schema` field to [Entities](/entities).
-- Added [Interaction Controls Extensions](/extensions/interaction-controls)
-- Added [URI Collections](/structures/collection#reference-collection)
-    - Changed all Collections that can contain remote entities to use URI Collections (eg. [User](/entities/user) `collections.followers`).
-- Add `collections` field to [Notes](/entities/note).
-    - [Likes Extension](/extensions/likes), [Reactions Extension](/extensions/reactions) and [Share Extension](/extensions/share) now use this field, instead of a custom field in `extensions`.
-- Allowed uppercase characters in [User](/entities/user) `username`.
-    - These are now case-insensitive.
-- Added `timezone` field to [Vanity Extension](/extensions/vanity).
+- Timestamps now use [RFC 3339](https://datatracker.ietf.org/doc/html/rfc3339) instead of ISO 8601. The two are mostly interchangeable, and RFC 3339 is stricter, so most implementations should not need to change anything.
+- Added an optional `$schema` field to [Entities](/entities).
+- Added the [Interaction Controls extension](/extensions/interaction-controls).
+- Added URI Collections, now called [Reference Collections](/structures/collection#reference-collection). Every Collection that can contain remote entities now uses one, such as [User](/entities/user) `collections.followers`.
+- Added a `collections` field to [Notes](/entities/note). The [Likes](/extensions/likes), [Reactions](/extensions/reactions) and [Share](/extensions/share) extensions now use it, instead of a field in `extensions`.
+- [User](/entities/user) `username` may now contain uppercase letters, and is case-insensitive.
+- [Vanity](/extensions/vanity): added `timezone`.
 
-## Since WD 3
+## v0.4.0
 
-- Rewrote the signature system from scratch to be simpler and not depend on dates.
-- Moved Likes and Dislikes to an extension.
+- Rewrote the signature system from scratch, to be simpler and not depend on dates.
+- Moved [Likes and Dislikes](/extensions/likes) to an extension.
 - Added [Delegation](/extensions/delegation).
-- Renamed fields on several common entities like [Users](/entities/user) and [Notes](/entities/note).
-- Removed the `Patch` entity.
-  - Useless since edits can just be sent to inboxes directly.
-- Allowed `uri`s to not contain the entity's `id`.
-- Loosened restrictions on the `id` field in entities.
-  - Can now be any string, not just a UUID.
-- Made `uri` optional in some entities not useful enough to keep track of.
+- Renamed fields on several common entities, such as [Users](/entities/user) and [Notes](/entities/note).
+- Removed the `Patch` entity, since edits can be sent to inboxes directly.
+- A `uri` no longer has to contain the entity's `id`, and `uri` is optional on some entities that are not worth keeping track of.
+- `id` can now be any string, not only a UUID.
 - Added shared inboxes.
-- Added `remote` field to [ContentFormat](/structures/content-format).
-- Switched to [ThumbHash](https://evanw.github.io/thumbhash/) from [BlurHash](https://blurha.sh/).
-- Added identification characters to [Custom Emojis](/extensions/custom-emojis).
-- Added `manually_approves_followers` to [Users](/entities/user).
-- Removed `visibility` from [Notes](/entities/note).
-- Made `subject` optional in [Notes](/entities/note).
-- Clarified the way [Follows](/entities/follow) work.
-- Removed the use of `Undo` entities for anything except than deleting entities.
-- Renamed `Undo` to [Delete](/entities/delete).
-- Added [Unfollow](/entities/unfollow) entity.
-- Completely rework `ServerMetadata`, and rename to [InstanceMetadata](/entities/instance-metadata).
-- Remove Server Actors, and move instance public keys to [InstanceMetadata](/entities/instance-metadata).
-- Add `algorithm` to [Users](/entities/user) and [InstanceMetadata](/entities/instance-metadata)'s public keys for future use (only `ed25519` is allowed for now).
-  - Renamed the second `public_key` to `key`.
+- [ContentFormat](/structures/content-format): added `remote`.
+- Switched from [BlurHash](https://blurha.sh/) to [ThumbHash](https://evanw.github.io/thumbhash/).
+- [Custom Emojis](/extensions/custom-emojis): added identification characters.
+- [Users](/entities/user): added `manually_approves_followers`.
+- [Notes](/entities/note): removed `visibility`, and `subject` is now optional.
+- Clarified how [Follows](/entities/follow) work.
+- Renamed `Undo` to [Delete](/entities/delete), which is now only used to delete entities.
+- Added the [Unfollow](/entities/unfollow) entity.
+- Reworked `ServerMetadata` and renamed it to [InstanceMetadata](/entities/instance-metadata).
+- Removed server actors, and moved instance public keys to [InstanceMetadata](/entities/instance-metadata).
+- Added `algorithm` to the public keys of [Users](/entities/user) and [InstanceMetadata](/entities/instance-metadata), for future use. Only `ed25519` is allowed. The second `public_key` is renamed to `key`.
 - Renamed `Announce` to [Share](/extensions/share).
-- Renamed `prev` to `previous` in [Collections](/structures/collection).
-- Removed `extension_type` from entities, and instead use the `type` field.
-- Removed `VoteResult` from the [Polls Extension](/extensions/polls).
+- [Collections](/structures/collection): renamed `prev` to `previous`.
+- Removed `extension_type` from entities, which now use the `type` field instead.
+- [Polls](/extensions/polls): removed `VoteResult`.
