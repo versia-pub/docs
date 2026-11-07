@@ -1,0 +1,113 @@
+<div class="verify-only">
+    <h5>Result</h5>
+    <div class="worked-out">
+        <p class="verdict" data-output="verdict" aria-live="polite"></p>
+        <div class="clock" data-output="clock">
+            <strong data-result aria-live="polite"></strong>
+            <span data-detail></span>
+        </div>
+    </div>
+
+    <h5>Checks</h5>
+    <ol class="checks">
+        <li data-output="check-decode">
+            <strong data-result></strong>
+            <div>Decode the signature <span data-detail></span></div>
+        </li>
+        <li data-output="check-key">
+            <strong data-result></strong>
+            <div>Read the public key <span data-detail></span></div>
+        </li>
+        <li data-output="check-signature">
+            <strong data-result></strong>
+            <div>Verify the signature <span data-detail></span></div>
+        </li>
+    </ol>
+    <p class="mismatch" data-output="mismatch" hidden>
+        A signature either verifies or does not, so this cannot say which part differs. Compare the string with the
+        one you signed. Check that the body is byte for byte what was signed, that <code>$1</code> is the domain the
+        request was sent to, that the path was not re-encoded, and that the key is the right one.
+    </p>
+
+    <h5>Not Checked Here</h5>
+    <ul class="limits">
+        <li>That the key belongs to the instance in <code>Versia-Signed-By</code>.</li>
+        <li>That a response came from the instance the request was sent to.</li>
+        <li>That the signature has not been seen before.</li>
+    </ul>
+</div>
+
+<style>
+    /* The answer, ahead of the steps that led to it. Two results, since a good signature on a
+       stale message is still refused. */
+    p.verdict {
+        margin: 0;
+    }
+
+    .verdict,
+    .clock [data-result] {
+        display: block;
+        font-size: var(--text-body);
+        font-weight: var(--weight-bold);
+        line-height: 1.4;
+    }
+
+    .clock [data-detail] {
+        display: block;
+        color: var(--ink-soft);
+    }
+
+    .verdict[data-state="pass"],
+    [data-state="pass"] > strong {
+        color: var(--value);
+    }
+
+    .verdict[data-state="fail"],
+    [data-state="fail"] > strong {
+        color: var(--accent);
+    }
+
+    /* A stale timestamp is a problem with the message, not a cryptographic failure. */
+    .clock[data-state="warn"] > strong {
+        color: var(--warn);
+    }
+
+    .checks {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
+
+    .checks li {
+        display: grid;
+        grid-template-columns: 4rem minmax(0, 1fr);
+        margin: 0;
+    }
+
+    .checks li + li {
+        margin-top: 0.15rem;
+    }
+
+    .checks [data-result] {
+        font-weight: var(--weight-bold);
+    }
+
+    .checks [data-detail] {
+        display: block;
+        color: var(--ink-soft);
+    }
+
+    p.mismatch {
+        margin: 0.75rem 0 0;
+    }
+
+    .limits {
+        margin: 0;
+        padding-left: 1.25em;
+        color: var(--ink-soft);
+    }
+
+    .limits li + li {
+        margin-top: 0.15rem;
+    }
+</style>

@@ -4,6 +4,7 @@ description: "How a message is signed and verified, and when a signature is requ
 kind: Core concept
 ---
 
+import SignaturePlayground from "../../components/signature-playground/SignaturePlayground.astro";
 import SigningString from "../../components/spec/SigningString.astro";
 
 Versia uses cryptographic signatures to ensure the integrity and authenticity of data. A signature proves that a message was sent by the instance named in `Versia-Signed-By`, and that it has not been tampered with.
@@ -80,6 +81,8 @@ To verify a signature, the verifying instance **MUST**:
 - Decode the signature from base64 to the raw bytes.
 - Verify the signature using the public key of the instance named in `Versia-Signed-By`.
 - When verifying a response, check that `Versia-Signed-By` names the instance the request was sent to.
+
+<SignaturePlayground />
 
 ### Repeated Signatures
 

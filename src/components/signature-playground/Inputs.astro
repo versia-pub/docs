@@ -1,0 +1,120 @@
+---
+import { sample } from "../../lib/signed-sample";
+import ToolButton from "./ToolButton.astro";
+---
+
+<div>
+    <h5>Input</h5>
+    <div class="fields">
+        <label>
+            <span><code>$0</code> Method of the request</span>
+            <input name="method" data-part="0" value={sample.method} spellcheck="false" />
+        </label>
+        <label>
+            <span><code>$1</code> Domain it is sent to</span>
+            <input name="domain" data-part="1" value={sample.domain} spellcheck="false" />
+        </label>
+        <label class="full">
+            <span><code>$2</code> Path and query of the request</span>
+            <input name="path" data-part="2" value={sample.path} spellcheck="false" />
+        </label>
+        <label>
+            <span><code>$3</code> <code class="header">Versia-Signed-At</code></span>
+            <input name="timestamp" data-part="3" value={sample.timestamp} spellcheck="false" inputmode="numeric" />
+        </label>
+        <div class="now"><ToolButton output="now">Use the current time</ToolButton></div>
+        <label class="sign-only full">
+            <span><code class="header">Versia-Signed-By</code>, which is not part of the string</span>
+            <input name="signed-by" value={sample.signedBy} spellcheck="false" />
+        </label>
+        <label class="full">
+            <span><code>$4</code> Body, hashed exactly as written</span>
+            <textarea name="body" data-part="4" rows="14" spellcheck="false">{sample.body}</textarea>
+            <small data-output="body-size"></small>
+        </label>
+        <label class="verify-only full">
+            <span><code class="header">Versia-Signature</code></span>
+            <textarea class="value" name="signature" rows="2" spellcheck="false">{sample.signature}</textarea>
+        </label>
+        <label class="verify-only full">
+            <span>Public key of the signer, in base64 SPKI</span>
+            <textarea class="value" name="public-key" rows="2" spellcheck="false"></textarea>
+        </label>
+    </div>
+</div>
+
+<style>
+    .fields {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr);
+        gap: 0.75rem 1rem;
+    }
+
+    @media (min-width: 36rem) {
+        .fields {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .full {
+            grid-column: 1 / -1;
+        }
+    }
+
+    .fields label {
+        display: block;
+    }
+
+    .fields span,
+    small {
+        display: block;
+        color: var(--ink-soft);
+        font-size: var(--text-sm);
+        line-height: 1.4;
+    }
+
+    .fields span code {
+        color: var(--accent);
+        font-size: var(--code-size);
+        font-weight: var(--weight-bold);
+    }
+
+    .fields span code.header {
+        color: var(--ink-soft);
+        font-weight: 400;
+    }
+
+    input,
+    textarea {
+        display: block;
+        box-sizing: border-box;
+        width: 100%;
+        margin-top: 0.25rem;
+        padding: 0.4rem 0.6rem;
+        border: 1px solid var(--control-border);
+        border-radius: var(--radius);
+        background: var(--paper);
+        color: var(--ink);
+        font-family: var(--font-mono);
+        font-size: var(--code-size);
+        line-height: 1.6;
+    }
+
+    textarea {
+        resize: vertical;
+    }
+
+    /* Base64 has no spaces to break at, and these should be readable in full. */
+    textarea.value {
+        field-sizing: content;
+        resize: none;
+        overflow-wrap: anywhere;
+    }
+
+    small {
+        margin-top: 0.25rem;
+    }
+
+    .now {
+        align-self: end;
+    }
+</style>

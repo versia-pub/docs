@@ -40,11 +40,30 @@ export const signingParts = async ({
     toBase64(await crypto.subtle.digest("SHA-256", encode(body))),
 ];
 
+export const sign = async (key: CryptoKey, parts: string[]) =>
+    toBase64(await crypto.subtle.sign("Ed25519", key, encode(parts.join(" "))));
+
 export const verify = (
     key: CryptoKey,
     signature: Uint8Array<ArrayBuffer>,
     parts: string[],
 ) => crypto.subtle.verify("Ed25519", key, signature, encode(parts.join(" ")));
+
+/** Null if the text is not an Ed25519 public key in base64 SPKI. */
+export const importPublicKey = async (base64: string) => {
+    const bytes = fromBase64(base64);
+    if (!bytes) return null;
+    try {
+        return await crypto.subtle.importKey("spki", bytes, "Ed25519", true, [
+            "verify",
+        ]);
+    } catch {
+        return null;
+    }
+};
+
+export const exportPublicKey = async (key: CryptoKey) =>
+    toBase64(await crypto.subtle.exportKey("spki", key));
 
 /** The example key pair. */
 export const exampleKeys = async () => {
@@ -67,6 +86,13 @@ export const exampleKeys = async () => {
     );
     return { privateKey, publicKey };
 };
+
+/** The private key cannot leave the browser's crypto store. */
+export const generateKeys = () =>
+    crypto.subtle.generateKey("Ed25519", false, ["sign", "verify"]) as Promise<{
+        privateKey: CryptoKey;
+        publicKey: CryptoKey;
+    }>;
 
 /** Chrome 137, Firefox 129, Safari 17 and later, in a secure context. */
 export const canSign = async () => {

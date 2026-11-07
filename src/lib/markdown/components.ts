@@ -198,6 +198,9 @@ const Note: Component = (node, { body }) => [
 /** Components that only wrap their content. */
 const Wrapper: Component = (node, { body }) => body(node);
 
+/** Components that only work in a browser, whose page says the same in words. */
+const Interactive: Component = () => [];
+
 /** Add a new component here, or the build fails on any page that uses it. */
 export const components: Record<string, Component> = {
     Button,
@@ -210,6 +213,7 @@ export const components: Record<string, Component> = {
     Inherits,
     Libraries,
     Note,
+    SignaturePlayground: Interactive,
     SigningString,
     Values,
     WireTrace,

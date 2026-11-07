@@ -1,0 +1,29 @@
+---
+interface Props {
+    /** The name the script finds this button by. */
+    output: string;
+    hidden?: boolean;
+}
+
+const { output, hidden } = Astro.props;
+---
+
+<button type="button" data-output={output} hidden={hidden}><slot /></button>
+
+<style>
+    button {
+        padding: 0.35rem 0.7rem;
+        border: 1px solid var(--control-border);
+        border-radius: var(--radius);
+        background: var(--paper);
+        color: var(--ink);
+        cursor: pointer;
+        font-family: var(--font-prose);
+        font-size: var(--text-sm);
+    }
+
+    button:hover {
+        border-color: var(--accent);
+        color: var(--accent);
+    }
+</style>
