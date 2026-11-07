@@ -13,19 +13,27 @@ The Versia Protocol is designed as a communication medium for federated applicat
   <Button href="/sdks" variant="outline">Explore SDKs</Button>
 </div>
 
+## Audience and Scope
+
+This specification is for people implementing a Versia server or library.
+
+It covers what instances exchange with each other: [entities](/entities), [signatures](/signatures), [HTTP routes](/federation/endpoints) and [extensions](/extensions), plus [Versia Links](/links) for opening addresses. It does not cover client APIs, storage, account management or moderation policy.
+
+## Reading Order
+
+1. [Entities](/entities), [JSON](/json) and [Signatures](/signatures), which everything else builds on.
+2. [Federation](/federation), for how instances exchange entities.
+3. The entity pages, starting with [Note](/entities/note) and [User](/entities/user).
+4. [Validation](/validation), for what to check on everything you receive.
+5. [Extensions](/extensions), as you need them.
+
+Two guides walk through [signing requests](/guides/signing-requests) and [implementing a receiver](/guides/implementing-a-receiver). The reasoning behind the design is in [Principles](/principles), and terms are defined in the [Glossary](/glossary).
+
 ## Vocabulary
 
 The key words **MUST**, **MUST NOT**, **SHOULD**, **SHOULD NOT** and **MAY** in this specification are to be interpreted as described in BCP 14 ([RFC 2119](https://datatracker.ietf.org/doc/html/rfc2119), [RFC 8174](https://datatracker.ietf.org/doc/html/rfc8174)) when, and only when, they appear in bold capitals, as shown here. In any other form, these words have their everyday meaning and set no requirement.
 
 An Instance conforms to this specification if it meets every **MUST** and **MUST NOT** of the core protocol, and of each [extension](/extensions) it lists in [`compatibility.extensions`](/entities/instance-metadata). Extensions are optional.
-
-The Versia Protocol uses the following terms:
-- **Entity**: A JSON object with a `type` and a `created_at`, such as a [User](./entities/user), a [Note](./entities/note), or a [Like](./extensions/likes). Most entities are uniquely identified by their `id` property.
-    - [**Transient Entity**](/entities#transient-entities): A type of **Entity** that has no `id`, so it cannot be fetched or referenced by other entities.
-- **Implementation**: A software application that implements the Versia Protocol.
-- **Instance**: An application deploying an **Implementation**.
-  - Using the same nomenclature, an ActivityPub Implementation would be `Mastodon`, and an Instance would be `mastodon.social`.
-- **Federation**: The process of exchanging data between two or more **Instances**.
 
 ## Philosophy
 
