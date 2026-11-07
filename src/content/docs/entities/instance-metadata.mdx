@@ -36,7 +36,7 @@ Contains metadata about a Versia instance, such as its capabilities and public k
         Information about the compatibility of the instance. Supported Versia Protocol versions are listed at the [well-known endpoint](/api/endpoints#well-known).
 
         <Field name="extensions" type="string[]" required>
-            Supported extensions.
+            Supported extensions, each with its [version](/extensions#versions), such as `pub.versia:likes@1`.
         </Field>
     </Field>
     <Field name="description" type="string">
@@ -75,9 +75,9 @@ Contains metadata about a Versia instance, such as its capabilities and public k
         },
         "compatibility": {
             "extensions": [
-                "pub.versia:reactions",
-                "pub.versia:polls",
-                "pub.versia:reports"
+                "pub.versia:reactions@1",
+                "pub.versia:polls@1",
+                "pub.versia:reports@1"
             ]
         },
         "description": "Server for Jim's Jolly Jimjams, a social network for fans of Jimjams.",
@@ -96,7 +96,9 @@ Contains metadata about a Versia instance, such as its capabilities and public k
         },
         "created_at": "2021-07-01T00:00:00Z",
         "extensions": {
-            "example.extension:monthly_active_users": 1000
+            "com.example:stats": {
+                "monthly_active_users": 1000
+            }
         }
     }
     ```

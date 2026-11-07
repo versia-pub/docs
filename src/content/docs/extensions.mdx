@@ -17,9 +17,11 @@ Extensions **SHOULD** be standardized and publicly documented.
 
 ## Documented Extensions
 
-These extensions are documented on this site, and all use the `pub.versia` namespace. See [Naming](#naming) for how their names are formed.
+These extensions are documented on this site, and all use the `pub.versia` namespace and are at [version](#versions) 1. See [Naming](#naming) for how their names are formed.
 
 <ExtensionList descriptions />
+
+An extension does not need to be listed here to be used. To propose one for this list, [open an issue](https://github.com/versia-pub/docs/issues).
 
 ## Handling Unsupported Extensions
 
@@ -37,6 +39,8 @@ Versia extension names are composed of two parts:
 pub.versia:likes
 ```
 
+The namespace **MUST** come from a domain the author controls. `pub.versia` is reserved for extensions defined in this specification.
+
 ### Custom Entities
 
 Custom entities are named in the same way, but with an additional part:
@@ -45,6 +49,18 @@ Custom entities are named in the same way, but with an additional part:
 ```text title="Example Custom Entity Type"
 pub.versia:likes/Like
 ```
+
+## Versions
+
+An extension's version is a whole number that starts at 1, and goes up only when a change is incompatible. Extension keys, entity types and endpoints do not include it.
+
+Instances list what they support in [`compatibility.extensions`](/entities/instance-metadata), as the extension name and version joined by `@`. They **MAY** list several versions of an extension.
+
+```text title="Example Supported Extension"
+pub.versia:likes@1
+```
+
+Two instances that both list an extension use the highest version they have in common. If they have none in common, the sender **MUST** leave out that extension's data: its key in `extensions`, its entity types and its collections.
 
 ## Extension Definition
 
@@ -63,7 +79,7 @@ Extensions can add any of the following:
         Custom extensions to the entity.
 
         - `key`: The extension name.
-        - `value`: Extension data. Can be any JSON object, following [Versia JSON rules](/json).
+        - `value`: Extension data. **MUST** be a JSON object, following [Versia JSON rules](/json).
     </Field>
 
     <Example slot="example" unchecked>
@@ -124,7 +140,7 @@ An extension's [collections](/structures/collection) are named like its custom e
 
 ### Endpoints
 
-An extension's endpoints **MUST** be under `/.versia/v0.X/extensions/<extension name>/`. This keeps them from colliding with core endpoints or with other extensions. The colon in the extension name **MUST NOT** be percent-encoded, so that each endpoint has one spelling for [signatures](/signatures) to cover.
+An extension's endpoints **MUST** be under `/.versia/v0.X/extensions/<extension name>/`. This keeps them from colliding with core endpoints or with other extensions. The extension name is [not percent-encoded](/api/basics#encoding).
 
 ```text title="Example Extension Endpoint"
 /.versia/v0.7/extensions/pub.versia:instance_messaging/messaging
