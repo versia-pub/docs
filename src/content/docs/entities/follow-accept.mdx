@@ -13,7 +13,7 @@ Accepts a pending [Follow](/entities/follow). How follow relationships work is d
 
 ## Definition
 
-<Entity name="FollowAccept" type="FollowAccept" transient>
+<Entity name="FollowAccept" type="FollowAccept" transient checker>
     <Field name="author" type="Reference" required>
         [Reference](/entities#reference) to the `User` considered the 'followee', i.e. the user who is being followed.
     </Field>

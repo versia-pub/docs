@@ -13,7 +13,7 @@ The `User` entity represents an account on a Versia instance. Users can post [No
 
 ## Definition
 
-<Entity name="User" type="User">
+<Entity name="User" type="User" checker>
     <div slot="collections">
         - `outbox`: [Collection](/structures/collection) of notes authored by the user.
         - `followers`: [Reference Collection](/structures/collection#reference-collection) of users that follow the user.

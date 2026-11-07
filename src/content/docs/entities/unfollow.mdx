@@ -13,7 +13,7 @@ Ends a follow relationship, or [cancels a pending follow request](/entities/foll
 
 ## Definition
 
-<Entity name="Unfollow" type="Unfollow" transient>
+<Entity name="Unfollow" type="Unfollow" transient checker>
     <Field name="author" type="Reference" required>
         [Reference](/entities#reference) to the `User` considered the 'follower', i.e. the user who is unsubscribing from the followee.
     </Field>

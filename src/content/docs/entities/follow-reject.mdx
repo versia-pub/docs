@@ -13,7 +13,7 @@ Rejects a pending [Follow](/entities/follow), or removes a follower after the re
 
 ## Definition
 
-<Entity name="FollowReject" type="FollowReject" transient>
+<Entity name="FollowReject" type="FollowReject" transient checker>
     <Field name="author" type="Reference" required>
         [Reference](/entities#reference) to the `User` considered the 'followee', i.e. the user who is being followed.
     </Field>

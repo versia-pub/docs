@@ -18,7 +18,7 @@ Sometimes, [Users](/entities/user) want to subscribe to each other to see each o
 
 ## Definition
 
-<Entity name="Follow" type="Follow" transient>
+<Entity name="Follow" type="Follow" transient checker>
     <Field name="author" type="Reference" required>
         [Reference](/entities#reference) to the `User` considered the 'follower'.
     </Field>
