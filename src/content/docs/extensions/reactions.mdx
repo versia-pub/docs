@@ -25,9 +25,9 @@ The Reactions Extension allows users to express their reactions ("react") to pos
         [Reference](/entities#reference) to the [Note](/entities/note) attached to the reaction.
     </Field>
     <Field name="content" type="string" required>
-        Emoji content of reaction. May also be arbitrary text, or the `name` of a [Custom Emoji](/extensions/custom-emojis), such as `:happy_face:`, with a matching entry in this Reaction's own `pub.versia:custom_emojis` extension. **MUST** be at least 1 character long.
+        Emoji content of reaction. Can also be arbitrary text, or the `name` of a [Custom Emoji](/extensions/custom-emojis), such as `:happy_face:`, with a matching entry in this Reaction's own `pub.versia:custom_emojis` extension. **MUST** be at least 1 character long.
 
-        Receivers **MAY** drop a Reaction they cannot display. Clients are encouraged to disfavour text in favour of emoji where possible.
+        Receivers **MAY** drop a Reaction they cannot display.
     </Field>
 
     <Inherits />

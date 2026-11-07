@@ -8,7 +8,6 @@ kind: Extension
 import Example from "../../../components/spec/Example.astro";
 import Field from "../../../components/spec/Field.astro";
 import Fields from "../../../components/spec/Fields.astro";
-import Note from "../../../components/Note.astro";
 
 The Vanity extension adds more optional metadata to the user profile.
 
@@ -20,26 +19,24 @@ All properties are optional.
     <Field name="avatar_overlays" type="ContentFormat[]">
         Overlay images to be placed on top of the user's avatar, like this: [example overlay from Discord](https://cdn.discordapp.com/avatar-decoration-presets/a_949a575b693c81ced8f56a7579d0969f.png).
 
-        The first overlay in the array is the topmost overlay. The inner 80% of the overlay should cover the avatar, with the outer 20% extending beyond the avatar's bounds.
+        The first overlay in the array is the topmost overlay. The inner 80% of the overlay **SHOULD** cover the avatar, with the outer 20% extending beyond the avatar's bounds.
 
         Image format (e.g. `image/png`), can be animated (e.g. APNG, gif, WebP).
     </Field>
     <Field name="avatar_mask" type="ContentFormat">
-        Mask image to be used to clip the user's avatar. The avatar should be clipped to the mask's alpha channel. For example, a black square with rounded corners would clip the avatar to a rounded square.
+        Mask image to be used to clip the user's avatar. The avatar **SHOULD** be clipped to the mask's alpha channel. For example, a black square with rounded corners would clip the avatar to a rounded square.
 
         Image format (e.g. `image/png`), non-animated.
     </Field>
     <Field name="background" type="ContentFormat">
-        Background image to be displayed behind the user's profile. Should be full-width and high-resolution, preferably at least 1080p.
+        Background image to be displayed behind the user's profile.
 
         Image format (e.g. `image/png`), can be animated (e.g. APNG, gif, WebP).
     </Field>
     <Field name="audio" type="ContentFormat">
-        Audio file to be played when viewing the user's profile. Should be a short clip, like a ringtone.
+        Audio file to be played when viewing the user's profile.
 
-        <Note>
-            Audio files can be used as a vector for abuse. Implementations **SHOULD** provide a way to disable audio playback.
-        </Note>
+        Audio files can be used as a vector for abuse. Implementations **SHOULD** provide a way to disable audio playback.
 
         Audio format (e.g. `audio/mpeg`).
     </Field>
@@ -63,7 +60,7 @@ All properties are optional.
         Location does not need to be precise, and can be as simple as `+46+002/` (France) or `+48.52+002.20/` (Paris, France).
     </Field>
     <Field name="timezone" type="string">
-        User's timezone. Should be a valid [IANA timezone](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones) string.
+        User's timezone. **SHOULD** be a valid [IANA timezone](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones) string.
     </Field>
 
     <Example slot="example" unchecked>

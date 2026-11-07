@@ -74,7 +74,7 @@ A signed response is not tied to one particular request. Its freshness relies on
 ### Verifying the Signature
 
 To verify a signature, the verifying instance **MUST**:
-- Recreate the string as described above. For `$1`, use its own domain when verifying a request, and the domain it sent the request to when verifying a response. Do not read `$1` from the `Host` header.
+- Recreate the string as described above. For `$1`, use its own domain when verifying a request, and the domain it sent the request to when verifying a response. It **MUST NOT** read `$1` from the `Host` header.
 - Extract the signature provided in the `Versia-Signature` header.
 - Check that the `Versia-Signed-At` timestamp is within 5 minutes of the current time.
 - Decode the signature from base64 to the raw bytes.

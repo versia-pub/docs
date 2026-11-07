@@ -26,7 +26,7 @@ Notes represent a piece of content on a Versia instance. They can be posted by [
     </div>
 
     <Field name="attachments" type="ContentFormat[]" required>
-        Media attachments to the note. May be any format. **MUST** use `url`.
+        Media attachments to the note. Any format is allowed. **MUST** use `url`.
     </Field>
     <Field name="author" type="Reference" required>
         [Reference](/entities#reference) to the `User` considered the author of the note.
@@ -65,20 +65,18 @@ Notes represent a piece of content on a Versia instance. They can be posted by [
         Whether the note contains "sensitive content". This can be used with `subject` as a "content warning" feature.
     </Field>
     <Field name="mentions" type="Reference[]" required>
-        [References](/entities#reference) to [Users](/entities/user) that should be notified of the note. Similar to Twitter's `@` mentions. The note may also contain mentions in the content, however only the mentions in this field **SHOULD** trigger notifications.
+        [References](/entities#reference) to [Users](/entities/user) mentioned by the note. Similar to Twitter's `@` mentions. The content can also contain mentions, however only the mentions in this field **SHOULD** trigger notifications.
     </Field>
     <Field name="previews" type="LinkPreview[]" required>
         Previews for any links in the publication. This is to avoid the [stampeding mastodon problem](https://github.com/mastodon/mastodon/issues/23662) where a link preview is fetched by every instance that sees the publication, creating an accidental DDOS attack.
+
+        Implementations **SHOULD NOT** trust previews, as a malicious remote instance could fake them to redirect users to malicious links.
 
         <Field name="link" type="string" required />
         <Field name="title" type="string" required />
         <Field name="description" type="string" />
         <Field name="image" type="string" />
         <Field name="icon" type="string" />
-
-        <Note>
-            Implementations should make sure not to trust the previews, as they could be faked by malicious remote instances. This is not a very good attack vector, but it is still possible to redirect users to malicious links.
-        </Note>
     </Field>
     <Field name="quoting" type="Reference">
         [Reference](/entities#reference) to the note that this note is quoting, if any. Quoting is similar to replying, but does not notify the author of the quoted note. Inspired by Twitter's "quote tweet" feature.

@@ -29,7 +29,7 @@ Contains metadata about a Versia instance, such as its capabilities and public k
             Name of the software.
         </Field>
         <Field name="version" type="string" required>
-            Version of the software. Should use [SemVer](https://semver.org/).
+            Version of the software. **SHOULD** use [SemVer](https://semver.org/).
         </Field>
     </Field>
     <Field name="compatibility" type="Compatibility" required>
@@ -40,7 +40,7 @@ Contains metadata about a Versia instance, such as its capabilities and public k
         </Field>
     </Field>
     <Field name="description" type="string">
-        Long description of the instance, for humans. Should be around 100-200 words.
+        Long description of the instance, for humans.
     </Field>
     <Field name="domain" type="Domain" required>
         Domain of the instance, used for federation.
@@ -49,7 +49,7 @@ Contains metadata about a Versia instance, such as its capabilities and public k
         Public key of the instance.
 
         <Field name="algorithm" type="string" required>
-            Algorithm used for the public key. Can only be `ed25519` for now.
+            Algorithm used for the public key. **MUST** be `ed25519`.
         </Field>
         <Field name="key" type="string" required>
             Instance public key, in [SPKI-encoded base64](/signatures#exporting-the-public-key).

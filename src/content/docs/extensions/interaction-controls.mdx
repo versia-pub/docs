@@ -8,7 +8,6 @@ kind: Extension
 import Example from "../../../components/spec/Example.astro";
 import Field from "../../../components/spec/Field.astro";
 import Fields from "../../../components/spec/Fields.astro";
-import Note from "../../../components/Note.astro";
 
 The Interaction Controls extension lets a user control who may interact with a Note, for example who may reply to it.
 
@@ -22,7 +21,7 @@ The structure defined in this document **MUST** be inserted in the `pub.versia:i
 
         <Field name="allowed" type="InteractionGroup[]" required />
 
-        A user may perform the interaction if they are in any of the listed groups. The Note's author always may. An interaction type that is left out allows everyone, and an empty list allows only the author.
+        A user may perform the interaction if they are in any of the listed groups. The Note's author can always perform it. An interaction type that is left out allows everyone, and an empty list allows only the author.
 
         Values of `InteractionGroup`:
         - `everyone`: Includes every single User in the federation.
@@ -57,9 +56,7 @@ A refused interaction is answered with `422 Unprocessable Entity` if it is check
 
 Implementations **SHOULD** keep related [Collections](/structures/collection) and [Reference Collections](/structures/collection#reference-collection), such as a user's followers, up to date, so as not to refuse an interaction based on outdated data.
 
-<Note>
-    To avoid server load from constant Collection refreshing, implementations **MAY** only refetch associated Collections when forbidden interactions are detected, then recalculate permissions again.
-</Note>
+To avoid server load from constant Collection refreshing, implementations **MAY** only refetch associated Collections when forbidden interactions are detected, then recalculate permissions again.
 
 ## Interaction Types
 

@@ -93,7 +93,7 @@ Each value in a `ContentFormat` is an object with the fields below. It **MUST** 
 
 ### Representations
 
-Each piece of data in the `ContentFormat` structure is meant to be a different representation of the same content. For example, a PNG image and its WebP version are different representations of the same image. Do not mix unrelated files or data in the same `ContentFormat` structure.
+Each piece of data in the `ContentFormat` structure is meant to be a different representation of the same content. For example, a PNG image and its WebP version are different representations of the same image. Unrelated files or data **MUST NOT** be mixed in the same `ContentFormat` structure.
 
 **Good:**
 ```json
@@ -136,4 +136,4 @@ See [HTML](/validation#html) for sanitizing remote HTML.
 
 ### Images
 
-It is a good idea to provide at least two versions of an image (if possible): one in the original format and another in a more efficient format like WebP/AVIF. This allows clients to choose the most suitable format based on their capabilities.
+Implementations **SHOULD** provide at least two versions of an image, if possible: one in the original format and another in a more efficient format like WebP/AVIF. This allows clients to choose the most suitable format based on their capabilities.

@@ -7,8 +7,6 @@ kind: Federation
 import Example from "../../../components/spec/Example.astro";
 import Field from "../../../components/spec/Field.astro";
 import Fields from "../../../components/spec/Fields.astro";
-import Note from "../../../components/Note.astro";
-import Warning from "../../../components/Warning.astro";
 
 Versia uses the HTTP protocol for all communications between instances.
 
@@ -37,7 +35,7 @@ Requests not encrypted with TLS (aka HTTPS) **MUST NOT** be sent or responded to
         See [Signatures](/signatures).
     </Field>
     <Field name="User-Agent" type="string">
-        A string identifying the software making the request. Should contain the name of the software, its version, and a link to its homepage.
+        A string identifying the software making the request. **SHOULD** contain the name of the software, its version, and a link to its homepage.
 
         ```text title="Example User-Agent"
         CoolServer/1.0 (https://coolserver.com)
@@ -70,11 +68,7 @@ Entity types, extension names and collection names go in paths as they are, so a
 API endpoints **MUST NOT** redirect to other endpoints, with the following exceptions:
 - When a `GET` request does not have an `Accept: application/vnd.versia+json` header, the server **MAY** redirect to an HTML representation of the resource.
 
-<Warning>
-    API endpoints **MUST NOT** redirect from HTTP to HTTPS.
-
-    This is to force all API communication to be encrypted, and to avoid accidentally leaking sensitive data over unencrypted connections.
-</Warning>
+API endpoints **MUST NOT** redirect from HTTP to HTTPS. This is to force all API communication to be encrypted, and to avoid accidentally leaking sensitive data over unencrypted connections.
 
 This is forbidden:
 

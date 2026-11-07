@@ -8,20 +8,20 @@ Implementations **MUST** strictly validate all incoming data to ensure that it i
 
 Remember that while *your* implementation may disallow or restrict some user input, other implementations may not. You **SHOULD NOT** apply those restrictions to data coming from other instances.
 
-For example, if your implementation disallows using HTML in posts, you should not strip HTML from posts coming from other instances. You **MAY** choose to display them differently, but you should not modify the data itself. [Sanitizing HTML before rendering it](#html) does not change this: it applies to what you display, not to what you store.
+For example, an implementation that disallows HTML in its own posts does not strip HTML from posts coming from other instances. You **MAY** choose to display them differently, but the data itself stays unchanged. [Sanitizing HTML before rendering it](#html) does not change this: it applies to what you display, not to what you store.
 
 Things to validate include, but are not limited to:
 
 - The presence of **all required fields**. See [Optional Fields](/json#optional-fields).
-- The **format** of all fields (integers should not be strings, timestamps should be in RFC 3339 format, etc.). Whether a well-formed date is plausible is up to your implementation.
+- The **format** of all fields (integers are not strings, timestamps are in RFC 3339 format, etc.). Whether a well-formed date is plausible is up to your implementation.
 - The presence of **all required headers**.
 - The presence of a **valid signature**, where [one is required](/signatures#where-signatures-are-required).
 - The **author** of each entity, as described [below](#authors-and-signers).
 - The **length** of all fields. Strings and arrays may be empty, unless their field says otherwise (for example, the `username` field on a `User` entity).
-  - Limits on fields that other instances send you should not copy the limits you set for your own users. For example, a `bio` field should not be limited to 160 characters, even if your own implementation has such a limit.
-  - Any limit you do set should be generous and documented, and should let Users view the remote original, for example through a link. A limit of `100 000` characters for a `bio` field is acceptable, but a limit of `160` characters is not.
+  - Limits on fields that other instances send you **SHOULD NOT** copy the limits you set for your own users. For example, an implementation that limits its own users' `bio` to 160 characters does not apply that limit to remote Users.
+  - Any limit you do set **SHOULD** be generous and documented, and **SHOULD** let Users view the remote original, for example through a link. A limit of `100 000` characters for a `bio` field is acceptable, but a limit of `160` characters is not.
 - The **type** and **range** of all numeric fields.
-  - For example, a `size` field on a `ContentFormat` structure should be a non-negative integer, not a negative number or a fractional one.
+  - For example, a `size` field on a `ContentFormat` structure is a non-negative integer, not a negative number or a fractional one.
 
   All numeric fields in these docs state their [type](/json#numbers) (`integer` or `float`). As a rule of thumb, store them in types that hold the full range, such as a 64-bit integer and a double-precision float.
 
@@ -48,7 +48,7 @@ An entity whose `type` the receiver does not recognize is handled by what kind o
 
 ## Remote Content
 
-Everything in an entity is written by another instance, and should be treated as untrusted.
+Everything in an entity is written by another instance, and **SHOULD** be treated as untrusted.
 
 ### HTML
 

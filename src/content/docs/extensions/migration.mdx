@@ -97,4 +97,4 @@ Relationships then move through normal [Follows](/entities/follow):
 
 The old instance sets the `destination` field of the old account to a [Reference](/entities#reference) to the new account, and disables the old account.
 
-It **SHOULD** keep serving the old account and its `followers` and `following` collections for long enough that other instances can finish moving. At least 30 days is suggested.
+It **SHOULD** keep serving the old account and its `followers` and `following` collections for at least 30 days, so that other instances can finish moving.
