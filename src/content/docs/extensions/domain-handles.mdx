@@ -11,7 +11,7 @@ import Fields from "../../../components/spec/Fields.astro";
 
 The Domain Handles extension lets a [User](/entities/user) be shown by a domain they own, such as `@joe.example`, instead of their [address](/entities/user#addresses) `@joe@versia.example`. The user stays on their instance: the handle only changes how they are shown and mentioned.
 
-A handle is proven both ways. The User names the domain, and the domain names the User in a DNS record. Instances show the handle only when the two match.
+A handle is proven both ways. The User names the domain, and the domain names the User, in a [DNS record](#dns-record) or a [file on its website](#https-file). Instances show the handle only when the two match.
 
 ## Definition
 
@@ -49,20 +49,37 @@ _versia.joe.example.  TXT  "user=versia.example:033p0g85e2000"
 
 Records at that name whose value does not start with `user=` are ignored. If more than one record starts with `user=`, the domain names no user.
 
+### HTTPS File
+
+A domain without a DNS record can prove the handle with a file instead. A `GET` request to `/.well-known/versia-handle` on the domain, over [HTTPS](/federation/http#tls), returns a `200` status code, and a body holding only the [Reference](/entities#reference) to the User. Whitespace before and after the Reference is ignored. The file **SHOULD** be served as `text/plain`.
+
+```http title="Example Request"
+GET /.well-known/versia-handle HTTP/1.1
+Host: joe.example
+```
+
+```text title="Example Response Body"
+versia.example:033p0g85e2000
+```
+
+The file is not a Versia endpoint, and is not [signed](/signatures). Any static host can serve it. An instance fetching it **MAY** follow up to 5 redirects, and **MUST NOT** follow one to a URL that is not HTTPS.
+
 ## Behavior
 
 ### Verifying a Handle
 
-To verify a User's handle, an instance:
+To find the user that a domain names, an instance:
 
-1. Looks up the `TXT` records at `_versia.` followed by the User's `domain`.
-2. Checks that a [record](#dns-record) names a Reference to that User.
+1. Looks up the `TXT` records at `_versia.` followed by the domain. If they hold [a `user=` record](#dns-record), that record decides, and the instance stops here.
+2. Otherwise, fetches the [HTTPS file](#https-file) on the domain. Any status code other than `200` means the domain names no user.
+
+To verify a User's handle, an instance finds the user that the User's `domain` names, and checks that it is that User.
 
 An instance **MUST NOT** show a handle it has not verified, and **MUST** show the user's [address](/entities/user#addresses) instead. A handle that fails to verify does not make the User invalid.
 
-An instance **MUST** verify a handle when it first receives a User that claims it, and again when the User's `domain` changes. It **SHOULD** verify it again at least every 24 hours while it shows it, so that a handle stops being shown once the record no longer names the User. If the lookup fails without an answer, for example on a timeout, the instance keeps the result of its last check until the next one.
+An instance **MUST** verify a handle when it first receives a User that claims it, and again when the User's `domain` changes. It **SHOULD** verify it again at least every 24 hours while it shows it, so that a handle stops being shown once the domain no longer names the User. If a lookup fails without an answer, for example on a timeout, a network error or a `5xx` status code, the instance keeps the result of its last check until the next one.
 
-If several Users claim the same domain, only the one that the record names can verify it.
+If several Users claim the same domain, only the one that the domain names can verify it.
 
 ### Showing a Handle
 
@@ -72,14 +89,16 @@ Handles do not change how users are referenced. A [mention](/structures/rich-tex
 
 ### Resolving a Handle
 
-To find the user behind a handle, such as when someone mentions `@joe.example`, an instance looks up the DNS record, fetches the User it names, and checks that the User's `domain` is the handle's domain. If it is not, the handle names no user.
+To find the user behind a handle, such as when someone mentions `@joe.example`, an instance [finds the user that the domain names](#verifying-a-handle), fetches that User, and checks that the User's `domain` is the handle's domain. If it is not, the handle names no user.
 
 ### Moving Instances
 
-A handle is not tied to an instance. After a user [migrates](/extensions/migration), their new account claims the same domain, and the user changes the record to name the new account. Until then, instances keep showing the handle on the old account, and the address on the new one.
+A handle is not tied to an instance. After a user [migrates](/extensions/migration), their new account claims the same domain, and the user changes the DNS record or file to name the new account. Until then, instances keep showing the handle on the old account, and the address on the new one.
 
 ## Security
 
 DNS records are not signed unless the domain uses [DNSSEC](https://datatracker.ietf.org/doc/html/rfc9364). An attacker who can change DNS answers can change which user a handle is shown on, but not what that user sends. Instances **SHOULD** use a resolver that validates DNSSEC.
 
-Domains to look up come from remote Users. An instance **SHOULD** limit how often it looks up each domain.
+The HTTPS file is trusted through [TLS](/federation/http#tls), so anyone who controls the domain's website controls the file. A domain owner who does not want that can use a DNS record, which [decides](#verifying-a-handle) when both exist.
+
+Domains to look up come from remote Users. An instance **SHOULD** limit how often it looks up each domain. The file is fetched under the rules for [outbound requests](/validation#outbound-requests).
