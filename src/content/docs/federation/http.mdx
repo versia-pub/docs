@@ -14,7 +14,7 @@ Versia uses the HTTP protocol for all communications between instances.
 
 ## TLS
 
-Requests not encrypted with TLS (aka HTTPS) **MUST NOT** be sent or responded to. All implementations **MUST** use TLS 1.2 or higher, and **MUST** support HTTP/2.
+Requests not encrypted with TLS (HTTPS) **MUST NOT** be sent or responded to. All implementations **MUST** use TLS 1.2 or higher, and **MUST** support HTTP/2.
 
 ## Requests
 
@@ -138,7 +138,7 @@ How long to keep trying is up to the implementation. 48 hours is a reasonable de
 
 ## Status Codes
 
-Every federation route uses these status codes. A check that runs after a `2xx` status code has been sent can no longer report a problem, so the entity is dropped.
+Every federation route uses these status codes. An inbox that answers `2xx` before it has finished checking an entity cannot report a problem found later, so it drops the entity.
 
 | Status code | Meaning |
 | --- | --- |

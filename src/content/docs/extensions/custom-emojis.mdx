@@ -9,7 +9,7 @@ import Example from "../../../components/spec/Example.astro";
 import Field from "../../../components/spec/Field.astro";
 import Fields from "../../../components/spec/Fields.astro";
 
-The Custom Emojis extension adds support for adding personalized emojis to federated data.
+The Custom Emojis extension lets an entity carry its own emoji images, so that a name such as `:happy_face:` in its text can be shown as an image.
 
 ## Definition
 
@@ -48,7 +48,7 @@ The Custom Emojis extension adds support for adding personalized emojis to feder
 
 ### Extension
 
-Custom Emojis can be added to any entity with text content. The extension ID is `pub.versia:custom_emojis`.
+Custom Emojis can be added to any entity with text content. The extension name is `pub.versia:custom_emojis`.
 
 <Fields name="CustomEmojisExtension" extension="pub.versia:custom_emojis">
     <Field name="emojis" type="CustomEmoji[]" required>

@@ -6,20 +6,20 @@ kind: Federation
 
 Implementations **MUST** strictly validate all incoming data to ensure that it is well-formed and adheres to the Versia Protocol. If a request is invalid, the instance **MUST** reject it with the matching [status code](/federation/http#status-codes).
 
-Remember that while *your* implementation may disallow or restrict some user input, other implementations may not. You **SHOULD NOT** apply those restrictions to data coming from other instances.
+An implementation may disallow or restrict some user input, but other implementations may not. It **SHOULD NOT** apply those restrictions to data coming from other instances.
 
-For example, an implementation that disallows HTML in its own posts does not strip HTML from posts coming from other instances. You **MAY** choose to display them differently, but the data itself stays unchanged. [Sanitizing HTML before rendering it](#html) does not change this: it applies to what you display, not to what you store.
+For example, an implementation that disallows HTML in its own Notes does not strip HTML from Notes coming from other instances. It **MAY** choose to display them differently, but the data itself stays unchanged. [Sanitizing HTML before rendering it](#html) does not change this: it applies to what is displayed, not to what is stored.
 
 Things to validate include, but are not limited to:
 
 - The presence of **all required fields**. See [Optional Fields](/json#optional-fields).
-- The **format** of all fields (integers are not strings, timestamps are in RFC 3339 format, etc.). Whether a well-formed date is plausible is up to your implementation.
+- The **format** of all fields (for example, integers are not strings and timestamps are in RFC 3339 format). Whether a well-formed date is plausible is up to the implementation.
 - The presence of **all required headers**.
 - The presence of a **valid signature**, where [one is required](/signatures#where-signatures-are-required).
 - The **author** of each entity, as described [below](#authors-and-signers).
 - The **length** of all fields. Strings and arrays may be empty, unless their field says otherwise (for example, the `username` field on a `User` entity).
-  - Limits on fields that other instances send you **SHOULD NOT** copy the limits you set for your own users. For example, an implementation that limits its own users' `bio` to 160 characters does not apply that limit to remote Users.
-  - Any limit you do set **SHOULD** be generous and documented, and **SHOULD** let Users view the remote original, for example through a link. A limit of `100 000` characters for a `bio` field is acceptable, but a limit of `160` characters is not.
+  - Limits on fields from other instances **SHOULD NOT** copy the limits an implementation sets for its own users. For example, an implementation that limits its own users' `bio` to 160 characters does not apply that limit to remote Users.
+  - Any such limit **SHOULD** be generous and documented, and **SHOULD** let Users view the remote original, for example through a link. A limit of `100 000` characters for a `bio` field is acceptable, but a limit of `160` characters is not.
 - The **type** and **range** of all numeric fields.
   - For example, a `size` field on a `ContentFormat` structure is a non-negative integer, not a negative number or a fractional one.
 

@@ -78,7 +78,7 @@ Only the instance hosting a group may send or serve that Group.
 
 A [Note](/entities/note) is posted to a group through the `pub.versia:groups` key of its `extensions` field.
 
-Members of the group can see the Note, on top of the audience its `visibility` gives it, and their instances [may fetch it](/federation#access). To post a Note that only members and the rest of the `mentions` audience can see, use a `visibility` of `mentions`: an instance that does not support this extension will then show it only to the mentioned users.
+Members of the group can see the Note, on top of the audience its `visibility` gives it, and their instances [may fetch it](/federation#access). A Note with a `visibility` of `mentions` can be seen only by members and the rest of its `mentions` audience. An instance that does not support this extension shows it only to the mentioned users.
 
 <Fields name="GroupNote" extension="pub.versia:groups" on="Note">
     <Field name="group" type="Reference" required>
@@ -168,7 +168,7 @@ Indicates that a [Group](#group) has accepted a [User](/entities/user)'s subscri
         **MUST** be `pub.versia:groups/SubscribeAccept`.
     </Field>
     <Field name="subscriber" type="Reference" required>
-        [Reference](/entities#reference) to the [User](/entities/user) subscribing to the group.
+        [Reference](/entities#reference) to the [User](/entities/user) whose subscription was accepted.
     </Field>
     <Field name="group" type="Reference" required>
         [Reference](/entities#reference) to the group that accepted the subscription.
@@ -197,7 +197,7 @@ Indicates that a [Group](#group) has rejected a [User](/entities/user)'s subscri
         **MUST** be `pub.versia:groups/SubscribeReject`.
     </Field>
     <Field name="subscriber" type="Reference" required>
-        [Reference](/entities#reference) to the [User](/entities/user) subscribing to the group.
+        [Reference](/entities#reference) to the [User](/entities/user) whose subscription was rejected.
     </Field>
     <Field name="group" type="Reference" required>
         [Reference](/entities#reference) to the group that rejected the subscription.

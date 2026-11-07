@@ -10,7 +10,7 @@ A lot of the time, Versia instances may need to look up information about other 
 
 Discovering a user starts from [the user's address](/entities/user#addresses). With it, the [WebFinger](https://tools.ietf.org/html/rfc7033) protocol can be used to find the user's profile.
 
-### Example
+### User Discovery Example
 
 To discover the profile of the user `@george@versia.example`, an instance would make a `GET` request to `https://versia.example/.well-known/webfinger?resource=acct:george@versia.example`.
 
@@ -54,7 +54,7 @@ Instance metadata can be accessed in two steps:
 1. Making a `GET` request to the instance's [`/.well-known/versia` endpoint](/federation/endpoints#well-known) to discover supported Versia Protocol versions.
 2. [Choosing the protocol version](/federation/versions#choosing-a-version) to use, and then querying the instance metadata endpoint as documented in the [Endpoints](/federation/endpoints#instance-metadata) document.
 
-### Example
+### Instance Discovery Example
 
 To discover the metadata of the instance `versia.example`, an instance would first make a `GET` request to `https://versia.example/.well-known/versia`.
 
@@ -73,9 +73,9 @@ Accept: application/json
 }
 ```
 
-Then, we
-- Pick `0.7`, the highest `0.X` that both instances support
-- Make a `GET` request to `https://versia.example/.versia/v0.7/instance`.
+Then, it:
+- Picks `0.7`, the highest `0.X` that both instances support
+- Makes a `GET` request to `https://versia.example/.versia/v0.7/instance`.
 
 This endpoint will return an [InstanceMetadata](/entities/instance-metadata) entity.
 

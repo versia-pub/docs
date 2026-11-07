@@ -13,9 +13,8 @@ import WireTrace from "../../../components/spec/WireTrace.astro";
 
 Sometimes, [Users](/entities/user) want to subscribe to each other to see each other's content. The `Follow` entity facilitates this, by defining a subscription relationship between two users.
 
-- **Follower**: The user who is subscribing to another user. If `Joe` is following `Alice`, `Joe` is the follower.
-- **Followee**: The user who is being subscribed to. If `Joe` is following `Alice`, `Alice` is the followee.
-- **Subscribing**: Identical to **Following**. The act of subscribing to another user's content.
+- **Follower**: The user who follows another user. If `Joe` is following `Alice`, `Joe` is the follower.
+- **Followee**: The user who is followed. If `Joe` is following `Alice`, `Alice` is the followee.
 
 ## Definition
 
@@ -42,8 +41,6 @@ Sometimes, [Users](/entities/user) want to subscribe to each other to see each o
 </Entity>
 
 ## Behavior
-
-Consider the following example:
 
 `Joe`, a user on `joe.example`, wants to follow `Alice`, a user on `alice.example`.
 

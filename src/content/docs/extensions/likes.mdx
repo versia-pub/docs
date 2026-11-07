@@ -46,7 +46,7 @@ Likes are a way for users to show appreciation for a note.
 
 ### Dislike
 
-Dislikes are a way for users to show disapproval for a note, like YouTube's "dislikes" or Reddit's "downvotes".
+Dislikes are a way for users to show disapproval for a note.
 
 <Entity name="Dislike" type="pub.versia:likes/Dislike">
     <Field name="type" type="string" required>
@@ -78,7 +78,7 @@ Dislikes are a way for users to show disapproval for a note, like YouTube's "dis
 
 Implementations **SHOULD** make sure that users cannot like and dislike the same note at the same time. If a user dislikes a note they have already liked, the like **SHOULD** be removed, and vice versa.
 
-To undo a like or dislike, a [Delete](/entities/delete) entity **MUST** be used. The `deleted` property of the Delete entity **MUST** link to the Like or Dislike entity to be removed.
+To undo a like or dislike, a [Delete](/entities/delete) entity **MUST** be used. The `deleted` property of the Delete entity **MUST** be a [Reference](/entities#reference) to the Like or Dislike entity to be removed.
 
 ## Delivery and Access
 

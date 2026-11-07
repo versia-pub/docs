@@ -87,14 +87,14 @@ curl https://a.example/.versia/v0.7/instance -H "Accept: application/vnd.versia+
 
 ```json
 {
-    "id": "bde22zi3ca8762", // [!code focus:3]
+    "id": "bde22zi3ca8762",
     "type": "User",
     "created_at": "2024-10-13T18:48:19Z",
     "avatar": {
         "image/webp": {
             "url": "https://cdn.example.com/avatars/joe.webp"
         }
-    }, // [!code focus:3]
+    },
     "display_name": "Joe Swanson (Winter Arc :gigachad:)",
     "username": "joe",
     "fields": [],
@@ -125,13 +125,13 @@ Finally, `a.example` serializes the note to send it to `joe`.
 
 ```json
 {
-    "id": "782addd9-c051-4eea-8ba4-23d561d0c5bb", // [!code focus:6]
+    "id": "782addd9-c051-4eea-8ba4-23d561d0c5bb",
     "type": "Note",
     "created_at": "2024-12-01T11:19:04Z",
     "author": "a.example:ac41xk9dfe7302",
     "category": "microblog",
     "content": {
-        "text/html": { // [!code focus:3]
+        "text/html": {
             "content": "Hello, <a class=\"u-url mention\" href=\"https://b.example/users/bde22zi3ca8762\">@joe@b.example</a>! How are you doing today?"
         },
         "text/plain": {
@@ -139,7 +139,7 @@ Finally, `a.example` serializes the note to send it to `joe`.
         }
     },
     "visibility": "public",
-    "mentions": [ // [!code focus:3]
+    "mentions": [
         "b.example:bde22zi3ca8762"
     ],
     "attachments": [],

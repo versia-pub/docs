@@ -15,7 +15,7 @@ For working code, see [Signing Requests](/guides/signing-requests).
 A signature consists of three headers on an HTTP request or response:
 - **`Versia-Signature`**: The signature itself, encoded in base64.
 - **`Versia-Signed-By`**: [Domain](/entities#domain) of the instance signing the message.
-- **`Versia-Signed-At`**: The current Unix timestamp, in seconds (integer), when the message was signed. Timezone **MUST** be UTC, like all Unix timestamps.
+- **`Versia-Signed-At`**: The time when the message was signed, as a Unix timestamp in whole seconds.
 
 All base64 on this page is the standard alphabet with padding, as defined in [RFC 4648, section 4](https://datatracker.ietf.org/doc/html/rfc4648#section-4).
 
@@ -52,7 +52,7 @@ Where:
 - `$0` is the HTTP method of the request in lowercase (e.g. `get`, `post`). If signing a *response*, use the method of the request it answers.
 - `$1` is the [Domain](/entities#domain) of the instance the request is sent to, in lowercase. If signing a *response*, this is the responding instance's own domain.
 - `$2` is the path and query string of the request, exactly as they appear in the HTTP request line, with no re-encoding. If there is no query string, this is the path alone, with no `?`. If signing a *response*, use the path and query string of the request it answers.
-- `$3` is the Unix timestamp when this message was signed, in UTC seconds (integer).
+- `$3` is the value of `Versia-Signed-At`.
 - `$4` is the SHA-256 hash of the raw bytes of this message's body, exactly as sent, encoded in base64. If signing a *response*, hash the response's body, not the request's. If the message has no body, this is the hash of zero bytes: `47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=`.
 
 Sign this string using the instance's private key with the [Ed25519](https://en.wikipedia.org/wiki/EdDSA#Ed25519) algorithm. The resulting bytes **MUST** be encoded in base64.
@@ -78,7 +78,7 @@ To verify a signature, the verifying instance **MUST**:
 - Extract the signature provided in the `Versia-Signature` header.
 - Check that the `Versia-Signed-At` timestamp is within 5 minutes of the current time.
 - Decode the signature from base64 to the raw bytes.
-- Perform a signature verification using the public key of the instance named in `Versia-Signed-By`.
+- Verify the signature using the public key of the instance named in `Versia-Signed-By`.
 - When verifying a response, check that `Versia-Signed-By` names the instance the request was sent to.
 
 ### Repeated Signatures

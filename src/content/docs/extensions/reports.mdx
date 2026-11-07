@@ -10,7 +10,7 @@ import Example from "../../../components/spec/Example.astro";
 import Field from "../../../components/spec/Field.astro";
 import Inherits from "../../../components/spec/Inherits.astro";
 
-Reporting can be used to report content to moderators or administrators of a remote instance for review.
+The Reports extension sends content to the moderators or administrators of a remote instance for review.
 
 ## Definition
 
@@ -32,7 +32,7 @@ Reporting can be used to report content to moderators or administrators of a rem
         </Field>
     </Field>
     <Field name="tags" type="string[]" required>
-        Report tags, such as `spam`, `harassment`, `misinformation`, etc. Used for categorization.
+        Report tags, such as `spam`, `harassment` or `misinformation`. Used for categorization.
     </Field>
     <Field name="comment" type="string">
         Additional comments about the report. Can be used to provide more context or details.
