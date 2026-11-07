@@ -35,11 +35,16 @@ API requests and responses between instances **MUST** include a [Signature](/sig
 
 ## Encoding
 
-"URL-encoding" is the mechanism used to encode data containing special characters in URLs. When this specification refers to "URL-encoding", it means the encoding defined in [RFC 3986](https://datatracker.ietf.org/doc/html/rfc3986#section-2.1).
+Entity types, extension names and collection names go in paths as they are, so a namespaced type spans two path segments. They **MUST NOT** be percent-encoded, so that each path has one spelling for [signatures](/signatures) to cover. A receiver does not have to accept an encoded form.
+
+```text title="Paths With Namespaced Types"
+/.versia/v0.7/entities/pub.versia:groups/Group/1234
+/.versia/v0.7/entities/User/1234/collections/pub.versia:likes/Likes
+```
 
 ## Domain
 
-Versia defines a **domain** as the hostname of an instance, which is used to identify the instance in the network. It **MUST** be a valid hostname as defined by [RFC 1123](https://datatracker.ietf.org/doc/html/rfc1123#section-2), and **MUST NOT** include a port number (the HTTPS port is always 443). An internationalized domain name **MUST** be written in its ASCII `xn--` form, as defined by [IDNA](https://datatracker.ietf.org/doc/html/rfc5891).
+Versia defines a **domain** as the hostname of an instance, which is used to identify the instance in the network. It **MUST** be a valid hostname as defined by [RFC 1123](https://datatracker.ietf.org/doc/html/rfc1123#section-2), and **MUST NOT** include a port number (the HTTPS port is always 443). It **MUST NOT** be an IP address or a single label such as `localhost`. An internationalized domain name **MUST** be written in its ASCII `xn--` form, as defined by [IDNA](https://datatracker.ietf.org/doc/html/rfc5891).
 
 A domain **MUST** be lowercase wherever it appears in the protocol, including [References](/entities#reference), `Versia-Signed-By` and the [signed string](/signatures).
 
@@ -60,6 +65,8 @@ test.org/sus       # ❌️ Invalid: path is not allowed
 💩.la              # ❌️ Invalid: IDNs must be Punycode encoded
 Example.com        # ❌️ Invalid: uppercase is not allowed
 https://bob.org    # ❌️ Invalid: protocol is not allowed
+192.0.2.1          # ❌️ Invalid: IP address is not allowed
+localhost          # ❌️ Invalid: single label is not allowed
 ```
 
 ## Redirects

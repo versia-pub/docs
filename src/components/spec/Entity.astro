@@ -20,7 +20,7 @@ interface Props {
 }
 
 const { name, type, transient = false, fetch, collectionsHref = "/api/endpoints#entity-collections" } = Astro.props;
-const fetchPath = fetch?.path ?? `${API_PREFIX}/entities/${encodeURIComponent(type)}/{id}`;
+const fetchPath = fetch?.path ?? `${API_PREFIX}/entities/${type}/{id}`;
 const fetchHref = fetch?.href ?? "/api/endpoints#entity-data";
 ---
 

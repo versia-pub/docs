@@ -75,10 +75,10 @@ import Example from "../../../components/spec/Example.astro";
 
 <Endpoint name="EntityData" method="GET" path="/.versia/v0.7/entities/{entity_type}/{id}">
     <div slot="parameters">
-        - `{entity_type}`: The type of the entity to fetch, URL-encoded.
-        - `{id}`: The ID of the entity to fetch, URL-encoded.
+        - `{entity_type}`: The type of the entity to fetch, [not percent-encoded](/api/basics#encoding).
+        - `{id}`: The ID of the entity to fetch.
 
-        Example: `GET /.versia/v0.7/entities/pub.versia%3Agroups%2FGroup/1234` fetches the [Group](/extensions/groups) entity with ID `1234`.
+        Example: `GET /.versia/v0.7/entities/pub.versia:groups/Group/1234` fetches the [Group](/extensions/groups) entity with ID `1234`.
     </div>
     <div slot="response">
         Entity data as JSON, as defined in its [Entity](/entities) definition document.
@@ -110,9 +110,9 @@ import Example from "../../../components/spec/Example.astro";
 
 <Endpoint name="EntityCollection" method="GET" path="/.versia/v0.7/entities/{entity_type}/{id}/collections/{collection_type}">
     <div slot="parameters">
-        - `{entity_type}`: The type of the entity to fetch, URL-encoded.
-        - `{id}`: The ID of the entity to fetch, URL-encoded.
-        - `{collection_type}`: The type of the collection to fetch, URL-encoded.
+        - `{entity_type}`: The type of the entity to fetch, [not percent-encoded](/api/basics#encoding).
+        - `{id}`: The ID of the entity to fetch.
+        - `{collection_type}`: The type of the collection to fetch, [not percent-encoded](/api/basics#encoding).
 
         Example: `GET /.versia/v0.7/entities/User/1234/collections/followers` fetches the followers of the user with ID `1234`.
     </div>
@@ -167,7 +167,7 @@ Accept: application/vnd.versia+json
 
 <Endpoint name="InstanceCollection" method="GET" path="/.versia/v0.7/instance/collections/{collection_type}">
     <div slot="parameters">
-        - `{collection_type}`: The type of the collection to fetch, URL-encoded: `moderators` or `admins`.
+        - `{collection_type}`: The type of the collection to fetch: `moderators` or `admins`.
 
         Example: `GET /.versia/v0.7/instance/collections/admins` fetches the administrators of the instance.
     </div>
