@@ -85,6 +85,20 @@ Fields not marked as `required` are [optional](/json#optional-fields).
     </Example>
 </Fields>
 
+## Transient Entities
+
+Some entities are **transient**. A Transient Entity has no `id` field, so it cannot be fetched using the [Federation API](/federation/endpoints) or referenced by other entities. These entities are used for actions that do not require a permanent record, such as deletions or migrations.
+
+Implementations do not need to store Transient Entities, and **MUST NOT** rely on other implementations to store them.
+
+## Changing an Entity
+
+To change an entity, its instance sends the whole entity again, with the same `id`, to the [same audience](/federation#delivery). The receiver replaces the copy it holds. An optional field that is left out is cleared.
+
+`id`, `type`, `author` and `created_at` **MUST NOT** change. A receiver **MUST** discard a version that changes any of them. An extension **MAY** lock further fields of its own entities, and states which on its page.
+
+Senders **SHOULD** set `updated_at` when sending a change. A receiver **MUST** discard a version whose `updated_at` is older than that of the copy it holds. Without an `updated_at` to compare, the last version received wins. The same applies to a version it fetched.
+
 ## Reference
 
 ```typescript
@@ -106,7 +120,7 @@ The domain is always present, even when a reference points to an entity on the i
 
 A reference does not say what type of entity it points to, but [fetching an entity](/federation/endpoints#entity-data) needs its type. So every field holding a reference **MUST** state the entity type it points to. A field that can point to several types **MUST** carry the type next to the reference, as [Delete](/entities/delete) and [Report](/extensions/reports) do.
 
-### Example
+### Reference Example
 
 ```jsonc
 {
@@ -116,20 +130,6 @@ A reference does not say what type of entity it points to, but [fetching an enti
     "followee": "test.org:02e1e3b2-cb1f-4e4a-b82e-98866bee5de7" // [!code focus]
 }
 ```
-
-## Changing an Entity
-
-To change an entity, its instance sends the whole entity again, with the same `id`, to the [same audience](/federation#delivery). The receiver replaces the copy it holds. An optional field that is left out is cleared.
-
-`id`, `type`, `author` and `created_at` **MUST NOT** change. A receiver **MUST** discard a version that changes any of them. An extension **MAY** lock further fields of its own entities, and states which on its page.
-
-Senders **SHOULD** set `updated_at` when sending a change. A receiver **MUST** discard a version whose `updated_at` is older than that of the copy it holds. Without an `updated_at` to compare, the last version received wins. The same applies to a version it fetched.
-
-## Transient Entities
-
-Some entities are **transient**. A Transient Entity has no `id` field, so it cannot be fetched using the [Federation API](/federation/endpoints) or referenced by other entities. These entities are used for actions that do not require a permanent record, such as deletions or migrations.
-
-Implementations do not need to store Transient Entities, and **MUST NOT** rely on other implementations to store them.
 
 ## Domain
 

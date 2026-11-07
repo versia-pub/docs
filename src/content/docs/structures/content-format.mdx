@@ -10,6 +10,8 @@ import Field from "../../../components/spec/Field.astro";
 
 The `ContentFormat` structure is used to represent content with metadata. It supports multiple content types for the same file, such as a PNG image and a WebP image.
 
+## Definition
+
 A `ContentFormat` structure is defined as follows:
 
 ```typescript
@@ -21,55 +23,6 @@ type ContentFormat = {
     };
 }
 ```
-
-Each piece of data in the `ContentFormat` structure is meant to be a different representation of the same content. For example, a PNG image and its WebP version are different representations of the same image. Do not mix unrelated files or data in the same `ContentFormat` structure.
-
-**Good:**
-```json
-{
-    "image/png": {
-        ...
-    },
-    "image/webp": {
-        ...
-    }
-}
-```
-
-**Bad:**
-```json
-{
-    "image/png": {
-        ...
-    },
-    "application/json": {
-        ...
-    }
-}
-```
-
-## Implementation Guidelines
-
-### Text
-
-Text formats are ranked in this order:
-
-1. `text/html`
-2. `text/markdown`
-3. `text/x.misskeymarkdown` (Misskey Flavoured Markdown, common on ActivityPub)
-4. `text/plain`
-
-Clients **SHOULD** use the first format on this list that they support.
-
-Senders **SHOULD** include `text/html`, converting the content to HTML if it was written in another format. They **SHOULD** also include `text/plain`, for compatibility with other systems.
-
-Remote HTML **SHOULD** be [sanitized before it is rendered](/security#remote-content).
-
-### Images
-
-It is a good idea to provide at least two versions of an image (if possible): one in the original format and another in a more efficient format like WebP/AVIF. This allows clients to choose the most suitable format based on their capabilities.
-
-## Definition
 
 Each value in a `ContentFormat` is an object with the fields below. It **MUST** have exactly one of `content` or `url`.
 
@@ -135,3 +88,52 @@ Each value in a `ContentFormat` is an object with the fields below. It **MUST** 
     ```
     </Example>
 </Fields>
+
+## Implementation Guidelines
+
+### Representations
+
+Each piece of data in the `ContentFormat` structure is meant to be a different representation of the same content. For example, a PNG image and its WebP version are different representations of the same image. Do not mix unrelated files or data in the same `ContentFormat` structure.
+
+**Good:**
+```json
+{
+    "image/png": {
+        ...
+    },
+    "image/webp": {
+        ...
+    }
+}
+```
+
+**Bad:**
+```json
+{
+    "image/png": {
+        ...
+    },
+    "application/json": {
+        ...
+    }
+}
+```
+
+### Text
+
+Text formats are ranked in this order:
+
+1. `text/html`
+2. `text/markdown`
+3. `text/x.misskeymarkdown` (Misskey Flavoured Markdown, common on ActivityPub)
+4. `text/plain`
+
+Clients **SHOULD** use the first format on this list that they support.
+
+Senders **SHOULD** include `text/html`, converting the content to HTML if it was written in another format. They **SHOULD** also include `text/plain`, for compatibility with other systems.
+
+Remote HTML **SHOULD** be [sanitized before it is rendered](/validation#html).
+
+### Images
+
+It is a good idea to provide at least two versions of an image (if possible): one in the original format and another in a more efficient format like WebP/AVIF. This allows clients to choose the most suitable format based on their capabilities.

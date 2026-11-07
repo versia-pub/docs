@@ -54,17 +54,7 @@ Additionally, we would like to avoid re-creating what would essentially be a sho
 
 ## Remote Content
 
-Everything in an entity is written by another instance, and should be treated as untrusted.
-
-### HTML
-
-[Validation](/validation) asks implementations not to modify the content they store. They **SHOULD** sanitize remote HTML before rendering it or passing it to clients, removing at least scripts, event handlers and other active content, to prevent cross-site scripting. Which tags to allow is up to the implementation.
-
-### Outbound Requests
-
-Remote entities contain URLs and domains that an instance then fetches. A hostile entity could point them at the instance's own network.
-
-When fetching anything named by remote data, instances **SHOULD NOT** connect to loopback, link-local or private addresses. This **SHOULD** be checked after DNS resolution and on every redirect. Development setups may be exempted by local configuration.
+Everything in an entity is written by another instance, and should be treated as untrusted. [Validation](/validation#remote-content) has the rules for rendering remote HTML and for fetching what remote data names.
 
 ## Reporting a Vulnerability
 

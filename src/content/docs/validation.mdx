@@ -9,7 +9,7 @@ Implementations **MUST** strictly validate all incoming data to ensure that it i
 
 Remember that while *your* implementation may disallow or restrict some user input, other implementations may not. You **SHOULD NOT** apply those restrictions to data coming from other instances.
 
-For example, if your implementation disallows using HTML in posts, you should not strip HTML from posts coming from other instances. You **MAY** choose to display them differently, but you should not modify the data itself. [Sanitizing HTML before rendering it](/security#remote-content) does not change this: it applies to what you display, not to what you store.
+For example, if your implementation disallows using HTML in posts, you should not strip HTML from posts coming from other instances. You **MAY** choose to display them differently, but you should not modify the data itself. [Sanitizing HTML before rendering it](#html) does not change this: it applies to what you display, not to what you store.
 
 Things to validate include, but are not limited to:
 
@@ -46,3 +46,17 @@ An entity whose `type` the receiver does not recognize is handled by what kind o
 
 - A namespaced type, which belongs to an [extension](/extensions#naming), **MUST** be answered with a `2xx` status code and dropped.
 - Any other type is a core type, and **MUST** be rejected with a `422 Unprocessable Entity` status code. Core types only change between `X` versions, so an unknown one is an invalid entity.
+
+## Remote Content
+
+Everything in an entity is written by another instance, and should be treated as untrusted.
+
+### HTML
+
+This page asks implementations not to modify the content they store. They **SHOULD** sanitize remote HTML before rendering it or passing it to clients, removing at least scripts, event handlers and other active content, to prevent cross-site scripting. Which tags to allow is up to the implementation.
+
+### Outbound Requests
+
+Remote entities contain URLs and domains that an instance then fetches. A hostile entity could point them at the instance's own network.
+
+When fetching anything named by remote data, instances **SHOULD NOT** connect to loopback, link-local or private addresses. This **SHOULD** be checked after DNS resolution and on every redirect. Development setups may be exempted by local configuration.
