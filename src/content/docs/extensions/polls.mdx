@@ -31,7 +31,7 @@ Note that there is no `question` field: the question should be included in the `
         <Field name="content" type="ContentFormat" required>
             Text of the option. It can contain the same properties as a Note's `content` (e.g. [Custom Emojis](/extensions/custom-emojis) or HTML hyperlinks).
         </Field>
-        <Field name="votes" type="number" required numberType="u64">
+        <Field name="votes" type="number" required numberType="integer">
             Number of votes for this option.
         </Field>
     </Field>
@@ -117,7 +117,7 @@ A Vote's `target` **MUST NOT** change, and a receiver **MUST** discard a version
     <Field name="target" type="Reference" required>
         [Reference](/entities#reference) to the note with poll that the user voted on.
     </Field>
-    <Field name="option" type="number" required numberType="u64">
+    <Field name="option" type="number" required numberType="integer">
         Index of the option that the user voted for, in the `options` array of the poll.
     </Field>
 

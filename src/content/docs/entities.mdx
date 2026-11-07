@@ -24,7 +24,7 @@ Fields not marked as `required` are [optional](/json#optional-fields).
 
 <Fields name="Entity">
     <Field name="id" type="string" required>
-        Unique identifier for the entity. **MUST** be unique within the instance. Can be any string with the following character sets:
+        Unique identifier for the entity. **MUST** be unique within the instance, and at least 1 character long. There is no fixed maximum, though [receivers may set a generous limit](/federation/validation). Can be any string with the following character sets:
 
         - `a-z`
         - `A-Z`

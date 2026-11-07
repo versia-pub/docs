@@ -83,25 +83,25 @@ Each value in a `ContentFormat` is an object with the fields below. It **MUST** 
     <Field name="description" type="string">
         A human-readable description of the content. Also known as `alt` text.
     </Field>
-    <Field name="size" type="number" numberType="u64">
+    <Field name="size" type="number" numberType="integer">
         Size of the content in bytes. For inline `content`, this is the size of its UTF-8 encoding.
     </Field>
     <Field name="hash" type="string">
-        SHA-256 hash of the content. Encoded in hexadecimal. For inline `content`, this is the hash of its UTF-8 encoding.
+        SHA-256 hash of the content. **MUST** be encoded in lowercase hexadecimal. For inline `content`, this is the hash of its UTF-8 encoding.
     </Field>
     <Field name="thumbhash" type="string">
-        Image in [ThumbHash](https://evanw.github.io/thumbhash/) format.
+        Image in [ThumbHash](https://evanw.github.io/thumbhash/) format, encoded in base64 using the standard alphabet with padding, as defined in [RFC 4648, section 4](https://datatracker.ietf.org/doc/html/rfc4648#section-4).
     </Field>
-    <Field name="width" type="number" numberType="u64">
+    <Field name="width" type="number" numberType="integer">
         Width of the content in pixels. Only applicable to content types that have a width.
     </Field>
-    <Field name="height" type="number" numberType="u64">
+    <Field name="height" type="number" numberType="integer">
         Height of the content in pixels. Only applicable to content types that have a height.
     </Field>
-    <Field name="fps" type="number" numberType="f64">
+    <Field name="fps" type="number" numberType="float">
         Frames per second, such as `29.97`. **MUST NOT** be negative. Only applicable to video content.
     </Field>
-    <Field name="duration" type="number" numberType="f64">
+    <Field name="duration" type="number" numberType="float">
         Duration of the content in seconds. **MUST NOT** be negative. Only applicable to content types that have a duration.
     </Field>
 

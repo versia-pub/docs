@@ -63,7 +63,7 @@ Instance **MUST** be the [Domain](/api/basics#domain) that the user is on.
         <Field name="value" type="ContentFormat" required />
     </Field>
     <Field name="username" type="string" required>
-        The user's username. **MUST** be unique within the instance. **MUST** be treated as changeable by the user.
+        The user's username. **MUST** be unique within the instance, and at least 1 character long. **MUST** be treated as changeable by the user.
 
         Can only contain the following characters: `a-z`, `A-Z` (case-insensitive), `0-9`, `_` and `-`. Should be limited to reasonable lengths.
     </Field>

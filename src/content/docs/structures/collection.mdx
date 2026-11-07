@@ -17,7 +17,7 @@ A Collection can only hold entities [authored on the instance serving it](/feder
 ## Definition
 
 <Fields name="Collection">
-    <Field name="total" type="number" required numberType="u64">
+    <Field name="total" type="number" required numberType="integer">
         Total number of entities in the collection that the requesting instance [may fetch](/federation#access), across all pages.
     </Field>
     <Field name="items" type="Entity[]" required>
@@ -54,7 +54,7 @@ Reference Collections are identical to regular Collections, but their `items` ar
 Neither kind of collection carries a field saying which kind it is. The page that names a collection states its kind and the type of its items, and that is how to read its `items`.
 
 <Fields name="ReferenceCollection">
-    <Field name="total" type="number" required numberType="u64">
+    <Field name="total" type="number" required numberType="integer">
         Total number of entities in the collection that the requesting instance [may fetch](/federation#access), across all pages.
     </Field>
     <Field name="items" type="Reference[]" required>

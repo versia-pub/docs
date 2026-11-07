@@ -10,7 +10,7 @@ All JSON in the Versia protocol **MUST** be an [I-JSON message](https://datatrac
 
 All JSON data **MUST** be encoded in UTF-8. This is the only encoding supported by the Versia protocol. As I-JSON requires, keys and string values **MUST NOT** contain surrogate or noncharacter code points.
 
-Line breaks inside string values **SHOULD** be Unix-style `\n` (LF), not Windows-style `\r\n` (CRLF). There is no rule on whitespace between JSON tokens.
+Line breaks inside string values **MUST** be Unix-style `\n` (LF), not Windows-style `\r\n` (CRLF). A receiver **MUST** treat an entity with a `\r\n` inside a string value as [invalid](/federation/validation). There is no rule on whitespace between JSON tokens.
 
 ## Keys
 
@@ -31,8 +31,8 @@ Numbers **SHOULD NOT** have greater magnitude or precision than an IEEE 754 doub
 
 Numeric fields state their type:
 
-- `u64`: a whole number from 0 to 2⁵³-1 (`9007199254740991`), in any form, so `1000`, `1000.0` and `1e3` are all valid. Values above that **MUST NOT** be sent.
-- `f64`: an IEEE 754 double-precision number.
+- `integer`: a whole number from 0 to 2⁵³-1 (`9007199254740991`), in any form, so `1000`, `1000.0` and `1e3` are all valid. Other values **MUST NOT** be sent, and [fail validation](/federation/validation).
+- `float`: an IEEE 754 double-precision number.
 
 ### Optional Fields
 
