@@ -1,9 +1,13 @@
 ---
+import { bodyParts, sample, sampleSignatureCovers } from "../lib/signed-sample";
+
+// The caption tells readers to check this signature, so it has to stay true.
+if (!(await sampleSignatureCovers(sample))) {
+    throw new Error("The signature in signed-sample.ts no longer covers its body.");
+}
+
 // One delivery, split into rows so each part can carry its note. The rows are
 // fragments, so Shiki cannot tokenize them.
-//
-// The signature is real: it covers the exact bytes of the JSON below, signed with the
-// example key from `/guides/signing-requests`. Any change to the body needs a new signature.
 type Token = { text: string; kind?: "key" | "value" };
 
 // Colours a line the way the code theme does: pink for keys, the companion colour for values.
@@ -33,57 +37,36 @@ const tokenize = (line: string): Token[] => {
 
 const rows = [
     {
-        code: `POST /.versia/v0.7/inbox
-Host: b.example
+        code: `${sample.method} ${sample.path}
+Host: ${sample.domain}
 Content-Type: application/vnd.versia+json`,
         title: "One inbox.",
         href: "/federation/endpoints#inbox",
         text: "A single endpoint receives messages for every user on the instance.",
     },
     {
-        code: `Versia-Signed-By: a.example
-Versia-Signed-At: 1733051946
-Versia-Signature: odN8Tqt2nouQ1Zju37z/LcVvdY146qnXcFTvQ7UIdbTyDs1WSCHpkRnHl+i3dKGPlujAqtWSeDcz15beqGbFBA==
+        code: `Versia-Signed-By: ${sample.signedBy}
+Versia-Signed-At: ${sample.timestamp}
+Versia-Signature: ${sample.signature}
 `,
         title: "Signed.",
         href: "/signatures",
-        text: "Requests are signed with the instance’s Ed25519 key, and rejected if the timestamp is more than 5 minutes off.",
+        text: "Requests are signed with the instance\u2019s Ed25519 key, and rejected if the timestamp is more than 5 minutes off.",
     },
     {
-        code: `{
-    "id": "782addd9-c051-4eea-8ba4-23d561d0c5bb",
-    "type": "Note",
-    "created_at": "2024-12-01T11:19:04Z",
-    "author": "a.example:ac41xk9dfe7302",
-    "category": "microblog",`,
+        code: bodyParts[0],
         title: "Self-description.",
         href: "/principles#self-description",
         text: "Headers and transport stay out of the data. One plain JSON object holds everything needed to process the entity, with no JSON-LD.",
     },
     {
-        code: `    "content": {
-        "text/plain": {
-            "content": "Hello, @joe@b.example! How are you doing today?"
-        }
-    },
-    "visibility": "public",
-    "mentions": [
-        "b.example:bde22zi3ca8762"
-    ],
-    "attachments": [],
-    "is_sensitive": false,
-    "previews": [],`,
+        code: bodyParts[1],
         title: "Determinism.",
         href: "/principles#determinism",
         text: "Text and media use the same structure, ContentFormat: one way to represent any single piece of data.",
     },
     {
-        code: `    "extensions": {
-        "pub.versia:custom_emojis": {
-            "emojis": []
-        }
-    }
-}`,
+        code: bodyParts[2],
         title: "Extensions.",
         href: "/extensions",
         text: "Anything beyond the core sits under a namespaced key. Implementations that do not support it can ignore it.",
@@ -97,11 +80,22 @@ Versia-Signature: odN8Tqt2nouQ1Zju37z/LcVvdY146qnXcFTvQ7UIdbTyDs1WSCHpkRnHl+i3dK
             <pre><code>{row.code.split("\n").map((line) => (
                 <span class="line" style={`--indent:${line.match(/^ */)?.[0].length ?? 0}ch`}>{tokenize(line).map((token) => <span class={token.kind}>{token.text}</span>)}</span>
             ))}</code></pre>
-            {row.title && <p><a href={row.href}>{row.title}</a> {row.text}</p>}
+            <div>
+                <p><a href={row.href}>{row.title}</a> {row.text}</p>
+                {row.code === bodyParts[1] && (
+                    <p class="status" data-note-status hidden aria-live="polite">
+                        <strong data-label></strong> <span data-hint></span> <button type="button" hidden>Restore the text</button>
+                    </p>
+                )}
+            </div>
         </div>
     ))}
-    <figcaption>What <code>a.example</code> sends <code>b.example</code> when someone posts. The signature is real: it was made with the <a href="/guides/signing-requests#example-key">example key</a>, so you can <a href="/signatures#verifying-the-signature">verify it</a>. <a href="/example">See the whole exchange</a>.</figcaption>
+    <figcaption>What <code>a.example</code> sends <code>b.example</code> when someone posts. The signature is real: it was made with the <a href="/guides/signing-requests#example-key">example key</a>, so you can <a href="/signatures?mode=verify#verifying-the-signature">verify it</a>. <a href="/example">See the whole exchange</a>.</figcaption>
 </figure>
+
+<script>
+    import "../lib/signed-note";
+</script>
 
 <style>
     .message {
@@ -147,6 +141,53 @@ Versia-Signature: odN8Tqt2nouQ1Zju37z/LcVvdY146qnXcFTvQ7UIdbTyDs1WSCHpkRnHl+i3dK
         min-height: 1lh;
         padding-left: var(--indent);
         text-indent: calc(-1 * var(--indent));
+    }
+
+    /* Added by the script, so these reach past the scoping. */
+    .message :global(.note-text) {
+        border-bottom: 1px dashed currentColor;
+        cursor: text;
+    }
+
+    /* Beside the text it reacts to, so it stays in view during an edit. */
+    .row .status {
+        margin-top: 0.75rem;
+        color: var(--ink);
+    }
+
+    .status strong {
+        display: block;
+        font-weight: var(--weight-bold);
+    }
+
+    .status[data-valid="true"] strong {
+        color: var(--value);
+    }
+
+    .status[data-valid="false"] strong {
+        color: var(--accent);
+    }
+
+    .status button[hidden] {
+        display: none;
+    }
+
+    .status button {
+        display: block;
+        margin-top: 0.4rem;
+        padding: 0.1rem 0.5rem;
+        border: 1px solid var(--control-border);
+        border-radius: var(--radius);
+        background: var(--paper);
+        color: var(--ink);
+        cursor: pointer;
+        font-family: var(--font-prose);
+        font-size: var(--text-sm);
+    }
+
+    .status button:hover {
+        border-color: var(--accent);
+        color: var(--accent);
     }
 
     figcaption {

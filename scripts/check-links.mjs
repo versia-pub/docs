@@ -32,7 +32,8 @@ for (const [route, html] of pages) {
     }
 
     for (const [, href = ""] of main.matchAll(/href="((?:\/|#)[^"]*)"/g)) {
-        const [path = "", fragment] = href.split("#");
+        const [address = "", fragment] = href.split("#");
+        const path = address.split("?")[0] ?? "";
         const target = path === "" ? route : path.replace(/(.)\/$/, "$1");
 
         if (target.includes(".")) {
