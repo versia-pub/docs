@@ -8,28 +8,10 @@ import Entity from "../../../components/spec/Entity.astro";
 import Example from "../../../components/spec/Example.astro";
 import Field from "../../../components/spec/Field.astro";
 import Inherits from "../../../components/spec/Inherits.astro";
-import Note from "../../../components/Note.astro";
 
-Sometimes, [Users](/entities/user) want to unsubscribe from each other to stop seeing each other's content. The `Unfollow` defines such a change.
+Ends a follow relationship, or [cancels a pending follow request](/entities/follow#cancelling-the-follow-request). It is sent by the follower. How follow relationships work is described under [Follow](/entities/follow#behaviour).
 
-<Note>
-    Refer to the [Follow](/entities/follow) entity for information on how follow relationships work.
-</Note>
-
-An `Unfollow` also cancels a [pending follow request](/entities/follow#cancelling-the-follow-request).
-
-This is **not** used to remove a follower from a followee.
-
-For example, if Bob follows Alice, this entity is used when:
-- Bob wants to stop following Alice.
-
-**NOT** when:
-
-- Alice wants to remove Bob as a follower.
-
-For the latter, use [FollowReject](/entities/follow-reject).
-
-## Entity Definition
+## Definition
 
 <Entity name="Unfollow" type="Unfollow" transient>
     <Field name="author" type="Reference" required>

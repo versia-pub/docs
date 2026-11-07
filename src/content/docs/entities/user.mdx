@@ -11,33 +11,7 @@ import Inherits from "../../../components/spec/Inherits.astro";
 
 The `User` entity represents an account on a Versia instance. Users can post [Notes](/entities/note), follow other users, and interact with content. Users are identified by their `id` property, which is unique within the instance. Only the instance a User is on may send or serve that User.
 
-## Addresses
-
-Users may be represented by a shorthand address, in the following format:
-
-```
-@username@instance
-```
-
-For example:
-
-```
-@jessew@versia.social
-```
-
-This is similar to an email address or an ActivityPub address. Usernames are case-insensitive.
-
-### Username
-
-Username **MUST** be the user's `username`.
-
-Usernames can be changed by the user, so an address may stop working. Use a [Reference](/entities#reference) for long-term references.
-
-### Instance
-
-Instance **MUST** be the [Domain](/entities#domain) that the user is on.
-
-## Entity Definition
+## Definition
 
 <Entity name="User" type="User">
     <div slot="collections">
@@ -125,3 +99,29 @@ Instance **MUST** be the [Domain](/entities#domain) that the user is on.
     ```
     </Example>
 </Entity>
+
+## Addresses
+
+Users may be represented by a shorthand address, in the following format:
+
+```
+@username@instance
+```
+
+For example:
+
+```
+@jessew@versia.social
+```
+
+This is similar to an email address or an ActivityPub address. Usernames are case-insensitive.
+
+### Username
+
+Username **MUST** be the user's `username`.
+
+Usernames can be changed by the user, so an address may stop working. Use a [Reference](/entities#reference) for long-term references.
+
+### Instance
+
+Instance **MUST** be the [Domain](/entities#domain) that the user is on.

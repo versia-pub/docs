@@ -8,23 +8,10 @@ import Entity from "../../../components/spec/Entity.astro";
 import Example from "../../../components/spec/Example.astro";
 import Field from "../../../components/spec/Field.astro";
 import Inherits from "../../../components/spec/Inherits.astro";
-import Note from "../../../components/Note.astro";
 
-<Note>
-    Refer to the [Follow](/entities/follow) entity for information on how follow relationships work.
-</Note>
+Rejects a pending [Follow](/entities/follow), or removes a follower after the relationship has been established. How follow relationships work is described under [Follow](/entities/follow#behaviour).
 
-## Removing Followers
-
-`FollowReject` can also be used *after* a follow relationship has been established to remove a follower.
-
-For example, if Bob requests to follow Alice, this entity is used when:
-- Alice wants to reject Bob's follow request.
-
-But it can also be used when Bob is already following Alice, in the case that:
-- Alice wants to remove Bob as a follower.
-
-## Entity Definition
+## Definition
 
 <Entity name="FollowReject" type="FollowReject" transient>
     <Field name="author" type="Reference" required>

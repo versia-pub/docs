@@ -13,21 +13,7 @@ import Note from "../../../components/Note.astro";
 
 The Share Extension lets users share notes they like with others. This is the same as Twitter's "retweet" and Mastodon's "boost".
 
-## Behaviour
-
-In clients, `Shares` should be rendered in a way that makes it clear that the shared note was originally authored by someone else than the user who shared it.
-
-`Shares` can be undone ("unboosting") with a [Delete](/entities/delete) entity.
-
-## Delivery and Access
-
-A user **MUST NOT** share a [Note](/entities/note) whose `visibility` is not `public`. A receiver **MUST** ignore a Share of such a Note.
-
-A sender **MUST** [deliver](/federation#delivery) Shares to the author of the [Note](/entities/note) and to the followers of the user who shared it.
-
-Any instance that [may fetch](/federation#access) the Note, and the instance of the Note's author, may fetch a Share.
-
-## Entity Definition
+## Definition
 
 <Entity name="Share" type="pub.versia:share/Share">
     <Field name="type" type="string" required>
@@ -55,7 +41,21 @@ Any instance that [may fetch](/federation#access) the Note, and the instance of 
     </Example>
 </Entity>
 
-## Note Collections
+## Behaviour
+
+A user **MUST NOT** share a [Note](/entities/note) whose `visibility` is not `public`. A receiver **MUST** ignore a Share of such a Note.
+
+In clients, `Shares` should be rendered in a way that makes it clear that the shared note was originally authored by someone else than the user who shared it.
+
+`Shares` can be undone ("unboosting") with a [Delete](/entities/delete) entity.
+
+## Delivery and Access
+
+A sender **MUST** [deliver](/federation#delivery) Shares to the author of the [Note](/entities/note) and to the followers of the user who shared it.
+
+Any instance that [may fetch](/federation#access) the Note, and the instance of the Note's author, may fetch a Share.
+
+## Collections
 
 The Share extension adds the following collections to the [Note](/entities/note) entity:
 

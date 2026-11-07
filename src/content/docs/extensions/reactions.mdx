@@ -13,15 +13,7 @@ import Note from "../../../components/Note.astro";
 
 The Reactions Extension allows users to express their reactions ("react") to posts with emojis.
 
-## Delivery and Access
-
-A sender **MUST** [deliver](/federation#delivery) Reactions to the author of the [Note](/entities/note) and, if the Note is public, to the followers of the reacting user.
-
-Any instance that [may fetch](/federation#access) the Note, and the instance of the Note's author, may fetch a Reaction.
-
-Reactions can be displayed to clients depending on the privacy settings of the associated Note.
-
-## Entity Definition
+## Definition
 
 <Entity name="Reaction" type="pub.versia:reactions/Reaction">
     <Field name="type" type="string" required>
@@ -55,11 +47,19 @@ Reactions can be displayed to clients depending on the privacy settings of the a
     </Example>
 </Entity>
 
-## Undoing Reactions
+## Behaviour
 
 To undo a Reaction, a [Delete](/entities/delete) entity **MUST** be used. The `deleted` property of the Delete entity **MUST** link to the Reaction to be removed.
 
-## Note Collections
+## Delivery and Access
+
+A sender **MUST** [deliver](/federation#delivery) Reactions to the author of the [Note](/entities/note) and, if the Note is public, to the followers of the reacting user.
+
+Any instance that [may fetch](/federation#access) the Note, and the instance of the Note's author, may fetch a Reaction.
+
+Reactions can be displayed to clients depending on the privacy settings of the associated Note.
+
+## Collections
 
 The Reactions extension adds the following collections to the [Note](/entities/note) entity:
 

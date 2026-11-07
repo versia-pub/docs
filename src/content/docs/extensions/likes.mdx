@@ -13,13 +13,11 @@ import Note from "../../../components/Note.astro";
 
 The Likes extension adds support for users to like and dislike notes.
 
-Implementations **SHOULD** make sure that users cannot like and dislike the same note at the same time. If a user dislikes a note they have already liked, the like **SHOULD** be removed, and vice versa.
+## Definition
 
-## Likes
+### Like
 
 Likes are a way for users to show appreciation for a note, like Twitter's "heart" button or Reddit's "upvote".
-
-### Entity Definition
 
 <Entity name="Like" type="pub.versia:likes/Like">
     <Field name="type" type="string" required>
@@ -47,11 +45,9 @@ Likes are a way for users to show appreciation for a note, like Twitter's "heart
     </Example>
 </Entity>
 
-## Dislikes
+### Dislike
 
 Dislikes are a way for users to show disapproval for a note, like YouTube's "dislikes" or Reddit's "downvotes".
-
-### Entity Definition
 
 <Entity name="Dislike" type="pub.versia:likes/Dislike">
     <Field name="type" type="string" required>
@@ -79,7 +75,9 @@ Dislikes are a way for users to show disapproval for a note, like YouTube's "dis
     </Example>
 </Entity>
 
-## Undoing Likes and Dislikes
+## Behaviour
+
+Implementations **SHOULD** make sure that users cannot like and dislike the same note at the same time. If a user dislikes a note they have already liked, the like **SHOULD** be removed, and vice versa.
 
 To undo a like or dislike, a [Delete](/entities/delete) entity **MUST** be used. The `deleted` property of the Delete entity **MUST** link to the Like or Dislike entity to be removed.
 
@@ -89,14 +87,16 @@ A sender **MUST** [deliver](/federation#delivery) Likes and Dislikes to the auth
 
 Any instance that [may fetch](/federation#access) the Note, and the instance of the Note's author, may fetch a Like or Dislike.
 
-## User Collections
+## Collections
+
+### User Collections
 
 The Likes extension adds the following collections to the [User](/entities/user) entity:
 
 - `pub.versia:likes/Likes`: [Reference Collection](/structures/collection#reference-collection) of all the notes the user has liked.
 - `pub.versia:likes/Dislikes`: [Reference Collection](/structures/collection#reference-collection) of all the notes the user has disliked.
 
-## Note Collections
+### Note Collections
 
 The Likes extension adds the following collections to the [Note](/entities/note) entity:
 

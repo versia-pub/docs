@@ -11,23 +11,7 @@ import Inherits from "../../../components/spec/Inherits.astro";
 
 Signals the deletion of an entity.
 
-## Authorization
-
-A `Delete` **MUST** come from the instance hosting the entity it deletes, which is the domain in the `deleted` [Reference](/entities#reference). A receiver **MUST** [reject](/validation#authors-and-signers) any other `Delete`.
-
-A receiver **MUST** ignore a `Delete` whose `deleted_type` differs from the type it has stored for the entity, and delete nothing.
-
-Which of its users may delete what is up to that instance. With no `author`, the `Delete` comes from the instance that signed it.
-
-## Fetching Deleted Entities
-
-An instance **SHOULD** answer a request for an entity it has deleted with `410 Gone` if it remembers the entity, and `404 Not Found` otherwise.
-
-A `404 Not Found` can also mean that the requesting instance [may not fetch the entity](/federation#access). So an instance **MUST NOT** delete its copy of an entity because of a `404`. Only a `Delete` entity or a `410 Gone` means the entity is gone.
-
-Whether to keep a record of an entity after deleting it is up to the receiver.
-
-## Entity Definition
+## Definition
 
 <Entity name="Delete" type="Delete" transient>
     <Field name="author" type="Reference">
@@ -54,3 +38,21 @@ Whether to keep a record of an entity after deleting it is up to the receiver.
     ```
     </Example>
 </Entity>
+
+## Behaviour
+
+### Authorization
+
+A `Delete` **MUST** come from the instance hosting the entity it deletes, which is the domain in the `deleted` [Reference](/entities#reference). A receiver **MUST** [reject](/validation#authors-and-signers) any other `Delete`.
+
+A receiver **MUST** ignore a `Delete` whose `deleted_type` differs from the type it has stored for the entity, and delete nothing.
+
+Which of its users may delete what is up to that instance. With no `author`, the `Delete` comes from the instance that signed it.
+
+### Fetching Deleted Entities
+
+An instance **SHOULD** answer a request for an entity it has deleted with `410 Gone` if it remembers the entity, and `404 Not Found` otherwise.
+
+A `404 Not Found` can also mean that the requesting instance [may not fetch the entity](/federation#access). So an instance **MUST NOT** delete its copy of an entity because of a `404`. Only a `Delete` entity or a `410 Gone` means the entity is gone.
+
+Whether to keep a record of an entity after deleting it is up to the receiver.

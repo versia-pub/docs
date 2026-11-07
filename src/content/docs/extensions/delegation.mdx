@@ -11,22 +11,10 @@ import Fields from "../../../components/spec/Fields.astro";
 
 Delegation lets a user's actions be shown under another user's name.
 
-## Vocabulary
-
 - **Delegator**: The user that actions are shown as.
 - **Delegate**: The user that performs the actions.
 
-## Implementation Details
-
-Any actions or entities created by the **delegate** should be attributed to the **delegator** user in clients transparently to end-users (e.g. showing the **delegator** user's name and avatar). This allows for a form of "consensual impersonation" that is authorized by the **delegators** and **delegates**.
-
-This is useful as a way to centralize all of a user's many "alt accounts" into a single, unified feed.
-
-If a User names a **delegator** that cannot be fetched, or that does not list them in `allowed_delegates`, instances **MUST** show the User's actions as their own. Instances **SHOULD** check again whenever they refetch either User, so that a withdrawn delegation stops applying.
-
-Delegation only changes who an action is shown as. It grants no rights over the other user's entities: each user's entities are still hosted, changed and [deleted](/entities/delete) by their own instance. That instance **MAY** let delegates ask it to act, which is outside this specification.
-
-## Extension Definition
+## Definition
 
 The Delegation extension uses an ID of `pub.versia:delegation`.
 
@@ -71,3 +59,13 @@ If the extension is present, exactly **one** of the fields **MUST** be specified
     ```
     </Example>
 </Fields>
+
+## Behaviour
+
+Any actions or entities created by the **delegate** should be attributed to the **delegator** user in clients transparently to end-users (e.g. showing the **delegator** user's name and avatar). This allows for a form of "consensual impersonation" that is authorized by the **delegators** and **delegates**.
+
+This is useful as a way to centralize all of a user's many "alt accounts" into a single, unified feed.
+
+If a User names a **delegator** that cannot be fetched, or that does not list them in `allowed_delegates`, instances **MUST** show the User's actions as their own. Instances **SHOULD** check again whenever they refetch either User, so that a withdrawn delegation stops applying.
+
+Delegation only changes who an action is shown as. It grants no rights over the other user's entities: each user's entities are still hosted, changed and [deleted](/entities/delete) by their own instance. That instance **MAY** let delegates ask it to act, which is outside this specification.

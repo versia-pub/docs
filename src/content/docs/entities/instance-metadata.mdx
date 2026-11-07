@@ -11,7 +11,7 @@ import Inherits from "../../../components/spec/Inherits.astro";
 
 Contains metadata about a Versia instance, such as its capabilities and public key. It is served by the instance it describes, has no `id`, and needs no [signature](/signatures), so that other instances can read the public key from it.
 
-## Entity Definition
+## Definition
 
 <Entity name="InstanceMetadata" type="InstanceMetadata" fetch={{ path: "/.versia/v0.7/instance", href: "/federation/endpoints#instance-metadata" }} collectionsHref="/federation/endpoints#instance-collections" idless>
     <div slot="collections">

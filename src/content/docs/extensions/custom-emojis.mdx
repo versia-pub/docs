@@ -11,7 +11,9 @@ import Fields from "../../../components/spec/Fields.astro";
 
 The Custom Emojis extension adds support for adding personalized emojis to federated data.
 
-## Structure Definition
+## Definition
+
+### CustomEmoji
 
 <Fields name="CustomEmoji">
     <Field name="name" type="string" required>
@@ -44,36 +46,13 @@ The Custom Emojis extension adds support for adding personalized emojis to feder
     </Example>
 </Fields>
 
-## Rendering
-
-To render custom emojis, clients **SHOULD** perform the following steps:
-1. Find all instances of custom emoji names in the text content.
-2. Replace the custom emoji names with the corresponding emoji images in text.
-
-If custom emojis are not supported, clients **SHOULD** leave the custom emoji names as-is. Images **SHOULD** have any associated `alt` text for accessibility.
-
-```html title="Example HTML/CSS"
-<style>
-img.emoji {
-    display: inline;
-    height: 1em;
-}
-</style>
-
-<p>
-    Hello, world! <img src="https://cdn.example.com/emojis/happy_face.webp" alt="A happy emoji smiling." class="emoji" />!
-</p>
-```
-
-Emojis **SHOULD** be displayed at a fixed height (such as `1em`), but their width **SHOULD** be allowed to be flexible.
-
-## Extension Definition
+### Extension
 
 Custom Emojis can be added to any entity with text content. The extension ID is `pub.versia:custom_emojis`.
 
 <Fields name="CustomEmojisExtension" extension="pub.versia:custom_emojis">
     <Field name="emojis" type="CustomEmoji[]" required>
-        [Custom emojis](/extensions/custom-emojis#structure-definition) used in the entity.
+        [Custom emojis](/extensions/custom-emojis#custom-emoji) used in the entity.
     </Field>
 
     <Example slot="example" unchecked>
@@ -108,3 +87,26 @@ Custom Emojis can be added to any entity with text content. The extension ID is 
     ```
     </Example>
 </Fields>
+
+## Behaviour
+
+To render custom emojis, clients **SHOULD** perform the following steps:
+1. Find all instances of custom emoji names in the text content.
+2. Replace the custom emoji names with the corresponding emoji images in text.
+
+If custom emojis are not supported, clients **SHOULD** leave the custom emoji names as-is. Images **SHOULD** have any associated `alt` text for accessibility.
+
+```html title="Example HTML/CSS"
+<style>
+img.emoji {
+    display: inline;
+    height: 1em;
+}
+</style>
+
+<p>
+    Hello, world! <img src="https://cdn.example.com/emojis/happy_face.webp" alt="A happy emoji smiling." class="emoji" />!
+</p>
+```
+
+Emojis **SHOULD** be displayed at a fixed height (such as `1em`), but their width **SHOULD** be allowed to be flexible.

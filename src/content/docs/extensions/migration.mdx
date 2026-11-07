@@ -13,35 +13,9 @@ import Inherits from "../../../components/spec/Inherits.astro";
 
 Sometimes, users may want to move from one instance to another. This could be due to a change in administration, a desire to be closer to friends, or any other reason. The migration extension moves an account's followers and followed accounts to a new account. Notes and other entities stay where they are.
 
-## Behaviour
+## Definition
 
-Migration happens in three steps:
-
-### Prepare the New Account
-
-The user creates an account on the new instance, and sets its `previous` field to a [Reference](/entities#reference) to the old account.
-
-### Request Migration
-
-The user requests migration from the old instance. The old instance checks that the new account's `previous` field names the old account, and sends a Migration entity.
-
-It **MUST** [deliver](/federation#delivery) the Migration to the instances hosting a follower of the old account or a user it follows, and to the new account's instance. It **MAY** also deliver it to others.
-
-A receiver **MUST** fetch the `destination` account, and **MUST** ignore the Migration if that account's `previous` field does not name the `author`.
-
-Relationships then move through normal [Follows](/entities/follow):
-
-- An instance hosting a follower of the old account **MUST** send a Follow to the new account for each of them, and drop their relationship with the old account.
-- The new account's instance **SHOULD** accept these Follows automatically, even if the account has `manually_approves_followers` set.
-- The new account's instance **MUST** send a Follow to each account in the old account's `following` collection. The followee's usual rules apply, so one who manually approves followers still decides.
-
-### Complete Migration
-
-The old instance sets the `destination` field of the old account to a [Reference](/entities#reference) to the new account, and disables the old account.
-
-It **SHOULD** keep serving the old account and its `followers` and `following` collections for long enough that other instances can finish moving. At least 30 days is suggested.
-
-## Entity Definition
+### Migration
 
 <Entity name="Migration" type="pub.versia:migration/Migration" transient>
     <Field name="type" type="string" required>
@@ -68,7 +42,7 @@ It **SHOULD** keep serving the old account and its `followers` and `following` c
     </Example>
 </Entity>
 
-## User Extensions
+### User Extensions
 
 The following extensions to [User](/entities/user) are used by the migration extension:
 
@@ -96,3 +70,31 @@ The following extensions to [User](/entities/user) are used by the migration ext
     ```
     </Example>
 </Fields>
+
+## Behaviour
+
+Migration happens in three steps:
+
+### Prepare the New Account
+
+The user creates an account on the new instance, and sets its `previous` field to a [Reference](/entities#reference) to the old account.
+
+### Request Migration
+
+The user requests migration from the old instance. The old instance checks that the new account's `previous` field names the old account, and sends a Migration entity.
+
+It **MUST** [deliver](/federation#delivery) the Migration to the instances hosting a follower of the old account or a user it follows, and to the new account's instance. It **MAY** also deliver it to others.
+
+A receiver **MUST** fetch the `destination` account, and **MUST** ignore the Migration if that account's `previous` field does not name the `author`.
+
+Relationships then move through normal [Follows](/entities/follow):
+
+- An instance hosting a follower of the old account **MUST** send a Follow to the new account for each of them, and drop their relationship with the old account.
+- The new account's instance **SHOULD** accept these Follows automatically, even if the account has `manually_approves_followers` set.
+- The new account's instance **MUST** send a Follow to each account in the old account's `following` collection. The followee's usual rules apply, so one who manually approves followers still decides.
+
+### Complete Migration
+
+The old instance sets the `destination` field of the old account to a [Reference](/entities#reference) to the new account, and disables the old account.
+
+It **SHOULD** keep serving the old account and its `followers` and `following` collections for long enough that other instances can finish moving. At least 30 days is suggested.

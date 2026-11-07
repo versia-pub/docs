@@ -12,33 +12,9 @@ import Note from "../../../components/Note.astro";
 
 Often, it is desirable to post a Note, but control who is allowed to interact with it (e.g. send replies, like, dislike, etc.). This has traditionally not been possible in most federated networks: the Interaction Controls extension adds this possibility.
 
-## Usage
+## Definition
 
 The structure defined in this document **MUST** be inserted in the `pub.versia:interaction_controls` key of a [Note](/entities/note)'s extensions field.
-
-```jsonc title="Example Usage"
-{
-    "id": "456df8ed-daf1-4062-abab-491071c7b8dd",
-    "type": "Note",
-    "visibility": "public",
-    "created_at": "2024-04-09T01:38:51.743Z",
-    "content": {
-        "text/plain": {
-            "content": "Hello, world :happy_face:!"
-        }
-    },
-    ...
-    "extensions": { // [!code focus:9]
-        "pub.versia:interaction_controls": {
-            "reply": {
-                "allowed": ["followers"]
-            }
-        }
-    }
-}
-```
-
-## Definition
 
 <Fields name="InteractionControls" extension="pub.versia:interaction_controls" on="Note">
     <Field name="interaction_type">
@@ -73,18 +49,7 @@ The structure defined in this document **MUST** be inserted in the `pub.versia:i
     </Example>
 </Fields>
 
-## Interactions
-
-### Interaction Types
-
-The following interaction types apply to every Note:
-
-- `reply`: Sending a Note with `replies_to` including this Note.
-- `quote`: Sending a Note with `quoting` including this Note.
-
-Extensions **MAY** register their own interaction types. The name of an interaction type is the `type` of the entity that performs it, such as `pub.versia:likes/Like` for the [Likes Extension](/extensions/likes).
-
-### Handling Permission Errors
+## Behaviour
 
 The instance hosting the Note's author **MUST NOT** apply an interaction the user is not allowed to perform. Other instances **SHOULD** do the same when they have the data to check it.
 
@@ -95,3 +60,36 @@ Implementations **SHOULD** keep related [Collections](/structures/collection) an
 <Note>
     To avoid server load from constant Collection refreshing, implementations **MAY** only refetch associated Collections when forbidden interactions are detected, then recalculate permissions again.
 </Note>
+
+## Interaction Types
+
+The following interaction types apply to every Note:
+
+- `reply`: Sending a Note with `replies_to` including this Note.
+- `quote`: Sending a Note with `quoting` including this Note.
+
+Extensions **MAY** register their own interaction types. The name of an interaction type is the `type` of the entity that performs it, such as `pub.versia:likes/Like` for the [Likes Extension](/extensions/likes).
+
+## Example
+
+```jsonc title="Example Usage"
+{
+    "id": "456df8ed-daf1-4062-abab-491071c7b8dd",
+    "type": "Note",
+    "visibility": "public",
+    "created_at": "2024-04-09T01:38:51.743Z",
+    "content": {
+        "text/plain": {
+            "content": "Hello, world :happy_face:!"
+        }
+    },
+    ...
+    "extensions": { // [!code focus:9]
+        "pub.versia:interaction_controls": {
+            "reply": {
+                "allowed": ["followers"]
+            }
+        }
+    }
+}
+```
