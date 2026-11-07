@@ -1,49 +1,63 @@
-<p align="center">
-  <a href="https://versia.pub"><img src="https://cdn.versia.pub/branding/logo-dark.svg" alt="Versia Logo" height="110"></a>
+<div align="center">
+
+<p>
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset=".github/assets/banner-dark.svg">
+    <img src=".github/assets/banner.svg" alt="Versia: federation you can read" width="640">
+  </picture>
 </p>
 
-<h2 align="center">
-  <strong><code>Versia Documentation</code></strong>
-</h2>
+[![Build](https://github.com/versia-pub/docs/actions/workflows/build.yml/badge.svg)](https://github.com/versia-pub/docs/actions/workflows/build.yml)
+[![License: GPL-3.0](https://img.shields.io/badge/license-GPL--3.0-22162B)](LICENSE)
+[![Docs: CC BY-SA 4.0](https://img.shields.io/badge/docs-CC_BY--SA_4.0-22162B)](https://creativecommons.org/licenses/by-sa/4.0/)
+[![Versia 0.7](https://img.shields.io/badge/Versia-0.7-E6A9FE)](https://versia.pub)
+[![Built with Deno](https://img.shields.io/badge/built_with-Deno-22162B?logo=deno)](https://deno.com)
 
-<div align="center">
-    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/typescript/typescript-original.svg" height="42" width="52" alt="TypeScript logo">
-    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/denojs/denojs-original.svg" height="42" width="52" alt="Deno logo">
-    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" height="42" width="52" alt="CSS3 logo">
-    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" height="42" width="52" alt="HTML5 logo">
-    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linux/linux-original.svg" height="42" width="52" alt="Linux logo">
+**[Read the docs](https://versia.pub)** · **[Introduction](https://versia.pub/introduction)** ·
+**[Implementing a receiver](https://versia.pub/guides/implementing-a-receiver)** ·
+**[Verso](https://github.com/versia-pub/verso)**
+
 </div>
 
-## Technologies
+This is the source of [versia.pub](https://versia.pub), the specification and documentation for
+Versia, a federation protocol for social media.
 
-- [**`TypeScript`**](https://www.typescriptlang.org/): A typed superset of JavaScript that compiles to plain JavaScript.
-- [**`Astro`**](https://astro.build/): A framework for content-driven websites.
-- [**`Starlight`**](https://starlight.astro.build/): An Astro documentation framework, heavily customized here.
-- [**`MDX`**](https://mdxjs.com/): Markdown for the component era.
-- [**`Pagefind`**](https://pagefind.app/): A static search library, which indexes the built site.
+The site is built with [Astro](https://astro.build) and [Starlight](https://starlight.astro.build),
+and the pages are MDX files in [`src/content/docs`](src/content/docs). Every page works without
+JavaScript, and each docs page also comes as plain Markdown.
 
-## Installation
+## Running the site locally
 
-This project uses [Deno](https://deno.com) to manage dependencies and run tasks. To install the dependencies, run:
+You need [Deno](https://deno.com). Install the dependencies, then start the development server:
 
-```bash
+```sh
 deno install
-```
-
-To start the development server, run:
-
-```bash
 deno task dev
 ```
 
-Search only works in production builds, as its index is generated from the output of `deno task build`.
+`deno task build` writes the site to `out/`, and `deno task preview` serves it. Search only works
+there, as its index is built from the output.
+
+## Checks
+
+CI runs the same checks on every push, and a pull request should pass them all:
+
+| Command                 | What it checks                                                    |
+| ----------------------- | ----------------------------------------------------------------- |
+| `deno task lint`        | Formatting and lint rules, with [Biome](https://biomejs.dev)      |
+| `deno task typecheck`   | Types, in TypeScript and in Astro components                      |
+| `deno task build`       | That the site builds, including the checks on examples and fields |
+| `deno task check-links` | Every link in the built site, run after a build                   |
+| `deno task knip`        | Unused files, exports and dependencies                            |
 
 ## Contributing
 
-Contributions are welcome! Feel free to open an issue or submit a pull request.
+Issues and pull requests are welcome, whether it's a typo, an unclear page or a gap in the
+protocol.
 
-### Licenses
+## License
 
-The code in this repository is licensed under the [GNU General Public License v3.0](LICENSE).
-
-However, the _documentation text_ (including the MDX files in the `src/content/docs` directory) is licensed under the [Creative Commons Attribution-ShareAlike 4.0 International License](https://creativecommons.org/licenses/by-sa/4.0/). You are free to share and adapt the text as long as you provide proper attribution and distribute your adaptations under the same license.
+The code is licensed under the [GNU General Public License v3.0](LICENSE). The documentation text,
+including the MDX files in `src/content/docs`, is licensed under
+[CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/): you may share and adapt it, as long
+as you give credit and share your changes under the same license.
