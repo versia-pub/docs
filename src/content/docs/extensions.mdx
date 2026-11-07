@@ -5,6 +5,7 @@ kind: Core concept
 ---
 
 import ExtensionList from "../../components/ExtensionList.astro";
+import Note from "../../components/Note.astro";
 import Example from "../../components/spec/Example.astro";
 import Field from "../../components/spec/Field.astro";
 import Fields from "../../components/spec/Fields.astro";
@@ -46,6 +47,10 @@ pub.versia:likes
 ```
 
 The namespace **MUST** come from a domain the author controls. `pub.versia` is reserved for extensions defined in this specification.
+
+<Note>
+    Matrix names custom event types the same way, such as `com.example.myapp.event`. ActivityPub uses JSON-LD contexts instead. See [Other Protocols](/other-protocols#plain-json-and-namespaces).
+</Note>
 
 ### Entity Names
 

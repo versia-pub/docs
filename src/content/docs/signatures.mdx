@@ -4,10 +4,15 @@ description: "How a message is signed and verified, and when a signature is requ
 kind: Core concept
 ---
 
+import Note from "../../components/Note.astro";
 import SignaturePlayground from "../../components/signature-playground/SignaturePlayground.astro";
 import SigningString from "../../components/spec/SigningString.astro";
 
 Versia uses cryptographic signatures to ensure the integrity and authenticity of data. A signature proves that a message was sent by the instance named in `Versia-Signed-By`, and that it has not been tampered with.
+
+<Note>
+    ActivityPub servers usually sign with a key for each user. Versia, like Matrix, signs with one key for the whole instance. See [Other Protocols](/other-protocols#instance-keys).
+</Note>
 
 For working code, see [Signing Requests](/guides/signing-requests).
 

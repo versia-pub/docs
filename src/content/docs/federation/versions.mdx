@@ -4,12 +4,18 @@ description: "How Versia numbers protocol versions, and how instances choose one
 kind: Federation
 ---
 
+import Note from "../../../components/Note.astro";
+
 Versia Protocol versions are written as `0.X.Y`:
 
 - `X` changes when a release breaks compatibility with earlier versions. Adding a core entity type is a breaking change.
 - `Y` changes when a release stays compatible with other `0.X` versions, for example by adding an optional field.
 
 Every Versia API endpoint is prefixed with `/.versia/v0.X/`, so all `0.X.Y` versions share one prefix. The current prefix is `/.versia/v0.7/`. Instances list the versions they support at the [well-known endpoint](/federation/endpoints#well-known).
+
+<Note>
+    ActivityPub has no protocol versions. Matrix versions its specification and each endpoint separately. See [Other Protocols](/other-protocols#concepts).
+</Note>
 
 Implementations have no obligation to support more than one Versia version. They **SHOULD** support the latest version, as it helps avoid bogging down the network with old versions.
 

@@ -6,6 +6,7 @@ kind: Core concept
 
 import Guide from "../../components/Guide.astro";
 import Guides from "../../components/Guides.astro";
+import Note from "../../components/Note.astro";
 
 This page describes how instances in a Versia network exchange data.
 
@@ -25,6 +26,10 @@ Federation is built on the [HyperText Transfer Protocol (HTTP)](https://datatrac
 ## Inboxes
 
 Every [Instance](/entities/instance-metadata) has one HTTP endpoint called an inbox (`/.versia/v0.7/inbox`), which receives messages for all of its users. Messages are sent to it as JSON payloads over HTTP `POST` requests. See the [Inbox Endpoint](/federation/endpoints#inbox).
+
+<Note>
+    The closest ActivityPub equivalent is the shared inbox. Versia has no inbox for each user, and sends entities without wrapping them in activities. See [Other Protocols](/other-protocols#no-activity-wrapper).
+</Note>
 
 Let's consider the following example:
 

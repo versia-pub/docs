@@ -4,6 +4,7 @@ description: "How a User subscribes to another entity, such as a User: the Subsc
 kind: Entity · Core
 ---
 
+import Note from "../../../components/Note.astro";
 import Entity from "../../../components/spec/Entity.astro";
 import Example from "../../../components/spec/Example.astro";
 import Field from "../../../components/spec/Field.astro";
@@ -12,6 +13,10 @@ import Message from "../../../components/spec/Message.astro";
 import WireTrace from "../../../components/spec/WireTrace.astro";
 
 A [User](/entities/user) can subscribe to another entity to receive what it shares with its subscribers. The `Subscribe` entity starts a subscription.
+
+<Note>
+    In ActivityPub, this is `Follow`, and [SubscribeAccept](/entities/subscribe-accept), [SubscribeReject](/entities/subscribe-reject) and [Unsubscribe](/entities/unsubscribe) are `Accept`, `Reject` and `Undo`. See [Other Protocols](/other-protocols#subscriptions).
+</Note>
 
 - **Subscriber**: The user who subscribes. If `Joe` subscribes to `Alice`, `Joe` is the subscriber.
 - **Target**: The entity subscribed to. If `Joe` subscribes to `Alice`, `Alice` is the target.

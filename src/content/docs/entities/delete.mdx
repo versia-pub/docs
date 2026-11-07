@@ -4,12 +4,17 @@ description: "Tells other instances that an entity was deleted."
 kind: Entity · Core
 ---
 
+import Note from "../../../components/Note.astro";
 import Entity from "../../../components/spec/Entity.astro";
 import Example from "../../../components/spec/Example.astro";
 import Field from "../../../components/spec/Field.astro";
 import Inherits from "../../../components/spec/Inherits.astro";
 
 Signals the deletion of an entity.
+
+<Note>
+    In ActivityPub, this is `Delete`. In Matrix, it is a redaction. See [Other Protocols](/other-protocols#concepts).
+</Note>
 
 ## Definition
 
