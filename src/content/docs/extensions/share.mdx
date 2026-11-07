@@ -9,7 +9,6 @@ import Entity from "../../../components/spec/Entity.astro";
 import Example from "../../../components/spec/Example.astro";
 import Field from "../../../components/spec/Field.astro";
 import Inherits from "../../../components/spec/Inherits.astro";
-import Note from "../../../components/Note.astro";
 
 The Share Extension lets users share notes they like with others. This is the same as Twitter's "retweet" and Mastodon's "boost".
 
@@ -63,9 +62,5 @@ The Share extension adds the following collections to the [Note](/entities/note)
 
 ## Interaction Types
 
-<Note>
-    This section only applies to implementors of the [Interaction Controls Extension](/extensions/interaction-controls).
-</Note>
-
-This extension registers the following interaction types:
+This extension registers the following [interaction types](/extensions/interaction-controls#interaction-types):
 - `pub.versia:share/Share`, for sharing a Note.

@@ -10,9 +10,9 @@ import Fields from "../../../components/spec/Fields.astro";
 import Note from "../../../components/Note.astro";
 import Warning from "../../../components/Warning.astro";
 
-Versia uses the HTTP protocol for all communications between instances. HTTP requests follow the rules on this page to ensure compatibility between different implementations, as well as to ensure the security and integrity of the data being exchanged.
+Versia uses the HTTP protocol for all communications between instances.
 
-HTTP requests and responses between instances **MUST** include a [Signature](/signatures), signed with the [instance's private key](/entities/instance-metadata), except on the routes listed in [Signatures](/signatures#where-signatures-are-required).
+[Signatures](/signatures#where-signatures-are-required) lists the routes where requests and responses are signed.
 
 ## TLS
 
@@ -99,9 +99,7 @@ Location: https://example.com/users/1234
 
 ## Rate Limits
 
-Implementations **MUST** respect the rate limits of remote instances.
-
-An instance that rate limits a request **MUST** respond with a [`429 Too Many Requests`](https://datatracker.ietf.org/doc/html/rfc6585#section-4) status code and a [`Retry-After`](https://datatracker.ietf.org/doc/html/rfc9110#section-10.2.3) header. The sender **MUST NOT** retry the request before that time.
+An instance that rate limits a request **MUST** respond with a [`429 Too Many Requests`](https://datatracker.ietf.org/doc/html/rfc6585#section-4) status code and a [`Retry-After`](https://datatracker.ietf.org/doc/html/rfc9110#section-10.2.3) header. The sender **MUST NOT** retry the request before the time that header gives.
 
 ## Retries
 
@@ -150,7 +148,7 @@ Every federation route uses these status codes. A check that runs after a `2xx` 
 | `200 OK` | The requested entity or collection is in the body. |
 | `202 Accepted` | The [inbox](/federation/endpoints#inbox) took the entity. A [repeated signature](/signatures#repeated-signatures) and an [unknown extension type](/validation#unknown-fields-and-types) also get a `2xx` status code. |
 | `400 Bad Request` | The body is not valid JSON. |
-| `401 Unauthorized` | The [signature](/signatures) is missing or invalid, or its timestamp is more than 5 minutes from the current time. |
+| `401 Unauthorized` | The [signature](/signatures) is missing or invalid, or its timestamp is [too old or too new](/signatures#verifying-the-signature). |
 | `403 Forbidden` | The receiver refuses to federate with the sender's instance. |
 | `404 Not Found` | There is no such entity, or the requesting instance [may not fetch it](/federation#access). |
 | `410 Gone` | The entity [was deleted](/entities/delete#fetching-deleted-entities). |

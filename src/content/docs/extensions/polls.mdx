@@ -10,7 +10,6 @@ import Example from "../../../components/spec/Example.astro";
 import Field from "../../../components/spec/Field.astro";
 import Fields from "../../../components/spec/Fields.astro";
 import Inherits from "../../../components/spec/Inherits.astro";
-import Note from "../../../components/Note.astro";
 
 Polls (also known as surveys) are a useful tool for gathering feedback from followers and friends. The Polls Extension allows users to create and vote on polls.
 
@@ -153,9 +152,5 @@ When a poll's votes change, its Note is [sent again](/entities#changing-an-entit
 
 ## Interaction Types
 
-<Note>
-    This section only applies to implementors of the [Interaction Controls Extension](/extensions/interaction-controls).
-</Note>
-
-This extension registers the following interaction types:
+This extension registers the following [interaction types](/extensions/interaction-controls#interaction-types):
 - `pub.versia:polls/Vote`, for voting on a Poll attached to a Note.

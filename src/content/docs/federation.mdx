@@ -6,12 +6,10 @@ kind: Core concept
 
 import Guide from "../../components/Guide.astro";
 import Guides from "../../components/Guides.astro";
-import Note from "../../components/Note.astro";
-import Warning from "../../components/Warning.astro";
 
-Being a federation protocol, Versia defines a set of rules for exchanging data between instances. This document outlines the behavior of instances in a Versia federated network.
+This page describes how instances in a Versia network exchange data.
 
-Federation is built on the [HyperText Transfer Protocol (HTTP)](https://datatracker.ietf.org/doc/html/rfc9110) and the [JavaScript Object Notation (JSON)](https://datatracker.ietf.org/doc/html/rfc8259) data format. Instances communicate with each other by sending and receiving JSON payloads over HTTP. If you have ever worked with ActivityPub, Versia's federation protocol will feel familiar.
+Federation is built on the [HyperText Transfer Protocol (HTTP)](https://datatracker.ietf.org/doc/html/rfc9110) and the [JavaScript Object Notation (JSON)](https://datatracker.ietf.org/doc/html/rfc8259) data format. Instances communicate with each other by sending and receiving JSON payloads over HTTP.
 
 ## Related Pages
 
@@ -26,11 +24,7 @@ Federation is built on the [HyperText Transfer Protocol (HTTP)](https://datatrac
 
 ## Inboxes
 
-<Note>
-    See the [Inbox Endpoint](/federation/endpoints#inbox) for more information on the inbox endpoint.
-</Note>
-
-Every [Instance](/entities/instance-metadata) has one HTTP endpoint called an inbox (`/.versia/v0.7/inbox`), which receives messages for all of its users. Messages are sent to it as JSON payloads over HTTP `POST` requests.
+Every [Instance](/entities/instance-metadata) has one HTTP endpoint called an inbox (`/.versia/v0.7/inbox`), which receives messages for all of its users. Messages are sent to it as JSON payloads over HTTP `POST` requests. See the [Inbox Endpoint](/federation/endpoints#inbox).
 
 Let's consider the following example:
 
@@ -44,13 +38,7 @@ Bob's instance receives the message and processes it according to the rules defi
 
 In addition to inboxes, every user has an outbox (at `/.versia/v0.7/entities/User/<id>/collections/outbox`). The outbox is a [Collection](/structures/collection) of the [Notes](/entities/note) that the user has authored.
 
-<Warning>
-    An outbox **MUST** list only the entities the requesting instance [may fetch](#access).
-
-    For example, if Alice sends a [Note](/entities/note) whose `visibility` is `mentions` and that only mentions Bob:
-    - Alice's instance **MUST** return the [Note](/entities/note) in response to a request from Bob's instance.
-    - Alice's instance **MUST NOT** list the [Note](/entities/note) in Alice's outbox in response to a request from Joe's instance.
-</Warning>
+An outbox **MUST** list only the entities the requesting instance [may fetch](#access). For example, if Alice sends a [Note](/entities/note) whose `visibility` is `mentions` and that only mentions Bob, Alice's instance **MUST** return it in response to a request from Bob's instance, and **MUST NOT** list it in Alice's outbox in response to a request from Joe's instance.
 
 Outboxes are very useful for "backfilling" data when a new instance joins the network. By resolving the outboxes of all new users it encounters, a new instance can quickly catch up on all old messages.
 

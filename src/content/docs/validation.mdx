@@ -4,7 +4,6 @@ description: "Validation rules for Versia implementations."
 kind: Federation
 ---
 
-
 Implementations **MUST** strictly validate all incoming data to ensure that it is well-formed and adheres to the Versia Protocol. If a request is invalid, the instance **MUST** reject it with the matching [status code](/federation/http#status-codes).
 
 Remember that while *your* implementation may disallow or restrict some user input, other implementations may not. You **SHOULD NOT** apply those restrictions to data coming from other instances.
@@ -13,7 +12,7 @@ For example, if your implementation disallows using HTML in posts, you should no
 
 Things to validate include, but are not limited to:
 
-- The presence of **all required fields**. [Optional fields](/json#optional-fields) may be omitted or `null`.
+- The presence of **all required fields**. See [Optional Fields](/json#optional-fields).
 - The **format** of all fields (integers should not be strings, timestamps should be in RFC 3339 format, etc.). Whether a well-formed date is plausible is up to your implementation.
 - The presence of **all required headers**.
 - The presence of a **valid signature**, where [one is required](/signatures#where-signatures-are-required).
@@ -28,13 +27,13 @@ Things to validate include, but are not limited to:
 
 - The **validity** of all URLs and URIs (run them through your favorite URL parser).
 
-It is your implementation's duty to reject data from other instances that does not adhere to the strict spec. **This is crucial to ensure the integrity of your instance and the network as a whole**. Accepting invalid data can lead to the degradation of the entire Versia ecosystem.
+It is your implementation's duty to reject data from other instances that does not follow this specification. **Accepting invalid data harms your instance and the network as a whole.**
 
 ## Authors and Signers
 
 An entity's `author` **MUST** belong to the instance that signed the message carrying it, whether the entity was delivered to an inbox or fetched. This also applies to each entity in a [Collection](/structures/collection)'s `items`.
 
-An instance **MUST** reject an entity that breaks this rule. If it checks before answering an inbox request, it **MUST** return a `422 Unprocessable Entity` status code. If it processes the entity after answering, it **MUST** drop the entity, and no status code is required.
+An instance **MUST** reject an entity that breaks this rule. If it checks before answering an inbox request, it **MUST** return a `422 Unprocessable Entity` status code. If it processes the entity after answering, it **MUST** drop the entity.
 
 Entities without an `author` field state which instance may send them on their own page.
 

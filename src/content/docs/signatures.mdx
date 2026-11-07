@@ -5,15 +5,8 @@ kind: Core concept
 ---
 
 import SigningString from "../../components/spec/SigningString.astro";
-import Warning from "../../components/Warning.astro";
 
 Versia uses cryptographic signatures to ensure the integrity and authenticity of data. A signature proves that a message was sent by the instance named in `Versia-Signed-By`, and that it has not been tampered with.
-
-<Warning>
-    This part is very important! If signatures are implemented incorrectly in your instance, **you will not be able to federate**.
-
-    Mistakes made in this section can lead to **security vulnerabilities** and **impersonation attacks**.
-</Warning>
 
 For working code, see [Signing Requests](/guides/signing-requests).
 
@@ -28,6 +21,8 @@ All base64 on this page is the standard alphabet with padding, as defined in [RF
 
 ### Where Signatures Are Required
 
+Requests and responses between instances **MUST** be signed with the [instance's private key](/entities/instance-metadata), except on the routes marked as not required below.
+
 | Route | Requests and responses |
 | --- | --- |
 | [Inbox](/federation/endpoints#inbox) | **MUST** be signed |
@@ -40,7 +35,7 @@ All base64 on this page is the standard alphabet with padding, as defined in [RF
 
 Instance metadata needs no signature because it holds the public key used to verify signatures.
 
-An instance receiving a request on a route that requires a signature **MUST** return a `401 Unauthorized` HTTP status code if the signature is missing or invalid, or if its timestamp is too old or too new (more than 5 minutes from the current time).
+An instance receiving a request on a route that requires a signature **MUST** return a `401 Unauthorized` HTTP status code if the signature is missing or invalid, or if its timestamp is [too old or too new](#verifying-the-signature).
 
 An instance receiving a `2xx` response on these routes **MUST** discard it if its signature is missing, invalid, too old or too new, and treat the attempt as failed.
 
@@ -74,7 +69,7 @@ Example:
     ]}
 />
 
-A signed response is not tied to one particular request. Its freshness relies on TLS and the 5-minute window.
+A signed response is not tied to one particular request. Its freshness relies on TLS and the [timestamp check](#verifying-the-signature).
 
 ### Verifying the Signature
 
@@ -105,13 +100,7 @@ A verifying instance:
 
 ## Exporting the Public Key
 
-Public keys are always encoded using `base64` and **MUST** be in [SubjectPublicKeyInfo (SPKI)](https://datatracker.ietf.org/doc/html/rfc8410#section-4) format. You will need to look up the appropriate method for your cryptographic library to convert the key to this format.
-
-<Warning>
-    This is **not** merely the key's raw bytes encoded as base64. You **MUST** export the key in [SPKI](https://datatracker.ietf.org/doc/html/rfc8410#section-4) format, *then* encode it as base64.
-
-    This is also not the commonly used "PEM" format.
-</Warning>
+Public keys are always encoded using `base64` and **MUST** be in [SubjectPublicKeyInfo (SPKI)](https://datatracker.ietf.org/doc/html/rfc8410#section-4) format: export the key in SPKI format, *then* encode it as base64. This is neither the key's raw bytes encoded as base64, nor the commonly used "PEM" format.
 
 ```typescript title="Example using TypeScript and the WebCrypto API"
 const spkiEncodedPublicKey = await crypto.subtle.exportKey(

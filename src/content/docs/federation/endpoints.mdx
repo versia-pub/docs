@@ -200,13 +200,11 @@ Accept: application/vnd.versia+json
 
 ## Inbox
 
-The inbox endpoint is used for instances to send entities to each other. It is a single endpoint that can receive messages for every user (also known as a shared inbox).
-
-The delivery mechanism is described further in the [Federation](/federation#inboxes) document.
+The inbox receives entities from other instances, for every user on the instance (also known as a shared inbox). See [Inboxes](/federation#inboxes) for how delivery works.
 
 <Endpoint name="Inbox" method="POST" path="/.versia/v0.7/inbox">
     <div slot="response">
-        **SHOULD** be `202 Accepted` with no body. See [Status Codes](/federation/http#status-codes) for all possible answers.
+        See [Status Codes](/federation/http#status-codes).
     </div>
 
     <Example slot="example">

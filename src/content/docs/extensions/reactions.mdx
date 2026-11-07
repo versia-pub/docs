@@ -9,7 +9,6 @@ import Entity from "../../../components/spec/Entity.astro";
 import Example from "../../../components/spec/Example.astro";
 import Field from "../../../components/spec/Field.astro";
 import Inherits from "../../../components/spec/Inherits.astro";
-import Note from "../../../components/Note.astro";
 
 The Reactions Extension allows users to express their reactions ("react") to posts with emojis.
 
@@ -67,9 +66,5 @@ The Reactions extension adds the following collections to the [Note](/entities/n
 
 ## Interaction Types
 
-<Note>
-    This section only applies to implementors of the [Interaction Controls Extension](/extensions/interaction-controls).
-</Note>
-
-This extension registers the following interaction types:
+This extension registers the following [interaction types](/extensions/interaction-controls#interaction-types):
 - `pub.versia:reactions/Reaction`, for adding a Reaction to a Note.
