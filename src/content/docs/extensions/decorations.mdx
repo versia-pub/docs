@@ -1,0 +1,83 @@
+---
+title: "Decorations Extension"
+description: "Adds images around a User's avatar, a profile background and a profile sound."
+extension: pub.versia:decorations
+kind: Extension
+---
+
+import Example from "../../../components/spec/Example.astro";
+import Field from "../../../components/spec/Field.astro";
+import Fields from "../../../components/spec/Fields.astro";
+
+The Decorations extension changes how a [User](/entities/user)'s profile looks: images drawn over or around their avatar, a background behind the profile, and a sound to play on it. Facts about the person, such as their pronouns, are in the [Profile extension](/extensions/profile).
+
+## Definition
+
+The fields go in the `pub.versia:decorations` key of a User's `extensions`.
+
+<Fields name="Decorations" extension="pub.versia:decorations" on="User">
+    <Field name="avatar_overlays" type="Media[]">
+        Overlay images to be placed on top of the user's avatar. Each **MUST** be an image (`image/*`), and can be animated, such as APNG, GIF or WebP.
+
+        The first overlay in the array is the topmost overlay. The inner 80% of the overlay **SHOULD** cover the avatar, with the outer 20% extending beyond the avatar's bounds.
+    </Field>
+    <Field name="avatar_mask" type="Media">
+        Mask image to be used to clip the user's avatar. **MUST** be an image (`image/*`) that is not animated.
+
+        The avatar **SHOULD** be clipped to the mask's alpha channel. For example, a black square with rounded corners would clip the avatar to a rounded square.
+    </Field>
+    <Field name="background" type="Media">
+        Background image to be displayed behind the user's profile. **MUST** be an image (`image/*`), and can be animated, such as APNG, GIF or WebP.
+    </Field>
+    <Field name="audio" type="Media">
+        Audio file to be played when viewing the user's profile. **MUST** be audio (`audio/*`), such as `audio/mpeg`.
+
+        Audio files can be used as a vector for abuse. Implementations **SHOULD** provide a way to disable audio playback.
+    </Field>
+
+    <Example slot="example" unchecked>
+    ```jsonc title="Example Decorations"
+    {
+        // ...
+        "type": "User",
+        // ...
+        "extensions": { // [!code focus:36]
+            "pub.versia:decorations": {
+                "avatar_overlays": [
+                    {
+                        "url": "https://cdn.example.com/decorations/cat_ears.png",
+                        "media_type": "image/png",
+                        "size": 18204,
+                        "hash": "c3c3f678f73c305af351474dbe4380ab5dcce7e073bdeefbbd381c7f3d7eec12",
+                        "width": 640,
+                        "height": 640
+                    }
+                ],
+                "avatar_mask": {
+                    "url": "https://cdn.example.com/decorations/rounded_square.png",
+                    "media_type": "image/png",
+                    "size": 2310,
+                    "hash": "6c5ccba14db5c9f0ba95031b9dbb30218f4575e349e589e529f04afd8a17cccc",
+                    "width": 512,
+                    "height": 512
+                },
+                "background": {
+                    "url": "https://cdn.example.com/decorations/stars.png",
+                    "media_type": "image/png",
+                    "size": 402118,
+                    "hash": "b4c03c054c918a4a28280c608894c94b02328657103acb7bb2e5ac4304a3eff2",
+                    "width": 1920,
+                    "height": 1080
+                },
+                "audio": {
+                    "url": "https://cdn.example.com/decorations/theme.mp3",
+                    "media_type": "audio/mpeg",
+                    "size": 481920,
+                    "hash": "0024f416c8164439880a9891a6797ad840b854197b83e0122ab7aaa91b644cf6"
+                }
+            }
+        }
+    }
+    ```
+    </Example>
+</Fields>

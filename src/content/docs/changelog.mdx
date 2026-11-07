@@ -46,7 +46,6 @@ All endpoints moved from `/.versia/v0.6/` to `/.versia/v0.7/`. This version also
 - Renamed URI Collection to [Reference Collection](/structures/collection#reference-collection). A Collection only holds entities authored on the instance serving it.
 - [Note](/entities/note): `quotes` is now `quoting`, and the new required `visibility` field replaces the `group` field's visibility values. Groups moved to the [Groups extension](/extensions/groups). An unknown `category` is treated as absent.
 - [User](/entities/user), [Note](/entities/note) and [Group](/extensions/groups) have a new optional `url`, the address of their page on their instance.
-- [User](/entities/user): `birthday` is now a full date, in the [Vanity extension](/extensions/vanity). Whether a well-formed date is plausible is up to implementations.
 - Removed the Types page. RFC3339 and URI types now link directly to their RFCs.
 
 ### Federation
@@ -70,6 +69,9 @@ All endpoints moved from `/.versia/v0.6/` to `/.versia/v0.7/`. This version also
 - Extensions now have [versions](/extensions#versions), listed in `compatibility.extensions` as `pub.versia:likes@1`. Instances use the highest version they have in common.
 - Extension values must be JSON objects, namespaces must come from a domain the author controls, and `pub.versia` is reserved.
 - All entities that act on another entity ([Like, Dislike](/extensions/likes), [Share](/extensions/share), [Reaction](/extensions/reactions) and [Vote](/extensions/polls)) now use `target`.
+- The Vanity extension (`pub.versia:vanity`) is split in two. [Profile](/extensions/profile) (`pub.versia:profile`) holds `pronouns`, `birthday`, `location` and `timezone`, and [Decorations](/extensions/decorations) (`pub.versia:decorations`) holds `avatar_overlays`, `avatar_mask`, `background` and `audio`. `aliases` is removed.
+- [Profile](/extensions/profile): `pronouns` is plain text for each BCP 47 language tag, replacing the five pronoun forms. `birthday` is `YYYY-MM-DD`, or `--MM-DD` without the year, replacing the `0000` year. Whether a well-formed date is plausible is up to implementations. `location` is plain text only, and `timezone` must be an IANA time zone name.
+- [Decorations](/extensions/decorations): each field must hold the media type it names: images, or audio for `audio`.
 - [Delegation](/extensions/delegation): now only changes who an action is shown as. It grants no rights over the other user's entities. A delegator that cannot be fetched counts as not listing the delegate.
 - [Groups](/extensions/groups): defined subscription, moderators and federation, and `GroupFederate.note` is now `target`. The instance of a Note's author sends the Note to the group's instance, which sends a `GroupFederate` to its members' instances, and those fetch the Note. `name` is a plain string, and `description` is RichText.
 - [Instance Messaging](/extensions/instance-messaging): named `pub.versia:instance_messaging` so that instances can list it in `compatibility.extensions`, moved to the extensions path, and defined as unsigned with untrusted text. The body should name the sender.
@@ -79,7 +81,6 @@ All endpoints moved from `/.versia/v0.6/` to `/.versia/v0.7/`. This version also
 - [Reactions](/extensions/reactions): defined how `content` holds a custom emoji, and a Reaction is undone with a Delete.
 - [Reports](/extensions/reports): `reported` is now a list of objects holding `type` and `reference`.
 - [Share](/extensions/share): only a public Note can be shared.
-- [Vanity](/extensions/vanity): removed `aliases`, and `LanguageCode` is now BCP 47.
 - [Versia Links](/links): `instance` is required except for `compose`, usernames are allowed, and `{text}` is percent-encoded.
 
 ### Documentation
@@ -110,7 +111,7 @@ All endpoints moved from `/.versia/v0.6/` to `/.versia/v0.7/`. This version also
 - Clarified what a [Domain](/entities#domain) means in Versia.
 - [Note](/entities/note): `is_sensitive`, `attachments`, `mentions` and `previews` are now required.
 - [User](/entities/user): `fields`, `manually_approves_followers` and `indexable` are now required.
-- [Vanity](/extensions/vanity): removed the short pronoun form, since union types are hard to parse in strongly typed languages.
+- [Vanity](/extensions/profile): removed the short pronoun form, since union types are hard to parse in strongly typed languages.
 
 ## v0.5.0
 
@@ -130,7 +131,7 @@ All endpoints moved from `/.versia/v0.6/` to `/.versia/v0.7/`. This version also
 - Added URI Collections, now called [Reference Collections](/structures/collection#reference-collection). Every Collection that can contain remote entities now uses one, such as [User](/entities/user) `collections.followers`.
 - Added a `collections` field to [Notes](/entities/note). The [Likes](/extensions/likes), [Reactions](/extensions/reactions) and [Share](/extensions/share) extensions now use it, instead of a field in `extensions`.
 - [User](/entities/user) `username` may now contain uppercase letters, and is case-insensitive.
-- [Vanity](/extensions/vanity): added `timezone`.
+- [Vanity](/extensions/profile): added `timezone`.
 
 ## v0.4.0
 

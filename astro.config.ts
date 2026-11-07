@@ -39,6 +39,7 @@ export default defineConfig({
         "/federation/validation": "/validation",
         "/federation/example": "/example",
         "/structures/content-format": "/structures/media",
+        "/extensions/vanity": "/extensions/profile",
     },
     markdown: {
         processor: unified({
@@ -182,6 +183,7 @@ export default defineConfig({
                     items: [
                         link("Overview", "/extensions"),
                         link("Custom Emojis", "/extensions/custom-emojis"),
+                        link("Decorations", "/extensions/decorations"),
                         link("Delegation", "/extensions/delegation"),
                         link("Groups", "/extensions/groups"),
                         link(
@@ -195,10 +197,10 @@ export default defineConfig({
                         link("Likes", "/extensions/likes"),
                         link("Migration", "/extensions/migration"),
                         link("Polls", "/extensions/polls"),
+                        link("Profile", "/extensions/profile"),
                         link("Reactions", "/extensions/reactions"),
                         link("Reports", "/extensions/reports"),
                         link("Share", "/extensions/share"),
-                        link("Vanity", "/extensions/vanity"),
                     ],
                 },
                 {

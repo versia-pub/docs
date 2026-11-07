@@ -1,0 +1,54 @@
+---
+title: "Profile Extension"
+description: "Adds a User's pronouns, birthday, location and time zone."
+extension: pub.versia:profile
+kind: Extension
+---
+
+import Example from "../../../components/spec/Example.astro";
+import Field from "../../../components/spec/Field.astro";
+import Fields from "../../../components/spec/Fields.astro";
+
+The Profile extension adds facts about the person behind a [User](/entities/user): their pronouns, birthday, location and time zone. How the profile looks is in the [Decorations extension](/extensions/decorations).
+
+## Definition
+
+The fields go in the `pub.versia:profile` key of a User's `extensions`.
+
+<Fields name="Profile" extension="pub.versia:profile" on="User">
+    <Field name="pronouns" type="{ [key: LanguageCode]: string }">
+        The pronouns the user uses in each language, as plain text, such as `she/her` or `any`.
+
+        `LanguageCode` is a [BCP 47](https://www.rfc-editor.org/info/bcp47) language tag, for example `en-US` or `fr`.
+    </Field>
+    <Field name="birthday" type="string">
+        User's birthday. **MUST** be an [RFC 3339 `full-date`](https://datatracker.ietf.org/doc/html/rfc3339#section-5.6) (`YYYY-MM-DD`), or `--MM-DD` to leave out the year, as in [vCard](https://datatracker.ietf.org/doc/html/rfc6350#section-6.2.5).
+    </Field>
+    <Field name="location" type="string">
+        User's location, as plain text, such as `Paris, France`. It does not need to be precise.
+    </Field>
+    <Field name="timezone" type="string">
+        User's time zone. **MUST** be a name from the [IANA Time Zone Database](https://www.iana.org/time-zones), such as `America/New_York`.
+    </Field>
+
+    <Example slot="example" unchecked>
+    ```jsonc title="Example Profile"
+    {
+        // ...
+        "type": "User",
+        // ...
+        "extensions": { // [!code focus:11]
+            "pub.versia:profile": {
+                "pronouns": {
+                    "en-US": "he/they",
+                    "fr": "il/iel"
+                },
+                "birthday": "--04-12",
+                "location": "New York, NY",
+                "timezone": "America/New_York"
+            }
+        }
+    }
+    ```
+    </Example>
+</Fields>
