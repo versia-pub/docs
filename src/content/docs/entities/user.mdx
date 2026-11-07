@@ -9,7 +9,7 @@ import Example from "../../../components/spec/Example.astro";
 import Field from "../../../components/spec/Field.astro";
 import Inherits from "../../../components/spec/Inherits.astro";
 
-The `User` entity represents an account on a Versia instance. Users can subscribe to other users, and post and interact with content through extensions such as [Social](/extensions/social). Users are identified by their `id` property, which is unique within the instance. Only the instance a User is on may send or serve that User.
+The `User` entity represents an account on a Versia instance. Users can subscribe to other users, and post and interact with content through extensions such as [Social](/extensions/social). Users are identified by their `id` property, which is unique within the instance. Only the instance a User is on may send or serve that User. A User holds only what every instance needs to show and address it. A bio and custom fields are in the [Profile extension](/extensions/profile), and images such as a header are in the [Decorations extension](/extensions/decorations).
 
 ## Definition
 
@@ -22,25 +22,13 @@ The `User` entity represents an account on a Versia instance. Users can subscrib
     <Field name="avatar" type="Media">
         The user's avatar. **MUST** be an image (`image/*`).
     </Field>
-    <Field name="bio" type="RichText">
-        Short description of the user.
-    </Field>
     <Field name="display_name" type="string">
         Display name, as shown to other users. Can contain emojis and any Unicode character.
-    </Field>
-    <Field name="fields" type="Field[]" required>
-        Custom key/value pairs. For example, metadata like socials or pronouns.
-
-        <Field name="key" type="RichText" required />
-        <Field name="value" type="RichText" required />
     </Field>
     <Field name="username" type="string" required>
         The user's username. **MUST** be unique within the instance, and at least 1 character long. **MUST** be treated as changeable by the user.
 
         **MUST** contain only the following characters: `a-z`, `A-Z` (case-insensitive), `0-9`, `_` and `-`.
-    </Field>
-    <Field name="header" type="Media">
-        A header image for the user's profile. Also known as a cover photo or a banner. **MUST** be an image (`image/*`).
     </Field>
     <Field name="manually_approves_subscribers" type="boolean" required>
         If `true`, the user approves new subscribers manually. If `false`, subscribers are automatically approved. This does not affect federation, and is meant to be used for clients to display correct UI: [every `Subscribe` is still answered](/entities/subscribe#accepting-the-subscription-request).
@@ -64,19 +52,21 @@ The `User` entity represents an account on a Versia instance. Users can subscrib
             "url": "https://cdn.example.com/avatars/april.png",
             "media_type": "image/png"
         },
-        "bio": "<p>🌸🌸🌸</p>",
         "display_name": "April The Pink (limited Sand Edition)",
         "extensions": {
             "pub.versia:custom_emojis": {
                 "emojis": []
+            },
+            "pub.versia:profile": {
+                "bio": "<p>🌸🌸🌸</p>",
+                "fields": [
+                    {
+                        "key": "Website",
+                        "value": "<a href=\"https://april.example\">april.example</a>"
+                    }
+                ]
             }
         },
-        "fields": [
-            {
-                "key": "Pronouns",
-                "value": "It/its"
-            }
-        ],
         "username": "april",
         "manually_approves_subscribers": false,
         "indexable": false,

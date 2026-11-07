@@ -1,6 +1,6 @@
 ---
 title: "Profile Extension"
-description: "Adds a User's pronouns, birthday, location and time zone."
+description: "Adds a User's bio, custom fields, pronouns, birthday, location and time zone."
 extension: pub.versia:profile
 kind: Extension
 ---
@@ -9,13 +9,22 @@ import Example from "../../../components/spec/Example.astro";
 import Field from "../../../components/spec/Field.astro";
 import Fields from "../../../components/spec/Fields.astro";
 
-The Profile extension adds facts about the person behind a [User](/entities/user): their pronouns, birthday, location and time zone. How the profile looks is in the [Decorations extension](/extensions/decorations).
+The Profile extension adds what a [User](/entities/user) says about themselves: a bio, custom fields, and their pronouns, birthday, location and time zone. How the profile looks is in the [Decorations extension](/extensions/decorations).
 
 ## Definition
 
 The fields go in the `pub.versia:profile` key of a User's `extensions`.
 
 <Fields name="Profile" extension="pub.versia:profile" on="User">
+    <Field name="bio" type="RichText">
+        Short description of the user.
+    </Field>
+    <Field name="fields" type="Field[]">
+        Custom key/value pairs. For example, links to the user's other accounts.
+
+        <Field name="key" type="RichText" required />
+        <Field name="value" type="RichText" required />
+    </Field>
     <Field name="pronouns" type="{ [key: LanguageCode]: string }">
         The pronouns the user uses in each language, as plain text, such as `she/her` or `any`.
 
@@ -37,8 +46,15 @@ The fields go in the `pub.versia:profile` key of a User's `extensions`.
         // ...
         "type": "User",
         // ...
-        "extensions": { // [!code focus:11]
+        "extensions": { // [!code focus:18]
             "pub.versia:profile": {
+                "bio": "<p>Writes about trains.</p>",
+                "fields": [
+                    {
+                        "key": "Website",
+                        "value": "<a href=\"https://trains.example\">trains.example</a>"
+                    }
+                ],
                 "pronouns": {
                     "en-US": "he/they",
                     "fr": "il/iel"

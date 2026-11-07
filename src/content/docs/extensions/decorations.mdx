@@ -1,6 +1,6 @@
 ---
 title: "Decorations Extension"
-description: "Adds images around a User's avatar, a profile background and a profile sound."
+description: "Adds a User's header image, images around their avatar, a profile background and a profile sound."
 extension: pub.versia:decorations
 kind: Extension
 ---
@@ -9,13 +9,16 @@ import Example from "../../../components/spec/Example.astro";
 import Field from "../../../components/spec/Field.astro";
 import Fields from "../../../components/spec/Fields.astro";
 
-The Decorations extension changes how a [User](/entities/user)'s profile looks: images drawn over or around their avatar, a background behind the profile, and a sound to play on it. Facts about the person, such as their pronouns, are in the [Profile extension](/extensions/profile).
+The Decorations extension changes how a [User](/entities/user)'s profile looks: a header image, images drawn over or around their avatar, a background behind the profile, and a sound to play on it. Facts about the person, such as their pronouns, are in the [Profile extension](/extensions/profile).
 
 ## Definition
 
 The fields go in the `pub.versia:decorations` key of a User's `extensions`.
 
 <Fields name="Decorations" extension="pub.versia:decorations" on="User">
+    <Field name="header" type="Media">
+        A header image for the user's profile. Also known as a cover photo or a banner. **MUST** be an image (`image/*`).
+    </Field>
     <Field name="avatar_overlays" type="Media[]">
         Overlay images to be placed on top of the user's avatar. Each **MUST** be an image (`image/*`), and can be animated, such as APNG, GIF or WebP.
 
@@ -41,8 +44,14 @@ The fields go in the `pub.versia:decorations` key of a User's `extensions`.
         // ...
         "type": "User",
         // ...
-        "extensions": { // [!code focus:36]
+        "extensions": { // [!code focus:42]
             "pub.versia:decorations": {
+                "header": {
+                    "url": "https://cdn.example.com/decorations/mountains.png",
+                    "media_type": "image/png",
+                    "width": 1500,
+                    "height": 500
+                },
                 "avatar_overlays": [
                     {
                         "url": "https://cdn.example.com/decorations/cat_ears.png",
