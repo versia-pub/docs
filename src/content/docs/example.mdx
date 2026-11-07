@@ -91,9 +91,8 @@ curl https://a.example/.versia/v0.7/instance -H "Accept: application/vnd.versia+
     "type": "User",
     "created_at": "2024-10-13T18:48:19Z",
     "avatar": {
-        "image/webp": {
-            "url": "https://cdn.example.com/avatars/joe.webp"
-        }
+        "url": "https://cdn.example.com/avatars/joe.webp",
+        "media_type": "image/webp"
     },
     "display_name": "Joe Swanson (Winter Arc :gigachad:)",
     "fields": [],
@@ -106,9 +105,8 @@ curl https://a.example/.versia/v0.7/instance -H "Accept: application/vnd.versia+
                 {
                     "name": ":gigachad:",
                     "content": {
-                        "image/png": {
-                            "url": "https://cdn.example.com/emojis/gigachad.png"
-                        }
+                        "url": "https://cdn.example.com/emojis/gigachad.png",
+                        "media_type": "image/png"
                     }
                 }
             ]
@@ -131,14 +129,7 @@ Finally, `a.example` serializes the note to send it to `joe`.
     "attachments": [],
     "author": "a.example:ac41xk9dfe7302",
     "category": "microblog",
-    "content": {
-        "text/html": {
-            "content": "Hello, <a class=\"u-url mention\" href=\"https://b.example/users/bde22zi3ca8762\">@joe@b.example</a>! How are you doing today?"
-        },
-        "text/plain": {
-            "content": "Hello, @joe@b.example! How are you doing today?"
-        }
-    },
+    "content": "<p>Hello, <a href=\"https://b.example/users/bde22zi3ca8762\" data-mention=\"b.example:bde22zi3ca8762\">@joe@b.example</a>! How are you doing today?</p>",
     "visibility": "public",
     "is_sensitive": false,
     "mentions": [
@@ -160,7 +151,7 @@ curl -X POST https://b.example/.versia/v0.7/inbox \
     --data-binary @note.json \
     -H "Content-Type: application/vnd.versia+json" \
     -H "User-Agent: CoolServer/1.0 (https://coolserver.example)" \
-    -H "Versia-Signature: L6QrlslJ1TDtb74on+2icDYqBp9YVyiEqddWj9ovgb9XauAFPewjFpp1svnSy3zSkC7GgFaHpqSBireUpgYkBg==" \
+    -H "Versia-Signature: KpDCy62xzfGn80w1cmJWx6gNKd5YXEqyuLBKKkWn5ky2PMKA2DZWNNIpL6ED+RpXew2oP8u/Zj1SxMrH9gDFDQ==" \
     -H "Versia-Signed-By: a.example" \
     -H "Versia-Signed-At: 1733051946"
 ```

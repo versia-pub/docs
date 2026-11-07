@@ -11,7 +11,8 @@ import {
 // build if it stops verifying.
 
 /** The text of the note, which the home page lets readers edit. */
-export const noteText = "Hello, @joe@b.example! How are you doing today?";
+export const noteText =
+    "<p>Hello, @joe@b.example! How are you doing today?</p>";
 
 /** The body, cut where the notes beside it change. */
 export const bodyParts = [
@@ -22,11 +23,7 @@ export const bodyParts = [
     "attachments": [],
     "author": "a.example:ac41xk9dfe7302",
     "category": "microblog",`,
-    `    "content": {
-        "text/plain": {
-            "content": "${noteText}"
-        }
-    },
+    `    "content": "${noteText}",
     "visibility": "public",
     "is_sensitive": false,
     "mentions": [
@@ -49,7 +46,7 @@ export const sample = {
     body: bodyParts.join("\n"),
     signedBy: "a.example",
     signature:
-        "GlHqOSGrz+nyATm8GqbgkmVJinCJ11NurstGMaeEQVDdNyQSNFdbFEHxj6XPUVEf2jh7aFwEKYznd0d/a4mGCA==",
+        "ZvwwdlE9sYp0TS1F2rk4YVi7C7wGSFcgFA9dKUenezf/CJg5L8xn2k0ofSPGdHEYlnEIrWz8ZSw+XOe4sw0SCw==",
 };
 
 /** Whether the sample's signature covers this message, with the example key. */
