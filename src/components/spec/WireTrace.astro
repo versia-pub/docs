@@ -113,9 +113,9 @@ const { a, b, stepper = false } = Astro.props;
         color: var(--accent);
     }
 
-    /* Important, as the code block's own background is, so it stands out from the shade. */
+    /* So it stands out from the shade. */
     .trace :global(.step[data-state="current"] [data-wire-block] pre) {
-        background: var(--paper) !important;
+        background: var(--paper);
     }
 
     /* The one animation on the site: the current message crosses from one instance to the other. */

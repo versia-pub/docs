@@ -14,7 +14,7 @@ const { hasSidebar } = Astro.locals.starlightRoute;
         {hasSidebar && (
             <nav class="rail-nav" aria-label={Astro.locals.t("sidebarNav.accessibleLabel")}>
                 {/* The popover opens and closes without JavaScript. */}
-                <button class="menu-button" popovertarget="site-nav">
+                <button type="button" class="menu-button" popovertarget="site-nav">
                     <svg viewBox="0 0 24 24" aria-hidden="true" width="20" height="20">
                         <path d="M3 7h18M3 12h18M3 17h18" stroke="currentColor" stroke-width="1.5" fill="none" />
                     </svg>

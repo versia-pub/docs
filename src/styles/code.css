@@ -6,8 +6,7 @@
     /* Wrapping keeps long hashes and URLs readable without sideways scrolling. */
     white-space: pre-wrap;
     overflow-wrap: anywhere;
-    /* Beats the inline background Shiki adds. */
-    background: var(--paper-raised) !important;
+    background: var(--paper-raised);
     font-family: var(--font-mono);
     font-size: var(--code-size);
     line-height: 1.6;
