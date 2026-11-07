@@ -8,108 +8,158 @@ interface Props {
     local?: boolean;
     /** What crosses over, such as a request line, status code or entity, when worth showing. */
     label?: string;
+    /**
+     * The code block on this page that shows this message, as `heading-id:index` with the first
+     * block under that heading at 0. A trace with `stepper` lets readers open it here.
+     */
+    wire?: string;
 }
 
-const { from, request = from === "a", local = false, label } = Astro.props;
+const { from, request = from === "a", local = false, label, wire } = Astro.props;
 // Long request lines wrap at their separators rather than inside a word.
-const labelParts = label?.split(/(?<=[/?&])/);
+const labelParts = label?.split(/(?<=[/?&=])/);
 ---
 
-<li class:list={["step", `from-${from}`, { local }]}>
-    {!local && <span class="visually-hidden">{request ? "Request:" : "Response:"}</span>}{" "}
-    {labelParts && <code class="label">{labelParts.map((part) => <>{part}<wbr /></>)}</code>}{" "}
-    {Astro.slots.has("default") && <div class="text"><slot /></div>}
+<li class:list={["step", `from-${from}`, { local, response: !local && !request }]} data-wire={wire}>
     {!local && <span class="arrow" aria-hidden="true"></span>}
+    <div class="body">
+        {!local && <span class="visually-hidden">{request ? "Request:" : "Response:"}</span>}{" "}
+        {labelParts && <code class="label">{labelParts.map((part) => <>{part}<wbr /></>)}</code>}{" "}
+        {Astro.slots.has("default") && <div class="text"><slot /></div>}{" "}
+        {wire && (
+            <div class="wire" data-wire-holder hidden data-pagefind-ignore>
+                <button class="toggle" type="button" data-output="toggle-wire">Show the message</button>
+                <div class="block" data-wire-block hidden></div>
+            </div>
+        )}
+    </div>
 </li>
 
 <style>
-    /* Everything that describes a message sits above its arrow, so each arrow ends its step. */
+    /* The lanes in a narrow column and the words beside them, so the words always read left to
+       right and every step has its mark at the same height: level with its first line. */
     .step {
         position: relative;
+        display: grid;
+        grid-template-columns: calc(var(--rail-gap) + 2 * var(--rail-edge)) minmax(0, 1fr);
+        column-gap: 0.75rem;
         margin: 0;
-        padding: 0.65rem 1rem;
+        padding: 0.6rem var(--trace-frame);
         font-size: var(--text-sm);
         line-height: 1.45;
     }
 
-    .step:not(.local) {
-        padding-bottom: 0.5rem;
-    }
-
-    /* Each message reads from the side it leaves. */
-    .from-b {
-        text-align: right;
-    }
-
-    .local .text {
-        color: var(--ink-soft);
-        font-style: italic;
-    }
-
-    /* A hollow stop on the rail: this instance acts, and nothing crosses. */
-    .local::before {
-        content: "";
-        position: absolute;
-        top: calc(0.65rem + (1lh - 0.5rem) / 2);
-        left: calc(-0.25rem - 0.5px);
-        box-sizing: border-box;
-        width: 0.5rem;
-        height: 0.5rem;
-        border: 1px solid var(--ink-faint);
-        border-radius: 50%;
-        background: var(--paper);
-    }
-
-    .local.from-b::before {
-        right: calc(-0.25rem - 0.5px);
-        left: auto;
+    .body {
+        grid-column: 2;
     }
 
     .label {
         display: block;
         font-size: var(--code-size);
         font-weight: var(--weight-bold);
+        /* The same height as a line of text, so the arrow lines up with either. */
+        line-height: 1lh;
         overflow-wrap: anywhere;
     }
 
-    /* Direction has a colour: pink leaves `a`, the companion colour comes back from `b`. */
-    .arrow {
-        position: relative;
-        display: block;
-        height: 2px;
-        margin: 0.4rem -1rem 0;
-        background: var(--accent);
+    /* The toggle follows the text, rather than adding a line to every step. */
+    .text {
+        display: inline;
     }
 
-    .from-b .arrow {
-        background: var(--value);
+    .local .text {
+        color: var(--ink-soft);
+    }
+
+    .wire:not([hidden]) {
+        display: inline;
+    }
+
+    /* Quiet, as there are several to a trace and the trace is what is being read. */
+    .toggle {
+        margin-inline-start: 0.35rem;
+        padding: 0;
+        border: 0;
+        background: none;
+        color: var(--ink-soft);
+        cursor: pointer;
+        font-family: inherit;
+        font-size: var(--text-xs);
+        white-space: nowrap;
+    }
+
+    .toggle:hover {
+        color: var(--accent);
+        text-decoration: underline;
+    }
+
+    .toggle::before {
+        content: "";
+        display: inline-block;
+        width: 0.35rem;
+        height: 0.55rem;
+        margin-inline-end: 0.3rem;
+        background: currentColor;
+        clip-path: polygon(0 0, 100% 50%, 0 100%);
+    }
+
+    .toggle[aria-expanded="true"]::before {
+        transform: rotate(90deg);
+    }
+
+    /* A copy of a block from further down the page. */
+    .block {
+        margin-top: 0.4rem;
+    }
+
+    .block :global(pre) {
+        max-height: 24rem;
+        margin: 0;
+        overflow: auto;
+    }
+
+    /* A solid arrow is a request and a dashed one its response. The head and the stop show which
+       way it goes. */
+    .arrow {
+        position: relative;
+        z-index: 2;
+        grid-column: 1;
+        grid-row: 1;
+        align-self: start;
+        margin: calc(0.5lh - 1px) var(--rail-edge) 0;
+        border-top: 2px solid var(--ink-soft);
+        color: var(--ink-soft);
+    }
+
+    .response .arrow {
+        border-top-style: dashed;
     }
 
     /* The filled stop it leaves from. */
     .arrow::before {
         content: "";
         position: absolute;
-        top: -0.2rem;
-        left: calc(-0.25rem - 0.5px);
-        width: calc(0.4rem + 2px);
-        height: calc(0.4rem + 2px);
+        top: calc(-0.2rem - 1px);
+        left: calc(-0.2rem + 0.5px);
+        width: 0.4rem;
+        height: 0.4rem;
         border-radius: 50%;
-        background: inherit;
+        background: currentColor;
     }
 
     .from-b .arrow::before {
-        right: calc(-0.25rem - 0.5px);
+        right: calc(-0.2rem + 0.5px);
         left: auto;
     }
 
     .arrow::after {
         content: "";
         position: absolute;
-        top: -0.35rem;
+        top: calc(-0.3rem - 1px);
         right: 0;
-        width: 0.7rem;
-        height: calc(0.7rem + 2px);
-        background: inherit;
+        width: 0.55rem;
+        height: 0.6rem;
+        background: currentColor;
         clip-path: polygon(0 0, 100% 50%, 0 100%);
     }
 
@@ -117,6 +167,25 @@ const labelParts = label?.split(/(?<=[/?&])/);
         right: auto;
         left: 0;
         clip-path: polygon(100% 0, 0 50%, 100% 100%);
+    }
+
+    /* A hollow stop on the rail: this instance acts, and nothing crosses. */
+    .local::before {
+        content: "";
+        position: absolute;
+        z-index: 2;
+        top: calc(0.6rem + 0.5lh - 0.225rem);
+        left: calc(var(--trace-frame) + var(--rail-edge) - 0.225rem + 0.5px);
+        box-sizing: border-box;
+        width: 0.45rem;
+        height: 0.45rem;
+        border: 1px solid var(--ink-soft);
+        border-radius: 50%;
+        background: var(--paper);
+    }
+
+    .local.from-b::before {
+        left: calc(var(--trace-frame) + var(--rail-edge) + var(--rail-gap) - 0.225rem - 0.5px);
     }
 
     .visually-hidden {

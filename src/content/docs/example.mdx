@@ -18,16 +18,16 @@ This page follows one note from `a.example` to `b.example`, from resolving a men
 
 The whole exchange looks like this, and the sections below go through each step.
 
-<WireTrace a="a.example" b="b.example">
+<WireTrace a="a.example" b="b.example" stepper>
     <Message from="a" local>`@alice` posts a note that mentions `@joe@b.example`.</Message>
-    <Message from="a" label="GET /.well-known/webfinger?resource=acct:joe@b.example">[Resolve the mention](#resolving-the-mention) using WebFinger.</Message>
-    <Message from="b">Responds with the URL of `joe`'s profile.</Message>
-    <Message from="a" label="GET /.versia/v0.7/entities/User/bde22zi3ca8762">[Fetch the user](#fetching-the-user) from that URL.</Message>
-    <Message from="b" request label="GET /.versia/v0.7/instance">[Verify the signature](/signatures#verifying-the-signature). `b.example` fetches `a.example`'s metadata if it does not have its public key yet.</Message>
+    <Message from="a" label="GET /.well-known/webfinger?resource=acct:joe@b.example" wire="resolving-the-mention:0">[Resolve the mention](#resolving-the-mention) using WebFinger.</Message>
+    <Message from="b" wire="resolving-the-mention:1">Responds with the URL of `joe`'s profile.</Message>
+    <Message from="a" label="GET /.versia/v0.7/entities/User/bde22zi3ca8762" wire="fetching-the-user:0">[Fetch the user](#fetching-the-user) from that URL.</Message>
+    <Message from="b" request label="GET /.versia/v0.7/instance" wire="fetching-the-user:1">[Verify the signature](/signatures#verifying-the-signature). `b.example` fetches `a.example`'s metadata if it does not have its public key yet.</Message>
     <Message from="a" request={false}>Responds with its `InstanceMetadata`, which holds the public key.</Message>
-    <Message from="b">Responds with the `User` entity.</Message>
-    <Message from="a" local>[Serialize the note](#serializing-the-note).</Message>
-    <Message from="a" label="POST /.versia/v0.7/inbox">[Send the note](#sending-the-note) to the inbox.</Message>
+    <Message from="b" wire="fetching-the-user:2">Responds with the `User` entity.</Message>
+    <Message from="a" local wire="serializing-the-note:0">[Serialize the note](#serializing-the-note).</Message>
+    <Message from="a" label="POST /.versia/v0.7/inbox" wire="sending-the-note:0">[Send the note](#sending-the-note) to the inbox.</Message>
     <Message from="b" label="202 Accepted">Verifies the signature with the key it already has, then responds.</Message>
     <Message from="b" local>[Display the note](#displaying-the-note) to `joe`.</Message>
 </WireTrace>

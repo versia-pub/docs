@@ -1,0 +1,55 @@
+---
+import ToolButton from "../ToolButton.astro";
+---
+
+<div class="controls" data-controls hidden data-pagefind-ignore>
+    <div class="buttons">
+        <ToolButton output="play">Play</ToolButton>
+        <ToolButton output="previous">Previous</ToolButton>
+        <ToolButton output="next">Next</ToolButton>
+        <ToolButton output="show-all">Show all</ToolButton>
+    </div>
+    <p data-output="status" aria-live="polite"></p>
+</div>
+
+<script>
+    import "../../lib/wire-trace/index";
+</script>
+
+<style>
+    /* In reach through the whole trace, below the top bar on small screens. */
+    .controls {
+        position: sticky;
+        top: 3.5rem;
+        z-index: 1;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.5rem 1rem;
+        background: var(--paper-raised);
+        border-bottom: 1px solid var(--control-border);
+        font-size: var(--text-sm);
+    }
+
+    .controls[hidden] {
+        display: none;
+    }
+
+    @media (min-width: 50rem) {
+        .controls {
+            top: 0;
+        }
+    }
+
+    /* The buttons and the status share one wrapping row, to keep this short on a phone, where it
+       stays on screen. */
+    .buttons {
+        display: contents;
+    }
+
+    p {
+        margin: 0 0 0 auto;
+        color: var(--ink-soft);
+    }
+</style>

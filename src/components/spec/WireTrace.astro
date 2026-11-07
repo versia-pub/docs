@@ -1,14 +1,19 @@
 ---
+import StepControls from "../wire-trace/StepControls.astro";
+
 interface Props {
     /** The instances on the left and right lanes. */
     a: string;
     b: string;
+    /** Lets readers play the trace or walk through it, one message at a time. */
+    stepper?: boolean;
 }
 
-const { a, b } = Astro.props;
+const { a, b, stepper = false } = Astro.props;
 ---
 
-<figure class="trace">
+<figure class="trace" data-stepper={stepper || undefined}>
+    {stepper && <StepControls />}
     <div class="lanes" aria-hidden="true" data-pagefind-ignore>
         <span>{a}</span>
         <span>{b}</span>
@@ -18,24 +23,129 @@ const { a, b } = Astro.props;
 
 <style>
     .trace {
+        --rail-gap: 4.5rem;
+        /* Room for the stops, which sit on the rails and stick out past them. */
+        --rail-edge: 0.3rem;
+        --trace-frame: 0rem;
         margin: 1rem 0 2rem;
     }
 
+    @media (min-width: 50rem) {
+        .trace {
+            --rail-gap: 7rem;
+        }
+    }
+
+    /* Each name hangs off the top of its rail, so a long name never meets the other one. */
     .lanes {
-        display: flex;
-        justify-content: space-between;
-        gap: 1rem;
-        padding-bottom: 0.35rem;
+        margin-inline-start: calc(var(--trace-frame) + var(--rail-edge));
+        border-inline-start: 1px solid var(--ink-faint);
         font-family: var(--font-mono);
         font-size: var(--code-size);
         font-weight: var(--weight-bold);
     }
 
-    /* The two instances, as rails running down each side. */
+    .lanes span {
+        display: block;
+        padding-inline-start: 0.4rem;
+    }
+
+    .lanes span + span {
+        margin-inline-start: calc(var(--rail-gap) - 2px);
+        border-inline-start: 1px solid var(--ink-faint);
+    }
+
     ol {
+        position: relative;
+        isolation: isolate;
         margin: 0;
-        padding: 0.35rem 0 0.5rem;
-        border-inline: 1px solid var(--ink-faint);
+        padding: 0 0 0.5rem;
         list-style: none;
+    }
+
+    /* The two instances, running down the whole trace, above the shade of the current step. */
+    ol::before {
+        content: "";
+        position: absolute;
+        z-index: 1;
+        inset-block: 0;
+        left: calc(var(--trace-frame) + var(--rail-edge));
+        box-sizing: border-box;
+        width: var(--rail-gap);
+        border-inline: 1px solid var(--ink-faint);
+        pointer-events: none;
+    }
+
+    /* The frame every tool has. It only appears with the controls, so without JavaScript this is
+       the same plain trace as any other. */
+    .trace[data-enhanced] {
+        --trace-frame: 1rem;
+        border: 1px solid var(--control-border);
+        border-radius: var(--radius);
+    }
+
+    .trace[data-enhanced] .lanes {
+        margin-block-start: 0.75rem;
+    }
+
+    /* Clears the controls, which stay on screen while the trace scrolls under them. */
+    .trace[data-enhanced] :global(.step) {
+        scroll-margin-block: 5rem 1rem;
+    }
+
+    /* While stepping, what has not happened yet is not there. It keeps its space, so the frame and
+       the page under it hold still. An open message would leave a large gap, so it folds away and
+       comes back when its step does. */
+    .trace :global(.step[data-state="upcoming"]) {
+        visibility: hidden;
+    }
+
+    .trace :global(.step[data-state="upcoming"] [data-wire-block]) {
+        display: none;
+    }
+
+    .trace :global(.step[data-state="current"]) {
+        background: var(--paper-raised);
+    }
+
+    .trace :global(.step[data-state="current"] .arrow) {
+        border-top-color: var(--accent);
+        color: var(--accent);
+    }
+
+    /* Important, as the code block's own background is, so it stands out from the shade. */
+    .trace :global(.step[data-state="current"] [data-wire-block] pre) {
+        background: var(--paper) !important;
+    }
+
+    /* The one animation on the site: the current message crosses from one instance to the other. */
+    @media (prefers-reduced-motion: no-preference) {
+        .trace :global(.step[data-state="current"] .arrow) {
+            animation: wire-cross-right 0.5s ease-out;
+        }
+
+        .trace :global(.step.from-b[data-state="current"] .arrow) {
+            animation-name: wire-cross-left;
+        }
+    }
+
+    @keyframes wire-cross-right {
+        from {
+            clip-path: inset(-1rem 100% -1rem -1rem);
+        }
+
+        to {
+            clip-path: inset(-1rem -1rem -1rem -1rem);
+        }
+    }
+
+    @keyframes wire-cross-left {
+        from {
+            clip-path: inset(-1rem -1rem -1rem 100%);
+        }
+
+        to {
+            clip-path: inset(-1rem -1rem -1rem -1rem);
+        }
     }
 </style>
