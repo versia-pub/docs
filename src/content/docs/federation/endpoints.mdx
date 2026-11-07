@@ -116,7 +116,7 @@ Versia defines an API for server-to-server communication, mainly fetching and se
         - `{id}`: The ID of the entity to fetch.
         - `{collection_type}`: The type of the collection to fetch, [not percent-encoded](/federation/http#encoding).
 
-        Example: `GET /.versia/v0.7/entities/User/1234/collections/followers` fetches the followers of the user with ID `1234`.
+        Example: `GET /.versia/v0.7/entities/User/1234/collections/subscribers` fetches the subscribers of the user with ID `1234`.
     </div>
     <div slot="response">
         **MUST** be either a [Collection](/structures/collection) or a [ReferenceCollection](/structures/collection#reference-collection) as JSON.
@@ -124,7 +124,7 @@ Versia defines an API for server-to-server communication, mainly fetching and se
 
     <Example slot="example">
     ```http title="Example request"
-    GET /.versia/v0.7/entities/User/1234/collections/followers HTTP/1.1
+    GET /.versia/v0.7/entities/User/1234/collections/subscribers HTTP/1.1
     Host: b.example
     Accept: application/vnd.versia+json
     ```
@@ -158,7 +158,7 @@ Items **MUST** be in a stable order, oldest first, so that new items do not shif
 A collection lists only the items the requesting instance [may fetch](/federation#access).
 
 ```http title="Example paginated collection request"
-GET /.versia/v0.7/entities/User/1234/collections/followers?offset=10&limit=20 HTTP/1.1
+GET /.versia/v0.7/entities/User/1234/collections/subscribers?offset=10&limit=20 HTTP/1.1
 Host: b.example
 Accept: application/vnd.versia+json
 ```

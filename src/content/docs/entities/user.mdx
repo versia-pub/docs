@@ -9,15 +9,15 @@ import Example from "../../../components/spec/Example.astro";
 import Field from "../../../components/spec/Field.astro";
 import Inherits from "../../../components/spec/Inherits.astro";
 
-The `User` entity represents an account on a Versia instance. Users can post [Notes](/entities/note), follow other users, and interact with content. Users are identified by their `id` property, which is unique within the instance. Only the instance a User is on may send or serve that User.
+The `User` entity represents an account on a Versia instance. Users can post [Notes](/entities/note), subscribe to other users, and interact with content. Users are identified by their `id` property, which is unique within the instance. Only the instance a User is on may send or serve that User.
 
 ## Definition
 
 <Entity name="User" type="User" checker>
     <div slot="collections">
         - `outbox`: [Collection](/structures/collection) of notes authored by the user.
-        - `followers`: [Reference Collection](/structures/collection#reference-collection) of users that follow the user.
-        - `following`: [Reference Collection](/structures/collection#reference-collection) of users that the user follows.
+        - `subscribers`: [Reference Collection](/structures/collection#reference-collection) of users subscribed to the user.
+        - `subscriptions`: [Reference Collection](/structures/collection#reference-collection) of users that the user is subscribed to. It lists only Users: an extension whose types accept subscriptions can add a collection of its own for them.
         - `featured`: [Reference Collection](/structures/collection#reference-collection) of notes that the user wants to feature on their profile ("pinned" notes).
     </div>
 
@@ -44,8 +44,8 @@ The `User` entity represents an account on a Versia instance. Users can post [No
     <Field name="header" type="Media">
         A header image for the user's profile. Also known as a cover photo or a banner. **MUST** be an image (`image/*`).
     </Field>
-    <Field name="manually_approves_followers" type="boolean" required>
-        If `true`, the user approves new followers manually. If `false`, followers are automatically approved. This does not affect federation, and is meant to be used for clients to display correct UI: [every `Follow` is still answered](/entities/follow#accepting-the-follow-request).
+    <Field name="manually_approves_subscribers" type="boolean" required>
+        If `true`, the user approves new subscribers manually. If `false`, subscribers are automatically approved. This does not affect federation, and is meant to be used for clients to display correct UI: [every `Subscribe` is still answered](/entities/subscribe#accepting-the-subscription-request).
     </Field>
     <Field name="indexable" type="boolean" required>
         User consent to be indexed by search engines. If `false`, the user's profile **SHOULD NOT** be indexed.
@@ -80,13 +80,17 @@ The `User` entity represents an account on a Versia instance. Users can post [No
             }
         ],
         "username": "april",
-        "manually_approves_followers": false,
+        "manually_approves_subscribers": false,
         "indexable": false,
         "url": "https://versia.example/@april"
     }
     ```
     </Example>
 </Entity>
+
+## Subscriptions
+
+Users accept [subscriptions](/entities/subscribe). A user's subscribers receive the entities that [Delivery](/federation#delivery) sends to them, such as changes to the user.
 
 ## Addresses
 

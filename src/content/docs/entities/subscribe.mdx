@@ -1,0 +1,143 @@
+---
+title: "Subscribe"
+description: "How a User subscribes to another entity, such as a User: the Subscribe entity and the subscription's lifecycle."
+kind: Entity · Core
+---
+
+import Entity from "../../../components/spec/Entity.astro";
+import Example from "../../../components/spec/Example.astro";
+import Field from "../../../components/spec/Field.astro";
+import Inherits from "../../../components/spec/Inherits.astro";
+import Message from "../../../components/spec/Message.astro";
+import WireTrace from "../../../components/spec/WireTrace.astro";
+
+A [User](/entities/user) can subscribe to another entity to receive what it shares with its subscribers. The `Subscribe` entity starts a subscription.
+
+- **Subscriber**: The user who subscribes. If `Joe` subscribes to `Alice`, `Joe` is the subscriber.
+- **Target**: The entity subscribed to. If `Joe` subscribes to `Alice`, `Alice` is the target.
+
+Only entity types whose page says they **accept subscriptions** can be a target. In the core, that is the [User](/entities/user). An extension can make its own types accept subscriptions, as [Groups](/extensions/groups) does, and states on its page what their subscribers receive.
+
+## Definition
+
+`Subscribe` has no `author`. It **MUST** be sent by the subscriber's instance.
+
+### Checking the Sender
+
+None of the four subscription entities has an `author`. When a receiver checks [Authors and Signers](/validation#authors-and-signers), it **MUST** treat `subscriber` as the author of a `Subscribe` or an [Unsubscribe](/entities/unsubscribe), and `target` as the author of a [SubscribeAccept](/entities/subscribe-accept) or a [SubscribeReject](/entities/subscribe-reject).
+
+`target_type` **MUST** be the type of the entity that `target` points to. A receiver that holds that entity **MUST** [reject](/validation#rejecting-entities) a subscription entity whose `target_type` does not match it.
+
+<Entity name="Subscribe" type="Subscribe" transient checker>
+    <Field name="subscriber" type="Reference" required>
+        [Reference](/entities#reference) to the [User](/entities/user) who subscribes.
+    </Field>
+    <Field name="target" type="Reference" required>
+        [Reference](/entities#reference) to the entity subscribed to.
+    </Field>
+    <Field name="target_type" type="string" required>
+        Type of the entity that `target` points to, such as `User`. **MUST** be a type that accepts subscriptions.
+    </Field>
+
+    <Inherits />
+
+    <Example slot="example">
+    ```jsonc title="Example Subscribe"
+    {
+        "type": "Subscribe",
+        "created_at": "2021-01-01T00:00:00Z",
+        "subscriber": "example.org:033wv9k6n0007",
+        "target": "example.com:033qtdbdkj006",
+        "target_type": "User"
+    }
+    ```
+    </Example>
+</Entity>
+
+## Behavior
+
+`Joe`, a user on `joe.example`, wants to subscribe to `Alice`, a user on `alice.example`.
+
+### Sending a Subscription Request
+
+To start a subscription, `joe.example` **MUST** do the following:
+
+1. Create a `Subscribe` entity with `Joe` as the subscriber and `Alice` as the target.
+2. Send the `Subscribe` entity to `alice.example`'s inbox.
+3. Treat the subscription as "processing" until a `SubscribeAccept` or `SubscribeReject` arrives, or until `Joe` sends an [Unsubscribe](/entities/unsubscribe).
+
+A `Subscribe` whose `target_type` does not accept subscriptions **MUST** be [rejected](/validation#rejecting-entities).
+
+### Accepting the Subscription Request
+
+`alice.example` **MUST** answer every `Subscribe` with a [SubscribeAccept](/entities/subscribe-accept) or a [SubscribeReject](/entities/subscribe-reject), even if [`manually_approves_subscribers`](/entities/user#user-manually-approves-subscribers) is `false`. If `Joe` is already subscribed to `Alice` and sends another `Subscribe`, `alice.example` **MUST** send a `SubscribeAccept` again, in case the first was lost.
+
+The answer can wait for `Alice` to decide. There is no time limit on a pending `Subscribe`.
+
+To accept the subscription request, `alice.example` **MUST** do the following:
+
+1. Create a [SubscribeAccept](/entities/subscribe-accept) entity with `Joe` as the subscriber and `Alice` as the target.
+2. Send the `SubscribeAccept` entity to `joe.example`'s inbox.
+
+It then treats `Joe` as a subscriber of `Alice`.
+
+### Rejecting the Subscription Request
+
+To reject the subscription request, `alice.example` **MUST** do the following:
+
+1. Create a [SubscribeReject](/entities/subscribe-reject) entity with `Joe` as the subscriber and `Alice` as the target.
+2. Send the `SubscribeReject` entity to `joe.example`'s inbox.
+
+### Cancelling the Subscription Request
+
+To cancel a subscription request that has not been answered, `joe.example` sends an [Unsubscribe](/entities/unsubscribe).
+
+### Final Steps
+
+`joe.example` **MUST** mark the subscription as "accepted" when it receives a `SubscribeAccept`, and remove it when it receives a `SubscribeReject`.
+
+### Delivering Entities
+
+Which entities reach a subscriber is defined in [Delivery](/federation#delivery), and by the page of each type that accepts subscriptions.
+
+### Ending the Subscription
+
+`Joe` ends the subscription by sending an [Unsubscribe](/entities/unsubscribe). `Alice` ends it by sending a [SubscribeReject](/entities/subscribe-reject), which removes `Joe` as a subscriber. An `Unsubscribe` is **not** used to remove a subscriber.
+
+### Flows
+
+Every message here is sent to the inbox of the other user's instance. A subscription request is either accepted:
+
+<WireTrace a="joe.example" b="alice.example">
+    <Message from="a" label="Subscribe">`Joe` asks to subscribe to `Alice`.</Message>
+    <Message from="a" local>Marks the subscription as "processing".</Message>
+    <Message from="b" request label="SubscribeAccept">`Alice` accepts.</Message>
+    <Message from="b" local>Marks the subscription as "accepted".</Message>
+    <Message from="a" local>Marks the subscription as "accepted".</Message>
+</WireTrace>
+
+Or rejected:
+
+<WireTrace a="joe.example" b="alice.example">
+    <Message from="a" label="Subscribe">`Joe` asks to subscribe to `Alice`.</Message>
+    <Message from="a" local>Marks the subscription as "processing".</Message>
+    <Message from="b" request label="SubscribeReject">`Alice` rejects.</Message>
+    <Message from="b" local>Optionally, logs the rejection.</Message>
+    <Message from="a" local>Removes the subscription.</Message>
+</WireTrace>
+
+Once accepted, the subscription ends when `Joe` [unsubscribes](/entities/unsubscribe):
+
+<WireTrace a="joe.example" b="alice.example">
+    <Message from="a" label="Unsubscribe">`Joe` unsubscribes from `Alice`.</Message>
+    <Message from="a" local>Removes the subscription.</Message>
+    <Message from="b" local>Removes the subscription.</Message>
+</WireTrace>
+
+Or when `Alice` removes `Joe` as a subscriber:
+
+<WireTrace a="joe.example" b="alice.example">
+    <Message from="b" request label="SubscribeReject">`Alice` removes `Joe` as a subscriber.</Message>
+    <Message from="b" local>Removes the subscription.</Message>
+    <Message from="a" local>Removes the subscription.</Message>
+</WireTrace>

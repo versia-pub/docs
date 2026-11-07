@@ -1,0 +1,42 @@
+---
+title: "SubscribeAccept"
+description: "Accepts a pending Subscribe."
+kind: Entity · Core
+---
+
+import Entity from "../../../components/spec/Entity.astro";
+import Example from "../../../components/spec/Example.astro";
+import Field from "../../../components/spec/Field.astro";
+import Inherits from "../../../components/spec/Inherits.astro";
+
+Accepts a pending [Subscribe](/entities/subscribe). How subscriptions work is described under [Subscribe](/entities/subscribe#behavior).
+
+## Definition
+
+`SubscribeAccept` has no `author`. It **MUST** be sent by the target's instance. Receivers check this as [Subscribe describes](/entities/subscribe#checking-the-sender).
+
+<Entity name="SubscribeAccept" type="SubscribeAccept" transient checker>
+    <Field name="subscriber" type="Reference" required>
+        [Reference](/entities#reference) to the [User](/entities/user) whose subscription is accepted.
+    </Field>
+    <Field name="target" type="Reference" required>
+        [Reference](/entities#reference) to the entity subscribed to.
+    </Field>
+    <Field name="target_type" type="string" required>
+        Type of the entity that `target` points to, such as `User`.
+    </Field>
+
+    <Inherits />
+
+    <Example slot="example">
+    ```jsonc title="Example SubscribeAccept"
+    {
+        "type": "SubscribeAccept",
+        "created_at": "2021-01-01T00:00:00Z",
+        "subscriber": "example.org:033wv9k6n0007",
+        "target": "example.com:033qtdbdkj006",
+        "target_type": "User"
+    }
+    ```
+    </Example>
+</Entity>

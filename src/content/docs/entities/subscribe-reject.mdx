@@ -1,0 +1,42 @@
+---
+title: "SubscribeReject"
+description: "Rejects a pending Subscribe, or removes a subscriber."
+kind: Entity · Core
+---
+
+import Entity from "../../../components/spec/Entity.astro";
+import Example from "../../../components/spec/Example.astro";
+import Field from "../../../components/spec/Field.astro";
+import Inherits from "../../../components/spec/Inherits.astro";
+
+Rejects a pending [Subscribe](/entities/subscribe), or removes a subscriber after the subscription has been accepted. How subscriptions work is described under [Subscribe](/entities/subscribe#behavior).
+
+## Definition
+
+`SubscribeReject` has no `author`. It **MUST** be sent by the target's instance. Receivers check this as [Subscribe describes](/entities/subscribe#checking-the-sender).
+
+<Entity name="SubscribeReject" type="SubscribeReject" transient checker>
+    <Field name="subscriber" type="Reference" required>
+        [Reference](/entities#reference) to the [User](/entities/user) whose subscription is rejected or removed.
+    </Field>
+    <Field name="target" type="Reference" required>
+        [Reference](/entities#reference) to the entity subscribed to.
+    </Field>
+    <Field name="target_type" type="string" required>
+        Type of the entity that `target` points to, such as `User`.
+    </Field>
+
+    <Inherits />
+
+    <Example slot="example">
+    ```jsonc title="Example SubscribeReject"
+    {
+        "type": "SubscribeReject",
+        "created_at": "2021-01-01T00:00:00Z",
+        "subscriber": "example.org:033wv9k6n0007",
+        "target": "example.com:033qtdbdkj006",
+        "target_type": "User"
+    }
+    ```
+    </Example>
+</Entity>

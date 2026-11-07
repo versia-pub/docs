@@ -23,7 +23,7 @@ export interface CheckResult {
 const UNKNOWN_FIELDS = "/validation#unknown-fields-and-types";
 const OPTIONAL_FIELDS = "/json#optional-fields";
 
-/** "a Note", "an Unfollow", but "a User". */
+/** "a Note", "an Unsubscribe", but "a User". */
 export const withArticle = (name: string) =>
     `${/^(?!Us)[AEIOU]/i.test(name) ? "an" : "a"} ${name}`;
 
@@ -39,7 +39,7 @@ const describe = (value: unknown) => {
     return `\`${String(value)}\``;
 };
 
-/** `"public" | "followers"` as its values, or nothing for any other type. */
+/** `"public" | "subscribers"` as its values, or nothing for any other type. */
 const literals = (type: string) => {
     const parts = type.split("|").map((part) => part.trim());
     return parts.every((part) => /^"[^"]*"$/.test(part))

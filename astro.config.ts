@@ -40,6 +40,10 @@ export default defineConfig({
         "/federation/example": "/example",
         "/structures/content-format": "/structures/media",
         "/extensions/vanity": "/extensions/profile",
+        "/entities/follow": "/entities/subscribe",
+        "/entities/follow-accept": "/entities/subscribe-accept",
+        "/entities/follow-reject": "/entities/subscribe-reject",
+        "/entities/unfollow": "/entities/unsubscribe",
     },
     markdown: {
         processor: unified({
@@ -155,10 +159,18 @@ export default defineConfig({
                     items: [
                         link("Note", "/entities/note", true),
                         link("User", "/entities/user", true),
-                        link("Follow", "/entities/follow", true),
-                        link("FollowAccept", "/entities/follow-accept", true),
-                        link("FollowReject", "/entities/follow-reject", true),
-                        link("Unfollow", "/entities/unfollow", true),
+                        link("Subscribe", "/entities/subscribe", true),
+                        link(
+                            "SubscribeAccept",
+                            "/entities/subscribe-accept",
+                            true,
+                        ),
+                        link(
+                            "SubscribeReject",
+                            "/entities/subscribe-reject",
+                            true,
+                        ),
+                        link("Unsubscribe", "/entities/unsubscribe", true),
                         link("Delete", "/entities/delete", true),
                         link(
                             "InstanceMetadata",

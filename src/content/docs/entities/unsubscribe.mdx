@@ -1,0 +1,42 @@
+---
+title: "Unsubscribe"
+description: "Ends a subscription, or cancels a pending subscription request."
+kind: Entity · Core
+---
+
+import Entity from "../../../components/spec/Entity.astro";
+import Example from "../../../components/spec/Example.astro";
+import Field from "../../../components/spec/Field.astro";
+import Inherits from "../../../components/spec/Inherits.astro";
+
+Ends a subscription, or [cancels a pending subscription request](/entities/subscribe#cancelling-the-subscription-request). How subscriptions work is described under [Subscribe](/entities/subscribe#behavior).
+
+## Definition
+
+`Unsubscribe` has no `author`. It **MUST** be sent by the subscriber's instance. Receivers check this as [Subscribe describes](/entities/subscribe#checking-the-sender).
+
+<Entity name="Unsubscribe" type="Unsubscribe" transient checker>
+    <Field name="subscriber" type="Reference" required>
+        [Reference](/entities#reference) to the [User](/entities/user) who unsubscribes.
+    </Field>
+    <Field name="target" type="Reference" required>
+        [Reference](/entities#reference) to the entity unsubscribed from.
+    </Field>
+    <Field name="target_type" type="string" required>
+        Type of the entity that `target` points to, such as `User`.
+    </Field>
+
+    <Inherits />
+
+    <Example slot="example">
+    ```jsonc title="Example Unsubscribe"
+    {
+        "type": "Unsubscribe",
+        "created_at": "2021-01-01T00:00:00Z",
+        "subscriber": "example.org:033wv9k6n0007",
+        "target": "example.com:033qtdbdkj006",
+        "target_type": "User"
+    }
+    ```
+    </Example>
+</Entity>

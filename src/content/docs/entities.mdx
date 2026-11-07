@@ -134,10 +134,11 @@ A reference does not say what type of entity it points to, but [fetching an enti
 
 ```jsonc
 {
-    "type": "Follow",
-    "author": "example.com:033wv9k6n0007", // [!code focus]
+    "type": "Subscribe",
     "created_at": "2021-01-01T00:00:00Z",
-    "followee": "example.org:033qtdbdkj006" // [!code focus]
+    "subscriber": "example.com:033wv9k6n0007", // [!code focus]
+    "target": "example.org:033qtdbdkj006", // [!code focus]
+    "target_type": "User"
 }
 ```
 

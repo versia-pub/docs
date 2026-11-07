@@ -50,7 +50,7 @@ const nameOf = (node: JsxElement) => {
     return value;
 };
 
-/** A plain string, or a string in braces, such as `type={'"public" | "followers"'}`. */
+/** A plain string, or a string in braces, such as `type={'"public" | "subscribers"'}`. */
 const stringAttribute = (node: JsxElement, name: string) => {
     const value = attribute(node, name)?.value;
     if (typeof value === "string" || value === null || value === undefined) {

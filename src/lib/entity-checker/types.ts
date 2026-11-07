@@ -4,7 +4,7 @@ type FieldFormat = "id" | "sha256" | "base64" | "non-negative" | "media-type";
 /** A field as its sheet lists it. `remark-spec` reads these from the page. */
 export interface FieldSpec {
     name: string;
-    /** As the sheet writes it, such as `Reference[]` or `"public" | "followers"`. */
+    /** As the sheet writes it, such as `Reference[]` or `"public" | "subscribers"`. */
     type?: string;
     required: boolean;
     numberType?: "float" | "integer";
@@ -16,7 +16,7 @@ export interface FieldSpec {
 }
 
 export interface EntitySchema {
-    /** Such as "Follow". */
+    /** Such as "Subscribe". */
     name: string;
     /** The value of its `type` field. */
     type: string;

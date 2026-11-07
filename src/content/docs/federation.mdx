@@ -48,12 +48,12 @@ A sender **MUST** deliver each entity to the instances hosting the users below. 
 
 | Entity | Delivered to |
 | --- | --- |
-| [Note](/entities/note), `visibility` is `public` | The author's followers, the users it mentions, and the authors of the Notes it replies to and quotes |
-| Note, `visibility` is `followers` | The author's followers, the users it mentions, and the authors of the Notes it replies to |
+| [Note](/entities/note), `visibility` is `public` | The author's subscribers, the users it mentions, and the authors of the Notes it replies to and quotes |
+| Note, `visibility` is `subscribers` | The author's subscribers, the users it mentions, and the authors of the Notes it replies to |
 | Note, `visibility` is `mentions` | The users it mentions and the authors of the Notes it replies to |
-| [User](/entities/user), after a change | The user's followers |
-| [Follow](/entities/follow), [Unfollow](/entities/unfollow) | The followee |
-| [FollowAccept](/entities/follow-accept), [FollowReject](/entities/follow-reject) | The follower |
+| [User](/entities/user), after a change | The user's subscribers |
+| [Subscribe](/entities/subscribe), [Unsubscribe](/entities/unsubscribe) | The target |
+| [SubscribeAccept](/entities/subscribe-accept), [SubscribeReject](/entities/subscribe-reject) | The subscriber |
 
 [Changing an entity](/entities#changing-an-entity) or sending a [Delete](/entities/delete) for it goes to the same audience, as it stands at that moment.
 
@@ -67,7 +67,7 @@ Requests identify an instance, not a user, so access is decided per instance. An
 | --- | --- |
 | [User](/entities/user) | Any instance |
 | [Note](/entities/note), `visibility` is `public` | Any instance |
-| Note, `visibility` is `followers` | Instances hosting a follower of the author, a mentioned user, or the author of a Note it replies to |
+| Note, `visibility` is `subscribers` | Instances hosting a subscriber of the author, a mentioned user, or the author of a Note it replies to |
 | Note, `visibility` is `mentions` | Instances hosting a mentioned user or the author of a Note it replies to |
 
 An instance that fetches an entity **MUST** apply the same limits to its own users.
@@ -80,4 +80,4 @@ Delivery order is not guaranteed. An instance can receive a Like before the Note
 
 A receiver **SHOULD** fetch referenced entities it does not have. If it cannot, it **MAY** retry later or drop the entity.
 
-An entity with nothing to apply to, such as a [FollowAccept](/entities/follow-accept) with no pending request, **MUST** be ignored, and is not an error.
+An entity with nothing to apply to, such as a [SubscribeAccept](/entities/subscribe-accept) with no pending request, **MUST** be ignored, and is not an error.

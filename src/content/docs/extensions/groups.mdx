@@ -42,7 +42,7 @@ Only the instance hosting a group may send or serve that Group.
         <Note>
             **This is meant as a UI hint** and does not guarantee that group subscriptions will be accepted or rejected.
 
-            It is similar to a [User](/entities/user)'s `manually_approves_followers` field.
+            It is similar to a [User](/entities/user)'s `manually_approves_subscribers` field.
         </Note>
     </Field>
     <Field name="url" type="URI">
@@ -93,122 +93,6 @@ Members of the group can see the Note, on top of the audience its `visibility` g
     </Example>
 </Fields>
 
-### GroupSubscribe
-
-Indicates that a [User](/entities/user) wishes to subscribe to a group. **MUST** be sent by the subscriber's instance.
-
-<Entity name="GroupSubscribe" type="pub.versia:groups/Subscribe" transient>
-    <Field name="type" type="string" required>
-        **MUST** be `pub.versia:groups/Subscribe`.
-    </Field>
-    <Field name="subscriber" type="Reference" required>
-        [Reference](/entities#reference) to the [User](/entities/user) subscribing to the group.
-    </Field>
-    <Field name="group" type="Reference" required>
-        [Reference](/entities#reference) to the group to subscribe to.
-    </Field>
-
-    <Inherits />
-
-    <Example slot="example">
-    ```jsonc title="Example GroupSubscribe"
-    {
-        "type": "pub.versia:groups/Subscribe",
-        "subscriber": "versia.example:034d3fsjny007",
-        "group": "example.com:033j6qrwzt002",
-        "created_at": "2021-01-01T00:00:00Z"
-    }
-    ```
-    </Example>
-</Entity>
-
-### GroupUnsubscribe
-
-Indicates that a [User](/entities/user) wishes to unsubscribe from a group. **MUST** be sent by the subscriber's instance.
-
-<Entity name="GroupUnsubscribe" type="pub.versia:groups/Unsubscribe" transient>
-    <Field name="type" type="string" required>
-        **MUST** be `pub.versia:groups/Unsubscribe`.
-    </Field>
-    <Field name="subscriber" type="Reference" required>
-        [Reference](/entities#reference) to the [User](/entities/user) unsubscribing from the group.
-    </Field>
-    <Field name="group" type="Reference" required>
-        [Reference](/entities#reference) to the group to unsubscribe from.
-    </Field>
-
-    <Inherits />
-
-    <Example slot="example">
-    ```jsonc title="Example GroupUnsubscribe"
-    {
-        "type": "pub.versia:groups/Unsubscribe",
-        "subscriber": "versia.example:034d3fsjny007",
-        "group": "example.com:033j6qrwzt002",
-        "created_at": "2021-01-01T00:00:00Z"
-    }
-    ```
-    </Example>
-</Entity>
-
-### GroupSubscribeAccept
-
-Indicates that a [Group](#group) has accepted a [User](/entities/user)'s subscription request. **MUST** be sent by the instance hosting the group.
-
-<Entity name="GroupSubscribeAccept" type="pub.versia:groups/SubscribeAccept" transient>
-    <Field name="type" type="string" required>
-        **MUST** be `pub.versia:groups/SubscribeAccept`.
-    </Field>
-    <Field name="subscriber" type="Reference" required>
-        [Reference](/entities#reference) to the [User](/entities/user) whose subscription was accepted.
-    </Field>
-    <Field name="group" type="Reference" required>
-        [Reference](/entities#reference) to the group that accepted the subscription.
-    </Field>
-
-    <Inherits />
-
-    <Example slot="example">
-    ```jsonc title="Example GroupSubscribeAccept"
-    {
-        "type": "pub.versia:groups/SubscribeAccept",
-        "subscriber": "versia.example:034d3fsjny007",
-        "group": "example.com:033j6qrwzt002",
-        "created_at": "2021-01-01T00:00:00Z"
-    }
-    ```
-    </Example>
-</Entity>
-
-### GroupSubscribeReject
-
-Indicates that a [Group](#group) has rejected a [User](/entities/user)'s subscription request. **MUST** be sent by the instance hosting the group.
-
-<Entity name="GroupSubscribeReject" type="pub.versia:groups/SubscribeReject" transient>
-    <Field name="type" type="string" required>
-        **MUST** be `pub.versia:groups/SubscribeReject`.
-    </Field>
-    <Field name="subscriber" type="Reference" required>
-        [Reference](/entities#reference) to the [User](/entities/user) whose subscription was rejected.
-    </Field>
-    <Field name="group" type="Reference" required>
-        [Reference](/entities#reference) to the group that rejected the subscription.
-    </Field>
-
-    <Inherits />
-
-    <Example slot="example">
-    ```jsonc title="Example GroupSubscribeReject"
-    {
-        "type": "pub.versia:groups/SubscribeReject",
-        "subscriber": "versia.example:034d3fsjny007",
-        "group": "example.com:033j6qrwzt002",
-        "created_at": "2021-01-01T00:00:00Z"
-    }
-    ```
-    </Example>
-</Entity>
-
 ### GroupFederate
 
 The `GroupFederate` entity tells an instance to fetch a Note posted to a group. **MUST** be sent by the instance hosting the group.
@@ -244,16 +128,9 @@ A receiver **MUST** ignore a `GroupFederate` that does not come from the instanc
 
 ### Subscribing to Groups
 
-[Users](/entities/user) may "subscribe" to a Group in order to receive all [Notes](/entities/note) posted to it. The mechanism by which federation is handled is described under [Federation](#federation).
+Groups accept [subscriptions](/entities/subscribe). A [User](/entities/user) joins a group by sending a [Subscribe](/entities/subscribe) whose `target_type` is `pub.versia:groups/Group`, and leaves it with an [Unsubscribe](/entities/unsubscribe). The group's instance answers as for any subscription, including when the group is `open`, and a [SubscribeReject](/entities/subscribe-reject) also removes a member.
 
-A subscription works like a [Follow](/entities/follow):
-
-- A [User](/entities/user)'s instance sends a `GroupSubscribe`, and the subscription is pending until the group's instance answers.
-- The group's instance **MUST** answer with a `GroupSubscribeAccept` or a `GroupSubscribeReject`, including when the group is `open`. It **MUST** send the `GroupSubscribeAccept` again if it receives a `GroupSubscribe` from a user who is already a member.
-- A `GroupUnsubscribe` ends a subscription and cancels a pending one.
-- A `GroupSubscribeReject` also removes a user who is already a member.
-
-Once accepted, the user is a member of the group and receives the Notes posted to it.
+A Group's subscribers are its **members**, listed in its `members` collection. They receive the Notes posted to it, as described under [Federation](#federation).
 
 ### Federation
 
@@ -271,8 +148,6 @@ When a Note posted to a group changes or is deleted, the group's instance **MUST
 
 | Entity | Delivered to |
 | --- | --- |
-| `GroupSubscribe`, `GroupUnsubscribe` | The group's instance |
-| `GroupSubscribeAccept`, `GroupSubscribeReject` | The subscriber's instance |
 | `GroupFederate` | Instances hosting a member of the group |
 | [Group](#group), after a change or [Delete](/entities/delete) | Instances hosting a member of the group |
 

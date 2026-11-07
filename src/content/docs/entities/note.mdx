@@ -56,11 +56,11 @@ A `Note` is a piece of content posted by a [User](/entities/user). Notes can con
         <Field name="version" type="string" />
         <Field name="url" type="string" />
     </Field>
-    <Field name="visibility" type={'"public" | "followers" | "mentions"'} required>
+    <Field name="visibility" type={'"public" | "subscribers" | "mentions"'} required>
         Who can see the note, besides its author:
 
         - `public`: Anyone.
-        - `followers`: The author's followers, the users mentioned in the note, and the authors of the Notes it replies to.
+        - `subscribers`: The author's subscribers, the users mentioned in the note, and the authors of the Notes it replies to.
         - `mentions`: Only the users mentioned in the note, and the authors of the Notes it replies to.
     </Field>
     <Field name="is_sensitive" type="boolean" required>

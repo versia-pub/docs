@@ -26,9 +26,9 @@ The structure defined in this document **MUST** be inserted in the `pub.versia:i
         Values of `InteractionGroup`:
         - `everyone`: Includes every single User in the federation.
         - `mentioned`: Includes every mentioned User.
-        - `followers`: Includes every follower of the author.
-        - `following`: Includes every User that the author follows.
-        - `mutuals`: Includes every mutual of the author (that is, every User that is both a follower and followed by the author).
+        - `subscribers`: Includes every subscriber of the author.
+        - `subscriptions`: Includes every User that the author is subscribed to.
+        - `mutuals`: Includes every mutual of the author (that is, every User that is both a subscriber of the author and subscribed to by the author).
         - `group`: Includes every User in the [Group](/extensions/groups) that this Note was posted to, if any. If Note is not posted to a [Group](/extensions/groups), this value has no effect.
     </Field>
 
@@ -56,7 +56,7 @@ The instance hosting the Note's author **MUST NOT** apply an interaction the use
 
 A refused interaction **MUST** be [rejected](/validation#rejecting-entities). The instance **MAY** also tell the sender through the [Instance Messaging](/extensions/instance-messaging) extension.
 
-Implementations **SHOULD** keep related [Collections](/structures/collection) and [Reference Collections](/structures/collection#reference-collection), such as a user's followers, up to date, so as not to refuse an interaction based on outdated data.
+Implementations **SHOULD** keep related [Collections](/structures/collection) and [Reference Collections](/structures/collection#reference-collection), such as a user's subscribers, up to date, so as not to refuse an interaction based on outdated data.
 
 To avoid server load from constant Collection refreshing, implementations **MAY** only refetch associated Collections when forbidden interactions are detected, then recalculate permissions again.
 
@@ -82,7 +82,7 @@ Extensions **MAY** register their own interaction types. The name of an interact
     "extensions": { // [!code focus:7]
         "pub.versia:interaction_controls": {
             "reply": {
-                "allowed": ["followers"]
+                "allowed": ["subscribers"]
             }
         }
     }
