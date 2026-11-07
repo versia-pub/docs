@@ -1,3 +1,4 @@
+import process from "node:process";
 import { unified } from "@astrojs/markdown-remark";
 import starlight from "@astrojs/starlight";
 import { transformerNotationFocus } from "@shikijs/transformers";
@@ -10,6 +11,12 @@ import {
 } from "./src/lib/rehype-spec.ts";
 import { remarkSpec } from "./src/lib/remark-spec.ts";
 import { transformerFieldLinks } from "./src/lib/shiki-field-links.ts";
+
+/**
+ * The Plausible site that visits count under, such as `versia.pub` or `dev.versia.pub`. Only the
+ * deployments that should be counted set it, so local and preview builds load no analytics.
+ */
+const plausibleDomain = process.env.PLAUSIBLE_DOMAIN;
 
 const O = "./src/components/overrides";
 const link = (label: string, path: string, ident = false) => ({
@@ -74,15 +81,20 @@ export default defineConfig({
                     tag: "meta",
                     attrs: { property: "og:image:alt", content: "Versia logo" },
                 },
-                {
-                    tag: "script",
-                    attrs: {
-                        defer: true,
-                        src: "/pl.js",
-                        "data-domain": "versia.pub",
-                        "data-api": "https://logs.cpluspatch.com/api/event",
-                    },
-                },
+                ...(plausibleDomain
+                    ? [
+                          {
+                              tag: "script" as const,
+                              attrs: {
+                                  defer: true,
+                                  src: "/pl.js",
+                                  "data-domain": plausibleDomain,
+                                  "data-api":
+                                      "https://logs.cpluspatch.com/api/event",
+                              },
+                          },
+                      ]
+                    : []),
             ],
             routeMiddleware: "./src/lib/route-middleware.ts",
             favicon: "/favicon.png",
