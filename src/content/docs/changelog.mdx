@@ -27,17 +27,19 @@ This is Working Draft 7. All endpoints moved from `/.versia/v0.6/` to `/.versia/
 - [An entity's `author` must belong to the instance that signed the message](/federation/validation#authors-and-signers), whether it was delivered or fetched. This also covers each entity in a Collection's `items`.
 - [References](/entities#reference) must always be `domain:id`, using a [Domain](/api/basics#domain) as their prefix, so they cannot be bare IDs or contain port numbers or IP addresses. Their definition moved to [Entities](/entities#reference).
 - [Domains](/api/basics#domain) are now defined by RFC 1123 and IDNA, and must be lowercase.
+- [Domains](/api/basics#domain) cannot be IP addresses or single labels.
 - [User addresses](/entities/user#addresses) now only allow usernames.
 
 ### Data Model
 
-- All JSON must now be an [I-JSON message](/json). `u64` values are whole numbers up to 2^53-1, in any notation.
-- Unix-style `\n` line breaks inside string values are now recommended, not required.
+- All JSON must now be an [I-JSON message](/json). Numeric fields are now `integer`, a whole number up to 2^53-1 in any notation, or `float`. These replace `u64` and `f64`.
+- An entity with a `\r\n` line break inside a string value is now invalid.
+- Strings and arrays may be empty unless their field says otherwise. [`id`](/entities), `username` and a Reaction's `content` have at least 1 character.
 - Senders may now omit [optional fields](/json#optional-fields) instead of setting them to `null`. Both mean the same, and receivers must accept both.
 - [Entities](/entities), structures and [transient entities](/entities#transient-entities) now have definitions. Transient entities have no `id`.
 - Added [`updated_at`](/entities) and defined [how an entity changes](/entities#changing-an-entity): the whole entity is sent again with the same `id`, and `id`, `type`, `author` and `created_at` cannot change.
 - Removed `$schema` from entities, and `author` from [Collections](/structures/collection) and Reference Collections.
-- [ContentFormat](/structures/content-format): `remote` is replaced by having exactly one of `content` or `url`, `hash` is now a `string`, and text formats have a defined order.
+- [ContentFormat](/structures/content-format): `remote` is replaced by having exactly one of `content` or `url`, `hash` is now a lowercase hexadecimal `string`, `thumbhash` is standard padded base64, and text formats have a defined order.
 - Renamed URI Collection to [Reference Collection](/structures/collection#reference-collection). A Collection only holds entities authored on the instance serving it.
 - [Note](/entities/note): `quotes` is now `quoting`, and the new required `visibility` field replaces the `group` field's visibility values. Groups moved to the [Groups extension](/extensions/groups).
 - [User](/entities/user): `birthday` is now a full date, in the [Vanity extension](/extensions/vanity). Whether a well-formed date is plausible is up to implementations.
@@ -51,29 +53,36 @@ This is Working Draft 7. All endpoints moved from `/.versia/v0.6/` to `/.versia/
 - Added a [status code table](/federation/http#status-codes) and an optional error body.
 - Rate limits now use `429` and `Retry-After`, replacing the expired IETF draft headers. Added retry rules.
 - Defined media types per route. `Content-Type` is now `application/vnd.versia+json`, with `charset=utf-8` optional, and the inbox no longer needs an `Accept` header.
-- [Follow](/entities/follow): the followee's instance must answer every Follow, Unfollow cancels a pending request, and [FollowReject](/entities/follow-reject) also removes an existing follower.
-- [Delete](/entities/delete): `author` is optional, instances can delete, and the instance hosting the entity must send the Delete. Added `410` and `404` for fetching deleted entities.
+- [Follow](/entities/follow): the followee's instance must answer every Follow, with no time limit on a pending request, Unfollow cancels a pending request, and [FollowReject](/entities/follow-reject) also removes an existing follower.
+- [Delete](/entities/delete): `author` is optional, instances can delete, and the instance hosting the entity must send the Delete. A Delete whose `deleted_type` differs from the stored type is ignored. Added `410` and `404` for fetching deleted entities.
+- [Outboxes](/federation#outboxes) hold the Notes a user has authored.
 - Added an [endpoint for instance collections](/api/endpoints#instance-collections), since Instance Metadata has no `id`, and defined [pagination](/api/endpoints#pagination).
 - [Extension endpoints](/extensions) must be under `/.versia/v0.X/extensions/<extension name>/`. Extensions now state their own delivery and access rules.
+- Entity types and collection names in paths are [no longer percent-encoded](/api/basics#encoding), as in `/entities/pub.versia:groups/Group/1234`.
 - Entity types in URLs are always capitalized, and examples no longer have port numbers in domains.
 
 ### Extensions
 
+- Extensions now have [versions](/extensions#versions), listed in `compatibility.extensions` as `pub.versia:likes@1`. Instances use the highest version they have in common.
+- Extension values must be JSON objects, namespaces must come from a domain the author controls, and `pub.versia` is reserved.
 - All entities that act on another entity ([Like, Dislike](/extensions/likes), [Share](/extensions/share), [Reaction](/extensions/reactions) and [Vote](/extensions/polls)) now use `target`.
-- [Delegation](/extensions/delegation): now only changes who an action is shown as. It grants no rights over the other user's entities.
+- [Delegation](/extensions/delegation): now only changes who an action is shown as. It grants no rights over the other user's entities. A delegator that cannot be fetched counts as not listing the delegate.
 - [Groups](/extensions/groups): defined subscription, moderators and federation, and `GroupFederate.note` is now `target`. The instance of a Note's author sends the Note to the group's instance, which sends a `GroupFederate` to its members' instances, and those fetch the Note.
-- [Instance Messaging](/extensions/instance-messaging): named `pub.versia:instance_messaging` so that instances can list it in `compatibility.extensions`, moved to the extensions path, and defined as unsigned with untrusted text.
+- [Instance Messaging](/extensions/instance-messaging): named `pub.versia:instance_messaging` so that instances can list it in `compatibility.extensions`, moved to the extensions path, and defined as unsigned with untrusted text. The body should name the sender.
 - [Interaction Controls](/extensions/interaction-controls): only `allowed` remains, priorities are gone, keys are entity types, and the `InteractionGroup` values now match their descriptions (`followed` is gone, `following` and `mentioned` are added).
 - [Migration](/extensions/migration): `new` is now `destination`, and `previous` is optional. Migrations have defined delivery, and relationships move through normal Follows.
 - [Polls](/extensions/polls): `options` is now a list of objects holding `content` and `votes`. A Vote can change by being sent again, and is withdrawn by a Delete, but its `target` cannot change.
+- [Reactions](/extensions/reactions): defined how `content` holds a custom emoji, and a Reaction is undone with a Delete.
 - [Reports](/extensions/reports): `reported` is now a list of objects holding `type` and `reference`.
+- [Share](/extensions/share): only a public Note can be shared.
 - [Vanity](/extensions/vanity): removed `aliases`, and `LanguageCode` is now BCP 47.
 - [Versia Links](/links): `instance` is required except for `compose`, usernames are allowed, and `:text` is percent-encoded.
 
 ### Documentation
 
 - Requirements now use [BCP 14](/introduction#vocabulary) key words, only in bold capitals. Some that were only written in lowercase now use them, including undoing a Like or Dislike with a Delete.
-- The [Security Model](/security) now says what signatures do not prove, and adds rules for remote HTML and outbound requests.
+- Defined [conformance](/introduction#vocabulary).
+- The [Security Model](/security) now says what signatures do not prove, adds rules for remote HTML and outbound requests, and says where to report a vulnerability.
 - Corrected samples across the specification, including the [federation example](/federation/example) and its signatures.
 
 ## Since WD 5
