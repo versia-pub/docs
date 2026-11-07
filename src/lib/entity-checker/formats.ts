@@ -7,7 +7,7 @@ const idProblem = (id: string) => {
     if (!/^[A-Za-z0-9_-]+$/.test(id)) {
         return "has characters other than `a-z`, `A-Z`, `0-9`, `-` and `_`";
     }
-    return undefined;
+    return;
 };
 
 /** /entities#domain, which lists valid and invalid examples. */
@@ -35,7 +35,7 @@ export const domainProblem = (domain: string) => {
     ) {
         return "is not a valid hostname";
     }
-    return undefined;
+    return;
 };
 
 const lower = (text: string) => text.charAt(0).toLowerCase() + text.slice(1);
@@ -50,7 +50,7 @@ export const referenceProblem = (reference: string) => {
     if (domain) return `its domain ${lower(domain)}`;
     const id = idProblem(reference.slice(separator + 1));
     if (id) return `its id ${id}`;
-    return undefined;
+    return;
 };
 
 const RFC3339 =
@@ -98,14 +98,8 @@ export const integerProblem = (value: number) =>
         : "is not a whole number from 0 to 2⁵³-1";
 
 /** /validation: URIs are run through a URL parser. */
-export const uriProblem = (text: string) => {
-    try {
-        new URL(text);
-        return undefined;
-    } catch {
-        return "is not a valid URI";
-    }
-};
+export const uriProblem = (text: string) =>
+    URL.canParse(text) ? undefined : "is not a valid URI";
 
 /** /extensions#naming: a reversed domain, a colon, and a name in `snake_case`. */
 export const extensionNameProblem = (name: string) =>

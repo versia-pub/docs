@@ -1,5 +1,5 @@
-import { fromBase64, importPublicKey, verify } from "../signing";
-import type { Tool } from "./dom";
+import { fromBase64, importPublicKey, verify } from "../signing.ts";
+import type { Tool } from "./dom.ts";
 
 const MAX_CLOCK_SKEW = 5 * 60;
 
@@ -12,7 +12,7 @@ const describeAge = (seconds: number) => {
         ["second", 1],
     ];
     const [unit, size] = units.find(
-        ([, size]) => Math.abs(seconds) >= size,
+        ([, length]) => Math.abs(seconds) >= length,
     ) ?? ["second", 1];
     const count = Math.floor(Math.abs(seconds) / size);
     return `${count} ${unit}${count === 1 ? "" : "s"}`;

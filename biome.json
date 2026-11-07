@@ -1,85 +1,10 @@
 {
     "$schema": "https://biomejs.dev/schemas/2.6.5/schema.json",
-    "assist": { "actions": { "source": { "organizeImports": "on" } } },
-    "linter": {
-        "enabled": true,
-        "rules": {
-            "suspicious": {
-                "noExplicitAny": "error",
-                "noConsole": "off",
-                "noDuplicateElseIf": "error",
-                "noDocumentCookie": "off",
-                "noUnknownAtRules": "off"
-            },
-            "performance": {
-                "noBarrelFile": "off",
-                "noNamespaceImport": "off",
-                "useTopLevelRegex": "off"
-            },
-            "correctness": {
-                "noUnusedVariables": "error",
-                "noUnusedImports": "error",
-                "noUnknownFunction": "off",
-                "noUndeclaredVariables": "off",
-                "noUndeclaredDependencies": "off",
-                "useImportExtensions": "off",
-                "useUniqueElementIds": "off"
-            },
-            "a11y": {
-                "noStaticElementInteractions": "off"
-            },
-            "complexity": {
-                "noExcessiveCognitiveComplexity": "off",
-                "noImportantStyles": "off"
-            },
-            "style": {
-                "noDefaultExport": "off",
-                "noParameterProperties": "off",
-                "useFilenamingConvention": "off",
-                "useNamingConvention": {
-                    "level": "warn",
-                    "options": {
-                        "requireAscii": false,
-                        "strictCase": false,
-                        "conventions": [
-                            {
-                                "selector": {
-                                    "kind": "typeProperty"
-                                },
-                                "formats": [
-                                    "camelCase",
-                                    "CONSTANT_CASE",
-                                    "PascalCase",
-                                    "snake_case"
-                                ]
-                            },
-                            {
-                                "selector": {
-                                    "kind": "objectLiteralProperty",
-                                    "scope": "any"
-                                },
-                                "formats": [
-                                    "camelCase",
-                                    "CONSTANT_CASE",
-                                    "PascalCase",
-                                    "snake_case"
-                                ]
-                            }
-                        ]
-                    }
-                },
-                "noParameterAssign": "error",
-                "useAsConstAssertion": "error",
-                "useDefaultParameterLast": "error",
-                "useEnumInitializers": "error",
-                "useSelfClosingElements": "error",
-                "useSingleVarDeclarator": "error",
-                "noUnusedTemplateLiteral": "error",
-                "useNumberNamespace": "error",
-                "noInferrableTypes": "error",
-                "noUselessElse": "error"
-            },
-            "nursery": {}
+    "assist": {
+        "actions": {
+            "source": {
+                "organizeImports": "on"
+            }
         }
     },
     "formatter": {
@@ -93,6 +18,45 @@
         "useIgnoreFile": true
     },
     "files": {
-        "includes": ["**", "!public", "!**/*.svg", "!**/*.mdx", "!**/*.astro"]
+        "includes": ["**", "!public", "!**/*.svg", "!**/*.mdx"]
+    },
+    "html": {
+        "experimentalFullSupportEnabled": true
+    },
+    "linter": {
+        "rules": {
+            "correctness": {
+                "useImportExtensions": "on",
+                "noUnusedFunctionParameters": "on",
+                "noUndeclaredDependencies": "on",
+                "noUnusedPrivateClassMembers": "on",
+                "noUnusedInstantiation": "on"
+            },
+            "suspicious": {
+                "noShadow": "on",
+                "noEvolvingTypes": "on",
+                "useAwait": "on",
+                "noImportCycles": "on",
+                "useErrorMessage": "on"
+            },
+            "complexity": {
+                "noUselessUndefined": "on"
+            },
+            "style": {
+                "useSelfClosingElements": "on",
+                "noParameterAssign": "on",
+                "useConsistentArrayType": "on",
+                "useForOf": "on",
+                "useCollapsedIf": "on",
+                "useExplicitLengthCheck": "on",
+                "useThrowNewError": "on",
+                "useNodejsImportProtocol": "on",
+                "noNonNullAssertion": "on"
+            },
+            "nursery": {
+                "noFloatingPromises": "on",
+                "noMisusedPromises": "on"
+            }
+        }
     }
 }

@@ -2,14 +2,14 @@ import { unified } from "@astrojs/markdown-remark";
 import starlight from "@astrojs/starlight";
 import { transformerNotationFocus } from "@shikijs/transformers";
 import { defineConfig } from "astro/config";
-import { codeThemeDark, codeThemeLight } from "./src/lib/code-themes";
+import { codeThemeDark, codeThemeLight } from "./src/lib/code-themes.ts";
 import {
     rehypeHeadingSlugs,
     rehypeNormative,
     rehypeNotesBesideText,
-} from "./src/lib/rehype-spec";
-import { remarkSpec } from "./src/lib/remark-spec";
-import { transformerFieldLinks } from "./src/lib/shiki-field-links";
+} from "./src/lib/rehype-spec.ts";
+import { remarkSpec } from "./src/lib/remark-spec.ts";
+import { transformerFieldLinks } from "./src/lib/shiki-field-links.ts";
 
 const O = "./src/components/overrides";
 const link = (label: string, path: string, ident = false) => ({

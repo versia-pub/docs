@@ -1,6 +1,6 @@
-import { checkEntity, withArticle } from "./check";
-import { readJson } from "./json";
-import type { EntitySchema, Finding } from "./types";
+import { checkEntity, withArticle } from "./check.ts";
+import { readJson } from "./json.ts";
+import type { EntitySchema, Finding } from "./types.ts";
 
 type Output = (name: string) => HTMLElement;
 

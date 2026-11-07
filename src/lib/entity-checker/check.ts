@@ -1,4 +1,7 @@
-import { CONTENT_FORMAT_FIELDS, CONTENT_FORMAT_HREF } from "./content-format";
+import {
+    CONTENT_FORMAT_FIELDS,
+    CONTENT_FORMAT_HREF,
+} from "./content-format.ts";
 import {
     domainProblem,
     extensionNameProblem,
@@ -8,9 +11,9 @@ import {
     referenceProblem,
     timestampProblem,
     uriProblem,
-} from "./formats";
-import { childPath } from "./path";
-import type { EntitySchema, FieldSpec, Finding } from "./types";
+} from "./formats.ts";
+import { childPath } from "./path.ts";
+import type { EntitySchema, FieldSpec, Finding } from "./types.ts";
 
 export interface CheckResult {
     /** What breaks a rule, so that a receiver would reject the entity. */
@@ -278,9 +281,9 @@ export const checkEntity = (
     }
 
     // Another type is another entity, with its own rules, so its fields mean nothing here.
-    const { type } = entity;
-    if (typeof type === "string" && type !== schema.type) {
-        return { problems, notes, otherType: type };
+    const { type: entityType } = entity;
+    if (typeof entityType === "string" && entityType !== schema.type) {
+        return { problems, notes, otherType: entityType };
     }
     checkObject(entity, schema.fields, "", withArticle(schema.name));
     return { problems, notes };

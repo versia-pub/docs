@@ -1,7 +1,7 @@
 import { getCollection } from "astro:content";
 import type { APIRoute } from "astro";
-import { listExtensions } from "../lib/extensions";
-import { pageToMarkdown } from "../lib/markdown/page";
+import { listExtensions } from "../lib/extensions.ts";
+import { pageToMarkdown } from "../lib/markdown/page.ts";
 
 export const getStaticPaths = async () =>
     (await getCollection("docs"))

@@ -1,6 +1,6 @@
-import { bindTool } from "../signature-playground/dom";
-import type { EntitySchema } from "./types";
-import { showCheck } from "./view";
+import { bindTool } from "../signature-playground/dom.ts";
+import type { EntitySchema } from "./types.ts";
+import { showCheck } from "./view.ts";
 
 // Enhancement only: without JavaScript the section stays hidden, and the field list above is the
 // whole definition.

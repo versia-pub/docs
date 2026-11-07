@@ -1,6 +1,6 @@
 ---
-import { sample } from "../../lib/signed-sample";
-import { signingParts } from "../../lib/signing";
+import { sample } from "../../lib/signed-sample.ts";
+import { signingParts } from "../../lib/signing.ts";
 import SigningString from "../spec/SigningString.astro";
 import Inputs from "./Inputs.astro";
 import SignResult from "./SignResult.astro";
@@ -51,7 +51,7 @@ const [method, domain, path, timestamp, hash] = await signingParts(sample);
 </section>
 
 <script>
-    import "../../lib/signature-playground/index";
+    import "../../lib/signature-playground/index.ts";
 </script>
 
 <style>

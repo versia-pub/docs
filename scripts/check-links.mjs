@@ -27,7 +27,9 @@ for (const [route, html] of pages) {
     const main = getMain(html);
 
     const ids = getIds(main);
-    for (const id of new Set(ids.filter((id, i) => ids.indexOf(id) !== i))) {
+    for (const id of new Set(
+        ids.filter((other, i) => ids.indexOf(other) !== i),
+    )) {
         problems.push(`${route}: duplicate id "${id}"`);
     }
 

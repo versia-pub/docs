@@ -1,5 +1,5 @@
 ---
-import { bodyParts, sample, sampleSignatureCovers } from "../lib/signed-sample";
+import { bodyParts, sample, sampleSignatureCovers } from "../lib/signed-sample.ts";
 
 // The caption tells readers to check this signature, so it has to stay true.
 if (!(await sampleSignatureCovers(sample))) {
@@ -84,7 +84,7 @@ Versia-Signature: ${sample.signature}
                 <p><a href={row.href}>{row.title}</a> {row.text}</p>
                 {row.code === bodyParts[1] && (
                     <p class="status" data-note-status hidden aria-live="polite">
-                        <strong data-label></strong> <span data-hint></span> <button type="button" hidden>Restore the text</button>
+                        <strong data-label /> <span data-hint /> <button type="button" hidden>Restore the text</button>
                     </p>
                 )}
             </div>
@@ -94,7 +94,7 @@ Versia-Signature: ${sample.signature}
 </figure>
 
 <script>
-    import "../lib/signed-note";
+    import "../lib/signed-note.ts";
 </script>
 
 <style>

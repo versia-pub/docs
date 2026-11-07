@@ -1,10 +1,10 @@
 import type { RootContent } from "mdast";
-import type { Extension } from "../extensions";
-import { libraries } from "../libraries";
-import { API_PREFIX } from "../spec";
-import { inheritedFieldHref, inheritedFields } from "../spec-fields";
-import { type Block, item, list, md } from "./build";
-import { type Jsx, needed, prop, slotsOf, unwrap } from "./jsx";
+import type { Extension } from "../extensions.ts";
+import { libraries } from "../libraries.ts";
+import { API_PREFIX } from "../spec.ts";
+import { inheritedFieldHref, inheritedFields } from "../spec-fields.ts";
+import { type Block, item, list, md } from "./build.ts";
+import { type Jsx, needed, prop, slotsOf, unwrap } from "./jsx.ts";
 
 export type Context = {
     /** Converts what a component holds. */

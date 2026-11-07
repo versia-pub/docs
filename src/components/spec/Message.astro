@@ -21,7 +21,7 @@ const labelParts = label?.split(/(?<=[/?&=])/);
 ---
 
 <li class:list={["step", `from-${from}`, { local, response: !local && !request }]} data-wire={wire}>
-    {!local && <span class="arrow" aria-hidden="true"></span>}
+    {!local && <span class="arrow" aria-hidden="true" />}
     <div class="body">
         {!local && <span class="visually-hidden">{request ? "Request:" : "Response:"}</span>}{" "}
         {labelParts && <code class="label">{labelParts.map((part) => <>{part}<wbr /></>)}</code>}{" "}
@@ -29,7 +29,7 @@ const labelParts = label?.split(/(?<=[/?&=])/);
         {wire && (
             <div class="wire" data-wire-holder hidden data-pagefind-ignore>
                 <button class="toggle" type="button" data-output="toggle-wire">Show the message</button>
-                <div class="block" data-wire-block hidden></div>
+                <div class="block" data-wire-block hidden />
             </div>
         )}
     </div>

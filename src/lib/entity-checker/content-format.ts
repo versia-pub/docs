@@ -1,4 +1,4 @@
-import type { FieldSpec } from "./types";
+import type { FieldSpec } from "./types.ts";
 
 const href = (name: string) =>
     `/structures/content-format#contentformat-${name}`;

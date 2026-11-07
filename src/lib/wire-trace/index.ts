@@ -1,5 +1,5 @@
-import { createPlayer, SHOW_ALL } from "./player";
-import { setUpWireBlocks } from "./wire-blocks";
+import { createPlayer, SHOW_ALL } from "./player.ts";
+import { setUpWireBlocks } from "./wire-blocks.ts";
 
 // Enhancement only: without JavaScript the controls stay hidden, and the trace is complete as it
 // stands, with each step linking to its section.

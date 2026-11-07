@@ -1,6 +1,6 @@
 ---
-import { withArticle } from "../../lib/entity-checker/check";
-import type { EntitySchema } from "../../lib/entity-checker/types";
+import { withArticle } from "../../lib/entity-checker/check.ts";
+import type { EntitySchema } from "../../lib/entity-checker/types.ts";
 import ToolButton from "../ToolButton.astro";
 import CheckResult from "./CheckResult.astro";
 
@@ -43,7 +43,7 @@ const fieldId = `check-${name.toLowerCase()}`;
 </section>
 
 <script>
-    import "../../lib/entity-checker/index";
+    import "../../lib/entity-checker/index.ts";
 </script>
 
 <style>

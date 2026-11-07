@@ -1,5 +1,5 @@
-import { noteText, sample, sampleSignatureCovers } from "./signed-sample";
-import { canSign } from "./signing";
+import { noteText, sample, sampleSignatureCovers } from "./signed-sample.ts";
+import { canSign } from "./signing.ts";
 
 // Enhancement only: without JavaScript, the message on the home page is a plain code block.
 const setUp = async () => {
@@ -51,11 +51,11 @@ const setUp = async () => {
     });
     restore.addEventListener("click", () => {
         editable.textContent = noteText;
-        check();
+        void check();
     });
 
     await check();
     status.hidden = false;
 };
 
-setUp();
+void setUp();

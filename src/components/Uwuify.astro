@@ -3,7 +3,7 @@
     window.addEventListener("keydown", (event) => {
         if (event.key === "u" && (event.metaKey || event.ctrlKey)) {
             event.preventDefault();
-            import("../lib/uwuify").then(({ uwuifyDocument }) => uwuifyDocument());
+            import("../lib/uwuify.ts").then(({ uwuifyDocument }) => uwuifyDocument());
         }
     });
 </script>

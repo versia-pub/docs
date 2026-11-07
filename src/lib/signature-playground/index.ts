@@ -1,8 +1,8 @@
-import { canSign, signingParts } from "../signing";
-import { bindTool, type Tool } from "./dom";
-import { createSignView } from "./sign-view";
-import { createStringView, readMessage } from "./string-view";
-import { showVerified } from "./verify-view";
+import { canSign, signingParts } from "../signing.ts";
+import { bindTool, type Tool } from "./dom.ts";
+import { createSignView } from "./sign-view.ts";
+import { createStringView, readMessage } from "./string-view.ts";
+import { showVerified } from "./verify-view.ts";
 
 // Enhancement only: without JavaScript the section stays hidden, and the page's static example
 // and written steps are all there is.
@@ -33,7 +33,7 @@ const setUp = async (tool: Tool) => {
     };
 
     const showString = createStringView(tool);
-    const signView = await createSignView(tool, () => update());
+    const signView = await createSignView(tool, () => void update());
 
     // Hashing and signing are asynchronous, so a slow run must not draw over a newer one.
     let latest = 0;
@@ -56,22 +56,22 @@ const setUp = async (tool: Tool) => {
 
     output("now").addEventListener("click", () => {
         field("timestamp").value = String(Math.floor(Date.now() / 1000));
-        update();
+        void update();
     });
 
     output("check-this").addEventListener("click", async () => {
         field("signature").value = signView.lastSignature();
         field("public-key").value = await signView.publicKey();
         chooseVerify();
-        update();
+        void update();
     });
 
     field("public-key").value = await signView.publicKey();
     if (new URLSearchParams(location.search).get("mode") === "verify") {
         chooseVerify();
     }
-    update();
+    void update();
 };
 
 const section = document.querySelector<HTMLElement>("[data-playground]");
-if (section) setUp(bindTool(section));
+if (section) void setUp(bindTool(section));

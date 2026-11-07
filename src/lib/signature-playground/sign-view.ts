@@ -1,5 +1,10 @@
-import { exampleKeys, exportPublicKey, generateKeys, sign } from "../signing";
-import type { Tool } from "./dom";
+import {
+    exampleKeys,
+    exportPublicKey,
+    generateKeys,
+    sign,
+} from "../signing.ts";
+import type { Tool } from "./dom.ts";
 
 /** Holds the key in use, wires up the buttons that change it, and draws the signed result. */
 export const createSignView = async (

@@ -5,11 +5,11 @@ import remarkParse from "remark-parse";
 import remarkStringify from "remark-stringify";
 import { unified } from "unified";
 import { visit } from "unist-util-visit";
-import type { Extension } from "../extensions";
-import { remarkSpec } from "../remark-spec";
-import { type Block, list, md } from "./build";
-import { type Context, components, fieldItem } from "./components";
-import { isJsx, type Jsx, unwrap } from "./jsx";
+import type { Extension } from "../extensions.ts";
+import { remarkSpec } from "../remark-spec.ts";
+import { type Block, list, md } from "./build.ts";
+import { type Context, components, fieldItem } from "./components.ts";
+import { isJsx, type Jsx, unwrap } from "./jsx.ts";
 
 // Same parsing as the HTML pages, including the `omit` that `remark-spec` adds to `Inherits`.
 const reader = unified()

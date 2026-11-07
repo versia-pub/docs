@@ -4,8 +4,8 @@ import {
     parseTree,
     printParseErrorCode,
 } from "jsonc-parser";
-import { childPath } from "./path";
-import type { Finding } from "./types";
+import { childPath } from "./path.ts";
+import type { Finding } from "./types.ts";
 
 export interface ParsedJson {
     value: unknown;
@@ -36,7 +36,7 @@ const ENCODING = "/json#encoding";
 const textProblem = (text: string) => {
     if (LONE_SURROGATE.test(text)) return "has a lone surrogate";
     if (NONCHARACTER.test(text)) return "has a noncharacter code point";
-    return undefined;
+    return;
 };
 
 /** Reads JSON as an entity is sent: no comments and no trailing commas. */

@@ -4,7 +4,7 @@ import {
     type Message,
     signingParts,
     verify,
-} from "./signing";
+} from "./signing.ts";
 
 // The message on the home page, which the playground on `/signatures` starts from. The signature
 // is real: it covers these exact bytes, signed with the example key. `SignedNote.astro` fails the

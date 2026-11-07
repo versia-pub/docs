@@ -1,5 +1,5 @@
-import type { Message } from "../signing";
-import type { Tool } from "./dom";
+import type { Message } from "../signing.ts";
+import type { Tool } from "./dom.ts";
 
 export const readMessage = ({ field }: Tool): Message => ({
     method: field("method").value,

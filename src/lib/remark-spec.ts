@@ -4,10 +4,14 @@ import type { MdxJsxFlowElement, MdxJsxTextElement } from "mdast-util-mdx-jsx";
 import type { Node } from "unist";
 import { visit } from "unist-util-visit";
 import type { VFile } from "vfile";
-import { checkEntity, unknownTypes } from "./entity-checker/check";
-import { CONTENT_FORMAT_FIELDS } from "./entity-checker/content-format";
-import type { EntitySchema, FieldSpec } from "./entity-checker/types";
-import { anchorPart, inheritedFieldHref, inheritedFields } from "./spec-fields";
+import { checkEntity, unknownTypes } from "./entity-checker/check.ts";
+import { CONTENT_FORMAT_FIELDS } from "./entity-checker/content-format.ts";
+import type { EntitySchema, FieldSpec } from "./entity-checker/types.ts";
+import {
+    anchorPart,
+    inheritedFieldHref,
+    inheritedFields,
+} from "./spec-fields.ts";
 
 type JsxElement = MdxJsxFlowElement | MdxJsxTextElement;
 
@@ -240,14 +244,14 @@ const addChecker = (
         );
     }
 
-    const [code] = elementsIn(entity, "Example").flatMap((example) =>
-        codeIn(example).filter((c) => c.lang === "json" || c.lang === "jsonc"),
+    const [code] = elementsIn(entity, "Example").flatMap((block) =>
+        codeIn(block).filter((c) => c.lang === "json" || c.lang === "jsonc"),
     );
     if (!code) {
         file.fail(`The checker for ${name} needs a JSON example`, entity);
     }
-    const example = parse(code.value, [], { allowTrailingComma: false });
-    const { problems } = checkEntity(schema, example);
+    const parsed = parse(code.value, [], { allowTrailingComma: false });
+    const { problems } = checkEntity(schema, parsed);
     if (problems.length > 0) {
         file.fail(
             `The example for ${name} fails its checker:\n${problems.map((p) => `  ${p.path || "(entity)"} ${p.message}`).join("\n")}`,
@@ -264,7 +268,7 @@ const addChecker = (
         {
             type: "mdxJsxAttribute",
             name: "sample",
-            value: JSON.stringify(example, null, 4),
+            value: JSON.stringify(parsed, null, 4),
         },
     );
 };

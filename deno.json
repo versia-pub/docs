@@ -5,7 +5,7 @@
         "build": "deno run -A npm:astro build",
         "preview": "deno run -A npm:astro preview",
         "typecheck": "deno run -A npm:astro check",
-        "lint": "deno run -A npm:@biomejs/biome check .",
+        "lint": "deno run -A npm:@biomejs/biome check --error-on-warnings .",
         "check-links": "deno run -A scripts/check-links.mjs",
         "knip": "deno run -A npm:knip",
         "uuid": "deno eval \"console.log(crypto.randomUUID())\""
