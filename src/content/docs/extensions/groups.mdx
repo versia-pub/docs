@@ -230,9 +230,9 @@ Indicates that a [Group](#entity-definition) has rejected a [User](/entities/use
 
 ## Federation
 
-The instance hosting a group cannot send the Notes posted to it, as an entity's author [must belong to the instance that signs it](/federation/validation#authors-and-signers). A Note therefore reaches the group's members in three steps:
+The instance hosting a group cannot send the Notes posted to it, as an entity's author [must belong to the instance that signs it](/validation#authors-and-signers). A Note therefore reaches the group's members in three steps:
 
-1. The instance of the Note's author **MUST** send the [Note](/entities/note) to the [inbox](/api/endpoints#inbox) of the group's instance, on top of its usual [delivery](/federation#delivery). It **MUST** do the same with any change to the Note, and with a [Delete](/entities/delete) for it.
+1. The instance of the Note's author **MUST** send the [Note](/entities/note) to the [inbox](/federation/endpoints#inbox) of the group's instance, on top of its usual [delivery](/federation#delivery). It **MUST** do the same with any change to the Note, and with a [Delete](/entities/delete) for it.
 2. The group's instance decides which Notes to federate. A Note it refuses is dropped silently. For the others, it **MUST** send a `GroupFederate` to every instance hosting a member of the group.
 3. Each of those instances fetches the Note from the instance of its author.
 

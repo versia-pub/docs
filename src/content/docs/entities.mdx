@@ -24,7 +24,7 @@ Fields not marked as `required` are [optional](/json#optional-fields).
 
 <Fields name="Entity">
     <Field name="id" type="string" required>
-        Unique identifier for the entity. **MUST** be unique within the instance, and at least 1 character long. There is no fixed maximum, though [receivers may set a generous limit](/federation/validation). Can be any string with the following character sets:
+        Unique identifier for the entity. **MUST** be unique within the instance, and at least 1 character long. There is no fixed maximum, though [receivers may set a generous limit](/validation). Can be any string with the following character sets:
 
         - `a-z`
         - `A-Z`
@@ -95,7 +95,7 @@ type Reference = `${Domain}:${Id}`;
 
 A **reference** is a way to refer to any entity within the Versia network. It is a string composed of the following parts:
 
-- The [domain](/api/basics#domain) of the entity's instance.
+- The [domain](#domain) of the entity's instance.
     - Example: `example.com`, `xn--ls8h.xn--ls8h`.
 - A colon (`:`) separator.
 - The entity's unique identifier. This is the `id` property of the entity.
@@ -104,7 +104,7 @@ The domain is always present, even when a reference points to an entity on the i
 
 ### Reference Types
 
-A reference does not say what type of entity it points to, but [fetching an entity](/api/endpoints#entity-data) needs its type. So every field holding a reference **MUST** state the entity type it points to. A field that can point to several types **MUST** carry the type next to the reference, as [Delete](/entities/delete) and [Report](/extensions/reports) do.
+A reference does not say what type of entity it points to, but [fetching an entity](/federation/endpoints#entity-data) needs its type. So every field holding a reference **MUST** state the entity type it points to. A field that can point to several types **MUST** carry the type next to the reference, as [Delete](/entities/delete) and [Report](/extensions/reports) do.
 
 ### Example
 
@@ -127,6 +127,33 @@ Senders **SHOULD** set `updated_at` when sending a change. A receiver **MUST** d
 
 ## Transient Entities
 
-Some entities are **transient**. A Transient Entity has no `id` field, so it cannot be fetched using the [Federation API](/api/endpoints) or referenced by other entities. These entities are used for actions that do not require a permanent record, such as deletions or migrations.
+Some entities are **transient**. A Transient Entity has no `id` field, so it cannot be fetched using the [Federation API](/federation/endpoints) or referenced by other entities. These entities are used for actions that do not require a permanent record, such as deletions or migrations.
 
 Implementations do not need to store Transient Entities, and **MUST NOT** rely on other implementations to store them.
+
+## Domain
+
+Versia defines a **domain** as the hostname of an instance, which is used to identify the instance in the network. It **MUST** be a valid hostname as defined by [RFC 1123](https://datatracker.ietf.org/doc/html/rfc1123#section-2), and **MUST NOT** include a port number (the HTTPS port is always 443). It **MUST NOT** be an IP address or a single label such as `localhost`. An internationalized domain name **MUST** be written in its ASCII `xn--` form, as defined by [IDNA](https://datatracker.ietf.org/doc/html/rfc5891).
+
+A domain **MUST** be lowercase wherever it appears in the protocol, including [References](/entities#reference), `Versia-Signed-By` and the [signed string](/signatures).
+
+```text title="Valid Domains"
+example.com
+test.localhost
+sus.example.org
+xn--ls8h.la
+1.0.1.7.0.8.0.0.0.0.7.4.0.1.0.0.2.ip6.arpa # We know what you did
+```
+
+```text title="Invalid Domains"
+example.com:3000   # ❌️ Invalid: port number is not allowed
+test..localhost    # ❌️ Invalid: double dot is not allowed
+example.com.       # ❌️ Invalid: trailing dot is not allowed
+test.org/          # ❌️ Invalid: trailing slash is not allowed
+test.org/sus       # ❌️ Invalid: path is not allowed
+💩.la              # ❌️ Invalid: IDNs must be Punycode encoded
+Example.com        # ❌️ Invalid: uppercase is not allowed
+https://bob.org    # ❌️ Invalid: protocol is not allowed
+192.0.2.1          # ❌️ Invalid: IP address is not allowed
+localhost          # ❌️ Invalid: single label is not allowed
+```

@@ -24,6 +24,14 @@ export default defineConfig({
     trailingSlash: "never",
     outDir: "./out",
     build: { format: "file" },
+    // Moved pages. Fragments of the old URLs are not carried over.
+    redirects: {
+        "/api/basics": "/federation/versions",
+        "/api/endpoints": "/federation/endpoints",
+        "/philosophy/principles": "/principles",
+        "/federation/validation": "/validation",
+        "/federation/example": "/example",
+    },
     markdown: {
         processor: unified({
             remarkPlugins: [remarkSpec],
@@ -102,55 +110,60 @@ export default defineConfig({
             },
             sidebar: [
                 {
-                    label: "Learn",
+                    label: "Start",
                     items: [
                         link("Introduction", "/introduction"),
-                        link("Principles", "/philosophy/principles"),
+                        link("Principles", "/principles"),
+                        link("Security", "/security"),
+                    ],
+                },
+                {
+                    label: "Foundations",
+                    items: [
                         link("Entities", "/entities"),
                         link("JSON", "/json"),
                         link("Signatures", "/signatures"),
-                        link("Security", "/security"),
-                        link("Links", "/links"),
                     ],
                 },
                 {
-                    label: "Federate",
+                    label: "Federation",
                     items: [
                         link("Overview", "/federation"),
-                        link("HTTP", "/federation/http"),
                         link("Discovery", "/federation/discovery"),
-                        link("Validation", "/federation/validation"),
-                        link("API basics", "/api/basics"),
-                        link("Endpoints", "/api/endpoints"),
-                        link("Example", "/federation/example"),
+                        link("Versions", "/federation/versions"),
+                        link("HTTP", "/federation/http"),
+                        link("Endpoints", "/federation/endpoints"),
                     ],
                 },
                 {
-                    label: "Entities",
+                    label: "Entities and structures",
                     items: [
-                        link("Delete", "/entities/delete", true),
+                        link("Note", "/entities/note", true),
+                        link("User", "/entities/user", true),
                         link("Follow", "/entities/follow", true),
                         link("FollowAccept", "/entities/follow-accept", true),
                         link("FollowReject", "/entities/follow-reject", true),
+                        link("Unfollow", "/entities/unfollow", true),
+                        link("Delete", "/entities/delete", true),
                         link(
                             "InstanceMetadata",
                             "/entities/instance-metadata",
                             true,
                         ),
-                        link("Note", "/entities/note", true),
-                        link("Unfollow", "/entities/unfollow", true),
-                        link("User", "/entities/user", true),
-                    ],
-                },
-                {
-                    label: "Structures",
-                    items: [
                         link("Collection", "/structures/collection", true),
                         link(
                             "ContentFormat",
                             "/structures/content-format",
                             true,
                         ),
+                    ],
+                },
+                {
+                    label: "Interoperability",
+                    items: [
+                        link("Validation", "/validation"),
+                        link("Example", "/example"),
+                        link("Links", "/links"),
                     ],
                 },
                 {
@@ -180,8 +193,8 @@ export default defineConfig({
                 {
                     label: "Project",
                     items: [
-                        link("SDKs", "/sdks"),
                         link("Changelog", "/changelog"),
+                        link("SDKs", "/sdks"),
                     ],
                 },
             ],

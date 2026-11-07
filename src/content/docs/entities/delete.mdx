@@ -13,7 +13,7 @@ Signals the deletion of an entity.
 
 ## Authorization
 
-A `Delete` **MUST** come from the instance hosting the entity it deletes, which is the domain in the `deleted` [Reference](/entities#reference). A receiver **MUST** [reject](/federation/validation#authors-and-signers) any other `Delete`.
+A `Delete` **MUST** come from the instance hosting the entity it deletes, which is the domain in the `deleted` [Reference](/entities#reference). A receiver **MUST** [reject](/validation#authors-and-signers) any other `Delete`.
 
 A receiver **MUST** ignore a `Delete` whose `deleted_type` differs from the type it has stored for the entity, and delete nothing.
 

@@ -10,7 +10,7 @@ All JSON in the Versia protocol **MUST** be an [I-JSON message](https://datatrac
 
 All JSON data **MUST** be encoded in UTF-8. This is the only encoding supported by the Versia protocol. As I-JSON requires, keys and string values **MUST NOT** contain surrogate or noncharacter code points.
 
-Line breaks inside string values **MUST** be Unix-style `\n` (LF), not Windows-style `\r\n` (CRLF). A receiver **MUST** treat an entity with a `\r\n` inside a string value as [invalid](/federation/validation). There is no rule on whitespace between JSON tokens.
+Line breaks inside string values **MUST** be Unix-style `\n` (LF), not Windows-style `\r\n` (CRLF). A receiver **MUST** treat an entity with a `\r\n` inside a string value as [invalid](/validation). There is no rule on whitespace between JSON tokens.
 
 ## Keys
 
@@ -18,7 +18,7 @@ Keys **MUST NOT** be empty. Senders **MUST NOT** send an object with duplicate k
 
 Which keys an object can have depends on the object:
 
-- Entity and structure fields use the names listed in this specification. Receivers [ignore any others](/federation/validation#unknown-fields-and-types).
+- Entity and structure fields use the names listed in this specification. Receivers [ignore any others](/validation#unknown-fields-and-types).
 - Extension keys follow [Extension Naming](/extensions#naming).
 - [ContentFormat](/structures/content-format) keys are media types.
 - Any other map documents its own keys where it is defined.
@@ -31,7 +31,7 @@ Numbers **SHOULD NOT** have greater magnitude or precision than an IEEE 754 doub
 
 Numeric fields state their type:
 
-- `integer`: a whole number from 0 to 2⁵³-1 (`9007199254740991`), in any form, so `1000`, `1000.0` and `1e3` are all valid. Other values **MUST NOT** be sent, and [fail validation](/federation/validation).
+- `integer`: a whole number from 0 to 2⁵³-1 (`9007199254740991`), in any form, so `1000`, `1000.0` and `1e3` are all valid. Other values **MUST NOT** be sent, and [fail validation](/validation).
 - `float`: an IEEE 754 double-precision number.
 
 ### Optional Fields

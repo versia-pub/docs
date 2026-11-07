@@ -6,7 +6,7 @@ export const typeLinks: Record<string, string> = {
     Collection: "/structures/collection",
     ContentFormat: "/structures/content-format",
     CustomEmoji: "/extensions/custom-emojis#structure-definition",
-    Domain: "/api/basics#domain",
+    Domain: "/entities#domain",
     Entity: "/entities",
     Extensions: "/extensions#entity-extension",
     Reference: "/entities#reference",

@@ -13,7 +13,7 @@ Contains metadata about a Versia instance, such as its capabilities and public k
 
 ## Entity Definition
 
-<Entity name="InstanceMetadata" type="InstanceMetadata" fetch={{ path: "/.versia/v0.7/instance", href: "/api/endpoints#instance-metadata" }} collectionsHref="/api/endpoints#instance-collections" idless>
+<Entity name="InstanceMetadata" type="InstanceMetadata" fetch={{ path: "/.versia/v0.7/instance", href: "/federation/endpoints#instance-metadata" }} collectionsHref="/federation/endpoints#instance-collections" idless>
     <div slot="collections">
         - `moderators`: [Collection](/structures/collection) of instance moderators ([Users](/entities/user)).
         - `admins`: [Collection](/structures/collection) of instance administrators ([Users](/entities/user)).
@@ -33,7 +33,7 @@ Contains metadata about a Versia instance, such as its capabilities and public k
         </Field>
     </Field>
     <Field name="compatibility" type="Compatibility" required>
-        Information about the compatibility of the instance. Supported Versia Protocol versions are listed at the [well-known endpoint](/api/endpoints#well-known).
+        Information about the compatibility of the instance. Supported Versia Protocol versions are listed at the [well-known endpoint](/federation/endpoints#well-known).
 
         <Field name="extensions" type="string[]" required>
             Supported extensions, each with its [version](/extensions#versions), such as `pub.versia:likes@1`.

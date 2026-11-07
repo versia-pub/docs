@@ -12,9 +12,9 @@ This is Working Draft 7. All endpoints moved from `/.versia/v0.6/` to `/.versia/
 
 ### Versions
 
-- Protocol versions are now written as `0.X.Y`. [`X` changes on a breaking release, and `Y` on a compatible one](/api/basics#api-versioning).
-- Removed `compatibility.versions` from [Instance Metadata](/entities/instance-metadata). The [well-known endpoint](/api/endpoints#well-known) is now the only list of supported versions.
-- Added rules for [choosing a version](/api/basics#choosing-a-version): senders use the highest `0.X` both instances support, instances with the same `X` must interoperate, and instances with none in common must not federate.
+- Protocol versions are now written as `0.X.Y`. [`X` changes on a breaking release, and `Y` on a compatible one](/federation/versions).
+- Removed `compatibility.versions` from [Instance Metadata](/entities/instance-metadata). The [well-known endpoint](/federation/endpoints#well-known) is now the only list of supported versions.
+- Added rules for [choosing a version](/federation/versions#choosing-a-version): senders use the highest `0.X` both instances support, instances with the same `X` must interoperate, and instances with none in common must not federate.
 
 ### Signatures and Identity
 
@@ -24,10 +24,10 @@ This is Working Draft 7. All endpoints moved from `/.versia/v0.6/` to `/.versia/
 - Only `2xx` responses have to verify. A response whose signature fails, or that is signed by an instance other than the one asked, is discarded and counts as a failed attempt.
 - Receivers ignore a `Versia-Signature` they have already accepted from the same instance on the inbox, and answer it with a `2xx`. Processing must be idempotent.
 - Defined key rotation: an instance has one current key, and a receiver fetches the signer's metadata again before rejecting a signature that fails to verify.
-- [An entity's `author` must belong to the instance that signed the message](/federation/validation#authors-and-signers), whether it was delivered or fetched. This also covers each entity in a Collection's `items`.
-- [References](/entities#reference) must always be `domain:id`, using a [Domain](/api/basics#domain) as their prefix, so they cannot be bare IDs or contain port numbers or IP addresses. Their definition moved to [Entities](/entities#reference).
-- [Domains](/api/basics#domain) are now defined by RFC 1123 and IDNA, and must be lowercase.
-- [Domains](/api/basics#domain) cannot be IP addresses or single labels.
+- [An entity's `author` must belong to the instance that signed the message](/validation#authors-and-signers), whether it was delivered or fetched. This also covers each entity in a Collection's `items`.
+- [References](/entities#reference) must always be `domain:id`, using a [Domain](/entities#domain) as their prefix, so they cannot be bare IDs or contain port numbers or IP addresses. Their definition moved to [Entities](/entities#reference).
+- [Domains](/entities#domain) are now defined by RFC 1123 and IDNA, and must be lowercase.
+- [Domains](/entities#domain) cannot be IP addresses or single labels.
 - [User addresses](/entities/user#addresses) now only allow usernames.
 
 ### Data Model
@@ -49,16 +49,16 @@ This is Working Draft 7. All endpoints moved from `/.versia/v0.6/` to `/.versia/
 
 - [Delivery](/federation#delivery) and [access](/federation#access) are now defined per entity type. Instances answer `404` for entities the requester may not fetch, and `followers` and `mentions` Notes also reach the authors of the Notes they reply to.
 - Delivery has no guaranteed order. Receivers should fetch missing references, and ignore entities with nothing to apply to.
-- Receivers must [ignore unknown fields](/federation/validation#unknown-fields-and-types). An unknown namespaced type is answered with a `2xx` and dropped, and an unknown core type with a `422`.
+- Receivers must [ignore unknown fields](/validation#unknown-fields-and-types). An unknown namespaced type is answered with a `2xx` and dropped, and an unknown core type with a `422`.
 - Added a [status code table](/federation/http#status-codes) and an optional error body.
 - Rate limits now use `429` and `Retry-After`, replacing the expired IETF draft headers. Added retry rules.
 - Defined media types per route. `Content-Type` is now `application/vnd.versia+json`, with `charset=utf-8` optional, and the inbox no longer needs an `Accept` header.
 - [Follow](/entities/follow): the followee's instance must answer every Follow, with no time limit on a pending request, Unfollow cancels a pending request, and [FollowReject](/entities/follow-reject) also removes an existing follower.
 - [Delete](/entities/delete): `author` is optional, instances can delete, and the instance hosting the entity must send the Delete. A Delete whose `deleted_type` differs from the stored type is ignored. Added `410` and `404` for fetching deleted entities.
 - [Outboxes](/federation#outboxes) hold the Notes a user has authored.
-- Added an [endpoint for instance collections](/api/endpoints#instance-collections), since Instance Metadata has no `id`, and defined [pagination](/api/endpoints#pagination).
+- Added an [endpoint for instance collections](/federation/endpoints#instance-collections), since Instance Metadata has no `id`, and defined [pagination](/federation/endpoints#pagination).
 - [Extension endpoints](/extensions) must be under `/.versia/v0.X/extensions/<extension name>/`. Extensions now state their own delivery and access rules.
-- Entity types and collection names in paths are [no longer percent-encoded](/api/basics#encoding), as in `/entities/pub.versia:groups/Group/1234`.
+- Entity types and collection names in paths are [no longer percent-encoded](/federation/http#encoding), as in `/entities/pub.versia:groups/Group/1234`.
 - Entity types in URLs are always capitalized, and examples no longer have port numbers in domains.
 
 ### Extensions
@@ -83,7 +83,7 @@ This is Working Draft 7. All endpoints moved from `/.versia/v0.6/` to `/.versia/
 - Requirements now use [BCP 14](/introduction#vocabulary) key words, only in bold capitals. Some that were only written in lowercase now use them, including undoing a Like or Dislike with a Delete.
 - Defined [conformance](/introduction#vocabulary).
 - The [Security Model](/security) now says what signatures do not prove, adds rules for remote HTML and outbound requests, and says where to report a vulnerability.
-- Corrected samples across the specification, including the [federation example](/federation/example) and its signatures.
+- Corrected samples across the specification, including the [federation example](/example) and its signatures.
 
 ## Since WD 5
 
@@ -91,7 +91,7 @@ This is Working Draft 7. All endpoints moved from `/.versia/v0.6/` to `/.versia/
 - Overhauled the Instance-to-Instance API to have clearly defined and namespaced endpoints, under `/.versia/v0.6/`, instead of letting implementations define their own endpoints.
 - Removed per-User keypairs: now, only the instance keypair is used for signing.
 - Moved [Delegation](/extensions/delegation) to an extension
-- Changed the contents of the [Well-Known Versia Endpoint](/api/endpoints#well-known) to only list supported protocol versions.
+- Changed the contents of the [Well-Known Versia Endpoint](/federation/endpoints#well-known) to only list supported protocol versions.
 - Modified how URIs and references to other entities are handled:
     - The `uri` field has been removed from all entities.
     - Every field that used to be a URI now uses that entity's `id` field.
@@ -100,7 +100,7 @@ This is Working Draft 7. All endpoints moved from `/.versia/v0.6/` to `/.versia/
 - Changed usage of "`null` authors" to simply being an optional field.
 - Replaced the stupid `hash` field on [ContentFormat](/structures/content-format) with hex-encoded SHA-256.
 - Added more guidelines on [JSON data handling](/json).
-- Clarified the meaning of [Domain](/api/basics#domain) in the context of Versia.
+- Clarified the meaning of [Domain](/entities#domain) in the context of Versia.
 - Changes to [Note](/entities/note):
     - `is_sensitive`, `attachments`, `mentions` and `previews` are now required.
 - Changes to [User](/entities/user):

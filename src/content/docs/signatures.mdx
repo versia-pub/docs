@@ -19,7 +19,7 @@ Versia uses cryptographic signatures to ensure the integrity and authenticity of
 
 A signature consists of three headers on an HTTP request or response:
 - **`Versia-Signature`**: The signature itself, encoded in base64.
-- **`Versia-Signed-By`**: [Domain](/api/basics#domain) of the instance signing the message.
+- **`Versia-Signed-By`**: [Domain](/entities#domain) of the instance signing the message.
 - **`Versia-Signed-At`**: The current Unix timestamp, in seconds (integer), when the message was signed. Timezone **MUST** be UTC, like all Unix timestamps.
 
 All base64 on this page is the standard alphabet with padding, as defined in [RFC 4648, section 4](https://datatracker.ietf.org/doc/html/rfc4648#section-4).
@@ -28,11 +28,11 @@ All base64 on this page is the standard alphabet with padding, as defined in [RF
 
 | Route | Requests and responses |
 | --- | --- |
-| [Inbox](/api/endpoints#inbox) | **MUST** be signed |
-| [Entities](/api/endpoints#entity-data) | **MUST** be signed |
-| [Entity collections](/api/endpoints#entity-collections) and [instance collections](/api/endpoints#instance-collections) | **MUST** be signed |
-| [Well-known](/api/endpoints#well-known) | Not required |
-| [Instance metadata](/api/endpoints#instance-metadata) | Not required |
+| [Inbox](/federation/endpoints#inbox) | **MUST** be signed |
+| [Entities](/federation/endpoints#entity-data) | **MUST** be signed |
+| [Entity collections](/federation/endpoints#entity-collections) and [instance collections](/federation/endpoints#instance-collections) | **MUST** be signed |
+| [Well-known](/federation/endpoints#well-known) | Not required |
+| [Instance metadata](/federation/endpoints#instance-metadata) | Not required |
 | [WebFinger](/federation/discovery) | Not required |
 | [Instance messaging](/extensions/instance-messaging) | Not required |
 
@@ -53,7 +53,7 @@ $0 $1 $2 $3 $4
 
 Where:
 - `$0` is the HTTP method of the request in lowercase (e.g. `get`, `post`). If signing a *response*, use the method of the request it answers.
-- `$1` is the [Domain](/api/basics#domain) of the instance the request is sent to, in lowercase. If signing a *response*, this is the responding instance's own domain.
+- `$1` is the [Domain](/entities#domain) of the instance the request is sent to, in lowercase. If signing a *response*, this is the responding instance's own domain.
 - `$2` is the path and query string of the request, exactly as they appear in the HTTP request line, with no re-encoding. If there is no query string, this is the path alone, with no `?`. If signing a *response*, use the path and query string of the request it answers.
 - `$3` is the Unix timestamp when this message was signed, in UTC seconds (integer).
 - `$4` is the SHA-256 hash of the raw bytes of this message's body, exactly as sent, encoded in base64. If signing a *response*, hash the response's body, not the request's. If the message has no body, this is the hash of zero bytes: `47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=`.
@@ -88,7 +88,7 @@ To verify a signature, the verifying instance **MUST**:
 
 A signed request stays valid for 5 minutes either side of its timestamp, so a captured request could be sent again.
 
-An instance **MUST NOT** process an [inbox](/api/endpoints#inbox) request whose `Versia-Signature` it has already accepted from the same instance in the last 10 minutes, and **MUST** answer it with a `2xx` status code so that the sender does not retry. Processing in the inbox **MUST** also be idempotent: receiving the same entity twice **MUST** have the same effect as receiving it once.
+An instance **MUST NOT** process an [inbox](/federation/endpoints#inbox) request whose `Versia-Signature` it has already accepted from the same instance in the last 10 minutes, and **MUST** answer it with a `2xx` status code so that the sender does not retry. Processing in the inbox **MUST** also be idempotent: receiving the same entity twice **MUST** have the same effect as receiving it once.
 
 ### Example
 
@@ -151,7 +151,7 @@ const response = await fetch("https://alice.com/.versia/v0.7/inbox", {
 });
 ```
 
-`alice.com` verifies the signature using the public key of `bob.com`. This code assumes that the key is stored in a variable called `publicKey` (during real federation, it would be fetched from the instance's [metadata endpoint](/api/endpoints#instance-metadata)).
+`alice.com` verifies the signature using the public key of `bob.com`. This code assumes that the key is stored in a variable called `publicKey` (during real federation, it would be fetched from the instance's [metadata endpoint](/federation/endpoints#instance-metadata)).
 
 ```typescript
 const method = request.method.toLowerCase();
@@ -197,7 +197,7 @@ if (!isVerified) {
 
 An instance has one current key, published in its [metadata](/entities/instance-metadata). Rotating the key replaces it at once, and anything signed with the old key stops verifying.
 
-Instance metadata is not signed, so [TLS](/api/basics#api-versioning) is what makes a published key trustworthy.
+Instance metadata is not signed, so [TLS](/federation/http#tls) is what makes a published key trustworthy.
 
 A verifying instance:
 

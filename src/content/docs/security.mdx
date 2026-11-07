@@ -34,7 +34,7 @@ Data that your instance does not federate, such as your password, is only expose
 
 Versia's security model provides the following guarantees:
 - **Integrity**: A message cannot be changed in transit without its signature failing to verify. If the signature is valid, the message is the one its signer sent.
-- **Authenticity**: A valid signature proves which instance sent a message. As an entity's author [must belong to the signing instance](/federation/validation#authors-and-signers), an instance cannot speak for another instance's users.
+- **Authenticity**: A valid signature proves which instance sent a message. As an entity's author [must belong to the signing instance](/validation#authors-and-signers), an instance cannot speak for another instance's users.
 
 ### What Signatures Do Not Prove
 
@@ -58,7 +58,7 @@ Everything in an entity is written by another instance, and should be treated as
 
 ### HTML
 
-[Validation](/federation/validation) asks implementations not to modify the content they store. They **SHOULD** sanitize remote HTML before rendering it or passing it to clients, removing at least scripts, event handlers and other active content, to prevent cross-site scripting. Which tags to allow is up to the implementation.
+[Validation](/validation) asks implementations not to modify the content they store. They **SHOULD** sanitize remote HTML before rendering it or passing it to clients, removing at least scripts, event handlers and other active content, to prevent cross-site scripting. Which tags to allow is up to the implementation.
 
 ### Outbound Requests
 

@@ -25,7 +25,7 @@ An extension does not need to be listed here to be used. To propose one for this
 
 ## Handling Unsupported Extensions
 
-When an extension is not supported by an Implementation, it can be ignored. This means that the extension is not processed, and its data is not used. Implementations **MUST NOT** throw an error when encountering an unsupported extension, as long as the rest of the entity is valid. An entity whose type comes from an unsupported extension is [answered with a `2xx` status code and dropped](/federation/validation#unknown-fields-and-types).
+When an extension is not supported by an Implementation, it can be ignored. This means that the extension is not processed, and its data is not used. Implementations **MUST NOT** throw an error when encountering an unsupported extension, as long as the rest of the entity is valid. An entity whose type comes from an unsupported extension is [answered with a `2xx` status code and dropped](/validation#unknown-fields-and-types).
 
 Extensions **MUST NOT** be designed in a way that makes them required to understand or process other non-extension entities.
 
@@ -140,7 +140,7 @@ An extension's [collections](/structures/collection) are named like its custom e
 
 ### Endpoints
 
-An extension's endpoints **MUST** be under `/.versia/v0.X/extensions/<extension name>/`. This keeps them from colliding with core endpoints or with other extensions. The extension name is [not percent-encoded](/api/basics#encoding).
+An extension's endpoints **MUST** be under `/.versia/v0.X/extensions/<extension name>/`. This keeps them from colliding with core endpoints or with other extensions. The extension name is [not percent-encoded](/federation/http#encoding).
 
 ```text title="Example Extension Endpoint"
 /.versia/v0.7/extensions/pub.versia:instance_messaging/messaging

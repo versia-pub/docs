@@ -19,9 +19,9 @@ interface Props {
     collectionsHref?: string;
 }
 
-const { name, type, transient = false, fetch, collectionsHref = "/api/endpoints#entity-collections" } = Astro.props;
+const { name, type, transient = false, fetch, collectionsHref = "/federation/endpoints#entity-collections" } = Astro.props;
 const fetchPath = fetch?.path ?? `${API_PREFIX}/entities/${type}/{id}`;
-const fetchHref = fetch?.href ?? "/api/endpoints#entity-data";
+const fetchHref = fetch?.href ?? "/federation/endpoints#entity-data";
 ---
 
 <Sheet entity={name}>

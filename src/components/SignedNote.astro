@@ -1,5 +1,5 @@
 ---
-// A hand-written mock-up of one delivery. The values follow `/federation/example`,
+// A hand-written mock-up of one delivery. The values follow `/example`,
 // `/signatures` and `/entities/note`. The rows are fragments, so Shiki cannot tokenize them.
 type Token = { text: string; kind?: "key" | "value" };
 
@@ -34,7 +34,7 @@ const rows = [
 Host: b.social
 Content-Type: application/vnd.versia+json`,
         title: "One inbox.",
-        href: "/api/endpoints#inbox",
+        href: "/federation/endpoints#inbox",
         text: "A single endpoint receives messages for every user on the instance.",
     },
     {
@@ -52,7 +52,7 @@ Versia-Signature: /CjB2L9bcvRg+uP19B4/rqy7Ji9/cqMFPlL3GVCIndnQjYyOpBzJEAl9weDnXm
     "created_at": "2024-10-18T08:54:40Z",
     "author": "a.social:018eb863-753f-76ff-83d6-fd590de7740a",`,
         title: "Self-description.",
-        href: "/philosophy/principles#self-description",
+        href: "/principles#self-description",
         text: "Headers and transport stay out of the data. One plain JSON object holds everything needed to process the entity, with no JSON-LD.",
     },
     {
@@ -63,7 +63,7 @@ Versia-Signature: /CjB2L9bcvRg+uP19B4/rqy7Ji9/cqMFPlL3GVCIndnQjYyOpBzJEAl9weDnXm
     },
     "attachments": [],`,
         title: "Determinism.",
-        href: "/philosophy/principles#determinism",
+        href: "/principles#determinism",
         text: "Text and media use the same structure, ContentFormat: one way to represent any single piece of data.",
     },
     {
@@ -94,7 +94,7 @@ Versia-Signature: /CjB2L9bcvRg+uP19B4/rqy7Ji9/cqMFPlL3GVCIndnQjYyOpBzJEAl9weDnXm
             {row.title && <p><a href={row.href}>{row.title}</a> {row.text}</p>}
         </div>
     ))}
-    <figcaption>What <code>a.social</code> sends <code>b.social</code> when someone posts. Domains, IDs and the signature are fictional, and some details are simplified. <a href="/federation/example">See the whole exchange</a>.</figcaption>
+    <figcaption>What <code>a.social</code> sends <code>b.social</code> when someone posts. Domains, IDs and the signature are fictional, and some details are simplified. <a href="/example">See the whole exchange</a>.</figcaption>
 </figure>
 
 <style>
