@@ -80,7 +80,7 @@ There is no `question` field: the question goes in the `content` of the Note its
 
 ### Vote
 
-A Vote is one user's vote for one option. On a poll with `multiple_choice`, a user sends one Vote for each option.
+A Vote holds every option one user chose in one poll. A user has at most one Vote in each poll.
 
 <Entity name="Vote" type="pub.versia:polls/Vote">
     <Field name="type" type="string" required>
@@ -92,8 +92,8 @@ A Vote is one user's vote for one option. On a poll with `multiple_choice`, a us
     <Field name="target" type="Reference" required>
         [Reference](/entities#reference) to the note with poll that the user voted on.
     </Field>
-    <Field name="option" type="number" required numberType="integer">
-        Index of the option that the user voted for, in the `options` array of the poll.
+    <Field name="options" type="number[]" required numberType="integer">
+        Indexes of the options that the user voted for, in the `options` array of the poll. **MUST** hold at least one index, and **MUST NOT** hold the same index twice.
     </Field>
 
     <Inherits />
@@ -106,7 +106,7 @@ A Vote is one user's vote for one option. On a poll with `multiple_choice`, a us
         "created_at": "2021-01-01T00:00:00Z",
         "author": "example.org:033wv9k6n0007", // [!code focus:3]
         "target": "example.com:0337hp246t002",
-        "option": 1
+        "options": [1]
     }
     ```
     </Example>
@@ -122,9 +122,16 @@ A poll's `options` hold numbers of votes, not voters, and a Vote can only be fet
 
 ### Voting
 
-The instance of the poll's author **MUST NOT** count a Vote for a poll that has closed, for an `option` that does not exist, or for a second option on a poll without `multiple_choice`. Such a Vote **MUST** be [rejected](/validation#rejecting-entities). A user's votes for the same option count once, whatever their `id`.
+The instance of the poll's author **MUST NOT** count a Vote that:
 
-A user changes a vote by [sending the Vote again](/entities#changing-an-entity) with the same `id` and a new `option`, and withdraws it with a [Delete](/entities/delete). A change or Delete that arrives after the poll has closed leaves the numbers as they are.
+- is for a poll that has closed,
+- holds an index that is not in the poll's `options`, or the same index twice,
+- holds no index, or more than one on a poll without `multiple_choice`,
+- has a different `id` from a Vote that the same user already has in the poll.
+
+Such a Vote **MUST** be [rejected](/validation#rejecting-entities).
+
+A user changes their choices by [sending the Vote again](/entities#changing-an-entity) with the same `id` and new `options`, and withdraws their vote with a [Delete](/entities/delete). After a Delete, the user can vote again with a new Vote. A change or Delete that arrives after the poll has closed leaves the numbers as they are.
 
 A Vote's `target` **MUST NOT** change, and a receiver **MUST** discard a version that changes it. Voting in another poll takes a new Vote.
 
