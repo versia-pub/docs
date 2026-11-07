@@ -1,0 +1,73 @@
+---
+title: "Other Protocols"
+description: "How Versia's concepts map to ActivityPub and Matrix, for readers who know one of them."
+kind: Core concept
+---
+
+This page is for readers who already know [ActivityPub](https://www.w3.org/TR/activitypub/) or the [Matrix server-server API](https://spec.matrix.org/latest/server-server-api/). It maps Versia's concepts to theirs and explains where they differ. It is informative and sets no requirements: the linked pages define the protocol.
+
+Some ActivityPub practice comes from Mastodon and other implementations rather than from the ActivityPub specification. This page says so where it matters.
+
+## Concepts
+
+| Versia | ActivityPub | Matrix |
+| --- | --- | --- |
+| [Instance](/entities/instance-metadata) | Server | Homeserver |
+| [Entity](/entities) | Object or Activity | Event |
+| [Reference](/entities#reference) | `id`, a URL | Event ID |
+| [User address](/entities/user#addresses) | WebFinger address, by convention | User ID |
+| [Inbox](/federation#inboxes), one per instance | Inbox per actor, optional shared inbox | Transactions |
+| [Signature](/signatures) by the instance key | HTTP Signatures by an actor key, by convention | `X-Matrix` header, by a server key |
+| [Extension](/extensions) names | JSON-LD contexts | Namespaced event types |
+| [Subscribe](/entities/subscribe) | Follow | None |
+| [Changing an entity](/entities#changing-an-entity) | Update | Event replacements |
+| [Delete](/entities/delete) | Delete and Tombstone | Redaction |
+| [Collection](/structures/collection) | Collection | None |
+| [Versions](/federation/versions) | None | Spec and endpoint versions |
+| [Discovery](/federation/discovery) | WebFinger, by convention | Well-known file |
+| [Versia Links](/links) | None | `matrix:` URIs and matrix.to links |
+
+## No Activity Wrapper
+
+ActivityPub delivers activities, such as a `Create` that wraps a `Note`. Versia sends the entity itself: an instance posts a Note by [sending the Note](/federation#inboxes) to the inbox. Actions that have no object to send are their own entities, such as [Subscribe](/entities/subscribe) and [Delete](/entities/delete).
+
+To [change an entity](/entities#changing-an-entity), an instance sends the whole entity again with the same `id`. This matches ActivityPub's server-to-server `Update`, which replaces the whole object.
+
+## Plain JSON and Namespaces
+
+Versia is plain JSON, like Matrix, and not JSON-LD. Extensions are named by the [reverse domain](/extensions#naming) of their author, such as `pub.versia:likes`, and `pub.versia` is reserved for this specification. Matrix does the same with event types, such as `com.example.myapp.event`, with `m.` reserved for its specification.
+
+A receiver [ignores unknown fields](/validation#unknown-fields-and-types). It answers an entity of an unknown extension type with a `2xx` and drops it.
+
+## Instance Keys
+
+ActivityPub does not define authentication. In practice, servers sign requests with HTTP Signatures, using a key that belongs to an actor. Versia signs requests and responses between instances with [one key per instance](/signatures), published in its [InstanceMetadata](/entities/instance-metadata). This is closest to Matrix, where a homeserver signs requests with its own key.
+
+## Signed Messages, Not Signed Entities
+
+Matrix signs each event, so a server can check an event that another server passes on. Versia signs the HTTP message, not the entity. An entity's `author` [must belong to the instance that signed the message](/validation#authors-and-signers), so an instance cannot pass on another instance's entities.
+
+This is why, in [Groups](/extensions/groups), the group's instance tells members' instances to fetch a Note from its author's instance instead of forwarding it.
+
+## Subscriptions
+
+[Subscribe](/entities/subscribe), [SubscribeAccept](/entities/subscribe-accept), [SubscribeReject](/entities/subscribe-reject) and [Unsubscribe](/entities/unsubscribe) play the roles of ActivityPub's `Follow`, `Accept`, `Reject` and `Undo` of a `Follow`. A Subscribe can target any entity type that accepts subscriptions, such as a [Group](/extensions/groups), not only a User.
+
+Matrix has no subscription to a user. Users join rooms, and every server in a room holds a copy of it. A Versia Group lives on one instance instead, which tells members' instances what is posted to it.
+
+## Posts
+
+Versia's core has no post type. Posts are Notes from the [Social extension](/extensions/social), which most other extensions build on. In ActivityPub, `Note` is part of the ActivityStreams vocabulary, and in Matrix, messages are `m.room.message` events.
+
+| Versia | ActivityPub |
+| --- | --- |
+| [Note](/extensions/social#note) | `Note` |
+| [Notes collection](/extensions/social#notes-collection) | Outbox |
+| [Featured collection](/extensions/social#user-collections) | `featured`, by Mastodon convention |
+| Note `mentions` | `Mention` tags |
+| Note `subject` and `is_sensitive` | `summary` and `sensitive`, by Mastodon convention |
+| [Share](/extensions/share) | `Announce` |
+| [Like and Dislike](/extensions/likes) | `Like` and `Dislike` |
+| [Reactions](/extensions/reactions) | None in ActivityStreams |
+| [Polls](/extensions/polls) | `Question` |
+| [Migration](/extensions/migration) | `Move` |

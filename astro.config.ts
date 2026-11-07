@@ -133,6 +133,7 @@ export default defineConfig({
                     items: [
                         link("Introduction", "/introduction"),
                         link("Principles", "/principles"),
+                        link("Other protocols", "/other-protocols"),
                         link("Glossary", "/glossary"),
                         link("Security", "/security"),
                     ],
