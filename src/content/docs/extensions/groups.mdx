@@ -30,15 +30,11 @@ Only the instance hosting a group may send or serve that Group.
     <Field name="type" type="string" required>
         **MUST** be `pub.versia:groups/Group`.
     </Field>
-    <Field name="name" type="ContentFormat">
-       Group name/title.
-
-       **MUST** be text format (`text/*`).
+    <Field name="name" type="string">
+        Group name or title, as plain text.
     </Field>
-    <Field name="description" type="ContentFormat">
+    <Field name="description" type="RichText">
         Short description of the group's contents and purpose.
-
-        **MUST** be text format (`text/*`).
     </Field>
     <Field name="open" type="boolean" required>
         Whether the group is open to all users or requires approval to join.
@@ -58,16 +54,8 @@ Only the instance hosting a group may send or serve that Group.
         "type": "pub.versia:groups/Group",
         "id": "ed480922-b095-4f09-9da5-c995be8f5960",
         "created_at": "2021-01-01T00:00:00Z",
-        "name": {
-            "text/html": {
-                "content": "The <strong>Woozy</strong> fan club"
-            }
-        },
-        "description": {
-            "text/plain": {
-                "content": "A group for fans of the Woozy emoji."
-            }
-        },
+        "name": "The Woozy fan club",
+        "description": "<p>A group for fans of the <strong>Woozy</strong> emoji.</p>",
         "open": false
     }
     ```

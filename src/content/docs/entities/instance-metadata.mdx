@@ -55,11 +55,11 @@ Contains metadata about a Versia instance, such as its capabilities and public k
             Instance public key, in [SPKI-encoded base64](/signatures#exporting-the-public-key).
         </Field>
     </Field>
-    <Field name="logo" type="ContentFormat">
-        Logo of the instance. **MUST** be an image format (`image/*`).
+    <Field name="logo" type="Media">
+        Logo of the instance. **MUST** be an image (`image/*`).
     </Field>
-    <Field name="banner" type="ContentFormat">
-        Banner of the instance. **MUST** be an image format (`image/*`).
+    <Field name="banner" type="Media">
+        Banner of the instance. **MUST** be an image (`image/*`).
     </Field>
 
     <Inherits />
@@ -87,12 +87,8 @@ Contains metadata about a Versia instance, such as its capabilities and public k
             "key": "MCowBQYDK2VwAyEA9zhEMtQZetRl4QrLcz99i7jOa6ZVjX7aLfRUsMuKByI="
         },
         "logo": {
-            "image/png": {
-                "url": "https://social.example/files/logo.png"
-            },
-            "image/webp": {
-                "url": "https://social.example/files/logo.webp"
-            }
+            "url": "https://social.example/files/logo.webp",
+            "media_type": "image/webp"
         },
         "created_at": "2021-07-01T00:00:00Z",
         "extensions": {

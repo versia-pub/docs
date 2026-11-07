@@ -16,29 +16,29 @@ The Vanity extension adds more optional metadata to the user profile.
 All properties are optional.
 
 <Fields name="Vanity" extension="pub.versia:vanity" on="User">
-    <Field name="avatar_overlays" type="ContentFormat[]">
+    <Field name="avatar_overlays" type="Media[]">
         Overlay images to be placed on top of the user's avatar.
 
         The first overlay in the array is the topmost overlay. The inner 80% of the overlay **SHOULD** cover the avatar, with the outer 20% extending beyond the avatar's bounds.
 
-        Image format (e.g. `image/png`), can be animated (e.g. APNG, gif, WebP).
+        An image (`image/*`), which can be animated, such as APNG, GIF or WebP.
     </Field>
-    <Field name="avatar_mask" type="ContentFormat">
+    <Field name="avatar_mask" type="Media">
         Mask image to be used to clip the user's avatar. The avatar **SHOULD** be clipped to the mask's alpha channel. For example, a black square with rounded corners would clip the avatar to a rounded square.
 
-        Image format (e.g. `image/png`), non-animated.
+        An image (`image/*`), not animated.
     </Field>
-    <Field name="background" type="ContentFormat">
+    <Field name="background" type="Media">
         Background image to be displayed behind the user's profile.
 
-        Image format (e.g. `image/png`), can be animated (e.g. APNG, gif, WebP).
+        An image (`image/*`), which can be animated, such as APNG, GIF or WebP.
     </Field>
-    <Field name="audio" type="ContentFormat">
+    <Field name="audio" type="Media">
         Audio file to be played when viewing the user's profile.
 
         Audio files can be used as a vector for abuse. Implementations **SHOULD** provide a way to disable audio playback.
 
-        Audio format (e.g. `audio/mpeg`).
+        Audio (`audio/*`), such as `audio/mpeg`.
     </Field>
     <Field name="pronouns" type="{ [key: LanguageCode]: Pronoun[] }">
         The pronouns the user uses, for each language.
@@ -69,29 +69,25 @@ All properties are optional.
         // ...
         "type": "User",
         // ...
-        "extensions": { // [!code focus:47]
+        "extensions": { // [!code focus:43]
             "pub.versia:vanity": {
                 "avatar_overlays": [
                     {
-                        "image/png": {
-                            "url": "https://cdn.example.com/ab5081cf-b11f-408f-92c2-7c246f290593/cat_ears.png"
-                        }
+                        "url": "https://cdn.example.com/ab5081cf-b11f-408f-92c2-7c246f290593/cat_ears.png",
+                        "media_type": "image/png"
                     }
                 ],
                 "avatar_mask": {
-                    "image/png": {
-                        "url": "https://cdn.example.com/d8c42be1-d0f7-43ef-b4ab-5f614e1beba4/rounded_square.png"
-                    }
+                    "url": "https://cdn.example.com/d8c42be1-d0f7-43ef-b4ab-5f614e1beba4/rounded_square.png",
+                    "media_type": "image/png"
                 },
                 "background": {
-                    "image/png": {
-                        "url": "https://cdn.example.com/6492ddcd-311e-4921-9567-41b497762b09/untitled-file-0019822.png"
-                    }
+                    "url": "https://cdn.example.com/6492ddcd-311e-4921-9567-41b497762b09/untitled-file-0019822.png",
+                    "media_type": "image/png"
                 },
                 "audio": {
-                    "audio/mpeg": {
-                        "url": "https://cdn.example.com/4da2f0d4-4728-4819-83e4-d614e4c5bebc/theme.mp3"
-                    }
+                    "url": "https://cdn.example.com/4da2f0d4-4728-4819-83e4-d614e4c5bebc/theme.mp3",
+                    "media_type": "audio/mpeg"
                 },
                 "pronouns": {
                     "en-US": [

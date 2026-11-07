@@ -21,28 +21,28 @@ The `User` entity represents an account on a Versia instance. Users can post [No
         - `featured`: [Reference Collection](/structures/collection#reference-collection) of notes that the user wants to feature on their profile ("pinned" notes).
     </div>
 
-    <Field name="avatar" type="ContentFormat">
-        The user's avatar. **MUST** be an image format (`image/*`).
+    <Field name="avatar" type="Media">
+        The user's avatar. **MUST** be an image (`image/*`).
     </Field>
-    <Field name="bio" type="ContentFormat">
-        Short description of the user. **MUST** be text format (`text/*`).
+    <Field name="bio" type="RichText">
+        Short description of the user.
     </Field>
     <Field name="display_name" type="string">
         Display name, as shown to other users. Can contain emojis and any Unicode character.
     </Field>
     <Field name="fields" type="Field[]" required>
-        Custom key/value pairs. For example, metadata like socials or pronouns. **MUST** be text format (`text/*`).
+        Custom key/value pairs. For example, metadata like socials or pronouns.
 
-        <Field name="key" type="ContentFormat" required />
-        <Field name="value" type="ContentFormat" required />
+        <Field name="key" type="RichText" required />
+        <Field name="value" type="RichText" required />
     </Field>
     <Field name="username" type="string" required>
         The user's username. **MUST** be unique within the instance, and at least 1 character long. **MUST** be treated as changeable by the user.
 
         **MUST** contain only the following characters: `a-z`, `A-Z` (case-insensitive), `0-9`, `_` and `-`.
     </Field>
-    <Field name="header" type="ContentFormat">
-        A header image for the user's profile. Also known as a cover photo or a banner. **MUST** be an image format (`image/*`).
+    <Field name="header" type="Media">
+        A header image for the user's profile. Also known as a cover photo or a banner. **MUST** be an image (`image/*`).
     </Field>
     <Field name="manually_approves_followers" type="boolean" required>
         If `true`, the user approves new followers manually. If `false`, followers are automatically approved. This does not affect federation, and is meant to be used for clients to display correct UI: [every `Follow` is still answered](/entities/follow#accepting-the-follow-request).
@@ -60,18 +60,10 @@ The `User` entity represents an account on a Versia instance. Users can post [No
         "type": "User",
         "created_at": "2024-04-09T01:38:51Z",
         "avatar": {
-            "image/png": {
-                "url": "https://cdn.example.com/avatars/april.png"
-            }
+            "url": "https://cdn.example.com/avatars/april.png",
+            "media_type": "image/png"
         },
-        "bio": {
-            "text/html": {
-                "content": "<p>🌸🌸🌸</p>"
-            },
-            "text/plain": {
-                "content": "🌸🌸🌸"
-            }
-        },
+        "bio": "<p>🌸🌸🌸</p>",
         "display_name": "April The Pink (limited Sand Edition)",
         "extensions": {
             "pub.versia:custom_emojis": {
@@ -80,16 +72,8 @@ The `User` entity represents an account on a Versia instance. Users can post [No
         },
         "fields": [
             {
-                "key": {
-                    "text/html": {
-                        "content": "<p>Pronouns</p>"
-                    }
-                },
-                "value": {
-                    "text/html": {
-                        "content": "<p>It/its</p>"
-                    }
-                }
+                "key": "Pronouns",
+                "value": "It/its"
             }
         ],
         "username": "april",

@@ -23,8 +23,8 @@ There is no `question` field: the question goes in the `content` of the Note its
     <Field name="options" type="PollOption[]" required>
         Array of options for the poll. Each `PollOption` has:
 
-        <Field name="content" type="ContentFormat" required>
-            Text of the option. It can contain the same properties as a Note's `content` (e.g. [Custom Emojis](/extensions/custom-emojis) or HTML hyperlinks).
+        <Field name="content" type="RichText" required>
+            Text of the option. Like a Note's `content`, it can contain links and [Custom Emojis](/extensions/custom-emojis).
         </Field>
         <Field name="votes" type="number" required numberType="integer">
             Number of votes for this option.
@@ -45,37 +45,21 @@ There is no `question` field: the question goes in the `content` of the Note its
         "created_at": "2024-06-19T01:07:44Z",
         "author": "versia.example:018eb863-753f-76ff-83d6-fd590de7740a",
         "category": "microblog",
-        "content": {
-            "text/plain": {
-                "content": "What is your favorite color?"
-            }
-        },
+        "content": "<p>What is your favorite color?</p>",
         // ...
-        "extensions": { // [!code focus:32]
+        "extensions": { // [!code focus:20]
             "pub.versia:polls": {
                 "options": [
                     {
-                        "content": {
-                            "text/plain": {
-                                "content": "Red"
-                            }
-                        },
+                        "content": "Red",
                         "votes": 9
                     },
                     {
-                        "content": {
-                            "text/plain": {
-                                "content": "Blue"
-                            }
-                        },
+                        "content": "Blue",
                         "votes": 5
                     },
                     {
-                        "content": {
-                            "text/plain": {
-                                "content": "Green"
-                            }
-                        },
+                        "content": "Green",
                         "votes": 0
                     }
                 ],

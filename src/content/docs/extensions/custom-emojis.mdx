@@ -27,8 +27,8 @@ The Custom Emojis extension lets an entity carry its own emoji images, so that a
 
         Identification characters **MUST NOT** be any of the characters allowed above. A name **MUST** have exactly two identification characters, one at the beginning and one at the end.
     </Field>
-    <Field name="content" type="ContentFormat" required>
-        Emoji content. **MUST** be an image format (`image/*`).
+    <Field name="content" type="Media" required>
+        Emoji image. **MUST** be an image (`image/*`).
     </Field>
 
     <Example slot="example">
@@ -36,10 +36,9 @@ The Custom Emojis extension lets an entity carry its own emoji images, so that a
     {
         "name": ":happy_face:",
         "content": {
-            "image/webp": {
-                "url": "https://cdn.example.com/emojis/happy_face.webp",
-                "description": "A happy emoji smiling."
-            }
+            "url": "https://cdn.example.com/emojis/happy_face.webp",
+            "media_type": "image/webp",
+            "description": "A happy emoji smiling."
         }
     }
     ```
@@ -61,11 +60,7 @@ Custom Emojis can be added to any entity with text content. The extension name i
         "id": "456df8ed-daf1-4062-abab-491071c7b8dd",
         "type": "Note",
         "created_at": "2024-04-09T01:38:51Z",
-        "content": {
-            "text/plain": {
-                "content": "Hello, world :happy_face:!"
-            }
-        },
+        "content": "<p>Hello, world :happy_face:!</p>",
         "visibility": "public",
         // ...
         "extensions": { // [!code focus:15]
@@ -74,10 +69,9 @@ Custom Emojis can be added to any entity with text content. The extension name i
                     {
                         "name": ":happy_face:",
                         "content": {
-                            "image/webp": {
-                                "url": "https://cdn.example.com/emojis/happy_face.webp",
-                                "description": "A happy emoji smiling."
-                            }
+                            "url": "https://cdn.example.com/emojis/happy_face.webp",
+                            "media_type": "image/webp",
+                            "description": "A happy emoji smiling."
                         }
                     }
                 ]
@@ -91,7 +85,7 @@ Custom Emojis can be added to any entity with text content. The extension name i
 ## Behavior
 
 To render custom emojis, clients **SHOULD** perform the following steps:
-1. Find all instances of custom emoji names in the text content.
+1. Find all instances of custom emoji names in the text content. In [RichText](/structures/rich-text), names are only found in text, not inside attribute values.
 2. Replace the custom emoji names with the corresponding emoji images in text.
 
 If custom emojis are not supported, clients **SHOULD** leave the custom emoji names as-is. Images **SHOULD** have any associated `alt` text for accessibility.
@@ -105,7 +99,7 @@ img.emoji {
 </style>
 
 <p>
-    Hello, world! <img src="https://cdn.example.com/emojis/happy_face.webp" alt="A happy emoji smiling." class="emoji" />!
+    Hello, world <img src="https://cdn.example.com/emojis/happy_face.webp" alt="A happy emoji smiling." class="emoji" />!
 </p>
 ```
 

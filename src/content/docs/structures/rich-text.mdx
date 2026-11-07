@@ -1,0 +1,128 @@
+---
+title: "RichText"
+description: "How formatted text is written: one HTML string, with a fixed set of elements that every receiver renders."
+kind: Format
+---
+
+`RichText` is formatted text, such as the content of a [Note](/entities/note) or a [User](/entities/user)'s bio. It is a string of HTML, using the elements and attributes listed on this page and no others.
+
+Fields that hold short labels, such as a User's `display_name`, are plain strings instead.
+
+```jsonc title="A Note's content"
+{
+    "content": "<p>Hello, <a href=\"https://b.example/@joe\" data-mention=\"b.example:bde22zi3ca8762\">@joe</a>! The notes from Tuesday:</p><ul><li>Ship the <code>0.7</code> release</li><li>Write the changelog</li></ul>"
+}
+```
+
+## Definition
+
+A RichText value is an HTML fragment, parsed as the [HTML standard](https://html.spec.whatwg.org/multipage/parsing.html#parsing-html-fragments) parses a fragment in the context of a `body` element. Senders **MUST** only use the [elements](#elements) and [attributes](#attributes) on this page, plus the [extension attributes](#extension-attributes) of extensions they implement. Senders **SHOULD** send well-formed HTML, with every element closed. Short values, such as a User's field keys or a poll option, can be text with no elements at all.
+
+[Mentions](#mentions) and [custom emojis](/extensions/custom-emojis) are written in the text as described below. Neither needs markup of its own for a receiver to find it.
+
+## Elements
+
+Receivers that display RichText **MUST** show the content of every element below. They **SHOULD** render each element as the HTML standard defines it. When a receiver cannot, it **MAY** use the fallback listed, which keeps the element's meaning.
+
+### Blocks
+
+| Element | Fallback |
+| --- | --- |
+| `p`, `div` | |
+| `h1`, `h2`, `h3`, `h4`, `h5`, `h6` | A paragraph in bold. |
+| `blockquote` | |
+| `pre` | |
+| `hr` | A blank line. |
+| `ul`, `ol`, `li` | |
+| `dl`, `dt`, `dd` | Each `dt` in bold, on its own line, followed by its `dd` elements. |
+| `table`, `caption`, `thead`, `tbody`, `tfoot`, `tr`, `th`, `td` | Each row on its own line, with its cells separated by tabs. |
+| `details`, `summary` | Shown open. |
+| `figure`, `figcaption` | |
+
+### Text
+
+| Element | Fallback |
+| --- | --- |
+| `a` | |
+| `br` | |
+| `span` | |
+| `strong`, `em`, `b`, `i`, `u`, `s`, `del`, `ins`, `mark`, `small` | |
+| `code`, `kbd`, `samp`, `var` | |
+| `sub`, `sup` | |
+| `abbr`, `cite`, `dfn`, `q`, `time` | |
+| `ruby`, `rt`, `rp` | The base text, followed by its `rt` text in parentheses. |
+| `bdi`, `bdo`, `wbr` | |
+
+### Media
+
+`img`, `video` and `audio` place a [Note](/entities/note)'s attachments inside its text, such as the images of a blog post. They are only allowed in a Note's `content`, and their `src` **MUST** be the `url` of one of that Note's `attachments`. Their description, size and dimensions come from that attachment, so these elements carry no other attributes. A receiver **MAY** show them as the attachments they point to.
+
+## Attributes
+
+Any element in the list can have `lang`, `dir` and `title`. Besides those, these attributes are allowed:
+
+| Element | Attributes |
+| --- | --- |
+| `a` | `href`, `data-mention` |
+| `ol` | `start`, `reversed`, `type` |
+| `li` | `value` |
+| `th` | `colspan`, `rowspan`, `scope` |
+| `td` | `colspan`, `rowspan` |
+| `time` | `datetime` |
+| `del`, `ins` | `datetime`, `cite` |
+| `blockquote`, `q` | `cite` |
+| `details` | `open` |
+| `code`, `pre` | `class`, only with values that start with `language-`, such as `language-rust` |
+| `img`, `video`, `audio` | `src` |
+| `span`, `div` | [Extension attributes](#extension-attributes) |
+
+A receiver that renders `ol` **MUST** honor its `start`, `reversed` and `type`, and the `value` of its `li` elements, so that numbers referred to in the text stay correct.
+
+### Links
+
+A link's `href` **MUST** be an absolute URL with one of these schemes: `http`, `https`, `mailto`, `web+versia`, `dat`, `dweb`, `ipfs`, `ipns`, `ssb`, `gopher`, `xmpp`, `magnet` or `gemini`. A `web+versia` link is a [Versia Link](/links).
+
+### Mentions
+
+A mention of a [User](/entities/user) is a link with a `data-mention` attribute, which holds the user's [Reference](/entities#reference). Its `href` **SHOULD** be the address of the user's profile on their instance, and its text is up to the sender, usually the [user address](/entities/user#addresses).
+
+```html
+<a href="https://b.example/@joe" data-mention="b.example:bde22zi3ca8762">@joe@b.example</a>
+```
+
+A mention in RichText does not notify anyone. On a Note, every user named in a `data-mention` **MUST** also be listed in its `mentions` field, which is what [decides who is notified](/entities/note). A receiver **MAY** point the link at its own copy of the user instead of the `href`.
+
+## Extension Attributes
+
+[Extensions](/extensions) can add effects to text, such as animation or color, with attributes on `span` and `div`. Each attribute is named `data-` followed by a short prefix that the extension states on its page, a hyphen and a name, such as `data-mfm-fn`. The prefix `mention` is reserved.
+
+```html
+<span data-mfm-fn="tada">hello</span>
+```
+
+An extension attribute **MUST NOT** change what text a receiver that does not implement the extension shows: without the attribute, the element and its content still read correctly. Receivers ignore the attributes of extensions they do not implement.
+
+An extension that defines attributes **MUST** state on its page how a receiver renders them safely. For example, an extension that animates text has to honor a reader's reduced-motion setting.
+
+## Other Elements and Attributes
+
+A receiver **SHOULD** [sanitize](/validation#html) RichText before rendering it. When it does:
+
+- `script`, `style`, `template`, `iframe`, `object`, `embed`, `svg` and `math` are removed, with their content.
+- Any other element not listed on this page is removed, and its content is kept in its place.
+- Attributes not listed on this page are removed, as are extension attributes of extensions the receiver does not implement.
+- A link whose `href` is not allowed is removed, and its text is kept.
+- `img`, `video` and `audio` whose `src` does not match an attachment are removed.
+
+## Plain Text
+
+Some places can only show plain text, such as notifications and link previews. To turn RichText into plain text, receivers **SHOULD**:
+
+- End each block element, `br` and `li` with a line break, and separate paragraphs with a blank line.
+- Start each `li` of a `ul` with `- `, and each `li` of an `ol` with its number and `. `.
+- Separate table cells with a tab, and put each row on its own line.
+- Replace each link with its text.
+- Leave out `rt`, `rp`, `img`, `video` and `audio`.
+- Collapse whitespace as HTML rendering does, except inside `pre`.
+
+Nothing in federation depends on the result.

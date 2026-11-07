@@ -21,7 +21,7 @@ Things to validate include, but are not limited to:
   - Limits on fields from other instances **SHOULD NOT** copy the limits an implementation sets for its own users. For example, an implementation that limits its own users' `bio` to 160 characters does not apply that limit to remote Users.
   - Any such limit **SHOULD** be generous and documented, and **SHOULD** let Users view the remote original, for example through a link. A limit of `100 000` characters for a `bio` field is acceptable, but a limit of `160` characters is not.
 - The **type** and **range** of all numeric fields.
-  - For example, a `size` field on a `ContentFormat` structure is a non-negative integer, not a negative number or a fractional one.
+  - For example, a `size` field on a `Media` structure is a non-negative integer, not a negative number or a fractional one.
 
   All numeric fields in these docs state their [type](/json#numbers) (`integer` or `float`). As a rule of thumb, store them in types that hold the full range, such as a 64-bit integer and a double-precision float.
 
@@ -56,7 +56,7 @@ Everything in an entity is written by another instance, and **SHOULD** be treate
 
 ### HTML
 
-This page asks implementations not to modify the content they store. They **SHOULD** sanitize remote HTML before rendering it or passing it to clients, removing at least scripts, event handlers and other active content, to prevent cross-site scripting. Which tags to allow is up to the implementation.
+This page asks implementations not to modify the content they store. They **SHOULD** sanitize remote HTML before rendering it or passing it to clients, removing at least scripts, event handlers and other active content, to prevent cross-site scripting. [RichText](/structures/rich-text#other-elements-and-attributes) lists the elements and attributes to keep.
 
 ### Outbound Requests
 

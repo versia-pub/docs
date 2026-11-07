@@ -38,6 +38,7 @@ export default defineConfig({
         "/philosophy/principles": "/principles",
         "/federation/validation": "/validation",
         "/federation/example": "/example",
+        "/structures/content-format": "/structures/media",
     },
     markdown: {
         processor: unified({
@@ -164,11 +165,8 @@ export default defineConfig({
                             true,
                         ),
                         link("Collection", "/structures/collection", true),
-                        link(
-                            "ContentFormat",
-                            "/structures/content-format",
-                            true,
-                        ),
+                        link("Media", "/structures/media", true),
+                        link("RichText", "/structures/rich-text", true),
                     ],
                 },
                 {

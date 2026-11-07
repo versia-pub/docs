@@ -1,0 +1,58 @@
+---
+title: "Media"
+description: "How images, video, audio and other files are linked, with their media type and metadata."
+kind: Structure
+---
+
+import Fields from "../../../components/spec/Fields.astro";
+import Example from "../../../components/spec/Example.astro";
+import Field from "../../../components/spec/Field.astro";
+
+The `Media` structure points to a file, such as a User's avatar or an attachment to a Note, together with what a receiver needs to know before fetching it.
+
+## Definition
+
+<Fields name="Media">
+    <Field name="url" type="URI" required>
+        Where to fetch the file from.
+    </Field>
+    <Field name="media_type" type="string" required>
+        [Media type](https://www.iana.org/assignments/media-types/media-types.xhtml) of the file, such as `image/png`. Fields that hold media say which media types they accept.
+    </Field>
+    <Field name="description" type="string">
+        A human-readable description of the file. Also known as `alt` text.
+    </Field>
+    <Field name="size" type="number" numberType="integer">
+        Size of the file in bytes. Senders **SHOULD** include it.
+    </Field>
+    <Field name="hash" type="string">
+        SHA-256 hash of the file. **MUST** be encoded in lowercase hexadecimal. Senders **SHOULD** include it.
+    </Field>
+    <Field name="thumbhash" type="string">
+        Image in [ThumbHash](https://evanw.github.io/thumbhash/) format, encoded in base64 using the standard alphabet with padding, as defined in [RFC 4648, section 4](https://datatracker.ietf.org/doc/html/rfc4648#section-4). Senders **SHOULD** include it for images and video.
+    </Field>
+    <Field name="width" type="number" numberType="integer">
+        Width of the image or video in pixels. Senders **SHOULD** include it for images and video.
+    </Field>
+    <Field name="height" type="number" numberType="integer">
+        Height of the image or video in pixels. Senders **SHOULD** include it for images and video.
+    </Field>
+    <Field name="duration" type="number" numberType="float">
+        Duration of the audio or video in seconds. **MUST NOT** be negative.
+    </Field>
+
+    <Example slot="example">
+    ```jsonc title="Image"
+    {
+        "url": "https://cdn.example.com/attachments/ece2f9d9-27d7-457d-b657-4ce9172bdcf8.png",
+        "media_type": "image/png",
+        "description": "A jolly horse running through mountains",
+        "size": 453933,
+        "hash": "91714fc336210d459d4f9d9233de663be2b87ffe923f1cfd76ece9d06f7c965d",
+        "thumbhash": "3OcRJYB4d3h/iIeHeEh3eIhw+j2w",
+        "width": 1920,
+        "height": 1080
+    }
+    ```
+    </Example>
+</Fields>

@@ -7,7 +7,6 @@ kind: Core concept
 Terms used across this specification.
 
 - **[Collection](/structures/collection)**: A paginated group of entities, such as a user's outbox.
-- **[ContentFormat](/structures/content-format)**: Content with metadata, in one or more media types.
 - **[Delegate](/extensions/delegation)**: The user that performs actions shown under another user's name.
 - **[Delegator](/extensions/delegation)**: The user that a delegate's actions are shown as.
 - **[Domain](/entities#domain)**: The hostname of an instance, used to identify it in the network.
@@ -18,10 +17,12 @@ Terms used across this specification.
 - **[Inbox](/federation#inboxes)**: The endpoint that receives messages for all of an instance's users.
 - **Instance**: An application deploying an implementation. `mastodon.social` is an instance of Mastodon. It is described by its [InstanceMetadata](/entities/instance-metadata).
 - **[Interaction type](/extensions/interaction-controls#interaction-types)**: A kind of interaction with a Note that can be controlled, such as `reply`.
+- **[Media](/structures/media)**: A file, such as an image, with its media type and metadata.
 - **Receiver**: The instance a message is sent to.
 - **[Reference](/entities#reference)**: A string of the form `domain:id`, which points to an entity.
 - **[Reference Collection](/structures/collection#reference-collection)**: A Collection of references, used to list entities from other instances.
+- **[RichText](/structures/rich-text)**: Formatted text, as one HTML string with a fixed set of elements.
 - **Sender**: The instance that sends a message.
-- **[Structure](/entities#definition)**: A JSON object that does not meet the definition of an entity, such as a ContentFormat.
+- **[Structure](/entities#definition)**: A JSON object that does not meet the definition of an entity, such as a Media.
 - **[Transient Entity](/entities#transient-entities)**: An entity with no `id`, which cannot be fetched or referenced.
 - **[User address](/entities/user#addresses)**: A shorthand for a user, in the form `@username@instance`.

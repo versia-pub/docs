@@ -25,8 +25,8 @@ A `Note` is a piece of content posted by a [User](/entities/user). Notes can con
         - `quotes`: [Reference Collection](/structures/collection#reference-collection) of [Note](/entities/note) entities that quote this note.
     </div>
 
-    <Field name="attachments" type="ContentFormat[]" required>
-        Media attachments to the note. Any format is allowed. **MUST** use `url`.
+    <Field name="attachments" type="Media[]" required>
+        Media attachments to the note. Any media type is allowed. The `content` can [place attachments inside the text](/structures/rich-text#media).
     </Field>
     <Field name="author" type="Reference" required>
         [Reference](/entities#reference) to the `User` considered the author of the note.
@@ -46,8 +46,8 @@ A `Note` is a piece of content posted by a [User](/entities/user). Notes can con
 
         A receiver **MUST** treat an unknown value as if `category` were left out.
     </Field>
-    <Field name="content" type="ContentFormat">
-        The content of the note. **MUST** be text format (`text/*`). **MUST** use `content`, not `url`.
+    <Field name="content" type="RichText">
+        The content of the note.
     </Field>
     <Field name="device" type="Device">
         Device used to post the note. Useful for showing which app posted the note.
@@ -87,7 +87,7 @@ A `Note` is a piece of content posted by a [User](/entities/user). Notes can con
         [Reference](/entities#reference) to the note that this note is a reply to, if any.
     </Field>
     <Field name="subject" type="string">
-        A subject for the note. Useful for clients to display a "content warning" or "spoiler" feature, such as on Mastodon. **MUST** be a plaintext string (`text/plain`).
+        A subject for the note. Useful for clients to display a "content warning" or "spoiler" feature, such as on Mastodon. **MUST** be plain text, not [RichText](/structures/rich-text).
     </Field>
     <Inherits />
 
@@ -99,33 +99,24 @@ A `Note` is a piece of content posted by a [User](/entities/user). Notes can con
         "created_at": "2024-06-19T01:07:44Z",
         "attachments": [
             {
-                "image/png": {
-                    "url": "https://cdn.example.com/29e810bf4707fef373d886af322089d5db300fce66e4e073efc26827f10825f6/image.png",
-                    "thumbhash": "1QcSHQRnh493V4dIh4eXh1h4kJUI",
-                    "height": 960,
-                    "size": 221275,
-                    "hash": "967b8e86d8708c6283814f450efcbd3be94d3d24ca9a7ab435b2ff8b51dcbc21",
-                    "width": 639
-                }
+                "url": "https://cdn.example.com/29e810bf4707fef373d886af322089d5db300fce66e4e073efc26827f10825f6/image.png",
+                "media_type": "image/png",
+                "size": 221275,
+                "hash": "967b8e86d8708c6283814f450efcbd3be94d3d24ca9a7ab435b2ff8b51dcbc21",
+                "thumbhash": "1QcSHQRnh493V4dIh4eXh1h4kJUI",
+                "width": 639,
+                "height": 960
             },
             {
-                "text/plain": {
-                    "url": "https://cdn.example.com/68c02dd11c179ef4d170b05393f6e72133dd0ad733f40d41b42363d8784e8d5d/fire.txt",
-                    "size": 8,
-                    "hash": "68c02dd11c179ef4d170b05393f6e72133dd0ad733f40d41b42363d8784e8d5d"
-                }
+                "url": "https://cdn.example.com/68c02dd11c179ef4d170b05393f6e72133dd0ad733f40d41b42363d8784e8d5d/fire.txt",
+                "media_type": "text/plain",
+                "size": 8,
+                "hash": "68c02dd11c179ef4d170b05393f6e72133dd0ad733f40d41b42363d8784e8d5d"
             }
         ],
         "author": "versia.example:018eb863-753f-76ff-83d6-fd590de7740a",
         "category": "microblog",
-        "content": {
-            "text/html": {
-                "content": "<p>In the next versia-fe update: account settings, finally!</p>"
-            },
-            "text/plain": {
-                "content": "In the next versia-fe update: account settings, finally!"
-            }
-        },
+        "content": "<p>In the next versia-fe update: account settings, finally!</p>",
         "device": {
             "name": "Example Client",
             "version": "1.0.0",
