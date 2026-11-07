@@ -27,8 +27,8 @@ Versia defines a very simple API for server-to-server communication, mainly fetc
 
     <Example slot="example">
     ```http title="Example request"
-    GET /.well-known/versia
-    Host: b.social
+    GET /.well-known/versia HTTP/1.1
+    Host: b.example
     Accept: application/json
     ```
 
@@ -55,8 +55,8 @@ Versia defines a very simple API for server-to-server communication, mainly fetc
 
     <Example slot="example">
     ```http title="Example request"
-    GET /.versia/v0.7/instance
-    Host: b.social
+    GET /.versia/v0.7/instance HTTP/1.1
+    Host: b.example
     Accept: application/vnd.versia+json
     ```
 
@@ -90,8 +90,8 @@ Versia defines a very simple API for server-to-server communication, mainly fetc
 
     <Example slot="example">
     ```http title="Example request"
-    GET /.versia/v0.7/entities/User/1234
-    Host: b.social
+    GET /.versia/v0.7/entities/User/1234 HTTP/1.1
+    Host: b.example
     Accept: application/vnd.versia+json
     ```
 
@@ -124,8 +124,8 @@ Versia defines a very simple API for server-to-server communication, mainly fetc
 
     <Example slot="example">
     ```http title="Example request"
-    GET /.versia/v0.7/entities/User/1234/collections/followers
-    Host: b.social
+    GET /.versia/v0.7/entities/User/1234/collections/followers HTTP/1.1
+    Host: b.example
     Accept: application/vnd.versia+json
     ```
 
@@ -136,8 +136,8 @@ Versia defines a very simple API for server-to-server communication, mainly fetc
     {
         "total": 2,
         "items": [
-            "a.social:f8b0d4b4-d354-4798-bbc5-c2ba8acabfe3",
-            "c.social:2B27E62snga763"
+            "a.example:f8b0d4b4-d354-4798-bbc5-c2ba8acabfe3",
+            "c.example:2B27E62snga763"
         ]
     }
     ```
@@ -158,8 +158,8 @@ Items **MUST** be in a stable order, oldest first, so that new items do not shif
 A collection lists only the items the requesting instance [may fetch](/federation#access).
 
 ```http title="Example paginated collection request"
-GET /.versia/v0.7/entities/User/1234/collections/followers?offset=10&limit=20
-Host: b.social
+GET /.versia/v0.7/entities/User/1234/collections/followers?offset=10&limit=20 HTTP/1.1
+Host: b.example
 Accept: application/vnd.versia+json
 ```
 
@@ -179,8 +179,8 @@ Accept: application/vnd.versia+json
 
     <Example slot="example">
     ```http title="Example request"
-    GET /.versia/v0.7/instance/collections/admins
-    Host: b.social
+    GET /.versia/v0.7/instance/collections/admins HTTP/1.1
+    Host: b.example
     Accept: application/vnd.versia+json
     ```
 
@@ -209,14 +209,14 @@ The inbox receives entities from other instances, for every user on the instance
 
     <Example slot="example">
     ```http title="Example request"
-    POST /.versia/v0.7/inbox
-    Host: b.social
+    POST /.versia/v0.7/inbox HTTP/1.1
+    Host: b.example
     Content-Type: application/vnd.versia+json
 
     {
         "type": "Note",
         "id": "1234",
-        ...
+        // ...
     }
     ```
     </Example>

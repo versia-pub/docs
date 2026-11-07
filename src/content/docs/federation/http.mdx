@@ -38,18 +38,21 @@ Requests not encrypted with TLS (aka HTTPS) **MUST NOT** be sent or responded to
         A string identifying the software making the request. **SHOULD** contain the name of the software, its version, and a link to its homepage.
 
         ```text title="Example User-Agent"
-        CoolServer/1.0 (https://coolserver.com)
+        CoolServer/1.0 (https://coolserver.example)
         ```
     </Field>
 
     <Example slot="example">
     ```http title="Example Request"
-    POST https://bob.com/.versia/v0.7/inbox HTTP/1.1
+    POST /.versia/v0.7/inbox HTTP/1.1
+    Host: bob.example
     Content-Type: application/vnd.versia+json
-    User-Agent: CoolServer/1.0 (https://coolserver.com)
-    Versia-Signature: zyNVCEnWvdklMqwEQ+iBS2MrcgThI5NY5iMOTTrHFIk2dCdAh0Q7HAYNeIju1UCIWKLLttrTDvma3MZGLqm4AQ==
+    User-Agent: CoolServer/1.0 (https://coolserver.example)
+    Versia-Signature: WuNuH0GXziXZ6m4DPrYGy70BibycNH6LqhYZ1YMO7kxzeA6eJlEV9vwXAx7RZAG67nMYGbQf6jjltobU8U0BAw==
     Versia-Signed-By: example.com
     Versia-Signed-At: 1729241687
+
+    {"type":"Delete","created_at":"2024-10-18T08:54:47Z","author":"example.com:6e0204a2-746c-4972-8602-c4f37fc63bbe","deleted_type":"Note","deleted":"example.com:02e1e3b2-cb1f-4e4a-b82e-98866bee5de7"}
     ```
     </Example>
 </Fields>
@@ -73,7 +76,7 @@ API endpoints **MUST NOT** redirect from HTTP to HTTPS. This is to force all API
 This is forbidden:
 
 ```http
-GET /.versia/v0.7/entities/User/1234
+GET /.versia/v0.7/entities/User/1234 HTTP/1.1
 Host: example.com
 Accept: application/vnd.versia+json
 
@@ -83,7 +86,7 @@ Location: https://example.com/users/1234
 
 This is allowed:
 ```http
-GET /.versia/v0.7/entities/User/1234
+GET /.versia/v0.7/entities/User/1234 HTTP/1.1
 Host: example.com
 Accept: text/html
 
@@ -121,11 +124,11 @@ How long to keep trying is up to the implementation. 48 hours is a reasonable de
 
     <Example slot="example">
     ```http title="Example Response"
-    # Answers GET /.versia/v0.7/instance/collections/admins, sent to bob.com
+    # Answers GET /.versia/v0.7/instance/collections/admins, sent to bob.example
     HTTP/1.1 200 OK
     Content-Type: application/vnd.versia+json
-    Versia-Signature: Agu7sfHZd+qDkyYrrROm8fKgb7tMrG1vdWRCKH5Kw9VS0HtLbt4f6Tf8eEpKZKiyQyZDe8lGihtICjSs/p4sBg==
-    Versia-Signed-By: bob.com
+    Versia-Signature: 9Xkg1gy82HxAoXeXk7je0Qc9kiBWXuVRmqXXdvBUW+z3USKzCkfGrttFHkqBALPlexghmiXzMzxM98kURplxAA==
+    Versia-Signed-By: bob.example
     Versia-Signed-At: 1729241717
 
     {"total":0,"items":[]}

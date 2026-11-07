@@ -8,13 +8,9 @@ import Note from "../../components/Note.astro";
 import Message from "../../components/spec/Message.astro";
 import WireTrace from "../../components/spec/WireTrace.astro";
 
-This page follows one note from `a.social` to `b.social`, from resolving a mention to displaying the note.
+This page follows one note from `a.example` to `b.example`, from resolving a mention to displaying the note.
 
 <Note>
-    All examples, domains, names and timestamps are **fictional** and are used **for illustrative purposes only**.
-
-    Some details have been slightly simplified for clarity.
-
     The signatures are real. They were made with the [example key](/guides/signing-requests#example-key) from Signing Requests, so you can check them by [exporting its public key](/signatures#exporting-the-public-key).
 </Note>
 
@@ -22,12 +18,12 @@ This page follows one note from `a.social` to `b.social`, from resolving a menti
 
 The whole exchange looks like this, and the sections below go through each step.
 
-<WireTrace a="a.social" b="b.social">
-    <Message from="a" local>`@alice` posts a note that mentions `@joe@b.social`.</Message>
-    <Message from="a" label="GET /.well-known/webfinger?resource=acct:joe@b.social">[Resolve the mention](#resolving-the-mention) using WebFinger.</Message>
+<WireTrace a="a.example" b="b.example">
+    <Message from="a" local>`@alice` posts a note that mentions `@joe@b.example`.</Message>
+    <Message from="a" label="GET /.well-known/webfinger?resource=acct:joe@b.example">[Resolve the mention](#resolving-the-mention) using WebFinger.</Message>
     <Message from="b">Responds with the URL of `joe`'s profile.</Message>
     <Message from="a" label="GET /.versia/v0.7/entities/User/bde22zi3ca8762">[Fetch the user](#fetching-the-user) from that URL.</Message>
-    <Message from="b" request label="GET /.versia/v0.7/instance">[Verify the signature](/signatures#verifying-the-signature). `b.social` fetches `a.social`'s metadata if it does not have its public key yet.</Message>
+    <Message from="b" request label="GET /.versia/v0.7/instance">[Verify the signature](/signatures#verifying-the-signature). `b.example` fetches `a.example`'s metadata if it does not have its public key yet.</Message>
     <Message from="a" request={false}>Responds with its `InstanceMetadata`, which holds the public key.</Message>
     <Message from="b">Responds with the `User` entity.</Message>
     <Message from="a" local>[Serialize the note](#serializing-the-note).</Message>
@@ -36,32 +32,32 @@ The whole exchange looks like this, and the sections below go through each step.
     <Message from="b" local>[Display the note](#displaying-the-note) to `joe`.</Message>
 </WireTrace>
 
-`@alice` on `a.social` creates a note with the following content:
+`@alice` on `a.example` creates a note with the following content:
 
 ```markdown
-Hello, @joe@b.social! How are you doing today?
+Hello, @joe@b.example! How are you doing today?
 ```
 
-`@alice` has mentioned `@joe@b.social` in the note.
+`@alice` has mentioned `@joe@b.example` in the note.
 
 ### Resolving the Mention
 
-`a.social` resolves the mention by querying `b.social` for the user `joe` using WebFinger.
+`a.example` resolves the mention by querying `b.example` for the user `joe` using WebFinger.
 
 ```bash title="cURL example"
-curl "https://b.social/.well-known/webfinger?resource=acct:joe@b.social" -H "Accept: application/jrd+json"
+curl "https://b.example/.well-known/webfinger?resource=acct:joe@b.example" -H "Accept: application/jrd+json"
 ```
 
-`b.social` responds with the following JSON:
+`b.example` responds with the following JSON:
 
 ```json
 {
-    "subject": "acct:joe@b.social",
+    "subject": "acct:joe@b.example",
     "links": [
         { // [!code focus:5]
             "rel": "self",
             "type": "application/vnd.versia+json",
-            "href": "https://b.social/.versia/v0.7/entities/User/bde22zi3ca8762"
+            "href": "https://b.example/.versia/v0.7/entities/User/bde22zi3ca8762"
         }
     ]
 }
@@ -69,25 +65,25 @@ curl "https://b.social/.well-known/webfinger?resource=acct:joe@b.social" -H "Acc
 
 ### Fetching the User
 
-`a.social` fetches the user profile of `joe` from `b.social` using the URL provided in the WebFinger response.
+`a.example` fetches the user profile of `joe` from `b.example` using the URL provided in the WebFinger response.
 
 ```bash
-# The request is signed by a.social's instance private key
-curl https://b.social/.versia/v0.7/entities/User/bde22zi3ca8762 \
+# The request is signed by a.example's instance private key
+curl https://b.example/.versia/v0.7/entities/User/bde22zi3ca8762 \
     -H "Accept: application/vnd.versia+json" \
-    -H "User-Agent: CoolServer/1.0 (https://coolserver.com)" \
-    -H "Versia-Signature: 79Dce+bCF59bZ8eE7OqE9hslBYhwmhSjKFYBGmPRDGQjOBUaGdX5WKY1iTbOgCTMp50xE+8sSQjuDNaOmBz3Bw==" \
-    -H "Versia-Signed-By: a.social" \
+    -H "User-Agent: CoolServer/1.0 (https://coolserver.example)" \
+    -H "Versia-Signature: MLIVrdNTl+QFvd/Pcyx03R0jYZCgi8PlcV1qd5JgG3YQ59hSirebmHIJcVQWKT97oHWSVMB5XqmscH3ovIOXDw==" \
+    -H "Versia-Signed-By: a.example" \
     -H "Versia-Signed-At: 1733051945"
 ```
 
-`b.social` [verifies the signature](/signatures#verifying-the-signature) before it answers. That takes `a.social`'s public key, so if `b.social` does not have it yet, it reads it from `a.social`'s [metadata](/entities/instance-metadata):
+`b.example` [verifies the signature](/signatures#verifying-the-signature) before it answers. That takes `a.example`'s public key, so if `b.example` does not have it yet, it reads it from `a.example`'s [metadata](/entities/instance-metadata):
 
 ```bash
-curl https://a.social/.versia/v0.7/instance -H "Accept: application/vnd.versia+json"
+curl https://a.example/.versia/v0.7/instance -H "Accept: application/vnd.versia+json"
 ```
 
-`b.social` then responds with the following JSON. Its response is signed too, and `a.social` verifies it the same way, using `b.social`'s public key.
+`b.example` then responds with the following JSON. Its response is signed too, and `a.example` verifies it the same way, using `b.example`'s public key.
 
 ```json
 {
@@ -96,7 +92,7 @@ curl https://a.social/.versia/v0.7/instance -H "Accept: application/vnd.versia+j
     "created_at": "2024-10-13T18:48:19Z",
     "avatar": {
         "image/webp": {
-            "url": "https://cdn.b.social/avatars/joe.webp"
+            "url": "https://cdn.example.com/avatars/joe.webp"
         }
     }, // [!code focus:3]
     "display_name": "Joe Swanson (Winter Arc :gigachad:)",
@@ -111,7 +107,7 @@ curl https://a.social/.versia/v0.7/instance -H "Accept: application/vnd.versia+j
                     "name": ":gigachad:",
                     "content": {
                         "image/png": {
-                            "url": "https://cdn.b.social/emojis/gigachad.png"
+                            "url": "https://cdn.example.com/emojis/gigachad.png"
                         }
                     }
                 }
@@ -121,30 +117,30 @@ curl https://a.social/.versia/v0.7/instance -H "Accept: application/vnd.versia+j
 }
 ```
 
-`a.social` now has the user profile of `joe` and can display the note with the correct user information.
+`a.example` now has the user profile of `joe` and can display the note with the correct user information.
 
 ### Serializing the Note
 
-Finally, `a.social` serializes the note to send it to `joe`.
+Finally, `a.example` serializes the note to send it to `joe`.
 
 ```json
 {
     "id": "782addd9-c051-4eea-8ba4-23d561d0c5bb", // [!code focus:6]
     "type": "Note",
     "created_at": "2024-12-01T11:19:04Z",
-    "author": "a.social:ac41xk9dfe7302",
+    "author": "a.example:ac41xk9dfe7302",
     "category": "microblog",
     "content": {
         "text/html": { // [!code focus:3]
-            "content": "Hello, <a class=\"u-url mention\" href=\"https://b.social/users/bde22zi3ca8762\">@joe@b.social</a>! How are you doing today?"
+            "content": "Hello, <a class=\"u-url mention\" href=\"https://b.example/users/bde22zi3ca8762\">@joe@b.example</a>! How are you doing today?"
         },
         "text/plain": {
-            "content": "Hello, @joe@b.social! How are you doing today?"
+            "content": "Hello, @joe@b.example! How are you doing today?"
         }
     },
     "visibility": "public",
     "mentions": [ // [!code focus:3]
-        "b.social:bde22zi3ca8762"
+        "b.example:bde22zi3ca8762"
     ],
     "attachments": [],
     "is_sensitive": false,
@@ -152,27 +148,27 @@ Finally, `a.social` serializes the note to send it to `joe`.
 }
 ```
 
-It is now time for `a.social` to send the note to `joe`.
+It is now time for `a.example` to send the note to `joe`.
 
 ### Sending the Note
 
-`a.social` sends the note to the inbox of `b.social`, which hosts `joe`. `note.json` holds the note above, with no trailing newline.
+`a.example` sends the note to the inbox of `b.example`, which hosts `joe`. `note.json` holds the note above, with no trailing newline.
 
 ```bash
-# The request is signed by a.social's instance private key
-curl -X POST https://b.social/.versia/v0.7/inbox \
+# The request is signed by a.example's instance private key
+curl -X POST https://b.example/.versia/v0.7/inbox \
     --data-binary @note.json \
     -H "Content-Type: application/vnd.versia+json" \
-    -H "User-Agent: CoolServer/1.0 (https://coolserver.com)" \
-    -H "Versia-Signature: 5PBu/nKzWBTZcApNTKtPPwayMqe5hu0d2KuN9VafWb0HUUF5DSTJC47hjawOboDtlXeRdIOD/mGtCMhZHEseCA==" \
-    -H "Versia-Signed-By: a.social" \
+    -H "User-Agent: CoolServer/1.0 (https://coolserver.example)" \
+    -H "Versia-Signature: J6xjtXEJzPwatif9ZByx2Lw2tupdyPH5W30AcpcoMUMNQa0gsQoN1fYVY50GZh6r25KMqdUlOysV8krsSEe0Aw==" \
+    -H "Versia-Signed-By: a.example" \
     -H "Versia-Signed-At: 1733051946"
 ```
 
-`b.social` verifies the signature with the key it already has, and responds with a `202 Accepted` status code.
+`b.example` verifies the signature with the key it already has, and responds with a `202 Accepted` status code.
 
 ### Displaying the Note
 
-The software on `b.social` processes the note and shows it to `joe` using whatever interface it has.
+The software on `b.example` processes the note and shows it to `joe` using whatever interface it has.
 
-`joe` can now see the note from `@alice` on `a.social` and respond to it.
+`joe` can now see the note from `@alice` on `a.example` and respond to it.

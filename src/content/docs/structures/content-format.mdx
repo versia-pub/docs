@@ -19,7 +19,7 @@ type ContentType = `${string}/${string}`;
 
 type ContentFormat = {
     [key: ContentType]: {
-        ...
+        // ...
     };
 }
 ```
@@ -99,10 +99,10 @@ Each piece of data in the `ContentFormat` structure is meant to be a different r
 ```json
 {
     "image/png": {
-        ...
+        "url": "https://cdn.example.com/photo.png"
     },
     "image/webp": {
-        ...
+        "url": "https://cdn.example.com/photo.webp"
     }
 }
 ```
@@ -111,10 +111,10 @@ Each piece of data in the `ContentFormat` structure is meant to be a different r
 ```json
 {
     "image/png": {
-        ...
+        "url": "https://cdn.example.com/photo.png"
     },
     "application/json": {
-        ...
+        "url": "https://cdn.example.com/photo.json"
     }
 }
 ```

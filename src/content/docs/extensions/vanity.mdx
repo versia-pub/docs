@@ -17,7 +17,7 @@ All properties are optional.
 
 <Fields name="Vanity" extension="pub.versia:vanity" on="User">
     <Field name="avatar_overlays" type="ContentFormat[]">
-        Overlay images to be placed on top of the user's avatar, like this: [example overlay from Discord](https://cdn.discordapp.com/avatar-decoration-presets/a_949a575b693c81ced8f56a7579d0969f.png).
+        Overlay images to be placed on top of the user's avatar.
 
         The first overlay in the array is the topmost overlay. The inner 80% of the overlay **SHOULD** cover the avatar, with the outer 20% extending beyond the avatar's bounds.
 
@@ -69,7 +69,7 @@ All properties are optional.
         // ...
         "type": "User",
         // ...
-        "extensions": { // [!code focus:100]
+        "extensions": { // [!code focus:47]
             "pub.versia:vanity": {
                 "avatar_overlays": [
                     {
@@ -90,7 +90,7 @@ All properties are optional.
                 },
                 "audio": {
                     "audio/mpeg": {
-                        "url": "https://cdn.example.com/4da2f0d4-4728-4819-83e4-d614e4c5bebc/michael-jackson-thriller.mp3"
+                        "url": "https://cdn.example.com/4da2f0d4-4728-4819-83e4-d614e4c5bebc/theme.mp3"
                     }
                 },
                 "pronouns": {

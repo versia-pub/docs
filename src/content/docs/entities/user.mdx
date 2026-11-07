@@ -58,10 +58,10 @@ The `User` entity represents an account on a Versia instance. Users can post [No
     {
         "id": "018ec082-0ae1-761c-b2c5-22275a611771",
         "type": "User",
-        "created_at": "2024-04-09T01:38:51.743Z",
-        "avatar": { // [!code focus:100]
+        "created_at": "2024-04-09T01:38:51Z",
+        "avatar": {
             "image/png": {
-                "url": "https://avatars.githubusercontent.com/u/30842467?v=4"
+                "url": "https://cdn.example.com/avatars/april.png"
             }
         },
         "bio": {
@@ -94,7 +94,7 @@ The `User` entity represents an account on a Versia instance. Users can post [No
         ],
         "indexable": false,
         "manually_approves_followers": false,
-        "username": "aprl"
+        "username": "april"
     }
     ```
     </Example>
@@ -111,7 +111,7 @@ Users may be represented by a shorthand address, in the following format:
 For example:
 
 ```
-@jessew@versia.social
+@alice@versia.example
 ```
 
 This is similar to an email address or an ActivityPub address. Usernames are case-insensitive.

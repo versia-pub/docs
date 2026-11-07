@@ -35,8 +35,8 @@ The migration extension moves an account's followers and followed accounts to a 
     {
         "type": "pub.versia:migration/Migration",
         "author": "example.com:44df6e02-ef43-47e0-aff2-47041f3d09ed",
-        "created_at": "2021-01-01T00:00:00.000Z",
-        "destination": "otherinstance.social:73e999a0-53d0-40a3-a5cc-be0408004726"
+        "created_at": "2021-01-01T00:00:00Z",
+        "destination": "other.example:73e999a0-53d0-40a3-a5cc-be0408004726"
     }
     ```
     </Example>
@@ -60,10 +60,10 @@ The following extensions to [User](/entities/user) are used by the migration ext
         // ...
         "type": "User",
         // ...
-        "extensions": { // [!code focus:100]
+        "extensions": { // [!code focus:6]
             "pub.versia:migration": {
-                "previous": "oldinstance.social:44df6e02-ef43-47e0-aff2-47041f3d09ed"
-                // "destination": "newinstance.social:73e999a0-53d0-40a3-a5cc-be0408004726"
+                "previous": "old.example:44df6e02-ef43-47e0-aff2-47041f3d09ed"
+                // "destination": "new.example:73e999a0-53d0-40a3-a5cc-be0408004726"
             }
         }
     }

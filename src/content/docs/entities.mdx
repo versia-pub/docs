@@ -56,19 +56,19 @@ Fields not marked as `required` are [optional](/json#optional-fields).
     {
         "id": "3e7e4750-afd4-4d99-a256-02f0710a0520",
         "type": "pub.versia:likes/Like",
-        "created_at": "2021-01-01T00:00:00.000Z",
+        "created_at": "2021-01-01T00:00:00Z",
         "author": "example.com:6e0204a2-746c-4972-8602-c4f37fc63bbe",
-        "target": "otherexample.org:fmKZ763jzIU8"
+        "target": "example.org:fmKZ763jzIU8"
     }
     ```
 
     ```jsonc title="With Extensions"
     {
         "id": "f0aacf0b-df7a-4ee5-a2ba-6c4acafd8642",
-        "type": "org.space:zlorbs/Zlorb",
+        "type": "com.example:zlorbs/Zlorb",
         "created_at": "2023-04-13T08:00:00Z",
-        "extensions": { // [!code focus:100]
-            "org.space:zlorbs": {
+        "extensions": { // [!code focus:10]
+            "com.example:zlorbs": {
                 "zlorb_type": "giant",
                 "zlorb_size": "huge"
             },
@@ -107,7 +107,7 @@ type Reference = `${Domain}:${Id}`;
 A **reference** is a way to refer to any entity within the Versia network. It is a string composed of the following parts:
 
 - The [domain](#domain) of the entity's instance.
-    - Example: `example.com`, `xn--ls8h.xn--ls8h`.
+    - Example: `example.com`, `xn--bcher-kva.example`.
 - A colon (`:`) separator.
 - The entity's unique identifier. This is the `id` property of the entity.
 
@@ -123,8 +123,8 @@ A reference does not say what type of entity it points to, but [fetching an enti
 {
     "type": "Follow",
     "author": "example.com:6e0204a2-746c-4972-8602-c4f37fc63bbe", // [!code focus]
-    "created_at": "2021-01-01T00:00:00.000Z",
-    "followee": "test.org:02e1e3b2-cb1f-4e4a-b82e-98866bee5de7" // [!code focus]
+    "created_at": "2021-01-01T00:00:00Z",
+    "followee": "example.org:02e1e3b2-cb1f-4e4a-b82e-98866bee5de7" // [!code focus]
 }
 ```
 
@@ -138,7 +138,7 @@ A domain **MUST** be lowercase wherever it appears in the protocol, including [R
 example.com
 test.localhost
 sus.example.org
-xn--ls8h.la
+xn--bcher-kva.example
 1.0.1.7.0.8.0.0.0.0.7.4.0.1.0.0.2.ip6.arpa # We know what you did
 ```
 
@@ -146,11 +146,11 @@ xn--ls8h.la
 example.com:3000   # ❌️ Invalid: port number is not allowed
 test..localhost    # ❌️ Invalid: double dot is not allowed
 example.com.       # ❌️ Invalid: trailing dot is not allowed
-test.org/          # ❌️ Invalid: trailing slash is not allowed
-test.org/sus       # ❌️ Invalid: path is not allowed
-💩.la              # ❌️ Invalid: IDNs must be Punycode encoded
+example.org/       # ❌️ Invalid: trailing slash is not allowed
+example.org/sus    # ❌️ Invalid: path is not allowed
+bücher.example     # ❌️ Invalid: IDNs must be Punycode encoded
 Example.com        # ❌️ Invalid: uppercase is not allowed
-https://bob.org    # ❌️ Invalid: protocol is not allowed
+https://a.example  # ❌️ Invalid: protocol is not allowed
 192.0.2.1          # ❌️ Invalid: IP address is not allowed
 localhost          # ❌️ Invalid: single label is not allowed
 ```

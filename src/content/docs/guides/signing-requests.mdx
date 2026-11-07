@@ -10,16 +10,16 @@ The following example is written in TypeScript using the WebCrypto API and the E
 
 ## The Request
 
-`@bob`, from `bob.com`, wants to sign a request to `alice.com`. The request is a `POST` to `/.versia/v0.7/inbox`, with the following body. It is shown exactly as sent, with no whitespace, because the hash covers the raw bytes.
+`@bob`, from `bob.example`, wants to sign a request to `alice.example`. The request is a `POST` to `/.versia/v0.7/inbox`, with the following body. It is shown exactly as sent, with no whitespace, because the hash covers the raw bytes.
 ```json
 {"content":"Hello, world!"}
 ```
 
-Bob can be found at `https://bob.com/.versia/v0.7/entities/User/bf44e6ad-7c0a-4560-9938-cf3fd4066511`.
+Bob can be found at `https://bob.example/.versia/v0.7/entities/User/bf44e6ad-7c0a-4560-9938-cf3fd4066511`.
 
 ## Example Key
 
-The Ed25519 private key of `bob.com`, encoded in base64 [PKCS8](https://en.wikipedia.org/wiki/PKCS_8), is `MC4CAQAwBQYDK2VwBCIEILrNXhbWxC/MhKQDsJOAAF1FH/R+Am5G/eZKnqNum5ro`. This key signs the examples in this specification, whichever instance they name. It is public, so never use it on a real instance.
+The Ed25519 private key of `bob.example`, encoded in base64 [PKCS8](https://en.wikipedia.org/wiki/PKCS_8), is `MC4CAQAwBQYDK2VwBCIEILrNXhbWxC/MhKQDsJOAAF1FH/R+Am5G/eZKnqNum5ro`. This key signs the examples in this specification, whichever instance they name. It is public, so never use it on a real instance.
 
 ## Signing
 
@@ -45,7 +45,7 @@ const digest = await crypto.subtle.digest(
 );
 
 const stringToSign =
-    `post alice.com /.versia/v0.7/inbox ${timestamp} ${new Uint8Array(digest).toBase64()}`;
+    `post alice.example /.versia/v0.7/inbox ${timestamp} ${new Uint8Array(digest).toBase64()}`;
 
 const signature = await crypto.subtle.sign(
     "Ed25519",
@@ -63,12 +63,12 @@ To send the request, Bob would use the following code:
 ```typescript
 const headers = new Headers();
 
-headers.set("Versia-Signed-By", "bob.com");
+headers.set("Versia-Signed-By", "bob.example");
 headers.set("Versia-Signed-At", String(timestamp));
 headers.set("Versia-Signature", base64Signature);
 headers.set("Content-Type", "application/vnd.versia+json");
 
-const response = await fetch("https://alice.com/.versia/v0.7/inbox", {
+const response = await fetch("https://alice.example/.versia/v0.7/inbox", {
     method: "POST",
     headers,
     body: content,
@@ -77,12 +77,12 @@ const response = await fetch("https://alice.com/.versia/v0.7/inbox", {
 
 ## Verifying
 
-`alice.com` verifies the signature using the public key of `bob.com`. This code assumes that the key is stored in a variable called `publicKey` (during real federation, it would be fetched from the instance's [metadata endpoint](/federation/endpoints#instance-metadata)).
+`alice.example` verifies the signature using the public key of `bob.example`. This code assumes that the key is stored in a variable called `publicKey` (during real federation, it would be fetched from the instance's [metadata endpoint](/federation/endpoints#instance-metadata)).
 
 ```typescript
 const method = request.method.toLowerCase();
 // Alice's own domain, not the Host header
-const host = "alice.com";
+const host = "alice.example";
 // Must match the request line. If your URL parser normalizes it, use the raw request target
 const url = new URL(request.url);
 const path = url.pathname + url.search;
