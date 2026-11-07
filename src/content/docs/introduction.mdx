@@ -17,6 +17,8 @@ The Versia Protocol is designed as a communication medium for federated applicat
 
 The key words **MUST**, **MUST NOT**, **SHOULD**, **SHOULD NOT** and **MAY** in this specification are to be interpreted as described in BCP 14 ([RFC 2119](https://datatracker.ietf.org/doc/html/rfc2119), [RFC 8174](https://datatracker.ietf.org/doc/html/rfc8174)) when, and only when, they appear in bold capitals, as shown here. In any other form, these words have their everyday meaning and set no requirement.
 
+An Instance conforms to this specification if it meets every **MUST** and **MUST NOT** of the core protocol, and of each [extension](/extensions) it lists in [`compatibility.extensions`](/entities/instance-metadata). Extensions are optional.
+
 The Versia Protocol uses the following terms:
 - **Entity**: A JSON object with a `type` and a `created_at`, such as a [User](./entities/user), a [Note](./entities/note), or a [Like](./extensions/likes). Most entities are uniquely identified by their `id` property.
     - [**Transient Entity**](/entities#transient-entities): A type of **Entity** that has no `id`, so it cannot be fetched or referenced by other entities.
