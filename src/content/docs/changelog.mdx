@@ -57,7 +57,7 @@ This is Working Draft 7. All endpoints moved from `/.versia/v0.6/` to `/.versia/
 - [Delete](/entities/delete): `author` is optional, instances can delete, and the instance hosting the entity must send the Delete. A Delete whose `deleted_type` differs from the stored type is ignored. Added `410` and `404` for fetching deleted entities.
 - [Outboxes](/federation#outboxes) hold the Notes a user has authored.
 - Added an [endpoint for instance collections](/federation/endpoints#instance-collections), since Instance Metadata has no `id`, and defined [pagination](/federation/endpoints#pagination).
-- [Extension endpoints](/extensions) must be under `/.versia/v0.X/extensions/<extension name>/`. Extensions now state their own delivery and access rules.
+- [Extension endpoints](/extensions) must be under `/.versia/v0.X/extensions/{extension_name}/`. Extensions now state their own delivery and access rules.
 - Entity types and collection names in paths are [no longer percent-encoded](/federation/http#encoding), as in `/entities/pub.versia:groups/Group/1234`.
 - Entity types in URLs are always capitalized, and examples no longer have port numbers in domains.
 
@@ -76,7 +76,7 @@ This is Working Draft 7. All endpoints moved from `/.versia/v0.6/` to `/.versia/
 - [Reports](/extensions/reports): `reported` is now a list of objects holding `type` and `reference`.
 - [Share](/extensions/share): only a public Note can be shared.
 - [Vanity](/extensions/vanity): removed `aliases`, and `LanguageCode` is now BCP 47.
-- [Versia Links](/links): `instance` is required except for `compose`, usernames are allowed, and `:text` is percent-encoded.
+- [Versia Links](/links): `instance` is required except for `compose`, usernames are allowed, and `{text}` is percent-encoded.
 
 ### Documentation
 

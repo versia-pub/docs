@@ -123,7 +123,7 @@ Extensions can add any of the following:
         "id": "6f27bc77-58ee-4c9b-b804-8cc1c1182fa9",
         "author": "example.com:6e0204a2-746c-4972-8602-c4f37fc63bbe",
         "created_at": "2021-01-01T00:00:00Z",
-        "question": "What is your favourite colour?",
+        "question": "What is your favorite color?",
         "options": [
             "Red",
             "Blue",
@@ -140,7 +140,7 @@ An extension's [collections](/structures/collection) are named like its custom e
 
 ### Endpoints
 
-An extension's endpoints **MUST** be under `/.versia/v0.X/extensions/<extension name>/`. This keeps them from colliding with core endpoints or with other extensions. The extension name is [not percent-encoded](/federation/http#encoding).
+An extension's endpoints **MUST** be under `/.versia/v0.X/extensions/{extension_name}/`. This keeps them from colliding with core endpoints or with other extensions. The extension name is [not percent-encoded](/federation/http#encoding).
 
 ```text title="Example Extension Endpoint"
 /.versia/v0.7/extensions/pub.versia:instance_messaging/messaging

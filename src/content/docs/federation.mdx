@@ -36,7 +36,7 @@ Bob's instance receives the message and processes it according to the rules defi
 
 ## Outboxes
 
-In addition to inboxes, every user has an outbox (at `/.versia/v0.7/entities/User/<id>/collections/outbox`). The outbox is a [Collection](/structures/collection) of the [Notes](/entities/note) that the user has authored.
+In addition to inboxes, every user has an outbox (at `/.versia/v0.7/entities/User/{id}/collections/outbox`). The outbox is a [Collection](/structures/collection) of the [Notes](/entities/note) that the user has authored.
 
 An outbox **MUST** list only the entities the requesting instance [may fetch](#access). For example, if Alice sends a [Note](/entities/note) whose `visibility` is `mentions` and that only mentions Bob, Alice's instance **MUST** return it in response to a request from Bob's instance, and **MUST NOT** list it in Alice's outbox in response to a request from Joe's instance.
 

@@ -23,20 +23,20 @@ Versia Links are a way to reference entities in the Versia Protocol, in a way th
 
         Possible actions:
 
-        - `users/:instance/:id`: Open a user profile.
-        - `users/:instance/@:username`: Open a user profile by username, [resolved through WebFinger](/federation/discovery).
-        - `notes/:instance/:id`: Open a note.
-        - `groups/:instance/:id`: Open a group.
-        - `reply/:instance/:id`: Open the composer to reply to a note.
-        - `quote/:instance/:id`: Open the composer to quote a note.
-        - `share/:instance/:id`: Share a note.
-        - `compose/:text`: Compose a new note. Text passed at the end will be added in the note compose field. Used for "Share with Versia" buttons on websites.
+        - `users/{instance}/{id}`: Open a user profile.
+        - `users/{instance}/@{username}`: Open a user profile by username, [resolved through WebFinger](/federation/discovery).
+        - `notes/{instance}/{id}`: Open a note.
+        - `groups/{instance}/{id}`: Open a group.
+        - `reply/{instance}/{id}`: Open the composer to reply to a note.
+        - `quote/{instance}/{id}`: Open the composer to quote a note.
+        - `share/{instance}/{id}`: Share a note.
+        - `compose/{text}`: Compose a new note. Text passed at the end will be added in the note compose field. Used for "Share with Versia" buttons on websites.
     </Field>
     <Field name="instance" type="Domain">
         Instance hosting the referenced content. **MUST** be present on every action except `compose`.
     </Field>
 
-    An `:id` is the entity's `id`, which cannot contain `@`, so a segment that starts with `@` always marks a username. `:text` **MUST** be percent-encoded as a URI path segment.
+    An `{id}` is the entity's `id`, which cannot contain `@`, so a segment that starts with `@` always marks a username. `{text}` **MUST** be percent-encoded as a URI path segment.
 
     <Example slot="example">
     ```text title="Viewing a user profile"

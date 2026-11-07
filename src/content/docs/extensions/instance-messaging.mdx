@@ -12,7 +12,7 @@ The name of this extension is `pub.versia:instance_messaging`. Instances that su
 
 Federation often fails silently. For example, if `joe.example` cannot process a [User](/entities/user) fetched from `jane.example` because of an invalid `username`, `jane.example` has no way of knowing what went wrong.
 
-## Behaviour
+## Behavior
 
 To send a federation debug message, instances **SHOULD** make a `POST` request to the `/.versia/v0.7/extensions/pub.versia:instance_messaging/messaging` endpoint with a text body. The body **SHOULD** name the sending instance and what failed, as nothing else in the request identifies the sender.
 
