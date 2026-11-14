@@ -71,8 +71,8 @@ A `Note` is a piece of content posted by a User.
 
         - `public`: Anyone.
         - `unlisted`: Anyone, but receivers **SHOULD NOT** show it in timelines of notes from users the reader has not subscribed to, such as a public timeline, or in search results.
-        - `subscribers`: The author's subscribers, the users mentioned in the note, and the authors of the Notes it replies to.
-        - `mentions`: Only the users mentioned in the note, and the authors of the Notes it replies to.
+        - `subscribers`: The author's subscribers, the users mentioned in the note, and the author of the Note it replies to.
+        - `mentions`: Only the users mentioned in the note, and the author of the Note it replies to.
 
         From widest to narrowest, the values are `public`, `unlisted`, `subscribers` and `mentions`.
     </Field>
@@ -163,16 +163,16 @@ A sender **MUST** [deliver](/federation#delivery) a Note to the instances hostin
 | Note | Delivered to |
 | --- | --- |
 | `visibility` is `public` or `unlisted` | The author's subscribers, the users it mentions, and the authors of the Notes it replies to and quotes |
-| `visibility` is `subscribers` | The author's subscribers, the users it mentions, and the authors of the Notes it replies to |
-| `visibility` is `mentions` | The users it mentions and the authors of the Notes it replies to |
+| `visibility` is `subscribers` | The author's subscribers, the users it mentions, and the author of the Note it replies to |
+| `visibility` is `mentions` | The users it mentions and the author of the Note it replies to |
 
 These instances [may fetch](/federation#access) a Note:
 
 | Note | May be fetched by |
 | --- | --- |
 | `visibility` is `public` or `unlisted` | Any instance |
-| `visibility` is `subscribers` | Instances hosting a subscriber of the author, a mentioned user, or the author of a Note it replies to |
-| `visibility` is `mentions` | Instances hosting a mentioned user or the author of a Note it replies to |
+| `visibility` is `subscribers` | Instances hosting a subscriber of the author, a mentioned user, or the author of the Note it replies to |
+| `visibility` is `mentions` | Instances hosting a mentioned user or the author of the Note it replies to |
 
 ## Notes Collection
 

@@ -73,6 +73,8 @@ pub.versia:likes@1
 
 Two instances that both list an extension use the highest version they have in common. If they have none in common, the sender **MUST** leave out that extension's data: its key in `extensions`, its entity types and its collections. The same applies when the version they would use requires an extension that they do not have in common at the required version.
 
+A sender learns what another instance lists from its metadata, which it fetches again [at least every 24 hours](/signatures#key-rotation). So an entity can reach an instance that has just added an extension without that extension's data, and a [change](/entities#changing-an-entity) sent before the sender fetches the metadata again clears that data from the receiver's copy.
+
 ## Extension Definition
 
 Extensions can add any of the following:
