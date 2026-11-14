@@ -109,6 +109,8 @@ To change an entity, its instance sends the whole entity again, with the same `i
 
 Senders **SHOULD** set `updated_at` when sending a change. A receiver **MUST** discard a version whose `updated_at` is older than that of the copy it holds. Without an `updated_at` to compare, the last version received wins. The same applies to a version it fetched.
 
+An extension **MAY** name fields of its own entities as **counters**, such as the vote numbers of a [poll](/extensions/polls). A change to only counters is not an edit, and receivers **SHOULD NOT** show the entity as edited because of it.
+
 ## Reference
 
 ```typescript

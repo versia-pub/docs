@@ -35,6 +35,9 @@ There is no `question` field: the question goes in the `content` of the Note its
     <Field name="multiple_choice" type="boolean" required>
         Whether the poll allows multiple votes to be cast for different options.
     </Field>
+    <Field name="voters" type="number" numberType="integer">
+        Number of users who voted. **SHOULD** be present when `multiple_choice` is `true`, as the numbers in `options` then count choices, not users.
+    </Field>
     <Field name="expires_at" type="RFC3339">
         RFC 3339 timestamp of when the poll ends and no more votes can be cast. If not present, the poll does not expire.
     </Field>
@@ -135,13 +138,19 @@ A user changes their choices by [sending the Vote again](/entities#changing-an-e
 
 A Vote's `target` **MUST NOT** change, and a receiver **MUST** discard a version that changes it. Voting in another poll takes a new Vote.
 
+### Changing a Poll
+
+Votes point at options by their index, so a poll's options are [locked](/entities#changing-an-entity). The number of `options`, the `content` of each, and `multiple_choice` **MUST NOT** change, and a receiver **MUST** discard a version of the Note that changes them. To change the options, the author deletes the Note and posts a new one.
+
+`votes` and `voters` are [counters](/entities#changing-an-entity), so a change to only those is not an edit of the Note.
+
 ## Delivery and Access
 
 A sender **MUST** [deliver](/federation#delivery) Votes to the author of the [Note](/extensions/social#note).
 
 Only the instance of the Note's author may [fetch](/federation#access) a Vote.
 
-When a poll's votes change, its Note is [sent again](/entities#changing-an-entity), and **MUST** also be delivered to the users who voted.
+When a poll's votes change, its Note is [sent again](/entities#changing-an-entity), and **MUST** also be delivered to the users who voted. The instance of the poll's author **SHOULD** combine changes that come close together into one resend, for example at most one a minute, and **SHOULD** send the Note again when the poll closes.
 
 ## Interaction Types
 
