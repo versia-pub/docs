@@ -100,7 +100,9 @@ An instance that rate limits a request **MUST** respond with a [`429 Too Many Re
 
 ## Retries
 
-A sender delivering to an [inbox](/federation/endpoints#inbox) **SHOULD** retry with increasing delays after a network failure, a `5xx` status code, a `408 Request Timeout`, a `429 Too Many Requests`, or a `2xx` response [it had to discard](/signatures#where-signatures-are-required). It **MUST** honor any `Retry-After` header. It **MUST NOT** retry after any other `4xx` status code.
+A sender delivering to an [inbox](/federation/endpoints#inbox) **SHOULD** retry with increasing delays after a network failure, a `5xx` status code, a `401 Unauthorized`, a `408 Request Timeout`, a `429 Too Many Requests`, or a `2xx` response [it had to discard](/signatures#where-signatures-are-required). It **MUST** honor any `Retry-After` header. It **MUST NOT** retry after any other `4xx` status code.
+
+A `401` is retried because it can be temporary. After a [key rotation](/signatures#key-rotation), a receiver that refetched the sender's metadata a moment earlier rejects valid signatures until it may refetch again.
 
 Each retry **MUST** be [signed](/signatures) again, as the signature's timestamp will no longer be valid.
 
