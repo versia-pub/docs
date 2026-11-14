@@ -66,12 +66,15 @@ A `Note` is a piece of content posted by a User.
         <Field name="version" type="string" />
         <Field name="url" type="string" />
     </Field>
-    <Field name="visibility" type={'"public" | "subscribers" | "mentions"'} required>
+    <Field name="visibility" type={'"public" | "unlisted" | "subscribers" | "mentions"'} required>
         Who can see the note, besides its author:
 
         - `public`: Anyone.
+        - `unlisted`: Anyone, but receivers **SHOULD NOT** show it in timelines of notes from users the reader has not subscribed to, such as a public timeline, or in search results.
         - `subscribers`: The author's subscribers, the users mentioned in the note, and the authors of the Notes it replies to.
         - `mentions`: Only the users mentioned in the note, and the authors of the Notes it replies to.
+
+        From widest to narrowest, the values are `public`, `unlisted`, `subscribers` and `mentions`.
     </Field>
     <Field name="is_sensitive" type="boolean" required>
         Whether the note contains "sensitive content". This can be used with `subject` as a "content warning" feature.
@@ -92,6 +95,8 @@ A `Note` is a piece of content posted by a User.
     </Field>
     <Field name="quoting" type="Reference">
         [Reference](/entities#reference) to the note that this note is quoting, if any. Quoting is similar to replying, but does not notify the author of the quoted note.
+
+        A note's `visibility` **MUST NOT** be wider than that of the note it quotes.
     </Field>
     <Field name="replies_to" type="Reference">
         [Reference](/entities#reference) to the note that this note is a reply to, if any.
@@ -157,7 +162,7 @@ A sender **MUST** [deliver](/federation#delivery) a Note to the instances hostin
 
 | Note | Delivered to |
 | --- | --- |
-| `visibility` is `public` | The author's subscribers, the users it mentions, and the authors of the Notes it replies to and quotes |
+| `visibility` is `public` or `unlisted` | The author's subscribers, the users it mentions, and the authors of the Notes it replies to and quotes |
 | `visibility` is `subscribers` | The author's subscribers, the users it mentions, and the authors of the Notes it replies to |
 | `visibility` is `mentions` | The users it mentions and the authors of the Notes it replies to |
 
@@ -165,7 +170,7 @@ These instances [may fetch](/federation#access) a Note:
 
 | Note | May be fetched by |
 | --- | --- |
-| `visibility` is `public` | Any instance |
+| `visibility` is `public` or `unlisted` | Any instance |
 | `visibility` is `subscribers` | Instances hosting a subscriber of the author, a mentioned user, or the author of a Note it replies to |
 | `visibility` is `mentions` | Instances hosting a mentioned user or the author of a Note it replies to |
 

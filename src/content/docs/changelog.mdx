@@ -46,7 +46,7 @@ The core is now general-purpose. Posts moved to the [Social extension](/extensio
 - RichText defines the elements and attributes senders can use, a fallback for each, and how to turn it into plain text. Mentions are links with a `data-mention` attribute, and [extensions](/structures/rich-text#extension-attributes) can add `data-` attributes to `span` and `div`.
 - Media's `hash` is a lowercase hexadecimal `string`, and `thumbhash` is standard padded base64. Senders should include `size` and `hash`, and `thumbhash`, `width` and `height` for images and video.
 - Renamed URI Collection to [Reference Collection](/structures/collection#reference-collection). A Collection only holds entities authored on the instance serving it.
-- [Note](/extensions/social#note): `quotes` is now `quoting`, and the new required `visibility` field replaces the `group` field's visibility values. Groups moved to the [Groups extension](/extensions/groups). An unknown `category` is treated as absent.
+- [Note](/extensions/social#note): `quotes` is now `quoting`, and the new required `visibility` field replaces the `group` field's visibility values. It has an `unlisted` value, and cannot be wider than the quoted Note's. Groups moved to the [Groups extension](/extensions/groups). An unknown `category` is treated as absent.
 - [User](/entities/user), [Note](/extensions/social#note) and [Group](/extensions/groups) have a new optional `url`, the address of their page on their instance.
 - Removed the Types page. RFC3339 and URI types now link directly to their RFCs.
 
@@ -89,7 +89,7 @@ The core is now general-purpose. Posts moved to the [Social extension](/extensio
 - [Polls](/extensions/polls): `options` is now a list of objects holding `content` and `votes`. A Vote now holds all of a user's choices in an `options` list of indexes, replacing one Vote per option with `option`, and a user has at most one Vote in each poll. A Vote can change by being sent again, and is withdrawn by a Delete, but its `target` cannot change. A refused Vote must be [rejected](/validation#rejecting-entities).
 - [Reactions](/extensions/reactions): defined how `content` holds a custom emoji, and a Reaction is undone with a Delete.
 - [Reports](/extensions/reports): `reported` is now a list of objects holding `type` and `reference`.
-- [Share](/extensions/share): only a public Note can be shared.
+- [Share](/extensions/share): only a public or unlisted Note can be shared.
 - [Versia Links](/links): `instance` is required except for `compose`, usernames are allowed, `{text}` is percent-encoded, and extensions can add actions.
 
 ### Documentation
