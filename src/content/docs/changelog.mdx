@@ -116,7 +116,7 @@ The core is now general-purpose. Posts moved to the [Social extension](/extensio
     - Added endpoints under `/.versia/v0.6/` to fetch entities by their `id`.
 - Added [References](/entities#reference) as a way to refer to other entities.
 - Replaced `null` authors with an optional field.
-- Replaced the `hash` field on [ContentFormat](/structures/content-format) with a hex-encoded SHA-256 hash.
+- Replaced the `hash` field on [ContentFormat](/structures/media) with a hex-encoded SHA-256 hash.
 - Added more guidance on [handling JSON](/json).
 - Clarified what a [Domain](/entities#domain) means in Versia.
 - [Note](/extensions/social#note): `is_sensitive`, `attachments`, `mentions` and `previews` are now required.
@@ -153,7 +153,7 @@ The core is now general-purpose. Posts moved to the [Social extension](/extensio
 - A `uri` no longer has to contain the entity's `id`, and `uri` is optional on some entities that are not worth keeping track of.
 - `id` can now be any string, not only a UUID.
 - Added shared inboxes.
-- [ContentFormat](/structures/content-format): added `remote`.
+- [ContentFormat](/structures/media): added `remote`.
 - Switched from [BlurHash](https://blurha.sh/) to [ThumbHash](https://evanw.github.io/thumbhash/).
 - [Custom Emojis](/extensions/custom-emojis): added identification characters.
 - [Users](/entities/user): added `manually_approves_followers`.
