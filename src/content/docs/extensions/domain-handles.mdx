@@ -25,7 +25,7 @@ The field goes in the `pub.versia:domain_handles` key of a User's `extensions`.
     <Example slot="example" unchecked>
     ```jsonc title="Example User"
     {
-        "id": "033p0g85e2000",
+        "id": "1hv0842q1hexgh24zk",
         "type": "User",
         // ...
         "username": "joe",
@@ -44,7 +44,7 @@ The field goes in the `pub.versia:domain_handles` key of a User's `extensions`.
 The owner of the domain proves the handle with a DNS `TXT` record named `_versia.` followed by the domain. Its value is `user=` followed by a [Reference](/entities#reference) to the User.
 
 ```text title="Example Record"
-_versia.joe.example.  TXT  "user=versia.example:033p0g85e2000"
+_versia.joe.example.  TXT  "user=versia.example:1hv0842q1hexgh24zk"
 ```
 
 Records at that name whose value does not start with `user=` are ignored. If more than one record starts with `user=`, the domain names no user.
@@ -59,7 +59,7 @@ Host: joe.example
 ```
 
 ```text title="Example Response Body"
-versia.example:033p0g85e2000
+versia.example:1hv0842q1hexgh24zk
 ```
 
 The file is not a Versia endpoint, and is not [signed](/signatures). Any static host can serve it. An instance fetching it **MAY** follow up to 5 redirects, and **MUST NOT** follow one to a URL that is not HTTPS.

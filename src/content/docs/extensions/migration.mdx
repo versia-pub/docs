@@ -34,9 +34,9 @@ The migration extension moves an account's subscribers and the users it is subsc
     ```json title="Example Entity"
     {
         "type": "pub.versia:migration/Migration",
-        "author": "example.com:034syrr1jc002",
+        "author": "example.com:1jczcc0s69y0dgtfkb",
         "created_at": "2021-01-01T00:00:00Z",
-        "destination": "other.example:0338qkp85w001"
+        "destination": "other.example:1hmbsv42ynr64s63kp"
     }
     ```
     </Example>
@@ -62,8 +62,8 @@ The following extensions to [User](/entities/user) are used by the migration ext
         // ...
         "extensions": { // [!code focus:6]
             "pub.versia:migration": {
-                "previous": "old.example:034syrr1jc002"
-                // "destination": "new.example:0338qkp85w001"
+                "previous": "old.example:1jczcc0s69y0dgtfkb"
+                // "destination": "new.example:1hmbsv42ynr64s63kp"
             }
         }
     }

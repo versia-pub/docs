@@ -22,7 +22,7 @@ The whole exchange looks like this, and the sections below go through each step.
     <Message from="a" local>`@alice` posts a note that mentions `@joe@b.example`.</Message>
     <Message from="a" label="GET /.well-known/webfinger?resource=acct:joe@b.example" wire="resolving-the-mention:0">[Resolve the mention](#resolving-the-mention) using WebFinger.</Message>
     <Message from="b" wire="resolving-the-mention:1">Responds with the URL of `joe`'s profile.</Message>
-    <Message from="a" label="GET /.versia/v0.7/entities/User/034de9r4fr006" wire="fetching-the-user:0">[Fetch the user](#fetching-the-user) from that URL.</Message>
+    <Message from="a" label="GET /.versia/v0.7/entities/User/1j6q4w27wacfeazw5v" wire="fetching-the-user:0">[Fetch the user](#fetching-the-user) from that URL.</Message>
     <Message from="b" request label="GET /.versia/v0.7/instance" wire="fetching-the-user:1">[Verify the signature](/signatures#verifying-the-signature). `b.example` fetches `a.example`'s metadata if it does not have its public key yet.</Message>
     <Message from="a" request={false}>Responds with its `InstanceMetadata`, which holds the public key.</Message>
     <Message from="b" wire="fetching-the-user:2">Responds with the `User` entity.</Message>
@@ -57,7 +57,7 @@ curl "https://b.example/.well-known/webfinger?resource=acct:joe@b.example" -H "A
         { // [!code focus:5]
             "rel": "self",
             "type": "application/vnd.versia+json",
-            "href": "https://b.example/.versia/v0.7/entities/User/034de9r4fr006"
+            "href": "https://b.example/.versia/v0.7/entities/User/1j6q4w27wacfeazw5v"
         }
     ]
 }
@@ -69,10 +69,10 @@ curl "https://b.example/.well-known/webfinger?resource=acct:joe@b.example" -H "A
 
 ```bash
 # The request is signed by a.example's instance private key
-curl https://b.example/.versia/v0.7/entities/User/034de9r4fr006 \
+curl https://b.example/.versia/v0.7/entities/User/1j6q4w27wacfeazw5v \
     -H "Accept: application/vnd.versia+json" \
     -H "User-Agent: CoolServer/1.0 (https://coolserver.example)" \
-    -H "Versia-Signature: L8icLiUGIu0kznC4Z1DgSMIzAvounZ0fJ7QsJFl+yFxnkb8qRQ/G2IT549f5yGcpfRFJQF87S12dWUM3161jDQ==" \
+    -H "Versia-Signature: RqHbVe+oXTFmdTFCFomBI2DWg5FkTHEJBOaRZ/15WuomQWm1KLthFye+2VMBA3SfTKeF3uI3xT3QGPhiJVdNAA==" \
     -H "Versia-Signed-By: a.example" \
     -H "Versia-Signed-At: 1733051945"
 ```
@@ -87,7 +87,7 @@ curl https://a.example/.versia/v0.7/instance -H "Accept: application/vnd.versia+
 
 ```json
 {
-    "id": "034de9r4fr006",
+    "id": "1j6q4w27wacfeazw5v",
     "type": "User",
     "created_at": "2024-10-13T18:48:19Z",
     "avatar": {
@@ -122,17 +122,17 @@ Finally, `a.example` serializes the note to send it to `joe`.
 
 ```json
 {
-    "id": "033r20svqa000",
+    "id": "1hw10cxvnwbv17qfbc",
     "type": "pub.versia:social/Note",
     "created_at": "2024-12-01T11:19:04Z",
     "attachments": [],
-    "author": "a.example:034d45r3e6003",
+    "author": "a.example:1j6j2w1q3b50qja183",
     "category": "microblog",
-    "content": "<p>Hello, <a href=\"https://b.example/users/034de9r4fr006\" data-mention=\"b.example:034de9r4fr006\">@joe@b.example</a>! How are you doing today?</p>",
+    "content": "<p>Hello, <a href=\"https://b.example/users/1j6q4w27wacfeazw5v\" data-mention=\"b.example:1j6q4w27wacfeazw5v\">@joe@b.example</a>! How are you doing today?</p>",
     "visibility": "public",
     "is_sensitive": false,
     "mentions": [
-        "b.example:034de9r4fr006"
+        "b.example:1j6q4w27wacfeazw5v"
     ],
     "previews": []
 }
@@ -150,7 +150,7 @@ curl -X POST https://b.example/.versia/v0.7/inbox \
     --data-binary @note.json \
     -H "Content-Type: application/vnd.versia+json" \
     -H "User-Agent: CoolServer/1.0 (https://coolserver.example)" \
-    -H "Versia-Signature: n+9b5vDR1CcvoxaO+XhWUj6hlVRQeZ+t+EC31SJHD8qHJQ7Y6yd8ZzgrJi9uOWnb7t3ht0EWVa2qF82Jq7ZlCQ==" \
+    -H "Versia-Signature: zFCsM0fs11F9PSDGD5h/6O4yadW8p4u9lTZN+5VTU+6CA3zBU3Up6Z/zteJj08Setp1MpBCCAc168+Z9J9SoAg==" \
     -H "Versia-Signed-By: a.example" \
     -H "Versia-Signed-At: 1733051946"
 ```

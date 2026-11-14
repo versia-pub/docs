@@ -1,14 +1,14 @@
 // The formats the pages define, as checks that return what is wrong, or nothing. Each message is
 // written to follow the name of what it checks, as in "Its domain has a port number".
 
-/** /entities: an `id` holds 1 to 13 of `a-z`, `0-9`, `-` and `_`. */
+/** /entities: an `id` holds 1 to 18 of `a-z`, `0-9`, `-` and `_`. */
 const idProblem = (id: string) => {
     if (id === "") return "is empty";
     if (/[A-Z]/.test(id)) return "has uppercase letters";
     if (!/^[a-z0-9_-]+$/.test(id)) {
         return "has characters other than `a-z`, `0-9`, `-` and `_`";
     }
-    if (id.length > 13) return "is longer than 13 characters";
+    if (id.length > 18) return "is longer than 18 characters";
     return;
 };
 

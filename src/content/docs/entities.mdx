@@ -21,7 +21,7 @@ Fields not marked as `required` are [optional](/json#optional-fields).
 
 <Fields name="Entity">
     <Field name="id" type="string" required>
-        Unique identifier for the entity. **MUST** be unique within the instance, and from 1 to 13 characters long. **MUST** contain only the following characters:
+        Unique identifier for the entity. **MUST** be unique within the instance, and from 1 to 18 characters long. **MUST** contain only the following characters:
 
         - `a-z`
         - `0-9`
@@ -55,17 +55,17 @@ Fields not marked as `required` are [optional](/json#optional-fields).
     <Example slot="example" unchecked>
     ```jsonc title="Example Entity"
     {
-        "id": "033gs6adpp000",
+        "id": "1hrck56vbp3k1zq615",
         "type": "pub.versia:likes/Like",
         "created_at": "2021-01-01T00:00:00Z",
-        "author": "example.com:033wv9k6n0007",
-        "target": "example.org:033w19vsgr000"
+        "author": "example.com:1hydmskagrdtnq544w",
+        "target": "example.org:1hy0mxwrc92jvwqc45"
     }
     ```
 
     ```jsonc title="With Extensions"
     {
-        "id": "033qkb1gq0002",
+        "id": "1hvsngrbg9jank607a",
         "type": "com.example:zlorbs/Zlorb",
         "created_at": "2023-04-13T08:00:00Z",
         "extensions": { // [!code focus:10]
@@ -87,10 +87,10 @@ Fields not marked as `required` are [optional](/json#optional-fields).
 
 A [reference](#reference) carries the domain of the entity's instance, so an id only has to be unique within that instance, not across the network. So it can be much shorter than a UUID, which at 36 characters is not a valid id. Short ids are also easier to read and type where they appear, such as in [Versia Links](/links) and in the paths of the [Federation API](/federation/endpoints).
 
-How an instance creates ids is up to it. For example, it can take the time the entity is created, in milliseconds since the Unix epoch, multiply it by 65 536, add a counter for entities created in the same millisecond, and write the result in lowercase [Crockford base32](https://www.crockford.com/base32.html), padded with `0` to 13 characters. Crockford base32 leaves out `i`, `l`, `o` and `u`, so an id cannot be misread as `1` or `0` when someone types it.
+How an instance creates ids is up to it. For example, it can write the time the entity is created, in milliseconds since the Unix epoch, in lowercase [Crockford base32](https://www.crockford.com/base32.html), padded with `0` to 9 characters. It then adds 9 random characters from the same alphabet. The random part holds 45 bits, so processes that create entities at the same moment don't need to share a counter. Crockford base32 leaves out `i`, `l`, `o` and `u`, so an id can't be misread as `1` or `0` when someone types it.
 
-```text title="An id made from a time and a counter"
-0341e147rp002
+```text title="An id made from a time and random characters"
+1j0q0j3wb4v0hgtw6w
 ```
 
 Ids made this way sort by creation time within one instance, which helps the instance store and page through them. Other instances still treat them as opaque.
@@ -140,8 +140,8 @@ A reference does not say what type of entity it points to, but [fetching an enti
 {
     "type": "Subscribe",
     "created_at": "2021-01-01T00:00:00Z",
-    "subscriber": "example.com:033wv9k6n0007", // [!code focus]
-    "target": "example.org:033qtdbdkj006", // [!code focus]
+    "subscriber": "example.com:1hydmskagrdtnq544w", // [!code focus]
+    "target": "example.org:1hvx6npss60nr8rva3", // [!code focus]
     "target_type": "User"
 }
 ```

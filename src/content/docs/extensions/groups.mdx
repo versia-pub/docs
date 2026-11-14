@@ -57,7 +57,7 @@ Only the instance hosting a group may send or serve that Group.
     ```jsonc title="Example Group"
     {
         "type": "pub.versia:groups/Group",
-        "id": "033j6qrwzt002",
+        "id": "1hs3bwefxa3k0h7d69",
         "created_at": "2021-01-01T00:00:00Z",
         "name": "The Woozy fan club",
         "description": "<p>A group for fans of the <strong>Woozy</strong> emoji.</p>",
@@ -87,7 +87,7 @@ Members of the group can see the Note, on top of the audience its `visibility` g
         // ...
         "extensions": { // [!code focus:5]
             "pub.versia:groups": {
-                "group": "example.com:033j6qrwzt002"
+                "group": "example.com:1hs3bwefxa3k0h7d69"
             }
         }
     }
@@ -118,8 +118,8 @@ A receiver **MUST** ignore a `GroupFederate` that does not come from the instanc
     ```jsonc title="Example GroupFederate"
     {
         "type": "pub.versia:groups/Federate",
-        "target": "versia.example:034e17jw54002",
-        "group": "example.com:033j6qrwzt002",
+        "target": "versia.example:1j70kse2jpcj1rt12j",
+        "group": "example.com:1hs3bwefxa3k0h7d69",
         "created_at": "2021-01-01T00:00:00Z"
     }
     ```
