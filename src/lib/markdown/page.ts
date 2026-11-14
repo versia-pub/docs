@@ -80,6 +80,23 @@ const assertPlain = (root: Root) => {
     });
 };
 
+/** The Markdown form of a site link, such as `/signatures.md#keys` for `/signatures#keys`. */
+export const markdownHref = (href: string): string => {
+    const [path = "", fragment] = href.split("#", 2);
+    if (!path.startsWith("/") || path.startsWith("//")) return href;
+    const file = path === "/" ? "/index.md" : `${path}.md`;
+    return fragment === undefined ? file : `${file}#${fragment}`;
+};
+
+/** Points every site link at the Markdown version of its page. */
+const linkMarkdown = (root: Root) => {
+    visit(root, ["link", "definition"], (node) => {
+        if (node.type === "link" || node.type === "definition") {
+            node.url = markdownHref(node.url);
+        }
+    });
+};
+
 type Page = {
     source: string;
     path: string;
@@ -113,5 +130,6 @@ export const pageToMarkdown = async (page: Page) => {
         ] as RootContent[],
     };
     assertPlain(output);
+    linkMarkdown(output);
     return writer.stringify(output);
 };
