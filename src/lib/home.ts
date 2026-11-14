@@ -1,3 +1,7 @@
+/** What Versia is, in one sentence, for the home page and `/index.md`. */
+export const tagline =
+    "Versia is a federation protocol: signed JSON over HTTP, with a small core and namespaced extensions.";
+
 export const maintainer = {
     name: "Jesse",
     username: "CPlusPatch",

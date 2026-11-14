@@ -43,14 +43,14 @@ export const onRequest = defineRouteMiddleware(({ locals, url }) => {
         tag: "meta",
         attrs: { "data-pagefind-meta": "url[content]", content: path },
     });
-    // The home page and the 404 have no Markdown version.
-    if (path !== "/" && path !== "/404") {
+    // The 404 has no Markdown version. The home page's is the list of pages.
+    if (path !== "/404") {
         head.push({
             tag: "link",
             attrs: {
                 rel: "alternate",
                 type: "text/markdown",
-                href: `${path}.md`,
+                href: path === "/" ? "/index.md" : `${path}.md`,
             },
         });
     }
