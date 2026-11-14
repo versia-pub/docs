@@ -1,7 +1,7 @@
 import type { RootContent } from "mdast";
 import type { Extension } from "../extensions.ts";
 import { libraries } from "../libraries.ts";
-import { API_PREFIX } from "../spec.ts";
+import { API_PREFIX, extendsLinks } from "../spec.ts";
 import { inheritedFieldHref, inheritedFields } from "../spec-fields.ts";
 import { type Block, item, list, md } from "./build.ts";
 import { type Jsx, needed, prop, slotsOf, unwrap } from "./jsx.ts";
@@ -68,10 +68,13 @@ const Entity: Component = (node, context) => {
 const Fields: Component = (node, context) => {
     const extension = prop(node, "extension");
     const on = prop(node, "on");
+    if (on !== undefined && !Object.hasOwn(extendsLinks, on)) {
+        throw new Error(`No link for the extended entity ${on}`);
+    }
+    const href = on && extendsLinks[on as keyof typeof extendsLinks];
     return sheet(node, context, prop(node, "label") ?? "Fields", [
         extension !== undefined && item(`Extension ID: \`${extension}\``),
-        on !== undefined &&
-            item(`Extends: [${on}](/entities/${on.toLowerCase()})`),
+        on !== undefined && item(`Extends: [${on}](${href})`),
     ]);
 };
 

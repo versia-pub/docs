@@ -1,6 +1,12 @@
 export const CURRENT_VERSION = "v0.7.0";
 export const API_PREFIX = "/.versia/v0.7";
 
+/** Where each entity that an extension's fields can extend is defined. */
+export const extendsLinks = {
+    Note: "/extensions/social#note",
+    User: "/entities/user",
+};
+
 /** Where each named type is defined, so that type strings can link themselves. */
 export const typeLinks: Record<string, string> = {
     Collection: "/structures/collection",

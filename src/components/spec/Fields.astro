@@ -1,4 +1,5 @@
 ---
+import { extendsLinks } from "../../lib/spec.ts";
 import Col from "./Col.astro";
 import Fact from "./Fact.astro";
 import Facts from "./Facts.astro";
@@ -13,18 +14,17 @@ interface Props {
     /** The key these fields live under in an entity's `extensions`. */
     extension?: string;
     /** The entity that carries the extension. */
-    on?: "Note" | "User";
+    on?: keyof typeof extendsLinks;
 }
 
 const { name, label = "Fields", extension, on } = Astro.props;
-const onHref = { Note: "/extensions/social#note", User: "/entities/user" };
 ---
 
 <Sheet entity={name}>
     {extension && (
         <Facts slot="meta">
             <Fact label="Extension ID"><code>{extension}</code></Fact>
-            {on && <Fact label="Extends"><a href={onHref[on]}>{on}</a></Fact>}
+            {on && <Fact label="Extends"><a href={extendsLinks[on]}>{on}</a></Fact>}
         </Facts>
     )}
     <Col>
