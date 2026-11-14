@@ -54,6 +54,10 @@ A receiver **MUST** ignore a `Delete` whose `deleted_type` differs from the type
 
 Which of its users may delete what is up to that instance. With no `author`, the `Delete` comes from the instance that signed it.
 
+### Pending Deliveries
+
+A delivery of the entity, or of a change to it, can still be waiting or [being retried](/federation/http#retries) when the entity is deleted. If it arrived after the `Delete`, the receiver would store the entity again. So once an entity is deleted, its instance **MUST** drop every delivery of it that has not succeeded yet.
+
 ### Fetching Deleted Entities
 
 An instance **SHOULD** answer a request for an entity it has deleted with `410 Gone` if it remembers the entity, and `404 Not Found` otherwise.
