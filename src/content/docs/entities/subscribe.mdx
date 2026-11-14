@@ -99,7 +99,9 @@ To cancel a subscription request that has not been answered, `joe.example` sends
 
 ### Final Steps
 
-`joe.example` **MUST** mark the subscription as "accepted" when it receives a `SubscribeAccept`, and remove it when it receives a `SubscribeReject`.
+`joe.example` **MUST** mark a pending subscription as "accepted" when it receives a `SubscribeAccept`, and remove the subscription when it receives a `SubscribeReject`.
+
+A `SubscribeAccept` for a subscription that `joe.example` has neither pending nor accepted has [nothing to apply to](/federation#ordering), and is ignored. It can arrive when `Joe` cancelled a request and the `Unsubscribe` reached `alice.example` before the `Subscribe`, so `joe.example` **SHOULD** answer it with an `Unsubscribe`. Otherwise `alice.example` keeps `Joe` as a subscriber.
 
 ### Delivering Entities
 
